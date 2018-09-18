@@ -11,3 +11,17 @@ Tabla de asignaciones del trabajo.
 |multiplicar|dividir|o|y|cambiar_signo|
 |no|igual|distinto|menor_igual|mayor_igual|
 |menor|mayor|leer|escribir|  |
+
+
+## Antes de ponerse a trabajar
+Primero te aseguras de que estas sincronizado con el servidor remoto:
+
+```
+git pull
+```
+
+### Cuando has acabado de trabajar:
+
+```
+git push
+```

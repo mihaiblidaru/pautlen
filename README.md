@@ -13,6 +13,16 @@ Tabla de asignaciones del trabajo.
 |menor|mayor|leer|escribir|  |
 
 
+Tienen prioridad las siguientes funciones:
+* escribir_cabecera_bss
+* escribir_subseccion_data
+* escribir_segmento_codigo
+* escribir_inicio_main
+* escribir_fin
+* declarar_variable
+
+Con estas funciones al menos se genera la estructura basica de un fichero **asm** y al menos ya no salen tantos errores al hacer **make**.
+
 ## Antes de ponerse a trabajar
 Primero te aseguras de que estas sincronizado con el servidor remoto:
 

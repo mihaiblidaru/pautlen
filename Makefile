@@ -12,38 +12,20 @@ ej2: ej2.o generacion.o
 ej3: ej3.o generacion.o
 ej4: ej4.o generacion.o
 
-programa1: programa1.o olib.o
-programa2: programa2.o olib.o
-programa3: programa3.o olib.o
-programa4: programa4.o olib.o
+programa%: programa%.o olib.o
+	$(CC) $(LDFLAGS) $^ -o $@ $(LDLIBS)
 
+programa%.asm: ej%
+	./$< $@
 
-programa1.asm: ej1
-	./ej1 programa1.asm
+programa%.o: programa%.asm
+	nasm -g -f elf32 -o $@ $<
 
-programa2.asm: ej2
-	./ej2 programa2.asm
-
-programa3.asm: ej3
-	./ej3 programa3.asm
-
-programa4.asm: ej41
-	./ej4 programa4.asm
-
-programa1.o: programa1.asm
-	nasm -g -f elf32 -o $@ programa1.asm
-
-programa2.o: programa1.asm
-	nasm -g -f elf32 -o $@ programa1.asm
-
-programa3.o: programa1.asm
-	nasm -g -f elf32 -o $@ programa1.asm
-
-programa4.o: programa1.asm
-	nasm -g -f elf32 -o $@ programa1.asm
-
-PHONY: all clean
+PHONY: clean all
 
 clean:
 	ls *.o | sed -e 's/olib.o//'| xargs rm -f
-	rm -f ej1 ej2 ej3 ej4 *.asm
+	rm -f ej1 ej2 ej3 ej4 programa1 programa2 programa3 programa4 *.asm
+
+#para que conserve los archivos asm despues de la compilacion
+.SECONDARY: programa1.asm programa2.asm programa4.asm programa3.asm

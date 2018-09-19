@@ -2,9 +2,8 @@
 ## Clase 1311
 ## Grupo 2
 
-[Enunciado de la práctica](https://docs.google.com/document/d/1kYNRC2WBayJQeK93sLsM8Nc1hPL19X-lXwz5j2B-R1Y/edit)
-
-[Ejemplos de reserva de memoria](#ejemplos-de-reserva-de-memoria)
+|[Enunciado de la práctica](https://docs.google.com/document/d/1kYNRC2WBayJQeK93sLsM8Nc1hPL19X-lXwz5j2B-R1Y/edit)|[Ejemplos de reserva de memoria](#ejemplos-de-reserva-de-memoria)|[Tabla instrucciones x86](https://c9x.me/x86/)|
+|-----------------------------------------------------------------|----------------------------------------------|------|
 
 Tabla de asignaciones del trabajo.
 

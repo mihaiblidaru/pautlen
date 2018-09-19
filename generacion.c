@@ -1,9 +1,16 @@
 #include <stdio.h>
 #include "generacion.h"
 
+/*
+ * Esto es solo por si decidimos tener cadenas constantes
+ * para tenerlas definidas en un solo sitio y poder cambiarlas rapidamente.
+ * Por ejemplo __esp o los mensajes de error de division por cero
+ */
+const char esp_backup_var_name[] = "__esp";
+
 void escribir_cabecera_bss(FILE* fpasm){
   fprintf(fpasm, "segment .bss\n");
-  fprintf(fpasm, "__esp DWORD 1\n");
+  fprintf(fpasm, "__esp resd 1\n");
 }
 
 
@@ -67,7 +74,6 @@ Se guarda el resultado en la pila
 void restar(FILE* fpasm, int es_variable_1, int es_variable_2){
 
 }
-
 
 void multiplicar(FILE* fpasm, int es_variable_1, int es_variable_2){  /*DUDA*/
   fprintf(fpasm, "mov eax, [esp]\n");

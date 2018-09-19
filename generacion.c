@@ -198,7 +198,23 @@ void menor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
    gestionar los saltos necesarios para implementar las comparaciones.
 */
 void mayor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
+  fprintf(fpasm, "mov eax, [esp]\n");
 
+  if(es_variable1)
+    fprintf(fpasm, "mov eax, [eax]\n");
+
+  if(es_variable2){
+    fprintf(fpasm, "mov ecx, [esp - 4]\n");
+    fprintf(fpasm, "mov ecx, [ecx]\n");
+    fprintf(fpasm, "cmp eax, ecx\n");
+  }else{
+    fprintf(fpasm, "cmp eax, [esp - 4]\n");
+  }
+
+  fprintf(fpasm, "jae true_%d\n", etiqueta);
+  fprintf(fpasm, "jmp false_%d\n", etiqueta);
+  fprintf(fpasm, "true_%d: push dword 1\n", etiqueta);
+  fprintf(fpasm, "false_%d: push dword 0\n", etiqueta);
 }
 
 

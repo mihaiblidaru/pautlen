@@ -75,7 +75,20 @@ Se guarda el resultado en la pila
    Deben tenerse en cuenta las peculiaridades de cada operación. En este sentido sí hay que mencionar explícitamente que, en el caso de la división, se debe controlar si el divisor es “0” y en ese caso se debe saltar a la rutina de error controlado (restaurando el puntero de pila en ese caso y comprobando en el retorno que no se produce “Segmentation Fault”)
 */
 void restar(FILE* fpasm, int es_variable_1, int es_variable_2){
+  fprintf(fpasm, "mov eax, [esp]");
+  
+  if(es_variable_1)
+    fprintf(fpasm, "mov eax, [eax]");
 
+  if(es_variable_2) {
+    fprintf(fpasm, "mov ecx, [esp - 4]");
+    fprintf(fpasm, "mov ecx, [ecx]");
+    fprintf(fpasm, "sub eax, ecx");
+  } else {
+    fprintf(fpasm, "sub ecx, [esp - 4]");
+  }
+
+  fprintf(fpasm, "push eax");
 }
 
 
@@ -126,6 +139,13 @@ void y(FILE* fpasm, int es_variable_1, int es_variable_2){
    Es análoga a las binarias, excepto que sólo requiere de un acceso a la pila ya que sólo usa un operando.
 */
 void cambiar_signo(FILE* fpasm, int es_variable){
+  fprintf(fpasm, "mov eax, [esp]\n");
+  
+  if(es_variable)
+    fprintf(fpasm, "mov eax, [eax]\n");
+  
+  fprintf(fpasm, "neg eax\n");
+  fprintf(fpasm, "push eax\n");
 
 }
 

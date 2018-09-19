@@ -2,7 +2,8 @@
 #include "generacion.h"
 
 void escribir_cabecera_bss(FILE* fpasm){
-
+  fprintf(fpasm, "segment .bss\n");
+  fprintf(fpasm, "__esp DWORD 1\n");
 }
 
 
@@ -20,7 +21,7 @@ void escribir_segmento_codigo(FILE* fpasm){
 
 }
 
-/* 
+/*
    En este punto se debe escribir, al menos, la etiqueta main y la sentencia
    que guarda el puntero de pila en su variable (se recomienda usar __esp).
 */
@@ -31,6 +32,11 @@ void escribir_inicio_main(FILE* fpasm){
 
 
 void escribir_fin(FILE* fpasm){
+  fprintf(fpasm, "cmp fdivzero, 00H\n"); /*DUDA*/
+  fprintf(fpasm, "jze errdivzero\n");
+  fprintf(fpasm, "fin:\n");
+  fprintf(fpasm, "mov esp, [__esp]\n");
+  fprintf(fpasm, "ret\n");
 
 }
 
@@ -63,8 +69,19 @@ void restar(FILE* fpasm, int es_variable_1, int es_variable_2){
 }
 
 
-void multiplicar(FILE* fpasm, int es_variable_1, int es_variable_2){
+void multiplicar(FILE* fpasm, int es_variable_1, int es_variable_2){  /*DUDA*/
+  fprintf(fpasm, "mov eax, [esp]\n");
 
+  if (es_variable_1)
+    fprintf(fpasm, "mov eax, [eax]\n");
+
+  fprintf(fpasm, "mov ecx, [esp-4]\n");
+
+  if (es_variable_2)
+    fprintf(fpasm, "mov ecx, [ecx]\n");
+
+  fprintf(fpasm, "imul ecx\n");
+  fprintf(fpasm, "push eax\n");
 }
 
 
@@ -83,7 +100,7 @@ void y(FILE* fpasm, int es_variable_1, int es_variable_2){
 }
 
 /*
-   Función aritmética de cambio de signo. 
+   Función aritmética de cambio de signo.
    Es análoga a las binarias, excepto que sólo requiere de un acceso a la pila ya que sólo usa un operando.
 */
 void cambiar_signo(FILE* fpasm, int es_variable){
@@ -92,7 +109,17 @@ void cambiar_signo(FILE* fpasm, int es_variable){
 
 
 void no(FILE* fpasm, int es_variable, int cuantos_no){
+  int i;
 
+  fprintf(fpasm, "mov ax, [esp]\n");
+
+  if (es_variable)
+    fprintf(fpasm, "mov ax, [ax]\n");
+
+  for (i = 0; i < cuantos_no; i++)
+    fprintf(fpasm, "not ax\n");
+
+  fprintf(fpasm, "push ax\n");
 }
 
 
@@ -110,11 +137,11 @@ void menor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
 
 }
 
-/* 
-   Todas estas funciones reciben como argumento si los elementos 
+/*
+   Todas estas funciones reciben como argumento si los elementos
    a comparar son o no variables. El resultado de las operaciones,
-   que siempre será un booleano (“1” si se cumple la comparación y “0” si no se cumple), 
-   se deja en la pila como en el resto de operaciones. Se deben usar etiquetas para poder 
+   que siempre será un booleano (“1” si se cumple la comparación y “0” si no se cumple),
+   se deja en la pila como en el resto de operaciones. Se deben usar etiquetas para poder
    gestionar los saltos necesarios para implementar las comparaciones.
 */
 void mayor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
@@ -123,7 +150,17 @@ void mayor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
 
 
 void menor(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
+  fprintf(fpasm, "mov eax, [esp-4]\n"); /*Operador de la izquierda*/
 
+  if (es_variable1)
+    fprintf(fpasm, "mov eax, [eax]\n");
+
+  fprintf(fpasm, "mov edx, [esp]\n"); /*Operador de la derecha*/
+
+  if (es_variable2)
+    fprintf(fpasm, "mov edx, [ecx]\n");
+
+  fprintf(fpasm, "jl %d\n", etiqueta); /*Repasar*/
 }
 
 
@@ -140,6 +177,3 @@ void leer(FILE* fpasm, char* nombre, int tipo){
 void escribir(FILE* fpasm, int es_variable, int tipo){
 
 }
-
-
-

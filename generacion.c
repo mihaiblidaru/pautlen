@@ -8,6 +8,9 @@
  */
 const char esp_backup_var_name[] = "__esp";
 
+/*
+ * En .bss se reserva con resb, resw, resd, etc
+ */
 void escribir_cabecera_bss(FILE* fpasm){
   fprintf(fpasm, "segment .bss\n");
   fprintf(fpasm, "__esp resd 1\n");
@@ -75,6 +78,19 @@ void restar(FILE* fpasm, int es_variable_1, int es_variable_2){
 
 }
 
+
+/* 
+ * Se puede hacer un poco mejor:
+ * Imul tiene tambien el formato:
+ *    IMUL mem32 => EAX = EAX * mem_dword
+ * 
+ * O sea que el segundo operando se podria multiplicar directamente
+ * sin cargarlo previamente en un registro.
+ * 
+ * Esto no lo tengas mucho en cuenta(probablemente lo dejemos tal como esta), porque 
+ * en realidad solo ahoraria una instruccion con el parametro 2 
+ * cuando no es un puntero.
+ */
 void multiplicar(FILE* fpasm, int es_variable_1, int es_variable_2){  /*DUDA*/
   fprintf(fpasm, "mov eax, [esp]\n");
 
@@ -113,7 +129,18 @@ void cambiar_signo(FILE* fpasm, int es_variable){
 
 }
 
-
+/*
+ * Esta está mal. Basicamente tiene varias cosas mal:
+ * 
+ * 1. Usas registros de solo 16 bits(aka ax).
+ * 2. La instruccion NOT hace el complemento a 1, no la negacion descrita en el enunciado:
+ *       Si en la pila lo que se niega es un 0 = 0x00000000 la idea
+ *       es que pase a valer 1 = 0x00000001 pero usando NOT el resultado
+ *       es 0xFFFFFFFF.
+ * 3. el argumentos cuantos_no no se para que sirve, pero estoy bastante 
+ * seguro de que no significa cuantas veces negar una cosa. Esto mejor se lo preguntamos 
+ * en clase o en un correo.
+ */
 void no(FILE* fpasm, int es_variable, int cuantos_no){
   int i;
 

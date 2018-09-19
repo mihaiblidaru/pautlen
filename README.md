@@ -2,6 +2,8 @@
 ## Clase 1311
 ## Grupo 2
 
+[Enunciado de la práctica](https://docs.google.com/document/d/1kYNRC2WBayJQeK93sLsM8Nc1hPL19X-lXwz5j2B-R1Y/edit)
+
 Tabla de asignaciones del trabajo.
 
 | Andrés | Lucía | Alberto | Sergio | Mihai |

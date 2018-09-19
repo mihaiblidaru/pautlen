@@ -17,8 +17,13 @@ void escribir_cabecera_bss(FILE* fpasm){
 }
 
 
+/*
+   Declaración (con directiva db) de las variables que contienen el texto de los mensajes para la identificación de errores en tiempo de ejecución.
+   En este punto, al menos, debes ser capaz de detectar la división por 0.
+*/ 
 void escribir_subseccion_data(FILE* fpasm){
-
+	fprintf(fpasm, "segment .data\n");
+	fprintf(fpasm, "\tmsg_error_div_0 db \"Division por 0\",0\n");
 }
 
 
@@ -51,8 +56,20 @@ void escribir_fin(FILE* fpasm){
 }
 
 
+/*
+   Función que debe ser invocada cuando se sabe un operando de una operación aritmético-lógica y se necesita introducirlo en la pila.
+nombre es la cadena de caracteres del operando tal y como debería aparecer en el fuente NASM
+es_variable indica si este operando es una variable (como por ejemplo b1) con un 1 u otra cosa (como por ejemplo 34) 
+con un 0. Recuerda que en el primer caso internamente se representará como _b1 y, sin embargo, 
+en el segundo se representará tal y como esté en el argumento (34).
+*/
 void escribir_operando(FILE* fpasm, char* nombre, int es_variable){
-
+	if(es_variable == 1){
+		fprintf(fpasm, "mov eax, _%s", nombre);
+	}else{ 
+		fprintf(fpasm, "mov eax, %s", nombre);
+	}
+	fprintf(fpasm, "push eax");
 }
 
 
@@ -72,7 +89,9 @@ Se extrae de la pila los operandos
 Se realiza la operación
 Se guarda el resultado en la pila
    Los dos últimos argumentos indican respectivamente si lo que hay en la pila es una referencia a un valor o un valor explícito.
-   Deben tenerse en cuenta las peculiaridades de cada operación. En este sentido sí hay que mencionar explícitamente que, en el caso de la división, se debe controlar si el divisor es “0” y en ese caso se debe saltar a la rutina de error controlado (restaurando el puntero de pila en ese caso y comprobando en el retorno que no se produce “Segmentation Fault”)
+   Deben tenerse en cuenta las peculiaridades de cada operación. En este sentido sí hay que mencionar explícitamente que, en el caso de la división, 
+   se debe controlar si el divisor es “0” y en ese caso se debe saltar a la rutina de error controlado 
+   (restaurando el puntero de pila en ese caso y comprobando en el retorno que no se produce “Segmentation Fault”)
 */
 void restar(FILE* fpasm, int es_variable_1, int es_variable_2){
   fprintf(fpasm, "mov eax, [esp]");
@@ -119,7 +138,19 @@ void multiplicar(FILE* fpasm, int es_variable_1, int es_variable_2){  /*DUDA*/
   fprintf(fpasm, "push eax\n");
 }
 
-
+/* (YA LO BORRARE)
+* 
+* Asume que el dividendo está en la composición de registros edx:eax.
+✖ El divisor es el registro que aparece en la instrucción.
+✖ El resultado de la división entera se ubica en el registro eax.
+✖ El resto de la división entera se ubica en el registro edx.
+*
+* ✖ Cargar el dividendo en eax.
+✖ Extender el dividendo a la composición de registros edx:eax utilizando el código de operación cdq.
+✖ Cargar el divisor en ecx.
+✖ Realizar la división: idiv ecx.
+*
+*/
 void dividir(FILE* fpasm, int es_variable_1, int es_variable_2){
 
 }
@@ -175,7 +206,12 @@ void no(FILE* fpasm, int es_variable, int cuantos_no){
   fprintf(fpasm, "push ax\n");
 }
 
-
+/* 
+   Todas estas funciones reciben como argumento si los elementos a comparar son o no variables. 
+   El resultado de las operaciones, que siempre será un booleano
+    (“1” si se cumple la comparación y “0” si no se cumple), se deja en la pila como en el resto de operaciones.
+     Se deben usar etiquetas para poder gestionar los saltos necesarios para implementar las comparaciones.
+*/
 void igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
 
 }

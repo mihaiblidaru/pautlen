@@ -64,12 +64,11 @@ con un 0. Recuerda que en el primer caso internamente se representará como _b1 
 en el segundo se representará tal y como esté en el argumento (34).
 */
 void escribir_operando(FILE* fpasm, char* nombre, int es_variable){
-	if(es_variable == 1){
-		fprintf(fpasm, "mov eax, _%s", nombre);
+	if(es_variable){
+		fprintf(fpasm, "push dword _%s", nombre);
 	}else{ 
-		fprintf(fpasm, "mov eax, %s", nombre);
+		fprintf(fpasm, "push dword %s", nombre);
 	}
-	fprintf(fpasm, "push eax");
 }
 
 
@@ -138,21 +137,23 @@ void multiplicar(FILE* fpasm, int es_variable_1, int es_variable_2){  /*DUDA*/
   fprintf(fpasm, "push eax\n");
 }
 
-/* (YA LO BORRARE)
-* 
-* Asume que el dividendo está en la composición de registros edx:eax.
-✖ El divisor es el registro que aparece en la instrucción.
-✖ El resultado de la división entera se ubica en el registro eax.
-✖ El resto de la división entera se ubica en el registro edx.
-*
-* ✖ Cargar el dividendo en eax.
-✖ Extender el dividendo a la composición de registros edx:eax utilizando el código de operación cdq.
-✖ Cargar el divisor en ecx.
-✖ Realizar la división: idiv ecx.
-*
-*/
+//TENGO DUDAS DE QUE ESTE BIEN...
 void dividir(FILE* fpasm, int es_variable_1, int es_variable_2){
 
+  fprintf(fpasm, "mov ecx, [esp]\n");  //divisor
+  if (es_variable_1){
+    fprintf(fpasm, "mov ecx, [ecx]\n");
+  }
+  fprintf(fpasm, "cmp ecx, 0\n");
+  fprintf(fpasm, "je errdivzero\n"); //caso division por 0
+  fprintf(fpasm, "mov eax, [esp-4]\n"); //dividendo
+  if (es_variable_2)
+    fprintf(fpasm, "mov eax, [eax]\n");
+
+  fprintf(fpasm, "cdq\n"); //extensión en signo del dividendo
+
+  fprintf(fpasm, "idiv ecx\n");
+  fprintf(fpasm, "push eax\n"); //resultado de la division está en eax
 }
 
 

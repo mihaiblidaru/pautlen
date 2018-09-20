@@ -93,20 +93,20 @@ Se guarda el resultado en la pila
    (restaurando el puntero de pila en ese caso y comprobando en el retorno que no se produce “Segmentation Fault”)
 */
 void restar(FILE* fpasm, int es_variable_1, int es_variable_2){
-  fprintf(fpasm, "mov eax, [esp]");
+  fprintf(fpasm, "mov eax, [esp]\n");
   
   if(es_variable_1)
-    fprintf(fpasm, "mov eax, [eax]");
+    fprintf(fpasm, "mov eax, [eax]\n");
 
   if(es_variable_2) {
-    fprintf(fpasm, "mov ecx, [esp - 4]");
-    fprintf(fpasm, "mov ecx, [ecx]");
-    fprintf(fpasm, "sub eax, ecx");
+    fprintf(fpasm, "mov ecx, [esp - 4]\n");
+    fprintf(fpasm, "mov ecx, [ecx]\n");
+    fprintf(fpasm, "sub eax, ecx\n");
   } else {
-    fprintf(fpasm, "sub ecx, [esp - 4]");
+    fprintf(fpasm, "sub ecx, [esp - 4]\n");
   }
 
-  fprintf(fpasm, "push eax");
+  fprintf(fpasm, "push eax\n");
 }
 
 
@@ -137,7 +137,7 @@ void multiplicar(FILE* fpasm, int es_variable_1, int es_variable_2){  /*DUDA*/
   fprintf(fpasm, "push eax\n");
 }
 
-//TENGO DUDAS DE QUE ESTE BIEN...
+//ESta bien
 void dividir(FILE* fpasm, int es_variable_1, int es_variable_2){
 
   fprintf(fpasm, "mov ecx, [esp]\n");  //divisor

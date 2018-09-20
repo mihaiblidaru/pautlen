@@ -93,17 +93,17 @@ Se guarda el resultado en la pila
    (restaurando el puntero de pila en ese caso y comprobando en el retorno que no se produce “Segmentation Fault”)
 */
 void restar(FILE* fpasm, int es_variable_1, int es_variable_2){
-  fprintf(fpasm, "\tmov eax, [esp]\n");
+  fprintf(fpasm, "\tmov eax, [esp + 4]\n");
   
   if(es_variable_1)
     fprintf(fpasm, "\tmov eax, [eax]\n");
 
   if(es_variable_2) {
-    fprintf(fpasm, "\tmov ecx, [esp - 4]\n");
+    fprintf(fpasm, "\tmov ecx, [esp]\n");
     fprintf(fpasm, "\tmov ecx, [ecx]\n");
     fprintf(fpasm, "\tsub eax, ecx\n");
   } else {
-    fprintf(fpasm, "\tsub ecx, [esp - 4]\n");
+    fprintf(fpasm, "\tsub eax, [esp]\n");
   }
 
   fprintf(fpasm, "\tpush eax\n");
@@ -128,7 +128,7 @@ void multiplicar(FILE* fpasm, int es_variable_1, int es_variable_2){  /*DUDA*/
   if (es_variable_1)
     fprintf(fpasm, "\tmov eax, [eax]\n");
 
-  fprintf(fpasm, "\tmov ecx, [esp+4]\n");
+  fprintf(fpasm, "\tmov ecx, [esp + 4]\n");
 
   if (es_variable_2)
     fprintf(fpasm, "\tmov ecx, [ecx]\n");
@@ -146,7 +146,7 @@ void dividir(FILE* fpasm, int es_variable_1, int es_variable_2){
   }
   fprintf(fpasm, "\tcmp ecx, 0\n");
   fprintf(fpasm, "\tje errdivzero\n"); //caso division por 0
-  fprintf(fpasm, "\tmov eax, [esp+4]\n"); //dividendo
+  fprintf(fpasm, "\tmov eax, [esp + 4]\n"); //dividendo
   if (es_variable_2)
     fprintf(fpasm, "\tmov eax, [eax]\n");
 
@@ -220,7 +220,7 @@ void igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
     fprintf(fpasm, "\tmov eax, [eax]\n");
   }
 
-  fprintf(fpasm, "\tmov ecx, [esp+4]\n");
+  fprintf(fpasm, "\tmov ecx, [esp + 4]\n");
   if(es_variable2){
     fprintf(fpasm, "\tmov ecx, [ecx]\n");
   }    
@@ -250,17 +250,17 @@ void menor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
    gestionar los saltos necesarios para implementar las comparaciones.
 */
 void mayor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
-  fprintf(fpasm, "\tmov eax, [esp]\n");
+  fprintf(fpasm, "\tmov eax, [esp + 4]\n");
 
   if(es_variable1)
     fprintf(fpasm, "\tmov eax, [eax]\n");
 
   if(es_variable2){
-    fprintf(fpasm, "\tmov ecx, [esp - 4]\n");
+    fprintf(fpasm, "\tmov ecx, [esp]\n");
     fprintf(fpasm, "\tmov ecx, [ecx]\n");
     fprintf(fpasm, "\tcmp eax, ecx\n");
   }else{
-    fprintf(fpasm, "\tcmp eax, [esp - 4]\n");
+    fprintf(fpasm, "\tcmp eax, [esp]\n");
   }
 
   fprintf(fpasm, "\tjae true_%d\n", etiqueta);
@@ -271,7 +271,7 @@ void mayor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
 
 
 void menor(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
-  fprintf(fpasm, "\tmov eax, [esp+4]\n"); /*Operador de la izquierda*/
+  fprintf(fpasm, "\tmov eax, [esp + 4]\n"); /*Operador de la izquierda*/
 
   if (es_variable1)
     fprintf(fpasm, "\tmov eax, [eax]\n");
@@ -287,7 +287,7 @@ void menor(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
 
 void mayor(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
   
-  fprintf(fpasm, "\tmov eax, [esp+4]\n"); /*Operador de la izquierda*/
+  fprintf(fpasm, "\tmov eax, [esp + 4]\n"); /*Operador de la izquierda*/
   if (es_variable1){
     fprintf(fpasm, "\tmov eax, [eax]\n");
   }

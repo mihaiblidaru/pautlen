@@ -3,6 +3,7 @@
 #include <string.h>
 #include "hash.h"
 /**************** FUNCIONES ****************/
+int mod(int a,int b);
 //Recibe un tamaño y crea una tabla de dicha longitud.
 TablaHash* crearTablaHash(int tam){
 
@@ -26,6 +27,9 @@ int eliminarTablaHash(TablaHash *tabla){
 
 	int i;
 	NodoHash*aux,*aux2;
+	if(tabla==NULL){
+		return ERROR;
+	}
 
 	for(i=0;i<tabla->tam;i++){
 
@@ -76,16 +80,28 @@ NodoHash* crearNodoHash(char *clave, void *info){
 int insertarNodoHash(TablaHash *tabla, char *clave, void *info){
 
 	int modulo;
-	NodoHash * aux;
-	modulo=funcionHash(clave)%tabla->tam;
+	NodoHash * aux=NULL,*aux2=NULL;
+	if(tabla==NULL){
+		return ERROR;
+	}
+
+	modulo=mod(funcionHash(clave),tabla->tam);
+	aux2=crearNodoHash(clave,info);	
+	if(aux2==NULL){
+		return ERROR;
+	}
 	if(tabla->nodo[modulo]==NULL){
-		tabla->nodo[modulo]=crearNodoHash(clave,info);		
+		tabla->nodo[modulo]=aux2;
 	}else{
 		aux = tabla->nodo[modulo];
-		tabla->nodo[modulo]=crearNodoHash(clave,info);
 		tabla->nodo[modulo]->siguiente = aux;
 	}
 	return OK;
+}
+
+int mod(int a,int b){
+
+	return((a%b)+b)%b;
 }
 
 //Busca en la tabla hash el nodo identificado por su clave y lo devuelve. NULL en caso contrario.
@@ -93,7 +109,8 @@ void* buscarNodoHash(TablaHash *tabla, char *clave){
 
 	int modulo;
 	NodoHash * aux;
-	modulo=funcionHash(clave)%tabla->tam;
+	modulo=mod(funcionHash(clave),tabla->tam);
+	
 	aux = tabla->nodo[modulo];
 	while(aux!=NULL){
 		if(strcmp(aux->clave,clave)==0){

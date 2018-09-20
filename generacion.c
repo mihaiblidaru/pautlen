@@ -225,6 +225,7 @@ void igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
     fprintf(fpasm, "mov ecx, [ecx]\n");
   }    
 
+  fprintf(fpasm, "cmp eax, ecx\n");
   fprintf(fpasm, "je true_%d\n", etiqueta);
   fprintf(fpasm, "jmp false_%d\n", etiqueta);
   fprintf(fpasm, "true_%d: push dword 1\n", etiqueta);

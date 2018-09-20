@@ -65,9 +65,9 @@ en el segundo se representará tal y como esté en el argumento (34).
 */
 void escribir_operando(FILE* fpasm, char* nombre, int es_variable){
 	if(es_variable){
-		fprintf(fpasm, "push dword _%s", nombre);
+		fprintf(fpasm, "push dword _%s\n", nombre);
 	}else{ 
-		fprintf(fpasm, "push dword %s", nombre);
+		fprintf(fpasm, "push dword %s\n", nombre);
 	}
 }
 

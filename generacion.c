@@ -33,7 +33,10 @@ void declarar_variable(FILE* fpasm, char * nombre,  int tipo,  int tamano){
 
 
 void escribir_segmento_codigo(FILE* fpasm){
-
+  fprintf(fpasm, "segment .codigo\n");
+  fprintf(fpasm, "\tglobal _main\n");
+  fprintf(fpasm, "\textern scan_int, scan_boolean, print_int, print_boolean, print_blank, print_endofline, print_string\n");
+  
 }
 
 /*
@@ -78,7 +81,21 @@ void asignar(FILE* fpasm, char* nombre, int es_variable){
 
 
 void sumar(FILE* fpasm, int es_variable_1, int es_variable_2){
-
+  fprintf(fpasm, "\tmov ebx, [esp + 4]\n");  
+  
+  if(es_variable_1){	  
+    fprintf(fpasm, "\tmov ebx, [eax]\n"); 
+  }
+  
+  if(es_variable_2) { 
+    fprintf(fpasm, "\tmov edx, [esp]\n"); 
+    fprintf(fpasm, "\tmov edx, [ecx]\n"); 
+    fprintf(fpasm, "\tadd ebx, edx\n"); 
+  } else { 
+    fprintf(fpasm, "\tadd ebx, [esp]\n"); 
+  } 
+  
+  fprintf(fpasm, "\tpush ebx\n");
 }
 
 /* FUNCIONES ARITMÉTICO-LÓGICAS BINARIAS */
@@ -164,7 +181,21 @@ void o(FILE* fpasm, int es_variable_1, int es_variable_2){
 
 
 void y(FILE* fpasm, int es_variable_1, int es_variable_2){
-
+  fprintf(fpasm, "\tmov eax, [esp + 4]\n");  
+  
+  if(es_variable_1){  
+    fprintf(fpasm, "\tmov eax, [eax]\n"); 
+  }
+  
+  if(es_variable_2) { 
+    fprintf(fpasm, "\tmov ecx, [esp]\n"); 
+    fprintf(fpasm, "\tmov ecx, [ecx]\n"); 
+    fprintf(fpasm, "\tand eax, ecx\n"); 
+  } else { 
+    fprintf(fpasm, "\tand eax, [esp]\n"); 
+  } 
+  
+  fprintf(fpasm, "\tpush eax\n");
 }
 
 /*
@@ -244,7 +275,25 @@ void distinto(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
 
 
 void menor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
+  fprintf(fpasm, "\tmov ebx, [esp + 4]\n");
 
+  if(es_variable1){
+	fprintf(fpasm, "\tmov ebx, [ebx]\n");
+  }
+	
+  if(es_variable2){
+    fprintf(fpasm, "\tmov edx, [esp]\n");
+    fprintf(fpasm, "\tmov edx, [ecx]\n");
+    fprintf(fpasm, "\tcmp ebx, edx\n");
+  }else{
+    fprintf(fpasm, "\tcmp ebx, [esp]\n");
+  }
+
+  
+  fprintf(fpasm, "\tjle true_%d\n", etiqueta);
+  fprintf(fpasm, "\tjmp false_%d\n", etiqueta);
+  fprintf(fpasm, "true_%d: push dword 1\n", etiqueta);
+  fprintf(fpasm, "false_%d: push dword 0\n", etiqueta);
 }
 
 /*
@@ -259,7 +308,7 @@ void mayor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
 
   if(es_variable1)
     fprintf(fpasm, "\tmov eax, [eax]\n");
-
+	
   if(es_variable2){
     fprintf(fpasm, "\tmov ecx, [esp]\n");
     fprintf(fpasm, "\tmov ecx, [ecx]\n");
@@ -322,5 +371,15 @@ void leer(FILE* fpasm, char* nombre, int tipo){
 
 
 void escribir(FILE* fpasm, int es_variable, int tipo){
-
+  
+  if(tipo){
+    fprintf(fpasm, "\tpush dword %d\n", es_variable);
+    fprintf(fpasm, "\tcall scan_boolean\n");
+    fprintf(fpasm, "\tadd esp, 4\n");
+  }
+  else{
+	fprintf(fpasm, "\tpush dword %d\n", es_variable);
+    fprintf(fpasm, "\tcall scan_int\n");
+    fprintf(fpasm, "\tadd esp, 4\n"); 
+  }
 }

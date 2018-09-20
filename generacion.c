@@ -138,16 +138,16 @@ void multiplicar(FILE* fpasm, int es_variable_1, int es_variable_2){  /*DUDA*/
   fprintf(fpasm, "\tpush eax\n"); //Ponemos el resultado en la pila
 }
 
-//ESta bien
+
 void dividir(FILE* fpasm, int es_variable_1, int es_variable_2){
 
-  fprintf(fpasm, "\tmov ecx, [esp]\n");  //divisor
+  fprintf(fpasm, "\tpop dword ecx\n");  //divisor
   if (es_variable_1){
     fprintf(fpasm, "\tmov ecx, [ecx]\n");
   }
   fprintf(fpasm, "\tcmp ecx, 0\n");
   fprintf(fpasm, "\tje errdivzero\n"); //caso division por 0
-  fprintf(fpasm, "\tmov eax, [esp + 4]\n"); //dividendo
+  fprintf(fpasm, "\tpop dword eax\n"); //dividendo
   if (es_variable_2)
     fprintf(fpasm, "\tmov eax, [eax]\n");
 

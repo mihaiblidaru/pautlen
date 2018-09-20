@@ -214,7 +214,21 @@ void no(FILE* fpasm, int es_variable, int cuantos_no){
      Se deben usar etiquetas para poder gestionar los saltos necesarios para implementar las comparaciones.
 */
 void igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
+  
+  fprintf(fpasm, "mov eax, [esp]\n");
+  if(es_variable1){
+    fprintf(fpasm, "mov eax, [eax]\n");
+  }
 
+  fprintf(fpasm, "mov ecx, [esp-4]\n");
+  if(es_variable2){
+    fprintf(fpasm, "mov ecx, [ecx]\n");
+  }    
+
+  fprintf(fpasm, "je true_%d\n", etiqueta);
+  fprintf(fpasm, "jmp false_%d\n", etiqueta);
+  fprintf(fpasm, "true_%d: push dword 1\n", etiqueta);
+  fprintf(fpasm, "false_%d: push dword 0\n", etiqueta);
 }
 
 
@@ -271,7 +285,22 @@ void menor(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
 
 
 void mayor(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
+  
+  fprintf(fpasm, "mov eax, [esp-4]\n"); /*Operador de la izquierda*/
+  if (es_variable1){
+    fprintf(fpasm, "mov eax, [eax]\n");
+  }
 
+  fprintf(fpasm, "mov ecx, [esp]\n"); /*Operador de la derecha*/
+  if (es_variable2){
+    fprintf(fpasm, "mov ecx, [ecx]\n");  
+  }
+
+  fprintf(fpasm, "cmp eax, ecx\n");
+  fprintf(fpasm, "ja true_%d\n", etiqueta);
+  fprintf(fpasm, "jmp false_%d\n", etiqueta);
+  fprintf(fpasm, "true_%d: push dword 1\n", etiqueta);
+  fprintf(fpasm, "false_%d: push dword 0\n", etiqueta);
 }
 
 

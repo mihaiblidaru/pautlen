@@ -47,11 +47,11 @@ void escribir_inicio_main(FILE* fpasm){
 
 
 void escribir_fin(FILE* fpasm){
-  fprintf(fpasm, "\tcmp fdivzero, 00H\n"); /*DUDA*/
-  fprintf(fpasm, "\tjze errdivzero\n");
+  fprintf(fpasm, "\tcmp tmsg_error_div_0, 1H\n"); //Miramos si la flag de division entre 0 esta activada
+  fprintf(fpasm, "\tje errdivzero\n");  //Saltamos al tratamiento del error
   fprintf(fpasm, "fin:\n");
-  fprintf(fpasm, "\tmov esp, [__esp]\n");
-  fprintf(fpasm, "\tret\n");
+  fprintf(fpasm, "\tmov esp, [__esp]\n"); //Devolvemos el puntero a pila a su sitio inicial
+  fprintf(fpasm, "\tret\n");  //Retorno de la función
 
 }
 

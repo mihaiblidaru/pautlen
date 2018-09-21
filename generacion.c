@@ -34,13 +34,7 @@ tipo puede ser ENTERO o BOOLEANO (observa la declaración de las constantes del 
 Esta misma función se invocará cuando en el compilador se declaren vectores, por eso se adjunta un argumento final (tamano) que para esta primera práctica siempre recibirá el valor 1.
 */
 void declarar_variable(FILE* fpasm, char * nombre,  int tipo,  int tamano){
-
-  if(tipo == BOOLEANO){
-   // fprintf(fpasm, "\t _%s ",nombre);
-
-  }else{
-    fprintf(fpasm, "\t_%s resd %d\n",nombre,tamano);
-  }
+    fprintf(fpasm, "\t_%s resd %d\n", nombre, tamano);
 }
 
 void escribir_segmento_codigo(FILE* fpasm){
@@ -257,7 +251,7 @@ void cambiar_signo(FILE* fpasm, int es_variable){
  * en clase o en un correo.
  */
 void no(FILE* fpasm, int es_variable, int cuantos_no){
-
+  
   fprintf(fpasm, "\tpop eax\n");  //Popeamos el elemento para después poner el nuevo
 
   if (es_variable)
@@ -280,15 +274,13 @@ void no(FILE* fpasm, int es_variable, int cuantos_no){
 */
 void igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
 
-  fprintf(fpasm, "\tmov eax, [esp]\n");
-  if(es_variable1){
+  fprintf(fpasm, "\tpop dword eax\n");
+  if(es_variable1)
     fprintf(fpasm, "\tmov eax, [eax]\n");
-  }
 
-  fprintf(fpasm, "\tmov ecx, [esp + 4]\n");
-  if(es_variable2){
+  fprintf(fpasm, "\tpop ecx\n");
+  if(es_variable2)
     fprintf(fpasm, "\tmov ecx, [ecx]\n");
-  }
 
   fprintf(fpasm, "\tcmp eax, ecx\n");
   fprintf(fpasm, "\tje true_%d\n", etiqueta);
@@ -302,15 +294,13 @@ void distinto(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
 
   //dependiendo de si son referenciadas o explicitas las variables
 
-  fprintf(fpasm, "\tmov eax, [esp]\n");
-  if(es_variable1){
+  fprintf(fpasm, "\tpop dword eax\n");
+  if(es_variable1)
     fprintf(fpasm, "\tmov eax, [eax]\n");
-  }
 
-  fprintf(fpasm, "\tmov ecx, [esp + 4]\n");
-  if(es_variable2){
+  fprintf(fpasm, "\tpop ecx\n");
+  if(es_variable2)
     fprintf(fpasm, "\tmov ecx, [ecx]\n");
-  } 
 
   fprintf(fpasm, "\tcmp eax, ecx\n");
   fprintf(fpasm, "\tjne true_%d\n", etiqueta);

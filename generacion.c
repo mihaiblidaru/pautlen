@@ -1,6 +1,14 @@
 #include <stdio.h>
 #include "generacion.h"
 
+
+/*
+ *  Expresion regular para borrar todas las lineas de comentarios
+ *  NO BORRAR
+ * 
+ *   ^\s*fprintf\(fpasm, "\\n;->.* 
+ */
+
 /*
  * Esto es solo por si decidimos tener cadenas constantes
  * para tenerlas definidas en un solo sitio y poder cambiarlas rapidamente.
@@ -100,22 +108,20 @@ void asignar(FILE* fpasm, char* nombre, int es_variable){
 void sumar(FILE* fpasm, int es_variable_1, int es_variable_2){
   fprintf(fpasm, "\n;-> Empieza sumar\n");
 
-  fprintf(fpasm, "\tmov ebx, [esp + 4]\n");
+  fprintf(fpasm, "\tpop dword eax\n");
+
+  if(es_variable_2){
+    fprintf(fpasm, "\tmov eax, [eax]\n");
+  }
+
+  fprintf(fpasm, "\tpop dword ebx\n");
 
   if(es_variable_1){
-    fprintf(fpasm, "\tmov ebx, [eax]\n");
+    fprintf(fpasm, "\tmov ebx, [ebx]\n");
   }
+  fprintf(fpasm, "\tadd eax, ebx\n");
 
-  if(es_variable_2) {
-    fprintf(fpasm, "\tmov edx, [esp]\n");
-    fprintf(fpasm, "\tmov edx, [ecx]\n");
-    fprintf(fpasm, "\tadd ebx, edx\n");
-  } else {
-    fprintf(fpasm, "\tadd ebx, [esp]\n");
-
-  }
-
-  fprintf(fpasm, "\tpush ebx\n");
+  fprintf(fpasm, "\tpush eax\n");
 }
 
 /* FUNCIONES ARITMÉTICO-LÓGICAS BINARIAS */
@@ -441,14 +447,18 @@ void leer(FILE* fpasm, char* nombre, int tipo){
 void escribir(FILE* fpasm, int es_variable, int tipo){
   fprintf(fpasm, "\n;-> Empieza escribir\n");
   
-  if(tipo){
-    fprintf(fpasm, "\tpush dword %d\n", es_variable);
+  if(es_variable){
+      fprintf(fpasm, "\tpop dword eax\n");
+      fprintf(fpasm, "\tmov eax, [eax]\n");
+      fprintf(fpasm, "\tpush dword eax\n");
+  }
+
+  if(tipo == BOOLEANO){
     fprintf(fpasm, "\tcall print_boolean\n");
-    fprintf(fpasm, "\tadd esp, 4\n");
-  }
-  else{
-  fprintf(fpasm, "\tpush dword %d\n", es_variable);
+  } else {
     fprintf(fpasm, "\tcall print_int\n");
-    fprintf(fpasm, "\tadd esp, 4\n"); 
   }
+  fprintf(fpasm, "\tcall print_endofline\n");
+  
+  fprintf(fpasm, "\tadd esp, 4\n"); 
 }

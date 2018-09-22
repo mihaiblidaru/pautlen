@@ -41,7 +41,7 @@ void escribir_segmento_codigo(FILE* fpasm){
   fprintf(fpasm, "segment .text\n");
   fprintf(fpasm, "\tglobal main\n");
   fprintf(fpasm, "\textern scan_int, scan_boolean, print_int, print_boolean, print_blank, print_endofline, print_string\n");
-  
+
 }
 
 /*
@@ -59,8 +59,8 @@ void escribir_fin(FILE* fpasm){
   fprintf(fpasm, "\n;-> Empieza fin\n");
   //fprintf(fpasm, "\tcmp tmsg_error_div_0, 1H\n"); //Miramos si la flag de division entre 0 esta activada
   //fprintf(fpasm, "\tje errdivzero\n");  //Saltamos al tratamiento del error
-  
-  
+
+
   fprintf(fpasm, "fin:\n");
   fprintf(fpasm, "\tmov esp, [__esp]\n"); //Devolvemos el puntero a pila a su sitio inicial
   fprintf(fpasm, "\tret\n");  //Retorno de la función
@@ -99,20 +99,22 @@ void asignar(FILE* fpasm, char* nombre, int es_variable){
 
 void sumar(FILE* fpasm, int es_variable_1, int es_variable_2){
   fprintf(fpasm, "\n;-> Empieza sumar\n");
-  fprintf(fpasm, "\tmov ebx, [esp + 4]\n");  
-  
-  if(es_variable_1){    
-    fprintf(fpasm, "\tmov ebx, [eax]\n"); 
+
+  fprintf(fpasm, "\tmov ebx, [esp + 4]\n");
+
+  if(es_variable_1){
+    fprintf(fpasm, "\tmov ebx, [eax]\n");
   }
-  
-  if(es_variable_2) { 
-    fprintf(fpasm, "\tmov edx, [esp]\n"); 
-    fprintf(fpasm, "\tmov edx, [ecx]\n"); 
-    fprintf(fpasm, "\tadd ebx, edx\n"); 
-  } else { 
-    fprintf(fpasm, "\tadd ebx, [esp]\n"); 
-  } 
-  
+
+  if(es_variable_2) {
+    fprintf(fpasm, "\tmov edx, [esp]\n");
+    fprintf(fpasm, "\tmov edx, [ecx]\n");
+    fprintf(fpasm, "\tadd ebx, edx\n");
+  } else {
+    fprintf(fpasm, "\tadd ebx, [esp]\n");
+
+  }
+
   fprintf(fpasm, "\tpush ebx\n");
 }
 
@@ -135,7 +137,7 @@ void restar(FILE* fpasm, int es_variable_1, int es_variable_2){
     fprintf(fpasm, "\tmov ecx, [ecx]\n");
 
   fprintf(fpasm, "\tpop eax\n");
-  
+
   if(es_variable_2)
     fprintf(fpasm, "\tmov eax, [eax]\n");
 
@@ -159,12 +161,12 @@ void restar(FILE* fpasm, int es_variable_1, int es_variable_2){
 void multiplicar(FILE* fpasm, int es_variable_1, int es_variable_2){  /*DUDA*/
   fprintf(fpasm, "\n;-> Empieza multiplicar\n");
 
-  fprintf(fpasm, "\tmov eax, [esp]\n"); //Primer operando
+  fprintf(fpasm, "\tpop dword eax\n"); //Primer operando
 
   if (es_variable_1)
     fprintf(fpasm, "\tmov eax, [eax]\n"); //Cogemos el contenido si es una viable
 
-  fprintf(fpasm, "\tmov ecx, [esp + 4]\n"); //Segundo operando
+  fprintf(fpasm, "\tpop dword ecx\n"); //Segundo operando
 
   if (es_variable_2)
     fprintf(fpasm, "\tmov ecx, [ecx]\n"); //Cogemos el contenido si es una viable
@@ -198,7 +200,7 @@ void o(FILE* fpasm, int es_variable_1, int es_variable_2){
   fprintf(fpasm, "\n;-> Empieza o\n");
 
   fprintf(fpasm, "\tmov eax, [esp + 4]\n");
-  
+
   if(es_variable_1)
     fprintf(fpasm, "\tmov eax, [eax]\n");
 
@@ -216,20 +218,21 @@ void o(FILE* fpasm, int es_variable_1, int es_variable_2){
 
 void y(FILE* fpasm, int es_variable_1, int es_variable_2){
   fprintf(fpasm, "\n;-> Empieza y\n");
-  fprintf(fpasm, "\tmov eax, [esp + 4]\n");  
-  
-  if(es_variable_1){  
-    fprintf(fpasm, "\tmov eax, [eax]\n"); 
+
+  fprintf(fpasm, "\tmov eax, [esp + 4]\n");
+
+  if(es_variable_1){
+    fprintf(fpasm, "\tmov eax, [eax]\n");
   }
-  
-  if(es_variable_2) { 
-    fprintf(fpasm, "\tmov ecx, [esp]\n"); 
-    fprintf(fpasm, "\tmov ecx, [ecx]\n"); 
-    fprintf(fpasm, "\tand eax, ecx\n"); 
-  } else { 
-    fprintf(fpasm, "\tand eax, [esp]\n"); 
-  } 
-  
+
+  if(es_variable_2) {
+    fprintf(fpasm, "\tmov ecx, [esp]\n");
+    fprintf(fpasm, "\tmov ecx, [ecx]\n");
+    fprintf(fpasm, "\tand eax, ecx\n");
+  } else {
+    fprintf(fpasm, "\tand eax, [esp]\n");
+  }
+
   fprintf(fpasm, "\tpush eax\n");
 }
 
@@ -263,8 +266,8 @@ void cambiar_signo(FILE* fpasm, int es_variable){
  */
 void no(FILE* fpasm, int es_variable, int cuantos_no){
   fprintf(fpasm, "\n;-> Empieza no\n");
-  
-  fprintf(fpasm, "\tpop eax\n");  //Popeamos el elemento para después poner el nuevo
+
+  fprintf(fpasm, "\tpop dword eax\n");  //Popeamos el elemento para después poner el nuevo
 
   if (es_variable)
     fprintf(fpasm, "\tmov eax, [eax]\n"); //Cogemos el contenido si es una viable
@@ -331,7 +334,7 @@ void menor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
   if(es_variable1){
   fprintf(fpasm, "\tmov ebx, [ebx]\n");
   }
-  
+
   if(es_variable2){
     fprintf(fpasm, "\tmov edx, [esp]\n");
     fprintf(fpasm, "\tmov edx, [ecx]\n");
@@ -340,7 +343,7 @@ void menor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
     fprintf(fpasm, "\tcmp ebx, [esp]\n");
   }
 
-  
+
   fprintf(fpasm, "\tjle true_%d\n", etiqueta);
   fprintf(fpasm, "\tjmp false_%d\n", etiqueta);
   fprintf(fpasm, "true_%d: push dword 1\n", etiqueta);
@@ -360,7 +363,7 @@ void mayor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
 
   if(es_variable1)
     fprintf(fpasm, "\tmov ecx, [ecx]\n");
-  
+
   fprintf(fpasm, "\tpop eax\n");
   if(es_variable2)
     fprintf(fpasm, "\tmov eax, [eax]\n");
@@ -375,15 +378,16 @@ void mayor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
 
 void menor(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
   fprintf(fpasm, "\n;-> Empieza menor\n");
-  fprintf(fpasm, "\tmov eax, [esp + 4]\n"); //Operador de la izquierda
+
+  fprintf(fpasm, "\tpop dword edx\n"); //Operador de la derecha
 
   if (es_variable1)
-    fprintf(fpasm, "\tmov eax, [eax]\n"); //Cogemos el contenido si es una viable
+    fprintf(fpasm, "\tmov edx, [edx]\n"); //Cogemos el contenido si es una viable
 
-  fprintf(fpasm, "\tmov edx, [esp]\n"); //Operador de la derecha
+  fprintf(fpasm, "\tpop dword eax\n"); //Operador de la izquierda
 
   if (es_variable2)
-    fprintf(fpasm, "\tmov edx, [ecx]\n"); //Cogemos el contenido si es una viable
+    fprintf(fpasm, "\tmov eax, [eax]\n"); //Cogemos el contenido si es una viable
 
   fprintf(fpasm, "\tcmp eax, edx\n"); //Comparamos los dos registros
   fprintf(fpasm, "\tjl true_%d\n", etiqueta); //Saltamos si eax es menor que edx

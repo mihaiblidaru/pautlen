@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -g -O0 -m32
-LDFLAGS = -m32
+LDFLAGS = -m32 -g
 LDLIBS = 
 AS = nasm
 ASFLAGS = -g -f elf32
@@ -28,4 +28,4 @@ clean:
 	rm -f ej1 ej2 ej3 ej4 programa1 programa2 programa3 programa4 *.asm
 
 #para que conserve los archivos asm despues de la compilacion
-.SECONDARY: programa1.asm programa2.asm programa4.asm programa3.asm
+.SECONDARY: programa1.asm programa2.asm programa4.asm programa3.asm 

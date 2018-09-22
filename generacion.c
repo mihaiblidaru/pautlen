@@ -34,7 +34,7 @@ tipo puede ser ENTERO o BOOLEANO (observa la declaración de las constantes del 
 Esta misma función se invocará cuando en el compilador se declaren vectores, por eso se adjunta un argumento final (tamano) que para esta primera práctica siempre recibirá el valor 1.
 */
 void declarar_variable(FILE* fpasm, char * nombre,  int tipo,  int tamano){
-    fprintf(fpasm, "\t_%s resd %d\n", nombre, tamano);
+  fprintf(fpasm, "\t_%s resd %d\n", nombre, tamano);
 }
 
 void escribir_segmento_codigo(FILE* fpasm){
@@ -49,12 +49,14 @@ void escribir_segmento_codigo(FILE* fpasm){
    que guarda el puntero de pila en su variable (se recomienda usar __esp).
 */
 void escribir_inicio_main(FILE* fpasm){
+    fprintf(fpasm, "\n;-> Empieza inicio_main\n");
     fprintf(fpasm, "main:\n");
     fprintf(fpasm, "\tmov [__esp], esp\n");
 }
 
 
 void escribir_fin(FILE* fpasm){
+  fprintf(fpasm, "\n;-> Empieza fin\n");
   //fprintf(fpasm, "\tcmp tmsg_error_div_0, 1H\n"); //Miramos si la flag de division entre 0 esta activada
   //fprintf(fpasm, "\tje errdivzero\n");  //Saltamos al tratamiento del error
   
@@ -74,6 +76,7 @@ con un 0. Recuerda que en el primer caso internamente se representará como _b1 
 en el segundo se representará tal y como esté en el argumento (34).
 */
 void escribir_operando(FILE* fpasm, char* nombre, int es_variable){
+  fprintf(fpasm, "\n;-> Empieza escribir_operando\n");
   if(es_variable){
     fprintf(fpasm, "\tpush dword _%s\n", nombre);
   }else{
@@ -83,6 +86,7 @@ void escribir_operando(FILE* fpasm, char* nombre, int es_variable){
 
 
 void asignar(FILE* fpasm, char* nombre, int es_variable){
+  fprintf(fpasm, "\n;-> Empieza asignar\n");
 
   if(es_variable){
     fprintf(fpasm, "\tpop dword _%s\n", nombre);
@@ -94,6 +98,7 @@ void asignar(FILE* fpasm, char* nombre, int es_variable){
 
 
 void sumar(FILE* fpasm, int es_variable_1, int es_variable_2){
+  fprintf(fpasm, "\n;-> Empieza sumar\n");
   fprintf(fpasm, "\tmov ebx, [esp + 4]\n");  
   
   if(es_variable_1){    
@@ -123,6 +128,7 @@ Se guarda el resultado en la pila
    (restaurando el puntero de pila en ese caso y comprobando en el retorno que no se produce “Segmentation Fault”)
 */
 void restar(FILE* fpasm, int es_variable_1, int es_variable_2){
+  fprintf(fpasm, "\n;-> Empieza restar\n");
   fprintf(fpasm, "\tpop ecx\n");
 
   if(es_variable_1)
@@ -151,6 +157,7 @@ void restar(FILE* fpasm, int es_variable_1, int es_variable_2){
  * cuando no es un puntero.
  */
 void multiplicar(FILE* fpasm, int es_variable_1, int es_variable_2){  /*DUDA*/
+  fprintf(fpasm, "\n;-> Empieza multiplicar\n");
 
   fprintf(fpasm, "\tmov eax, [esp]\n"); //Primer operando
 
@@ -168,6 +175,7 @@ void multiplicar(FILE* fpasm, int es_variable_1, int es_variable_2){  /*DUDA*/
 
 
 void dividir(FILE* fpasm, int es_variable_1, int es_variable_2){
+  fprintf(fpasm, "\n;-> Empieza dividir\n");
 
   fprintf(fpasm, "\tpop dword ecx\n");  //divisor
   if (es_variable_1){
@@ -187,6 +195,7 @@ void dividir(FILE* fpasm, int es_variable_1, int es_variable_2){
 
 
 void o(FILE* fpasm, int es_variable_1, int es_variable_2){
+  fprintf(fpasm, "\n;-> Empieza o\n");
 
   fprintf(fpasm, "\tmov eax, [esp + 4]\n");
   
@@ -206,6 +215,7 @@ void o(FILE* fpasm, int es_variable_1, int es_variable_2){
 
 
 void y(FILE* fpasm, int es_variable_1, int es_variable_2){
+  fprintf(fpasm, "\n;-> Empieza y\n");
   fprintf(fpasm, "\tmov eax, [esp + 4]\n");  
   
   if(es_variable_1){  
@@ -228,6 +238,7 @@ void y(FILE* fpasm, int es_variable_1, int es_variable_2){
    Es análoga a las binarias, excepto que sólo requiere de un acceso a la pila ya que sólo usa un operando.
 */
 void cambiar_signo(FILE* fpasm, int es_variable){
+  fprintf(fpasm, "\n;-> Empieza cambiar_signo\n");
   fprintf(fpasm, "\tpop eax\n");
 
   if(es_variable)
@@ -251,6 +262,7 @@ void cambiar_signo(FILE* fpasm, int es_variable){
  * en clase o en un correo.
  */
 void no(FILE* fpasm, int es_variable, int cuantos_no){
+  fprintf(fpasm, "\n;-> Empieza no\n");
   
   fprintf(fpasm, "\tpop eax\n");  //Popeamos el elemento para después poner el nuevo
 
@@ -273,6 +285,7 @@ void no(FILE* fpasm, int es_variable, int cuantos_no){
      Se deben usar etiquetas para poder gestionar los saltos necesarios para implementar las comparaciones.
 */
 void igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
+  fprintf(fpasm, "\n;-> Empieza igual\n");
 
   fprintf(fpasm, "\tpop dword eax\n");
   if(es_variable1)
@@ -291,6 +304,7 @@ void igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
 
 
 void distinto(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
+  fprintf(fpasm, "\n;-> Empieza distinto\n");
 
   //dependiendo de si son referenciadas o explicitas las variables
 
@@ -311,6 +325,7 @@ void distinto(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
 
 
 void menor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
+  fprintf(fpasm, "\n;-> Empieza menor_igual\n");
   fprintf(fpasm, "\tmov ebx, [esp + 4]\n");
 
   if(es_variable1){
@@ -340,6 +355,7 @@ void menor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
    gestionar los saltos necesarios para implementar las comparaciones.
 */
 void mayor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
+  fprintf(fpasm, "\n;-> Empieza mayor_igual\n");
   fprintf(fpasm, "\tpop ecx\n");
 
   if(es_variable1)
@@ -358,6 +374,7 @@ void mayor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
 
 
 void menor(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
+  fprintf(fpasm, "\n;-> Empieza menor\n");
   fprintf(fpasm, "\tmov eax, [esp + 4]\n"); //Operador de la izquierda
 
   if (es_variable1)
@@ -379,6 +396,7 @@ void menor(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
 
 
 void mayor(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
+  fprintf(fpasm, "\n;-> Empieza mayor\n");
 
   fprintf(fpasm, "\tmov eax, [esp + 4]\n"); /*Operador de la izquierda*/
   if (es_variable1){
@@ -399,6 +417,7 @@ void mayor(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
 
 
 void leer(FILE* fpasm, char* nombre, int tipo){
+  fprintf(fpasm, "\n;-> Empieza leer\n");
 
   if(tipo){
     //pasamos argumento por pila, llamamos y limpiamos la pila
@@ -416,15 +435,16 @@ void leer(FILE* fpasm, char* nombre, int tipo){
 
 
 void escribir(FILE* fpasm, int es_variable, int tipo){
+  fprintf(fpasm, "\n;-> Empieza escribir\n");
   
   if(tipo){
     fprintf(fpasm, "\tpush dword %d\n", es_variable);
-    fprintf(fpasm, "\tcall scan_boolean\n");
+    fprintf(fpasm, "\tcall print_boolean\n");
     fprintf(fpasm, "\tadd esp, 4\n");
   }
   else{
   fprintf(fpasm, "\tpush dword %d\n", es_variable);
-    fprintf(fpasm, "\tcall scan_int\n");
+    fprintf(fpasm, "\tcall print_int\n");
     fprintf(fpasm, "\tadd esp, 4\n"); 
   }
 }

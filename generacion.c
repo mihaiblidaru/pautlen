@@ -139,12 +139,12 @@ void restar(FILE* fpasm, int es_variable_1, int es_variable_2){
   fprintf(fpasm, "\n;-> Empieza restar\n");
   fprintf(fpasm, "\tpop ecx\n");
 
-  if(es_variable_1)
+  if(es_variable_2)
     fprintf(fpasm, "\tmov ecx, [ecx]\n");
 
   fprintf(fpasm, "\tpop eax\n");
 
-  if(es_variable_2)
+  if(es_variable_1)
     fprintf(fpasm, "\tmov eax, [eax]\n");
 
   fprintf(fpasm, "\tsub eax, ecx\n");
@@ -365,20 +365,22 @@ void menor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
 */
 void mayor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
   fprintf(fpasm, "\n;-> Empieza mayor_igual\n");
+
   fprintf(fpasm, "\tpop ecx\n");
 
-  if(es_variable1)
+  if(es_variable2)
     fprintf(fpasm, "\tmov ecx, [ecx]\n");
 
   fprintf(fpasm, "\tpop eax\n");
-  if(es_variable2)
+  if(es_variable1)
     fprintf(fpasm, "\tmov eax, [eax]\n");
 
   fprintf(fpasm, "\tcmp eax, ecx\n");
-  fprintf(fpasm, "\tjae true_%d\n", etiqueta);
-  fprintf(fpasm, "\tjmp false_%d\n", etiqueta);
-  fprintf(fpasm, "true_%d: push dword 1\n", etiqueta);
-  fprintf(fpasm, "false_%d: push dword 0\n", etiqueta);
+  fprintf(fpasm, "\tjge jge_true_%d\n", etiqueta);
+  fprintf(fpasm, "\tpush dword 0\n");
+  fprintf(fpasm, "\tjmp skip_jge%d\n", etiqueta);
+  fprintf(fpasm, "jge_true_%d:\n\tpush dword 1\n", etiqueta);
+  fprintf(fpasm, "skip_jge%d:\n", etiqueta);
 }
 
 

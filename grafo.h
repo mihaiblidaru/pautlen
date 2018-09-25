@@ -22,7 +22,7 @@ typedef struct NodoGrafo {
 } NodoGrafo;
 
 typedef struct Grafo {
-	NodoGrafo *raiz;        //Puntero al nodo raiz o array de raices (DECISION DE IMPLEMENTACION).
+	//NodoGrafo *raiz;        //Puntero al nodo raiz o array de raices (DECISION DE IMPLEMENTACION).
     NodoGrafo *listaNodos;  //Lista de nodos
 } Grafo;
 

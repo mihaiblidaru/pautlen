@@ -5,8 +5,8 @@
 /*
  *  Expresion regular para borrar todas las lineas de comentarios
  *  NO BORRAR
- * 
- *   ^\s*fprintf\(fpasm, "\\n;->.* 
+ *
+ *   ^\s*fprintf\(fpasm, "\\n;->.*
  */
 
 /*
@@ -70,7 +70,7 @@ void escribir_fin(FILE* fpasm){
 
 
   fprintf(fpasm, "fin:\n");
-  fprintf(fpasm, "\tmov esp, [__esp]\n"); //Devolvemos el puntero a pila a su sitio inicial
+  fprintf(fpasm, "\tmov dword esp, [__esp]\n"); //Devolvemos el puntero a pila a su sitio inicial
   fprintf(fpasm, "\tret\n");  //Retorno de la función
 
 }
@@ -448,7 +448,7 @@ void leer(FILE* fpasm, char* nombre, int tipo){
 
 void escribir(FILE* fpasm, int es_variable, int tipo){
   fprintf(fpasm, "\n;-> Empieza escribir\n");
-  
+
   if(es_variable){
       fprintf(fpasm, "\tpop dword eax\n");
       fprintf(fpasm, "\tmov eax, [eax]\n");
@@ -461,6 +461,6 @@ void escribir(FILE* fpasm, int es_variable, int tipo){
     fprintf(fpasm, "\tcall print_int\n");
   }
   fprintf(fpasm, "\tcall print_endofline\n");
-  
-  fprintf(fpasm, "\tadd esp, 4\n"); 
+
+  fprintf(fpasm, "\tadd esp, 4\n");
 }

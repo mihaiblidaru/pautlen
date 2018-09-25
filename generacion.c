@@ -65,9 +65,12 @@ void escribir_inicio_main(FILE* fpasm){
 
 void escribir_fin(FILE* fpasm){
   fprintf(fpasm, "\n;-> Empieza fin\n");
-  //fprintf(fpasm, "\tcmp tmsg_error_div_0, 1H\n"); //Miramos si la flag de division entre 0 esta activada
-  //fprintf(fpasm, "\tje errdivzero\n");  //Saltamos al tratamiento del error
-
+  fprintf(fpasm, "\t jmp near fin\n");
+  fprintf(fpasm, "err_div_0: ");
+  fprintf(fpasm, "\tpush dword msg_error_div_0\n");
+  fprintf(fpasm, "\tcall print_string\n");
+  fprintf(fpasm, "\tcall print_endofline\n");
+  fprintf(fpasm, "\tjmp near fin\n");
 
   fprintf(fpasm, "fin:\n");
   fprintf(fpasm, "\tmov dword esp, [__esp]\n"); //Devolvemos el puntero a pila a su sitio inicial
@@ -97,7 +100,9 @@ void asignar(FILE* fpasm, char* nombre, int es_variable){
   fprintf(fpasm, "\n;-> Empieza asignar\n");
 
   if(es_variable){
-    fprintf(fpasm, "\tpop dword _%s\n", nombre);
+    fprintf(fpasm, "\tpop dword eax\n");
+    fprintf(fpasm, "\tmov eax, [eax]");
+    fprintf(fpasm, "\tmov [_%s], eax", nombre);
   }else{
     fprintf(fpasm, "\tpop dword [_%s]\n", nombre);
   }
@@ -121,7 +126,7 @@ void sumar(FILE* fpasm, int es_variable_1, int es_variable_2){
   }
   fprintf(fpasm, "\tadd eax, ebx\n");
 
-  fprintf(fpasm, "\tpush eax\n");
+  fprintf(fpasm, "\tpush dword eax\n");
 }
 
 /* FUNCIONES ARITMÉTICO-LÓGICAS BINARIAS */
@@ -142,13 +147,13 @@ void restar(FILE* fpasm, int es_variable_1, int es_variable_2){
   if(es_variable_2)
     fprintf(fpasm, "\tmov ecx, [ecx]\n");
 
-  fprintf(fpasm, "\tpop eax\n");
+  fprintf(fpasm, "\tpop dword eax\n");
 
   if(es_variable_1)
     fprintf(fpasm, "\tmov eax, [eax]\n");
 
   fprintf(fpasm, "\tsub eax, ecx\n");
-  fprintf(fpasm, "\tpush eax\n");
+  fprintf(fpasm, "\tpush dword eax\n");
 }
 
 
@@ -169,16 +174,16 @@ void multiplicar(FILE* fpasm, int es_variable_1, int es_variable_2){  /*DUDA*/
 
   fprintf(fpasm, "\tpop dword eax\n"); //Primer operando
 
-  if (es_variable_1)
+  if (es_variable_2)
     fprintf(fpasm, "\tmov eax, [eax]\n"); //Cogemos el contenido si es una viable
 
   fprintf(fpasm, "\tpop dword ecx\n"); //Segundo operando
 
-  if (es_variable_2)
+  if (es_variable_1)
     fprintf(fpasm, "\tmov ecx, [ecx]\n"); //Cogemos el contenido si es una viable
 
   fprintf(fpasm, "\timul ecx\n"); //Multiplicamos los dos operandos
-  fprintf(fpasm, "\tpush eax\n"); //Ponemos el resultado en la pila
+  fprintf(fpasm, "\tpush dword eax\n"); //Ponemos el resultado en la pila
 }
 
 
@@ -186,60 +191,59 @@ void dividir(FILE* fpasm, int es_variable_1, int es_variable_2){
   fprintf(fpasm, "\n;-> Empieza dividir\n");
 
   fprintf(fpasm, "\tpop dword ecx\n");  //divisor
-  if (es_variable_1){
+  if (es_variable_2){
     fprintf(fpasm, "\tmov ecx, [ecx]\n");
   }
   fprintf(fpasm, "\tcmp ecx, 0\n");
-  fprintf(fpasm, "\tje errdivzero\n"); //caso division por 0
+  fprintf(fpasm, "\tje err_div_0\n"); //caso division por 0
   fprintf(fpasm, "\tpop dword eax\n"); //dividendo
-  if (es_variable_2)
+  if (es_variable_1)
     fprintf(fpasm, "\tmov eax, [eax]\n");
 
   fprintf(fpasm, "\tcdq\n"); //extensión en signo del dividendo
 
   fprintf(fpasm, "\tidiv ecx\n");
-  fprintf(fpasm, "\tpush eax\n"); //resultado de la division está en eax
+  fprintf(fpasm, "\tpush dword eax\n"); //resultado de la division está en eax
 }
 
 
 void o(FILE* fpasm, int es_variable_1, int es_variable_2){
   fprintf(fpasm, "\n;-> Empieza o\n");
 
-  fprintf(fpasm, "\tmov eax, [esp + 4]\n");
+  fprintf(fpasm, "\tpop dword eax\n");
 
-  if(es_variable_1)
+  if(es_variable_2)
     fprintf(fpasm, "\tmov eax, [eax]\n");
 
-  if(es_variable_2) {
-    fprintf(fpasm, "\tmov ecx, [esp]\n");
-    fprintf(fpasm, "\tmov ecx, [ecx]\n");
-    fprintf(fpasm, "\tsub eax, ecx\n");
-  } else {
-    fprintf(fpasm, "\tor eax, [esp]\n");
-  }
 
-  fprintf(fpasm, "\tpush eax\n");
+  fprintf(fpasm, "\tpop dword ecx\n");
+
+  if(es_variable_1)
+    fprintf(fpasm, "\tmov ecx, [ecx]\n");
+
+  fprintf(fpasm, "\tor eax, ecx\n");
+
+  fprintf(fpasm, "\tpush dword eax\n");
 }
 
 
 void y(FILE* fpasm, int es_variable_1, int es_variable_2){
   fprintf(fpasm, "\n;-> Empieza y\n");
 
-  fprintf(fpasm, "\tmov eax, [esp + 4]\n");
+  fprintf(fpasm, "\tpop dword eax\n");
 
-  if(es_variable_1){
+  if(es_variable_2)
     fprintf(fpasm, "\tmov eax, [eax]\n");
-  }
 
-  if(es_variable_2) {
-    fprintf(fpasm, "\tmov ecx, [esp]\n");
+
+  fprintf(fpasm, "\tpop dword ecx\n");
+
+  if(es_variable_1)
     fprintf(fpasm, "\tmov ecx, [ecx]\n");
-    fprintf(fpasm, "\tand eax, ecx\n");
-  } else {
-    fprintf(fpasm, "\tand eax, [esp]\n");
-  }
 
-  fprintf(fpasm, "\tpush eax\n");
+  fprintf(fpasm, "\tand eax, ecx\n");
+
+  fprintf(fpasm, "\tpush dword eax\n");
 }
 
 /*
@@ -248,28 +252,17 @@ void y(FILE* fpasm, int es_variable_1, int es_variable_2){
 */
 void cambiar_signo(FILE* fpasm, int es_variable){
   fprintf(fpasm, "\n;-> Empieza cambiar_signo\n");
-  fprintf(fpasm, "\tpop eax\n");
+  fprintf(fpasm, "\tpop dword eax\n");
 
   if(es_variable)
     fprintf(fpasm, "\tmov eax, [eax]\n");
 
   fprintf(fpasm, "\tneg eax\n");
-  fprintf(fpasm, "\tpush eax\n");
+  fprintf(fpasm, "\tpush dword eax\n");
 
 }
 
-/*
- * Esta está mal. Basicamente tiene varias cosas mal:
- *
- * 1. Usas registros de solo 16 bits(aka ax).
- * 2. La instruccion NOT hace el complemento a 1, no la negacion descrita en el enunciado:
- *       Si en la pila lo que se niega es un 0 = 0x00000000 la idea
- *       es que pase a valer 1 = 0x00000001 pero usando NOT el resultado
- *       es 0xFFFFFFFF.
- * 3. el argumentos cuantos_no no se para que sirve, pero estoy bastante
- * seguro de que no significa cuantas veces negar una cosa. Esto mejor se lo preguntamos
- * en clase o en un correo.
- */
+
 void no(FILE* fpasm, int es_variable, int cuantos_no){
   fprintf(fpasm, "\n;-> Empieza no\n");
 
@@ -278,11 +271,11 @@ void no(FILE* fpasm, int es_variable, int cuantos_no){
   if (es_variable)
     fprintf(fpasm, "\tmov eax, [eax]\n"); //Cogemos el contenido si es una viable
 
-  fprintf(fpasm, "\tcmp eax, 1\n");  //Vemos si es un 1
+  fprintf(fpasm, "\tcmp eax, 0\n");  //Vemos si es un 0
   fprintf(fpasm, "\tje neg_%d\n", cuantos_no); //Si lo es saltamos
-  fprintf(fpasm, "\tpush dword 1\n"); //Si no, metes un 1 en la pila
+  fprintf(fpasm, "\tpush dword 0\n"); //Si no, metes un 1 en la pila
   fprintf(fpasm, "\tjmp contNo_%d\n", cuantos_no);  //Saltamos para continuar con el codigo
-  fprintf(fpasm, "neg_%d: push dword 0\n", cuantos_no); //Como era un 1, metemos un 0 en la pila
+  fprintf(fpasm, "neg_%d: push dword 1\n", cuantos_no); //Como era un 1, metemos un 0 en la pila
 
   fprintf(fpasm, "contNo_%d: \n", cuantos_no);  //Ponemos la etiqueta para seguir con el codigo
 }
@@ -296,64 +289,64 @@ void no(FILE* fpasm, int es_variable, int cuantos_no){
 void igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
   fprintf(fpasm, "\n;-> Empieza igual\n");
 
+  fprintf(fpasm, "\tpop ecx\n");
+
+  if(es_variable2)
+    fprintf(fpasm, "\tmov ecx, [ecx]\n");
+
   fprintf(fpasm, "\tpop dword eax\n");
   if(es_variable1)
     fprintf(fpasm, "\tmov eax, [eax]\n");
 
-  fprintf(fpasm, "\tpop ecx\n");
-  if(es_variable2)
-    fprintf(fpasm, "\tmov ecx, [ecx]\n");
-
   fprintf(fpasm, "\tcmp eax, ecx\n");
-  fprintf(fpasm, "\tje true_%d\n", etiqueta);
-  fprintf(fpasm, "\tjmp false_%d\n", etiqueta);
-  fprintf(fpasm, "true_%d: push dword 1\n", etiqueta);
-  fprintf(fpasm, "false_%d: push dword 0\n", etiqueta);
+  fprintf(fpasm, "\tje je_true_%d\n", etiqueta);
+  fprintf(fpasm, "\tpush dword 0\n");
+  fprintf(fpasm, "\tjmp skip_je%d\n", etiqueta);
+  fprintf(fpasm, "je_true_%d:\n\tpush dword 1\n", etiqueta);
+  fprintf(fpasm, "skip_je%d:\n", etiqueta);
 }
 
 
 void distinto(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
   fprintf(fpasm, "\n;-> Empieza distinto\n");
 
-  //dependiendo de si son referenciadas o explicitas las variables
+    fprintf(fpasm, "\tpop ecx\n");
+
+  if(es_variable2)
+    fprintf(fpasm, "\tmov ecx, [ecx]\n");
 
   fprintf(fpasm, "\tpop dword eax\n");
   if(es_variable1)
     fprintf(fpasm, "\tmov eax, [eax]\n");
 
-  fprintf(fpasm, "\tpop ecx\n");
-  if(es_variable2)
-    fprintf(fpasm, "\tmov ecx, [ecx]\n");
-
   fprintf(fpasm, "\tcmp eax, ecx\n");
-  fprintf(fpasm, "\tjne true_%d\n", etiqueta);
-  fprintf(fpasm, "\tjmp false_%d\n", etiqueta);
-  fprintf(fpasm, "true_%d: push dword 1\n", etiqueta);
-  fprintf(fpasm, "false_%d: push dword 0\n", etiqueta);
+  fprintf(fpasm, "\tjne jne_true_%d\n", etiqueta);
+  fprintf(fpasm, "\tpush dword 0\n");
+  fprintf(fpasm, "\tjmp skip_jne%d\n", etiqueta);
+  fprintf(fpasm, "jne_true_%d:\n\tpush dword 1\n", etiqueta);
+  fprintf(fpasm, "skip_jne%d:\n", etiqueta);
 }
 
 
 void menor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
   fprintf(fpasm, "\n;-> Empieza menor_igual\n");
-  fprintf(fpasm, "\tmov ebx, [esp + 4]\n");
 
-  if(es_variable1){
-  fprintf(fpasm, "\tmov ebx, [ebx]\n");
-  }
+    fprintf(fpasm, "\tpop ecx\n");
 
-  if(es_variable2){
-    fprintf(fpasm, "\tmov edx, [esp]\n");
-    fprintf(fpasm, "\tmov edx, [ecx]\n");
-    fprintf(fpasm, "\tcmp ebx, edx\n");
-  }else{
-    fprintf(fpasm, "\tcmp ebx, [esp]\n");
-  }
+  if(es_variable2)
+    fprintf(fpasm, "\tmov ecx, [ecx]\n");
 
+  fprintf(fpasm, "\tpop dword eax\n");
+  if(es_variable1)
+    fprintf(fpasm, "\tmov eax, [eax]\n");
 
-  fprintf(fpasm, "\tjle true_%d\n", etiqueta);
-  fprintf(fpasm, "\tjmp false_%d\n", etiqueta);
-  fprintf(fpasm, "true_%d: push dword 1\n", etiqueta);
-  fprintf(fpasm, "false_%d: push dword 0\n", etiqueta);
+  fprintf(fpasm, "\tcmp eax, ecx\n");
+  fprintf(fpasm, "\tjle jle_true_%d\n", etiqueta);
+  fprintf(fpasm, "\tpush dword 0\n");
+  fprintf(fpasm, "\tjmp skip_jle%d\n", etiqueta);
+  fprintf(fpasm, "jle_true_%d:\n\tpush dword 1\n", etiqueta);
+  fprintf(fpasm, "skip_jle%d:\n", etiqueta);
+
 }
 
 /*
@@ -371,7 +364,7 @@ void mayor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
   if(es_variable2)
     fprintf(fpasm, "\tmov ecx, [ecx]\n");
 
-  fprintf(fpasm, "\tpop eax\n");
+  fprintf(fpasm, "\tpop dword eax\n");
   if(es_variable1)
     fprintf(fpasm, "\tmov eax, [eax]\n");
 
@@ -387,61 +380,54 @@ void mayor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
 void menor(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
   fprintf(fpasm, "\n;-> Empieza menor\n");
 
-  fprintf(fpasm, "\tpop dword edx\n"); //Operador de la derecha
+  fprintf(fpasm, "\tpop ecx\n");
 
-  if (es_variable1)
-    fprintf(fpasm, "\tmov edx, [edx]\n"); //Cogemos el contenido si es una viable
+  if(es_variable2)
+    fprintf(fpasm, "\tmov ecx, [ecx]\n");
 
-  fprintf(fpasm, "\tpop dword eax\n"); //Operador de la izquierda
+  fprintf(fpasm, "\tpop dword eax\n");
+  if(es_variable1)
+    fprintf(fpasm, "\tmov eax, [eax]\n");
 
-  if (es_variable2)
-    fprintf(fpasm, "\tmov eax, [eax]\n"); //Cogemos el contenido si es una viable
-
-  fprintf(fpasm, "\tcmp eax, edx\n"); //Comparamos los dos registros
-  fprintf(fpasm, "\tjl true_%d\n", etiqueta); //Saltamos si eax es menor que edx
-  fprintf(fpasm, "\tpush dword 0\n"); //Metemos un 0 ya que no se cumple
-  fprintf(fpasm, "\tjmp contMenor_%d\n", etiqueta); //Saltamos para continuar con el programa
-  fprintf(fpasm, "true_%d: push dword 1\n", etiqueta);  //Etiqueta donde pondremos el 1 en la pila ya que se cumple
-
-  fprintf(fpasm, "contMenor_%d: \n", etiqueta); //Etiqueta para continuar con el codigo
+  fprintf(fpasm, "\tcmp eax, ecx\n");
+  fprintf(fpasm, "\tjl jl_true_%d\n", etiqueta);
+  fprintf(fpasm, "\tpush dword 0\n");
+  fprintf(fpasm, "\tjmp skip_jl%d\n", etiqueta);
+  fprintf(fpasm, "jl_true_%d:\n\tpush dword 1\n", etiqueta);
+  fprintf(fpasm, "skip_jl%d:\n", etiqueta);
 }
 
 
 void mayor(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
   fprintf(fpasm, "\n;-> Empieza mayor\n");
+    fprintf(fpasm, "\tpop ecx\n");
 
-  fprintf(fpasm, "\tmov eax, [esp + 4]\n"); /*Operador de la izquierda*/
-  if (es_variable1){
-    fprintf(fpasm, "\tmov eax, [eax]\n");
-  }
-
-  fprintf(fpasm, "\tmov ecx, [esp]\n"); /*Operador de la derecha*/
-  if (es_variable2){
+  if(es_variable2)
     fprintf(fpasm, "\tmov ecx, [ecx]\n");
-  }
+
+  fprintf(fpasm, "\tpop dword eax\n");
+  if(es_variable1)
+    fprintf(fpasm, "\tmov eax, [eax]\n");
 
   fprintf(fpasm, "\tcmp eax, ecx\n");
-  fprintf(fpasm, "\tja true_%d\n", etiqueta);
-  fprintf(fpasm, "\tjmp false_%d\n", etiqueta);
-  fprintf(fpasm, "true_%d: push dword 1\n", etiqueta);
-  fprintf(fpasm, "false_%d: push dword 0\n", etiqueta);
+  fprintf(fpasm, "\tjg jg_true_%d\n", etiqueta);
+  fprintf(fpasm, "\tpush dword 0\n");
+  fprintf(fpasm, "\tjmp skip_jg%d\n", etiqueta);
+  fprintf(fpasm, "jg_true_%d:\n\tpush dword 1\n", etiqueta);
+  fprintf(fpasm, "skip_jg%d:\n", etiqueta);
 }
 
 
 void leer(FILE* fpasm, char* nombre, int tipo){
   fprintf(fpasm, "\n;-> Empieza leer\n");
 
-  if(tipo){
-    //pasamos argumento por pila, llamamos y limpiamos la pila
-    //control de errores jump?
-    fprintf(fpasm, "\tpush dword _%s\n", nombre);
+  fprintf(fpasm, "\tpush dword _%s\n", nombre);
+  if(tipo == BOOLEANO){
     fprintf(fpasm, "\tcall scan_boolean\n");
-    fprintf(fpasm, "\tadd esp, 4\n");
   }else{
-    fprintf(fpasm, "\tpush dword _%s\n", nombre);
     fprintf(fpasm, "\tcall scan_int\n");
-    fprintf(fpasm, "\tadd esp, 4\n");
   }
+  fprintf(fpasm, "\tadd esp, 4\n");
 
 }
 

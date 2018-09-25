@@ -100,7 +100,9 @@ void asignar(FILE* fpasm, char* nombre, int es_variable){
   fprintf(fpasm, "\n;-> Empieza asignar\n");
 
   if(es_variable){
-    fprintf(fpasm, "\tpop dword _%s\n", nombre);
+    fprintf(fpasm, "\tpop dword eax\n");
+    fprintf(fpasm, "\tmov eax, [eax]");
+    fprintf(fpasm, "\tmov [_%s], eax", nombre);
   }else{
     fprintf(fpasm, "\tpop dword [_%s]\n", nombre);
   }
@@ -378,7 +380,7 @@ void mayor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
 void menor(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
   fprintf(fpasm, "\n;-> Empieza menor\n");
 
-     fprintf(fpasm, "\tpop ecx\n");
+  fprintf(fpasm, "\tpop ecx\n");
 
   if(es_variable2)
     fprintf(fpasm, "\tmov ecx, [ecx]\n");

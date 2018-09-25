@@ -64,7 +64,7 @@ void escribir_inicio_main(FILE* fpasm){
 
 
 void escribir_fin(FILE* fpasm){
-  fprintf(fpasm, "\n;-> Empieza fin\n");
+  /*fprintf(fpasm, "\n;-> Empieza fin\n");*/
   //fprintf(fpasm, "\tcmp tmsg_error_div_0, 1H\n"); //Miramos si la flag de division entre 0 esta activada
   //fprintf(fpasm, "\tje errdivzero\n");  //Saltamos al tratamiento del error
 

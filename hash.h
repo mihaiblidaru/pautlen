@@ -37,6 +37,27 @@ int eliminarTablaHash(TablaHash *tabla);
 //Funcion auxiliar, se llama dentro de la funcion insertarNodoHash.
 int funcionHash(char *clave);
 
+
+/* String.hashcode de java
+
+http://hg.openjdk.java.net/jdk8/jdk8/jdk/file/687fd7c7986d/src/share/classes/java/lang/String.java
+
+    int funcionHash(char* clave) {
+        int h = 0;
+        if(clave){
+			size_t len = strlen(clave);
+			if(len > 0){
+				for (int i = 0; i < len; i++) {
+                	h = 31 * h + clave[i];
+            	}
+			}	
+		}
+		return h;
+    }
+*/
+
+
+
 //Recibe la clave y la informacion, y devuelve un nuevo NodoHash. Reservara memoria y rellenara la estructura de NodoHash.
 //Funcion auxiliar, se llama dentro de la funcion insertarNodoHash.
 Nodo* crearNodoHash(char *clave, void *info);

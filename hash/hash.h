@@ -17,12 +17,12 @@
 typedef struct NodoHash {
 	char *clave;    //Identificador del nodo.
 	void *info;     //Datos que vayamos a poner en este nodo.
-	Nodo *siguiente;//NULL en caso de que no exista un nodo en colision. El siguiente en caso contrario.
+	struct NodoHash *siguiente; //NULL en caso de que no exista un nodo en colision. El siguiente en caso contrario.
 } NodoHash;
 
 typedef struct TablaHash {
 	int tam;    //Tamaño de la tabla hash.
-	Nodo *nodo; //Puntero al primer elemento de la tabla hash.
+	NodoHash *nodo; //Puntero al primer elemento de la tabla hash.
 } TablaHash;
 
 /**************** FUNCIONES ****************/
@@ -60,14 +60,14 @@ http://hg.openjdk.java.net/jdk8/jdk8/jdk/file/687fd7c7986d/src/share/classes/jav
 
 //Recibe la clave y la informacion, y devuelve un nuevo NodoHash. Reservara memoria y rellenara la estructura de NodoHash.
 //Funcion auxiliar, se llama dentro de la funcion insertarNodoHash.
-Nodo* crearNodoHash(char *clave, void *info);
+NodoHash* crearNodoHash(char *clave, void *info);
 
 //Inserta en la tabla hash un nodo en un indice calculado por funcionHash.
 //Utilizara la funcionHash para saber donde insertar el nuevo elemento y debera crear dentro el nuevo nodo (crearNodoHash).
 //Devuelve OK en caso de que se inserte y ERROR en caso de que no.
 int insertarNodoHash(TablaHash *tabla, char *clave, void *info);
 
-//Busca en la tabla hash el nodo identificado por su clave y lo devuelve. NULL en caso contrario.
-NodoHash* buscarNodoHash(TablaHash *tabla, char *clave);
+//Busca en la tabla hash el nodo identificado por su clave y lo devuelve su info. NULL en caso contrario.
+void* buscarNodoHash(TablaHash *tabla, char *clave);
 
 #endif

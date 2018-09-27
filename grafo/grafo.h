@@ -17,8 +17,8 @@
 typedef struct NodoGrafo {
 	char *nombre;   //Nombre del nodo, sera su identificador.
 	void *info;     //Datos que vayamos a poner en este nodo.
-	NodoGrafo **predecesores;   //Punteros a predecesores del nodo (puede tener varios padres). Direccion NodoGrafo <- Predecesores.
-	NodoGrafo **descendientes;  //Punteros a descendientes del nodo (puede tener varios hijos). Direccion NodoGrafo -> Descendientes.
+	struct NodoGrafo **predecesores;   //Punteros a predecesores del nodo (puede tener varios padres). Direccion NodoGrafo <- Predecesores.
+	struct NodoGrafo **descendientes;  //Punteros a descendientes del nodo (puede tener varios hijos). Direccion NodoGrafo -> Descendientes.
 } NodoGrafo;
 
 typedef struct Grafo {

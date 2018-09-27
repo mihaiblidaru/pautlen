@@ -1,30 +1,10 @@
-/*
- * ADVERTENCIA: Esta librería es solo una guía de ayuda al estudiante.
- *  Es muy posible que haya que modificar las funciones, argumentos y retornos,
- *  así como ampliar su funcionalidad según el diseño implementado
- *  y según avance el proyecto.
- */
-#ifndef GRAFO
-#define GRAFO
-
 #include <stdio.h>
+#include <stdlib.h>
+#include "grafo.h"
 
 /**************** CONSTANTES ****************/
 #define OK 1
 #define ERROR 0
-
-/**************** DECLARACIONES DE TIPOS ****************/
-typedef struct NodoGrafo {
-	char *nombre;   //Nombre del nodo, sera su identificador.
-	void *info;     //Datos que vayamos a poner en este nodo.
-	NodoGrafo **predecesores;   //Punteros a predecesores del nodo (puede tener varios padres). Direccion NodoGrafo <- Predecesores.
-	NodoGrafo **descendientes;  //Punteros a descendientes del nodo (puede tener varios hijos). Direccion NodoGrafo -> Descendientes.
-} NodoGrafo;
-
-typedef struct Grafo {
-	//NodoGrafo *raiz;        //Puntero al nodo raiz o array de raices (DECISION DE IMPLEMENTACION).
-    NodoGrafo *listaNodos;  //Lista de nodos
-} Grafo;
 
 /**************** FUNCIONES ****************/
 //Crea el grafo bidireccional insertando el nodo raiz.
@@ -33,27 +13,29 @@ Grafo* crearGrafo(){
 
 	Grafo* grafo = NULL;
 
-	grafo = calloc(sizeof(Grafo));
+	grafo = calloc(1, sizeof(Grafo));
 	if(!grafo){
 		return NULL;
 	}
 	grafo->listaNodos = NULL;
+
+	return grafo;
 }
 
 //Puede que se necesite una función insertarRaiz...
-insertarRaiz();
+/*insertarRaiz();*/
 
 //Elimina el grafo.
 //Devuelve OK en caso de que se elimine correctamente y ERROR en caso contrario.
 int eliminarGrafo(Grafo* grafo){
 
-    int i =0;
+
 
 	if(!grafo){
     	return ERROR; 
     }
 
-    return;
+    return OK;
 }
 
 //Recibe la clave y la informacion, y devuelve un nuevo NodoGrafo. Reservara memoria y rellenara la estructura NodoGrafo.
@@ -61,14 +43,15 @@ int eliminarGrafo(Grafo* grafo){
 //Funcion auxiliar, se llama dentro de la funcion insertarNodoGrafo.
 NodoGrafo* crearNodoGrafo(char *nombre, void *info, char **padres){
 
-	NodoGrafo *nodo = calloc(sizeof(NodoGrafo));
+	NodoGrafo *nodo = calloc(1, sizeof(NodoGrafo));
 	if(!nodo){
 		return NULL;
 	}
 
+
 	nodo->nombre = nombre;
 	nodo->info = info;
-	nodo->predecesores = padres;
+	/*nodo->predecesores = padres; esto no va*/
 	nodo->descendientes = NULL;
 
 	return nodo;
@@ -86,4 +69,3 @@ int insertarNodoGrafo(Grafo *grafo, NodoGrafo *nodo, char **padres);
 //Devuelve el nodo en caso de que se encuentre y NULL en caso de que no.
 NodoGrafo* buscarNodoAnchura(Grafo *grafo, char *nombre);
 
-#endif

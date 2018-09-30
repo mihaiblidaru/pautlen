@@ -23,29 +23,49 @@ int main(){
     insertarNodoHash(tabla_hash, "clave5", info5);
     insertarNodoHash(tabla_hash, "clave6", info6);
     insertarNodoHash(tabla_hash, "clave7", info7);
-
-    if(strcmp(buscarNodoHash(tabla_hash, "clave1"), info1))
+    if(strcmp(buscarNodoHash(tabla_hash, "clave1"), info1)){
         printf("Fail buscando info con clave1\n");
-
-    if(strcmp(buscarNodoHash(tabla_hash, "clave2"), info2))
+    } else {
+        printf("Clave1: OK\n");
+    }   
+    
+    if(strcmp(buscarNodoHash(tabla_hash, "clave2"), info2)){
         printf("Fail buscando info con clave2\n");
-
-    if(strcmp(buscarNodoHash(tabla_hash, "clave3"), info3))
+    } else {
+        printf("Clave2: OK\n");
+    }   
+    
+    if(strcmp(buscarNodoHash(tabla_hash, "clave3"), info3)){
         printf("Fail buscando info con clave3\n");        
-
-    if(strcmp(buscarNodoHash(tabla_hash, "clave4"), info4))
+    } else {
+        printf("Clave3: OK\n");
+    }   
+    
+    if(strcmp(buscarNodoHash(tabla_hash, "clave4"), info4)){
         printf("Fail buscando info con clave4\n");
-
-    if(strcmp(buscarNodoHash(tabla_hash, "clave5"), info5))
+    } else {
+        printf("Clave4: OK\n");
+    }   
+    
+    if(strcmp(buscarNodoHash(tabla_hash, "clave5"), info5)){
         printf("Fail buscando info con clave5\n");
-
-    if(strcmp(buscarNodoHash(tabla_hash, "clave6"), info6))
+    } else {
+        printf("Clave5: OK\n");
+    }   
+    
+    if(strcmp(buscarNodoHash(tabla_hash, "clave6"), info6)){
         printf("Fail buscando info con clave6\n");
-
-    if(strcmp(buscarNodoHash(tabla_hash, "clave7"), info7))
+    } else {
+        printf("Clave6: OK\n");
+    }   
+    
+    if(strcmp(buscarNodoHash(tabla_hash, "clave7"), info7)){
         printf("Fail buscando info con clave7\n");
+    } else {
+        printf("Clave7: OK\n");
+    }
 
-    eliminarTablaHash(tabla_hash);
+        eliminarTablaHash(tabla_hash);
     
     return 0;
 }

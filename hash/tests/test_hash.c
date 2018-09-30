@@ -6,66 +6,73 @@ int main(){
 
     printf("Empezando test de hash.\n");
 
-    TablaHash* tabla_hash = crearTablaHash(100);
+    TablaHash* tabla_hash = hash_crear(100);
 
-    char info1[] = "info1";
-    char info2[] = "info2";
-    char info3[] = "info3";
-    char info4[] = "info4";
-    char info5[] = "info5";
-    char info6[] = "info6";
-    char info7[] = "info7";
+    char info1[] = "info 1";
+    char info2[] = "info 2";
+    char info3[] = "info 3";
+    char info4[] = "info 4";
+    char info5[] = "info 5";
+    char info6[] = "info 6";
+    char info7[] = "info 7";
 
-    insertarNodoHash(tabla_hash, "clave1", info1);
-    insertarNodoHash(tabla_hash, "clave2", info2);
-    insertarNodoHash(tabla_hash, "clave3", info3);
-    insertarNodoHash(tabla_hash, "clave4", info4);
-    insertarNodoHash(tabla_hash, "clave5", info5);
-    insertarNodoHash(tabla_hash, "clave6", info6);
-    insertarNodoHash(tabla_hash, "clave7", info7);
-    if(strcmp(buscarNodoHash(tabla_hash, "clave1"), info1)){
-        printf("Fail buscando info con clave1\n");
+    tabla_hash->insertar(tabla_hash, "clave 1", info1);
+    tabla_hash->insertar(tabla_hash, "clave 2", info2);
+    tabla_hash->insertar(tabla_hash, "clave 3", info3);
+    tabla_hash->insertar(tabla_hash, "clave 4", info4);
+    tabla_hash->insertar(tabla_hash, "clave 5", info5);
+    tabla_hash->insertar(tabla_hash, "clave 6", info6);
+    tabla_hash->insertar(tabla_hash, "clave 7", info7);
+    
+    if(strcmp(hash_buscar(tabla_hash, "clave 1"), info1)){
+        printf("Fail buscando info con clave 1\n");
     } else {
-        printf("Clave1: OK\n");
+        printf("Clave 1: OK\n");
     }   
     
-    if(strcmp(buscarNodoHash(tabla_hash, "clave2"), info2)){
-        printf("Fail buscando info con clave2\n");
+    if(strcmp(hash_buscar(tabla_hash, "clave 2"), info2)){
+        printf("Fail buscando info con clave 2\n");
     } else {
-        printf("Clave2: OK\n");
+        printf("Clave 2: OK\n");
     }   
     
-    if(strcmp(buscarNodoHash(tabla_hash, "clave3"), info3)){
-        printf("Fail buscando info con clave3\n");        
+    if(strcmp(hash_buscar(tabla_hash, "clave 3"), info3)){
+        printf("Fail buscando info con clave 3\n");        
     } else {
-        printf("Clave3: OK\n");
+        printf("Clave 3: OK\n");
     }   
     
-    if(strcmp(buscarNodoHash(tabla_hash, "clave4"), info4)){
-        printf("Fail buscando info con clave4\n");
+    if(strcmp(hash_buscar(tabla_hash, "clave 4"), info4)){
+        printf("Fail buscando info con clave 4\n");
     } else {
-        printf("Clave4: OK\n");
+        printf("Clave 4: OK\n");
     }   
     
-    if(strcmp(buscarNodoHash(tabla_hash, "clave5"), info5)){
-        printf("Fail buscando info con clave5\n");
+    if(strcmp(hash_buscar(tabla_hash, "clave 5"), info5)){
+        printf("Fail buscando info con clave 5\n");
     } else {
-        printf("Clave5: OK\n");
+        printf("Clave 5: OK\n");
     }   
     
-    if(strcmp(buscarNodoHash(tabla_hash, "clave6"), info6)){
-        printf("Fail buscando info con clave6\n");
+    if(strcmp(hash_buscar(tabla_hash, "clave 6"), info6)){
+        printf("Fail buscando info con clave 6\n");
     } else {
-        printf("Clave6: OK\n");
+        printf("Clave 6: OK\n");
     }   
     
-    if(strcmp(buscarNodoHash(tabla_hash, "clave7"), info7)){
-        printf("Fail buscando info con clave7\n");
+    if(strcmp(hash_buscar(tabla_hash, "clave 7"), info7)){
+        printf("Fail buscando info con clave 7\n");
     } else {
-        printf("Clave7: OK\n");
+        printf("Clave 7: OK\n");
     }
 
-        eliminarTablaHash(tabla_hash);
+    if(tabla_hash->length == 7){
+        printf("Longitud correcta\n");
+    } else {
+        printf("Longitud incorrecta\n");
+    }
+
+    tabla_hash->eliminar(tabla_hash);
     
     return 0;
 }

@@ -21,32 +21,28 @@ typedef struct NodoHash {
 } NodoHash;
 
 typedef struct TablaHash {
-	int tam;    //Tamaño de la tabla hash.
-	NodoHash **nodo; //Puntero al primer elemento de la tabla hash.
+	int tam;
+	NodoHash **nodo;
+	void*(*buscar)(struct TablaHash*, const char*);
+	int(*insertar)(struct TablaHash*, const char*, void*);
+	int(*eliminar)(struct TablaHash*);
+	int length;
 } TablaHash;
 
 /**************** FUNCIONES ****************/
 //Recibe un tamaño y crea una tabla de dicha longitud.
-TablaHash* crearTablaHash(int tam);
+TablaHash* hash_crear(int tam);
 
 //Elimina la tabla Hash.
 //Devuelve OK en caso de que se borre correctamente y ERROR en caso de que no.
-int eliminarTablaHash(TablaHash *tabla);
-
-//Recibe el identificador de un nodo y devuelve su indice para la tabla hash.
-//Funcion auxiliar, se llama dentro de la funcion insertarNodoHash.
-int funcionHash(char *clave);
-
-//Recibe la clave y la informacion, y devuelve un nuevo NodoHash. Reservara memoria y rellenara la estructura de NodoHash.
-//Funcion auxiliar, se llama dentro de la funcion insertarNodoHash.
-NodoHash* crearNodoHash(char *clave, void *info);
+int hash_eliminar(TablaHash *tabla);
 
 //Inserta en la tabla hash un nodo en un indice calculado por funcionHash.
 //Utilizara la funcionHash para saber donde insertar el nuevo elemento y debera crear dentro el nuevo nodo (crearNodoHash).
 //Devuelve OK en caso de que se inserte y ERROR en caso de que no.
-int insertarNodoHash(TablaHash *tabla, char *clave, void *info);
+int hash_insertar(TablaHash *tabla, const char *clave, void *info);
 
 //Busca en la tabla hash el nodo identificado por su clave y lo devuelve. NULL en caso contrario.
-void* buscarNodoHash(TablaHash *tabla, char *clave);
+void* hash_buscar(TablaHash *tabla, const char *clave);
 
 #endif

@@ -19,11 +19,16 @@ typedef struct NodoGrafo {
 	void *info;     //Datos que vayamos a poner en este nodo.
 	struct NodoGrafo **predecesores;   //Punteros a predecesores del nodo (puede tener varios padres). Direccion NodoGrafo <- Predecesores.
 	struct NodoGrafo **descendientes;  //Punteros a descendientes del nodo (puede tener varios hijos). Direccion NodoGrafo -> Descendientes.
+	int numPredecesores;   //añadidos por mi
+	int numDescendientes;  //añadidos por mi
+
 } NodoGrafo;
 
 typedef struct Grafo {
-	//NodoGrafo *raiz;        //Puntero al nodo raiz o array de raices (DECISION DE IMPLEMENTACION).
-    NodoGrafo *listaNodos;  //Lista de nodos
+	NodoGrafo **raiz;        //Puntero al nodo raiz o array de raices (DECISION DE IMPLEMENTACION).
+    NodoGrafo **listaNodos;  //Lista de nodos
+    int nNodos;
+    int nRaices;
 } Grafo;
 
 /**************** FUNCIONES ****************/

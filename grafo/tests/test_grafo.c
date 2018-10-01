@@ -6,6 +6,10 @@ int main(){
 
     Grafo* grafo = crearGrafo();
 
+    printf("Elimino grafo.\n");
+
+    eliminarGrafo(grafo);
+
     
 
 

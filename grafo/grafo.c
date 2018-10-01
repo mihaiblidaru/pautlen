@@ -17,8 +17,6 @@ Grafo* crearGrafo(){
 	if(!grafo){
 		return NULL;
 	}
-	grafo->listaNodos = NULL;
-
 	return grafo;
 }
 
@@ -29,43 +27,86 @@ Grafo* crearGrafo(){
 //Devuelve OK en caso de que se elimine correctamente y ERROR en caso contrario.
 int eliminarGrafo(Grafo* grafo){
 
-
-
 	if(!grafo){
     	return ERROR; 
     }
 
+    for(i=0;i<nNodos;i++){
+    	eliminarNodo(grafo->listaNodos);
+    }
+    free(grafo);
     return OK;
 }
 
-//Recibe la clave y la informacion, y devuelve un nuevo NodoGrafo. Reservara memoria y rellenara la estructura NodoGrafo.
-// PENSAR EL TIPO ADECUADO PARA RECIBIR LA LISTA DE PADRES
-//Funcion auxiliar, se llama dentro de la funcion insertarNodoGrafo.
-NodoGrafo* crearNodoGrafo(char *nombre, void *info, char **padres){
+int eliminarNodo(Nodo * nodo){
 
-	NodoGrafo *nodo = calloc(1, sizeof(NodoGrafo));
-	if(!nodo){
-		return NULL;
+	free(nodo->nombre);
+	free(nodo->info);
+	free(nodo);
+	return OK;
+}
+
+
+int anyadirConexion(Grafo* grafo, char* padre, char* hijo){
+
+	int i = 0;
+	int contador = 0;
+	Nodo* auxPadre;
+	Nodo* auxHijo;
+	for(i=0;i<grafo->listaNodos[i] == NULL || contador< 2; i++){
+		if(strcmp(listaNodos[i]->nombre, padre)){
+			auxPadre = listaNodos[i];
+			int ++;
+		}
+		else if(strcmp(listaNodos[i]->nombre, hijo)){
+			auxHijo = listaNodos[i];
+			int ++;
+		}
 	}
 
+	if(contador != 2){
+		return ERROR;
+	}
 
-	nodo->nombre = nombre;
-	nodo->info = info;
-	/*nodo->predecesores = padres; esto no va*/
-	nodo->descendientes = NULL;
+	//TODO:
+	anyadirPadreAHijo(auxHijo, auxPadre); //aqui se incrementaran numPadres/numHijos
+	anyadirHijoAPadre(auxPadre, auxHijo); //aqui se incrementaran numPadres/numHijos
 
-	return nodo;
+	return OK;
 }
 
 
 
-//Inserta un nodo en el grafo. Para ello debera utilizar la funcion auxiliar crearNodoGrafo.
-// Actualiza toda la relación de padres e hijos.
-// PENSAR EL TIPO ADECUADO PARA RECIBIR LA LISTA DE PADRES
-//Devuelve OK en caso de que se inserte y ERROR en caso de que no.
-int insertarNodoGrafo(Grafo *grafo, NodoGrafo *nodo, char **padres);
+int crearNodoGrafo(Grafo* grafo, char *nombre, void *info){
+
+	if(!nombre || !info){
+		return ERROR;
+	}
+
+	for(i=0;grafo->listaNodos[i] == NULL; i++){
+		if(strcmp(grafo->listaNodos[i].nombre, nombre) == 0){
+			return ERROR;
+		}
+	}
+
+	Nodo* nodo = calloc(1, sizeof(Nodo));
+	if(!nodo){
+		return ERROR;
+	}
+	nodo->nombre = strdup(nombre);
+	nodo->info = info;
+
+
+	grafo->listaNodos[nNodos] =  nodo;
+	nNodos++;
+	return OK;
+}
+
 
 //Busqueda en anchura de un nodo en el grafo identificado por su nombre.
 //Devuelve el nodo en caso de que se encuentre y NULL en caso de que no.
 NodoGrafo* buscarNodoAnchura(Grafo *grafo, char *nombre);
 
+
+
+void printNodo()

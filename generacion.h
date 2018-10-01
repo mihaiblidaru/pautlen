@@ -23,7 +23,7 @@ void escribir_subseccion_data(FILE* fpasm);
    En este punto, al menos, debes ser capaz de detectar la división por 0.
 */
 
-void declarar_variable(FILE* fpasm, char * nombre,  int tipo,  int tamano);
+void declarar_variable(FILE* fpasm, char * nombre, __attribute__((unused)) int tipo,  int tamano);
 /*
    Para ser invocada en la sección .bss cada vez que se quiera declarar una variable:
 El argumento nombre es el de la variable.

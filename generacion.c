@@ -41,7 +41,7 @@ El argumento nombre es el de la variable.
 tipo puede ser ENTERO o BOOLEANO (observa la declaración de las constantes del principio del fichero).
 Esta misma función se invocará cuando en el compilador se declaren vectores, por eso se adjunta un argumento final (tamano) que para esta primera práctica siempre recibirá el valor 1.
 */
-void declarar_variable(FILE* fpasm, char * nombre,  int tipo,  int tamano){
+void declarar_variable(FILE* fpasm, char * nombre, __attribute__((unused)) int tipo,  int tamano){
   fprintf(fpasm, "\t_%s resd %d\n", nombre, tamano);
 }
 

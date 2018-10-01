@@ -17,9 +17,9 @@ typedef struct Lista{
 	size_t(*lenght)(struct Lista*);
 }Lista;
 
-
 Lista* lista_crear();
 
+void* lista_getif(Lista* lista, int(*cmp_funct)(void* o1, void* o2), void* second_arg);
 bool lista_pushfirst(Lista* lista, void* info);
 bool lista_pushlast(Lista* lista, void* info);
 void* lista_popfirst(Lista* lista);

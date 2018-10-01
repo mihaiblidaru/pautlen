@@ -207,3 +207,16 @@ static bool remove_obj(Lista *list, Nodo *obj) {
 
     return true;
 }
+
+
+void* lista_getif(Lista* lista, int(*cmp_funct)(void* o1, void* o2), void* second_arg){
+  Nodo* aux = lista->first;
+
+  while(aux != NULL){
+    if(cmp_funct(aux->info, second_arg) == 0){
+      return aux->info;
+    }
+    aux = aux->next;
+  }
+  return NULL;
+}

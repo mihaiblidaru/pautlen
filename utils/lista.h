@@ -8,25 +8,41 @@ typedef struct _Nodo Nodo;
 typedef struct Lista{
 	Nodo* first;
 	Nodo* last;
-	int __size;
+	int num;
 	void*(*getat)(struct Lista*, int pos);
 	void*(*popfirst)(struct Lista*);
 	void(*free)(struct Lista*);
-	bool(*pushfirst)(struct Lista*, void* info);
-	bool(*pushlast)(struct Lista*, void* info);
+	bool(*pushfirst)(struct Lista *list, void *data);
+	bool(*pushlast)(struct Lista *list, void *data);
 	size_t(*lenght)(struct Lista*);
 }Lista;
 
 Lista* lista_crear();
 
 void* lista_getif(Lista* lista, int(*cmp_funct)(void* o1, void* o2), void* second_arg);
-bool lista_pushfirst(Lista* lista, void* info);
-bool lista_pushlast(Lista* lista, void* info);
-void* lista_popfirst(Lista* lista);
-void* lista_getat(Lista* lista, int pos);
-void lista_free(Lista* lista);
-size_t lista_length(Lista* lista);
+bool lista_pushfirst(Lista *list, void *data);
+bool lista_pushlast(Lista *list, void *data);
+bool lista_addat(Lista *list, int index, void *data);
 
+void *lista_getfirst(Lista *list);
+void *lista_getlast(Lista *list);
+void *lista_getat(Lista *list, int index);
+
+void *lista_popfirst(Lista *list);
+void *lista_poplast(Lista *list);
+void *lista_popat(Lista *list, int index);
+
+bool lista_removefirst(Lista *list);
+bool lista_removelast(Lista *list);
+bool lista_removeat(Lista *list, int index);
+
+bool lista_getnext(Lista *list, Nodo *obj);
+
+size_t lista_length(Lista *list);
+
+void lista_reverse(Lista *list);
+void lista_clear(Lista *list);
+void lista_free(Lista *list);
 
 
 

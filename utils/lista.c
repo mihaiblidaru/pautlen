@@ -11,6 +11,7 @@ Lista* lista_crear(){
   list->pushlast = lista_pushlast;
   list->popfirst = lista_popfirst;
   list->free = lista_free;
+  list->getat = lista_getat;
   
   return list;
 }

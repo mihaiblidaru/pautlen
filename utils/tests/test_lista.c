@@ -15,6 +15,10 @@ int main(){
 
 
     lista_pushfirst(lista, test3);
+    
+    char* otro1 = lista->getat(lista, 0);
+    printf("%s otro1\n", strcmp(otro1, test3) ? "Fail":"OK");
+
     lista_pushfirst(lista, test2);
     lista_pushfirst(lista, test1);
         

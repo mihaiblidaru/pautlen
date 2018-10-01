@@ -29,12 +29,12 @@ Grafo* crearGrafo(){
 //Devuelve OK en caso de que se elimine correctamente y ERROR en caso contrario.
 int eliminarGrafo(Grafo* grafo){
 
-
-
 	if(!grafo){
     	return ERROR; 
     }
 
+    free(grafo->listaNodos);
+    free(grafo);
     return OK;
 }
 
@@ -63,9 +63,15 @@ NodoGrafo* crearNodoGrafo(char *nombre, void *info, char **padres){
 // Actualiza toda la relación de padres e hijos.
 // PENSAR EL TIPO ADECUADO PARA RECIBIR LA LISTA DE PADRES
 //Devuelve OK en caso de que se inserte y ERROR en caso de que no.
-int insertarNodoGrafo(Grafo *grafo, NodoGrafo *nodo, char **padres);
+int insertarNodoGrafo(Grafo *grafo, NodoGrafo *nodo, char **padres){
+
+	
+}
 
 //Busqueda en anchura de un nodo en el grafo identificado por su nombre.
 //Devuelve el nodo en caso de que se encuentre y NULL en caso de que no.
 NodoGrafo* buscarNodoAnchura(Grafo *grafo, char *nombre);
 
+
+
+void printNodo()

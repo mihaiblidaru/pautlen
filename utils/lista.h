@@ -11,6 +11,7 @@ typedef struct Lista{
 	int num;
 	void*(*getat)(struct Lista*, int pos);
 	void*(*popfirst)(struct Lista*);
+	void*(*poplast)(struct Lista*);
 	void(*free)(struct Lista*);
 	bool(*pushfirst)(struct Lista *list, void *data);
 	bool(*pushlast)(struct Lista *list, void *data);
@@ -43,8 +44,6 @@ size_t lista_length(Lista *list);
 void lista_reverse(Lista *list);
 void lista_clear(Lista *list);
 void lista_free(Lista *list);
-
-
 
 
 

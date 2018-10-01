@@ -2,7 +2,19 @@
 #include <stdlib.h>
 #include <string.h>
 #include "lista.h"
+#include <stdbool.h>
 
+struct _Nodo{
+	void* info;
+	Nodo* next;
+	Nodo* prev;
+};
+
+Nodo *get_nodo(Lista *lista, int index);
+bool lista_addat(Lista* lista, int index, void *info);
+static bool remove_obj(Lista *list, Nodo *obj);
+static void *get_at(Lista *lista, int index, bool remove);
+void *lista_popat(Lista *lista, int index);
 
 Lista* lista_crear(){
   Lista* list = calloc(1, sizeof(Lista));
@@ -37,77 +49,161 @@ Nodo* nodo_crear(void* info){
   return nodo;
 }
 
-int lista_pushfirst(Lista* lista, void* info){
-  if(!lista || !info){
-    return 0;
-  }
-
-  Nodo* nodo = nodo_crear(info);
-  
-  if(nodo){
-    if(lista->first == NULL){
-      lista->first = nodo;
-      lista->last = nodo;
-    }else{
-      nodo->next = lista->first;
-      lista->first = nodo;
-    }
-    lista->__size++;
-    return 1;
-  }
-  return 0;
+bool lista_pushfirst(Lista* lista, void* info){
+  return lista_addat(lista, 0, info);
 }
 
-
-int lista_pushlast(Lista* lista, void* info){
-  if(!lista || !info){
-    return 0;
-  }
-
-  Nodo* nodo = nodo_crear(info);
-  
-  if(nodo){
-    if(lista->last == NULL){
-      lista->first = nodo;
-    }else{
-      lista->last->next = nodo;
-    }
-    lista->last = nodo;
-    lista->__size++;
-    return 1;
-  }
-  return 0;
+bool lista_pushlast(Lista* lista, void* info){
+  return lista_addat(lista, -1, info);
 }
 
-void* lista_getat(Lista* lista, size_t pos){
-  if(!lista || pos > lista->__size){
-    return NULL;
-  }
-
-  Nodo* iterator = lista->first;
-  size_t i = 0;
-  for(i=0; iterator != NULL && i < pos; i++, iterator = iterator->next);
-
-  if(iterator != NULL)
-    return iterator->info;
-  
-  return NULL;
+void* lista_getat(Lista* lista, int pos){
+  return get_at(lista, pos, false);
 }
 
 void* lista_popfirst(Lista* lista){
-  if(!lista || lista->__size == 0){
-    return NULL;
-  }
+  return lista_popat(lista, 0);
+}
 
-  Nodo* tmp = lista->first;
-  void* info = tmp->info;
-  if(lista->__size == 1){
-    lista->first = NULL;
-    lista->last = NULL;
-  }else{
-    lista->first = lista->first->next;
-  }
-  lista->__size--;
-  free(tmp);
-  return info;
+void *lista_popat(Lista *lista, int index) {
+    return get_at(lista, index, true);
+}
+
+bool lista_addat(Lista* lista, int index, void *info) {
+    // check arguments
+    if (!info || !lista) {
+      return false;
+    }
+
+    // adjust index
+    if (index < 0)
+        index = (lista->__size + index) + 1;  // -1 is same as addlast()
+    if (index < 0 || index > lista->__size) {
+        return false;
+    }
+
+
+    // make new object list
+    Nodo *obj = nodo_crear(info);
+    if (obj == NULL) {
+      return false;
+    }
+
+    // make link
+    if (index == 0) {
+        // add at first
+        obj->next = lista->first;
+        if (obj->next != NULL)
+            obj->next->prev = obj;
+        lista->first = obj;
+        if (lista->last == NULL)
+            lista->last = obj;
+    } else if (index == lista->__size) {
+        // add after last
+        obj->prev = lista->last;
+        if (obj->prev != NULL)
+            obj->prev->next = obj;
+        lista->last = obj;
+        if (lista->first == NULL)
+            lista->first = obj;
+    } else {
+        // add at the middle of lista
+        Nodo *tgt = get_nodo(lista, index);
+        if (tgt == NULL) {
+            return false;
+        }
+
+        // insert obj
+        tgt->prev->next = obj;
+        obj->prev = tgt->prev;
+        obj->next = tgt;
+        tgt->prev = obj;
+    }
+
+    lista->__size++;
+
+    return true;
+}
+
+
+Nodo *get_nodo(Lista *lista, int index) {
+    // index adjustment
+    if (index < 0)
+      index = lista->__size + index;
+    if (index >= lista->__size) {
+      return NULL;
+    }
+
+    // detect faster scan direction
+    bool backward;
+    Nodo *obj;
+    int listidx;
+    if (index < lista->__size / 2) {
+        backward = false;
+        obj = lista->first;
+        listidx = 0;
+    } else {
+        backward = true;
+        obj = lista->last;
+        listidx = lista->__size - 1;
+    }
+
+    // find object
+    while (obj != NULL) {
+        if (listidx == index)
+            return obj;
+
+        if (backward == false) {
+            obj = obj->next;
+            listidx++;
+        } else {
+            obj = obj->prev;
+            listidx--;
+        }
+    }
+    return NULL;
+}
+
+static void *get_at(Lista *lista, int index, bool remove) {
+    Nodo *obj = get_nodo(lista, index);
+    if (obj == NULL) {
+    
+        return false;
+    }
+
+    // copy data
+    void *data = obj->info;
+    
+    // remove if necessary
+    if (remove == true) {
+        if (remove_obj(lista, obj) == false) {
+          data = NULL;
+        }
+    }
+
+    return data;
+}
+
+
+static bool remove_obj(Lista *list, Nodo *obj) {
+    if (obj == NULL)
+        return false;
+
+    
+    if (obj->prev == NULL)
+        list->first = obj->next;
+    else
+        obj->prev->next = obj->next;
+    if (obj->next == NULL)
+        list->last = obj->prev;
+    else
+        obj->next->prev = obj->prev;
+
+    // adjust counter
+    
+    list->__size--;
+
+    free(obj);
+
+    return true;
 }

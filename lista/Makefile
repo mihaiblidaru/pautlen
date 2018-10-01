@@ -4,10 +4,10 @@ CFLAGS = -Wall -Wextra -g -O0
 
 all: tests
 
-tests: test_hash
+tests: test_lista
 
-test_hash: tests/test_hash.o hash.o
+test_lista: tests/test_lista.o lista.o
 	$(CC) $^ -o $@
 
 clean: 
-	rm -f tests/test_hash.o hash.o test_hash
+	rm -f tests/test_lista.o lista.o test_lista

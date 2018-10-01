@@ -10,6 +10,7 @@ Lista* lista_crear(){
   list->pushfirst = lista_pushfirst;
   list->pushlast = lista_pushlast;
   list->popfirst = lista_popfirst;
+  list->free = lista_free;
   
   return list;
 }
@@ -29,7 +30,7 @@ size_t lista_length(Lista* lista){
 
 Nodo* nodo_crear(void* info){
   Nodo* nodo = NULL;
-  if((nodo = calloc(1, sizeof(nodo)))){
+  if((nodo = calloc(1, sizeof(Nodo)))){
     nodo->info = info;
   }
   return nodo;
@@ -76,7 +77,6 @@ int lista_pushlast(Lista* lista, void* info){
   }
   return 0;
 }
-
 
 void* lista_getat(Lista* lista, size_t pos){
   if(!lista || pos > lista->__size){

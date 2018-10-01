@@ -12,7 +12,7 @@ test_lista: tests/test_lista.o lista.o
 test_hash: tests/test_hash.o hash.o
 	$(CC) $^ -o $@
 
-test_grafo: tests/test_grafo.o grafo.o
+test_grafo: tests/test_grafo.o grafo.o lista.o
 	$(CC) $^ -o $@
 
 clean: 

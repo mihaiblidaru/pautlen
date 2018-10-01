@@ -15,7 +15,7 @@ typedef struct Lista{
 	void(*free)(struct Lista*);
 	bool(*pushfirst)(struct Lista *list, void *data);
 	bool(*pushlast)(struct Lista *list, void *data);
-	size_t(*lenght)(struct Lista*);
+	int(*lenght)(struct Lista*);
 }Lista;
 
 Lista* lista_crear();
@@ -39,7 +39,7 @@ bool lista_removeat(Lista *list, int index);
 
 bool lista_getnext(Lista *list, Nodo *obj);
 
-size_t lista_length(Lista *list);
+int lista_length(Lista *list);
 
 void lista_reverse(Lista *list);
 void lista_clear(Lista *list);

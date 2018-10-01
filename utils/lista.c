@@ -159,12 +159,9 @@ bool lista_removeat(Lista *list, int index) {
 }
 
 
-
-size_t lista_length(Lista *list) {
+int lista_length(Lista *list) {
     return list->num;
 }
-
-
 
 void lista_reverse(Lista *list) {
 

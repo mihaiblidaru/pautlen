@@ -8,6 +8,8 @@
 #define GRAFO
 
 #include <stdio.h>
+#include "lista.h"
+
 
 /**************** CONSTANTES ****************/
 #define OK 1
@@ -17,18 +19,13 @@
 typedef struct NodoGrafo {
 	char *nombre;   //Nombre del nodo, sera su identificador.
 	void *info;     //Datos que vayamos a poner en este nodo.
-	struct NodoGrafo **predecesores;   //Punteros a predecesores del nodo (puede tener varios padres). Direccion NodoGrafo <- Predecesores.
-	struct NodoGrafo **descendientes;  //Punteros a descendientes del nodo (puede tener varios hijos). Direccion NodoGrafo -> Descendientes.
-	int numPredecesores;   //añadidos por mi
-	int numDescendientes;  //añadidos por mi
-
+	Lista* predecesores;
+	Lista* descendientes;
 } NodoGrafo;
 
 typedef struct Grafo {
-	NodoGrafo **raiz;        //Puntero al nodo raiz o array de raices (DECISION DE IMPLEMENTACION).
-    NodoGrafo **listaNodos;  //Lista de nodos
-    int nNodos;
-    int nRaices;
+	Lista* raices;       
+    Lista* nodos;  
 } Grafo;
 
 /**************** FUNCIONES ****************/
@@ -46,7 +43,9 @@ int eliminarGrafo(Grafo* grafo);
 //Recibe la clave y la informacion, y devuelve un nuevo NodoGrafo. Reservara memoria y rellenara la estructura NodoGrafo.
 // PENSAR EL TIPO ADECUADO PARA RECIBIR LA LISTA DE PADRES
 //Funcion auxiliar, se llama dentro de la funcion insertarNodoGrafo.
-NodoGrafo* crearNodoGrafo(char *nombre, void *info, char **padres);
+int crearNodoGrafo(Grafo* grafo, char *nombre, void *info);
+
+void printNodoGrafo(NodoGrafo* nodo);
 
 //Inserta un nodo en el grafo. Para ello debera utilizar la funcion auxiliar crearNodoGrafo.
 // Actualiza toda la relación de padres e hijos.

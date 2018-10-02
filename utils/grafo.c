@@ -54,6 +54,8 @@ NodoGrafo* crearNodoGrafo(Grafo* grafo, char *nombre, void *info){
 	}
 	nodo->nombre = strdup(nombre);
 	nodo->info = info;
+	nodo->predecesores = lista_crear();
+	nodo->descendientes = lista_crear();
 
 	lista_pushlast(grafo->nodos, nodo);
 
@@ -71,7 +73,7 @@ int insertarNodoGrafo(Grafo *grafo, char *nombre, void *info, char** padres,int 
 	nodoActual = crearNodoGrafo(grafo, nombre, info);
 
 	if(!padres){ //si no tiene padres, lo añado al array de raices, y al array de nodos totales
-		lista_pushlast(grafo->raices,nodoActual );
+		lista_pushlast(grafo->raices, nodoActual);
 		return OK;
 	}
 

@@ -16,23 +16,24 @@ int main(){
     padres2b[0] = strdup("1b");
 
 
-
     insertarNodoGrafo(grafo, "1a", "info1", NULL,0);
     insertarNodoGrafo(grafo, "1b", "info2", NULL,0);
-
-
     insertarNodoGrafo(grafo, "2a", "info3", padres2a, 2);
-    
     insertarNodoGrafo(grafo, "2b", "info5", padres2b, 1);
 
-
-    NodoGrafo *aux = buscarNodoAnchura(grafo, "2a");
-
-    printNodoGrafo(aux);
+    
+    printNodoGrafo(buscarNodoAnchura(grafo, "1a"));
+    printNodoGrafo(buscarNodoAnchura(grafo, "1b"));
+    printNodoGrafo(buscarNodoAnchura(grafo, "2a"));
+    printNodoGrafo(buscarNodoAnchura(grafo, "2b"));
+    
     eliminarGrafo(grafo);
 
-    
+    free(padres2a[0]);
+    free(padres2a[1]);
+    free(padres2a);
 
-
+    free(padres2b[0]);
+    free(padres2b);
     return 0;
 }

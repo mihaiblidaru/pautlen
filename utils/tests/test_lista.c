@@ -16,13 +16,13 @@ int main(){
 
     lista_pushfirst(lista, test3);
     
-    char* otro1 = lista->getat(lista, 0);
+    char* otro1 = lista_getat(lista, 0);
     printf("%s otro1\n", strcmp(otro1, test3) ? "Fail":"OK");
 
     lista_pushfirst(lista, test2);
     lista_pushfirst(lista, test1);
         
-    lista->pushlast(lista, test4);
+    lista_pushlast(lista, test4);
 
     char* ret1 = lista_getat(lista, 0);
     char* ret2 = lista_getat(lista, 1);
@@ -34,14 +34,10 @@ int main(){
     printf("%s t3\n", strcmp(test3, ret3) ? "Fail":"OK");
     printf("%s t4\n", strcmp(test4, ret4) ? "Fail":"OK");
 
-    char* pop_ret = lista->popfirst(lista);
-    
-    printf("%s pop\n", strcmp(pop_ret, test1) ? "Fail":"OK");
-    
-    int len = lista->lenght(lista);
+    int len = lista_length(lista);
 
-    printf("%s length\n", len != 3 ? "Fail":"OK");
-    lista->free(lista);
+    printf("%s length\n", len != 4 ? "Fail":"OK");
+    lista_free(lista);
     
 
 }

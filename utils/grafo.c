@@ -91,7 +91,6 @@ int insertarNodoGrafo(Grafo *grafo, char *nombre, void *info, char** padres,int 
 	}
 
 	return OK;
-		
 }
 
 
@@ -136,12 +135,19 @@ NodoGrafo* recBuscarNodoAnchura(NodoGrafo * actual,char * nombre){
 		}
 	}
 	return NULL;
+}
 
-
-
+void printNodoConectado(void* n){
+	printf("\t\t\tNombre: %s\n", ((NodoGrafo*)n)->nombre);
 }
 
 void printNodoGrafo(NodoGrafo* nodo){
-	printf("	Nombre: %s\n", nodo->nombre);
-	printf("	Info: %s\n", (char*)nodo->info);
+	printf("\n\tNombre: %s\n", nodo->nombre);
+	printf("\tInfo: %s\n", (char*)nodo->info);
+	printf("\t\tPadres:\n");
+	lista_print(nodo->predecesores, printNodoConectado);
+	printf("\t\tHijos:\n");
+	lista_print(nodo->descendientes, printNodoConectado);
+	printf("\n\n");
 }
+

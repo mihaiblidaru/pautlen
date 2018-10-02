@@ -23,9 +23,6 @@ typedef struct NodoHash {
 typedef struct TablaHash {
 	int tam;
 	NodoHash **nodo;
-	void*(*buscar)(struct TablaHash*, const char*);
-	int(*insertar)(struct TablaHash*, const char*, void*);
-	int(*eliminar)(struct TablaHash*);
 	int length;
 } TablaHash;
 

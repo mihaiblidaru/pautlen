@@ -16,4 +16,4 @@ test_grafo: tests/test_grafo.o grafo.o lista.o
 	$(CC) $^ -o $@
 
 clean: 
-	rm -f tests/*.o lista.o test_lista test_grafo test_hash
+	rm -f tests/*.o lista.o test_lista test_grafo test_hash grafo.o hash.o

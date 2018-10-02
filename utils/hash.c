@@ -42,10 +42,6 @@ TablaHash* hash_crear(int tam){
 			return NULL;
 		}
 		
-		nueva->buscar = hash_buscar;
-		nueva->eliminar = hash_eliminar;
-		nueva->insertar = hash_insertar;
-		
 		return nueva;
 	}
 }

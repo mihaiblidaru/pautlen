@@ -22,7 +22,7 @@ bool lista_addat(Lista *list, int index, void *data);
 void *lista_getat(Lista *list, int index);
 
 bool lista_getnext(Lista *list, Nodo *obj);
-void lista_free(Lista *list);
+void lista_free(Lista *list, void(*free_data_funct)(void*));
 
 int lista_length(Lista *lista);
 void lista_print(Lista* lista, void(*print_funct)(void*));

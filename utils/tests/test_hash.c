@@ -16,13 +16,13 @@ int main(){
     char info6[] = "info 6";
     char info7[] = "info 7";
 
-    tabla_hash->insertar(tabla_hash, "clave 1", info1);
-    tabla_hash->insertar(tabla_hash, "clave 2", info2);
-    tabla_hash->insertar(tabla_hash, "clave 3", info3);
-    tabla_hash->insertar(tabla_hash, "clave 4", info4);
-    tabla_hash->insertar(tabla_hash, "clave 5", info5);
-    tabla_hash->insertar(tabla_hash, "clave 6", info6);
-    tabla_hash->insertar(tabla_hash, "clave 7", info7);
+    hash_insertar(tabla_hash, "clave 1", info1);
+    hash_insertar(tabla_hash, "clave 2", info2);
+    hash_insertar(tabla_hash, "clave 3", info3);
+    hash_insertar(tabla_hash, "clave 4", info4);
+    hash_insertar(tabla_hash, "clave 5", info5);
+    hash_insertar(tabla_hash, "clave 6", info6);
+    hash_insertar(tabla_hash, "clave 7", info7);
     
     if(strcmp(hash_buscar(tabla_hash, "clave 1"), info1)){
         printf("Fail buscando info con clave 1\n");
@@ -72,7 +72,7 @@ int main(){
         printf("Longitud incorrecta\n");
     }
 
-    tabla_hash->eliminar(tabla_hash);
+    hash_eliminar(tabla_hash);
     
     return 0;
 }

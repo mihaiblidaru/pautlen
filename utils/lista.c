@@ -100,10 +100,13 @@ int lista_length(Lista *list) {
 }
 
 
-void lista_free(Lista *list) {
+void lista_free(Lista *list, void(*free_data_funct)(void*)) {
     Nodo *obj;
     for (obj = list->first; obj;) {
         Nodo *next = obj->next;
+        if(free_data_funct){
+            free_data_funct(obj->data);
+        }
         free(obj);
         obj = next;
     }

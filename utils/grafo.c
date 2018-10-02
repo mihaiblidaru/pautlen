@@ -32,7 +32,7 @@ int eliminarGrafo(Grafo* grafo){
     return OK;
 }
 
-int crearNodoGrafo(Grafo* grafo, char *nombre, void *info){
+NodoGrafo* crearNodoGrafo(Grafo* grafo, char *nombre, void *info){
 
 	int i = 0;
 	NodoGrafo* aux = NULL;
@@ -55,67 +55,89 @@ int crearNodoGrafo(Grafo* grafo, char *nombre, void *info){
 	nodo->nombre = strdup(nombre);
 	nodo->info = info;
 
-	return lista_pushlast(grafo->nodos, nodo);
+	lista_pushlast(grafo->nodos, nodo);
+
+	return nodo;
 }
 
-//int insertarNodoGrafo(Grafo *grafo, char *nombre, void *info, char** padres){
+int insertarNodoGrafo(Grafo *grafo, char *nombre, void *info, char** padres,int numPadres){
 
-	//NodoGrafo* nodoActual = NULL;
-//	//if(!grafo || !nombre || !info){
-//	//	return ERROR;
-//	//}
-//
-	//if(!padres){ //si no tiene padres, lo añado al array de raices, y al array de nodos totales
-	//	lista_pushlast(grafo->raices, lista_length(grafo->raices));
-	//	lista_pushlast(grafo->nodos, lista_length(grafo->nodos));
-	//	return OK;
-	//}
-	////ahora buscar en todos los nodos los q coinciden con los padres, y asignar doblemente
-	//for(i=0;i<lista_length(grafo->nodos);i++){
-	//	
-	//	nodoActual = lista_getat(grafo->nodos, i);
-	//	if(strcmp(nodoActual->nombre, padres[i]) == 0){ //cuando encuentro el padre
-	//		
-	//	}
-	//}
+	int i, j; 
+	NodoGrafo* nodoActual ,*nodoAux = NULL;
+	if(!grafo || !nombre || !info){
+		return ERROR;
+	}
+
+	nodoActual = crearNodoGrafo(grafo, nombre, info);
+
+	if(!padres){ //si no tiene padres, lo añado al array de raices, y al array de nodos totales
+		lista_pushlast(grafo->raices,nodoActual );
+		return OK;
+	}
 
 
+	//ahora buscar en todos los nodos los q coinciden con los padres, y asignar doblemente
+	for(i=0;i<lista_length(grafo->nodos);i++){
+		nodoAux = lista_getat(grafo->nodos, i);
+		for(j=0;j<numPadres;j++){
+			if(strcmp(nodoAux->nombre, padres[j]) == 0){ //cuando encuentro el padre
+				lista_pushlast(nodoActual->predecesores,nodoAux);
+				lista_pushlast(nodoAux->descendientes,nodoActual);
+				break;
+			}
+		}
+	}
 
-//int anyadirConexion(Grafo* grafo, char* padre, char* hijo){
-//
-//	int i = 0;
-//	int contador = 0;
-//	NodoGrafo* auxPadre;
-//	NodoGrafo* auxHijo;
-//	for(i=0;grafo->listaNodos[i] == NULL || contador< 2; i++){
-//		if(strcmp(grafo->listaNodos[i]->nombre, padre)){
-//			auxPadre = grafo->listaNodos[i];
-//			i ++;
-//		}
-//		else if(strcmp(grafo->listaNodos[i]->nombre, hijo)){
-//			auxHijo = grafo->listaNodos[i];
-//			i ++;
-//		}
-//	}
-//
-//	if(contador != 2){
-//		return ERROR;
-//	}
-//
-//	//TODO:
-//	anyadirPadreAHijo(auxHijo, auxPadre); //aqui se incrementaran numPadres/numHijos
-//	anyadirHijoAPadre(auxPadre, auxHijo); //aqui se incrementaran numPadres/numHijos
-//
-//	return OK;
-//}
-//
-//
-//
-//
-//
-////Busqueda en anchura de un nodo en el grafo identificado por su nombre.
-////Devuelve el nodo en caso de que se encuentre y NULL en caso de que no.
-//NodoGrafo* buscarNodoAnchura(Grafo *grafo, char *nombre);
+	return OK;
+		
+}
+
+
+//Busqueda en anchura de un nodo en el grafo identificado por su nombre (Si queréis podéis buscar en profundidad).
+//Devuelve el nodo en caso de que se encuentre y NULL en caso de que no.
+NodoGrafo* buscarNodoAnchura(Grafo *grafo, char *nombre){
+
+	int i;
+	NodoGrafo * aux;
+
+	if(!grafo || !nombre){
+		return NULL;
+	}
+
+	for(i=0;i<lista_length(grafo->raices);i++){
+
+		aux = recBuscarNodoAnchura(lista_getat(grafo->raices, i), nombre);
+		if(aux!=NULL){
+			return aux;
+		}
+
+	}
+	return NULL;
+}
+
+NodoGrafo* recBuscarNodoAnchura(NodoGrafo * actual,char * nombre){
+
+	NodoGrafo * aux;
+	int i;
+
+	if(!actual || !nombre){
+		return NULL;
+	}
+
+	if(strcmp(actual->nombre,nombre)==0){
+		return actual;
+	}
+	for( i=0;i<lista_length(actual->descendientes);i++){
+		aux = recBuscarNodoAnchura(lista_getat(actual->descendientes,i),nombre);
+		if(aux!=NULL){
+			return aux;
+		}
+	}
+	return NULL;
+
+
+
+}
 
 void printNodoGrafo(NodoGrafo* nodo){
 	printf("	Nombre: %s\n", nodo->nombre);

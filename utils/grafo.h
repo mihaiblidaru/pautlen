@@ -43,7 +43,7 @@ int eliminarGrafo(Grafo* grafo);
 //Recibe la clave y la informacion, y devuelve un nuevo NodoGrafo. Reservara memoria y rellenara la estructura NodoGrafo.
 // PENSAR EL TIPO ADECUADO PARA RECIBIR LA LISTA DE PADRES
 //Funcion auxiliar, se llama dentro de la funcion insertarNodoGrafo.
-int crearNodoGrafo(Grafo* grafo, char *nombre, void *info);
+NodoGrafo* crearNodoGrafo(Grafo* grafo, char *nombre, void *info);
 
 void printNodoGrafo(NodoGrafo* nodo);
 
@@ -51,10 +51,11 @@ void printNodoGrafo(NodoGrafo* nodo);
 // Actualiza toda la relación de padres e hijos.
 // PENSAR EL TIPO ADECUADO PARA RECIBIR LA LISTA DE PADRES
 //Devuelve OK en caso de que se inserte y ERROR en caso de que no.
-int insertarNodoGrafo(Grafo *grafo, NodoGrafo *nodo, char **padres);
+int insertarNodoGrafo(Grafo *grafo, char *nombre, void *info, char** padres,int numPadres);
 
 //Busqueda en anchura de un nodo en el grafo identificado por su nombre.
 //Devuelve el nodo en caso de que se encuentre y NULL en caso de que no.
+NodoGrafo* recBuscarNodoAnchura(NodoGrafo * actual,char * nombre);
 NodoGrafo* buscarNodoAnchura(Grafo *grafo, char *nombre);
 
 #endif

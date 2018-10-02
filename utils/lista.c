@@ -1,3 +1,15 @@
+/***********************************************************
+* lista.c
+*
+* GRUPO 2:
+* 
+* CALVENTE RODRIGUEZ, Andres
+* DOMINGUEZ GIGANTE, Sergio
+* FERNANDEZ TORRES, Lucia
+* AYALA VALENCIA, Alberto
+* BLIDARU , Mihai 
+*
+************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -102,6 +114,11 @@ int lista_length(Lista *list) {
 
 void lista_free(Lista *list, void(*free_data_funct)(void*)) {
     Nodo *obj;
+
+    if(!list){
+        return;
+    }
+
     for (obj = list->first; obj;) {
         Nodo *next = obj->next;
         if(free_data_funct){
@@ -110,7 +127,6 @@ void lista_free(Lista *list, void(*free_data_funct)(void*)) {
         free(obj);
         obj = next;
     }
-
     free(list);
 }
 

@@ -1,9 +1,15 @@
-/*
- * ADVERTENCIA: Esta librería es solo una guía de ayuda al estudiante.
- *  Es muy posible que haya que modificar las funciones, argumentos y retornos,
- *  así como ampliar su funcionalidad según el diseño implementado
- *  y según avance el proyecto.
- */
+/***********************************************************
+* hash.h
+*
+* GRUPO 2:
+* 
+* CALVENTE RODRIGUEZ, Andres
+* DOMINGUEZ GIGANTE, Sergio
+* FERNANDEZ TORRES, Lucia
+* AYALA VALENCIA, Alberto
+* BLIDARU , Mihai 
+*
+************************************************************/
 #ifndef HASH
 #define HASH
 
@@ -13,7 +19,7 @@
 #define OK 1
 #define ERROR 0
 
-/**************** DECLARsACIONES DE TIPOS ****************/
+/**************** DECLARACIONES DE TIPOS ****************/
 typedef struct NodoHash {
 	char *clave;    //Identificador del nodo.
 	void *info;     //Datos que vayamos a poner en este nodo.

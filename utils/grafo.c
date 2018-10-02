@@ -1,3 +1,15 @@
+/***********************************************************
+* grafo.c
+*
+* GRUPO 2:
+* 
+* CALVENTE RODRIGUEZ, Andres
+* DOMINGUEZ GIGANTE, Sergio
+* FERNANDEZ TORRES, Lucia
+* AYALA VALENCIA, Alberto
+* BLIDARU , Mihai 
+*
+************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,6 +22,7 @@
 #define ERROR 0
 
 /**************** FUNCIONES ****************/
+void eliminarNodo(void* nodo);
 
 Grafo* crearGrafo(){
 
@@ -27,8 +40,9 @@ int eliminarGrafo(Grafo* grafo){
 	if(!grafo){
     	return ERROR; 
     }
-    lista_free(grafo->nodos);
-    free(grafo);
+    lista_free(grafo->nodos, eliminarNodo);
+    lista_free(grafo->raices, NULL);
+	free(grafo);
     return OK;
 }
 
@@ -62,6 +76,16 @@ NodoGrafo* crearNodoGrafo(Grafo* grafo, char *nombre, void *info){
 	return nodo;
 }
 
+
+void eliminarNodo(void* o){
+	NodoGrafo* tmp = (NodoGrafo*)o;
+	free(tmp->nombre);
+	lista_free(tmp->predecesores, NULL);
+	lista_free(tmp->descendientes, NULL);
+	free(tmp);
+}
+
+
 int insertarNodoGrafo(Grafo *grafo, char *nombre, void *info, char** padres,int numPadres){
 
 	int i, j; 
@@ -94,9 +118,9 @@ int insertarNodoGrafo(Grafo *grafo, char *nombre, void *info, char** padres,int 
 }
 
 
-//Busqueda en anchura de un nodo en el grafo identificado por su nombre (Si queréis podéis buscar en profundidad).
+//Busqueda en Profundidad de un nodo en el grafo identificado por su nombre (Si queréis podéis buscar en profundidad).
 //Devuelve el nodo en caso de que se encuentre y NULL en caso de que no.
-NodoGrafo* buscarNodoAnchura(Grafo *grafo, char *nombre){
+NodoGrafo* buscarNodoProfundidad(Grafo *grafo, char *nombre){
 
 	int i;
 	NodoGrafo * aux;
@@ -107,7 +131,7 @@ NodoGrafo* buscarNodoAnchura(Grafo *grafo, char *nombre){
 
 	for(i=0;i<lista_length(grafo->raices);i++){
 
-		aux = recBuscarNodoAnchura(lista_getat(grafo->raices, i), nombre);
+		aux = recBuscarNodoProfundidad(lista_getat(grafo->raices, i), nombre);
 		if(aux!=NULL){
 			return aux;
 		}
@@ -116,7 +140,7 @@ NodoGrafo* buscarNodoAnchura(Grafo *grafo, char *nombre){
 	return NULL;
 }
 
-NodoGrafo* recBuscarNodoAnchura(NodoGrafo * actual,char * nombre){
+NodoGrafo* recBuscarNodoProfundidad(NodoGrafo * actual,char * nombre){
 
 	NodoGrafo * aux;
 	int i;
@@ -129,7 +153,7 @@ NodoGrafo* recBuscarNodoAnchura(NodoGrafo * actual,char * nombre){
 		return actual;
 	}
 	for( i=0;i<lista_length(actual->descendientes);i++){
-		aux = recBuscarNodoAnchura(lista_getat(actual->descendientes,i),nombre);
+		aux = recBuscarNodoProfundidad(lista_getat(actual->descendientes,i),nombre);
 		if(aux!=NULL){
 			return aux;
 		}

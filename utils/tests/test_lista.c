@@ -1,9 +1,19 @@
+/***********************************************************
+* test_lista.c
+*
+* GRUPO 2:
+* 
+* CALVENTE RODRIGUEZ, Andres
+* DOMINGUEZ GIGANTE, Sergio
+* FERNANDEZ TORRES, Lucia
+* AYALA VALENCIA, Alberto
+* BLIDARU , Mihai 
+*
+************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "../lista.h"
-
-
 
 int main(){
     Lista* lista = lista_crear();

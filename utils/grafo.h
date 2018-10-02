@@ -1,9 +1,15 @@
-/*
- * ADVERTENCIA: Esta librería es solo una guía de ayuda al estudiante.
- *  Es muy posible que haya que modificar las funciones, argumentos y retornos,
- *  así como ampliar su funcionalidad según el diseño implementado
- *  y según avance el proyecto.
- */
+/***********************************************************
+* grafo.h
+*
+* GRUPO 2:
+* 
+* CALVENTE RODRIGUEZ, Andres
+* DOMINGUEZ GIGANTE, Sergio
+* FERNANDEZ TORRES, Lucia
+* AYALA VALENCIA, Alberto
+* BLIDARU , Mihai 
+*
+************************************************************/
 #ifndef GRAFO
 #define GRAFO
 
@@ -29,33 +35,28 @@ typedef struct Grafo {
 } Grafo;
 
 /**************** FUNCIONES ****************/
-//Crea el grafo bidireccional insertando el nodo raiz.
-//Lo que reciba dependerá de como se piense la estructura del grafo.
+//Crea el grafo bidireccional
 Grafo* crearGrafo();
-
-//Puede que se necesite una función insertarRaiz...
-//insertarRaiz();
 
 //Elimina el grafo.
 //Devuelve OK en caso de que se elimine correctamente y ERROR en caso contrario.
 int eliminarGrafo(Grafo* grafo);
 
 //Recibe la clave y la informacion, y devuelve un nuevo NodoGrafo. Reservara memoria y rellenara la estructura NodoGrafo.
-// PENSAR EL TIPO ADECUADO PARA RECIBIR LA LISTA DE PADRES
 //Funcion auxiliar, se llama dentro de la funcion insertarNodoGrafo.
 NodoGrafo* crearNodoGrafo(Grafo* grafo, char *nombre, void *info);
 
+//Imprime un nodo
 void printNodoGrafo(NodoGrafo* nodo);
 
-//Inserta un nodo en el grafo. Para ello debera utilizar la funcion auxiliar crearNodoGrafo.
+//Inserta un nodo en el grafo. Para ello deberá utilizar la funcion auxiliar crearNodoGrafo.
 // Actualiza toda la relación de padres e hijos.
-// PENSAR EL TIPO ADECUADO PARA RECIBIR LA LISTA DE PADRES
 //Devuelve OK en caso de que se inserte y ERROR en caso de que no.
 int insertarNodoGrafo(Grafo *grafo, char *nombre, void *info, char** padres,int numPadres);
 
-//Busqueda en anchura de un nodo en el grafo identificado por su nombre.
+//Busqueda en Profundidad de un nodo en el grafo identificado por su nombre.
 //Devuelve el nodo en caso de que se encuentre y NULL en caso de que no.
-NodoGrafo* recBuscarNodoAnchura(NodoGrafo * actual,char * nombre);
-NodoGrafo* buscarNodoAnchura(Grafo *grafo, char *nombre);
+NodoGrafo* recBuscarNodoProfundidad(NodoGrafo * actual,char * nombre);
+NodoGrafo* buscarNodoProfundidad(Grafo *grafo, char *nombre);
 
 #endif

@@ -1,3 +1,16 @@
+/***********************************************************
+* test_grafo.c
+*
+* GRUPO 2:
+* 
+* CALVENTE RODRIGUEZ, Andres
+* DOMINGUEZ GIGANTE, Sergio
+* FERNANDEZ TORRES, Lucia
+* AYALA VALENCIA, Alberto
+* BLIDARU , Mihai 
+*
+************************************************************/
+
 #include "../grafo.h"
 #include <stdlib.h>
 #include <string.h>
@@ -22,10 +35,10 @@ int main(){
     insertarNodoGrafo(grafo, "2b", "info5", padres2b, 1);
 
     
-    printNodoGrafo(buscarNodoAnchura(grafo, "1a"));
-    printNodoGrafo(buscarNodoAnchura(grafo, "1b"));
-    printNodoGrafo(buscarNodoAnchura(grafo, "2a"));
-    printNodoGrafo(buscarNodoAnchura(grafo, "2b"));
+    printNodoGrafo(buscarNodoProfundidad(grafo, "1a"));
+    printNodoGrafo(buscarNodoProfundidad(grafo, "1b"));
+    printNodoGrafo(buscarNodoProfundidad(grafo, "2a"));
+    printNodoGrafo(buscarNodoProfundidad(grafo, "2b"));
     
     eliminarGrafo(grafo);
 

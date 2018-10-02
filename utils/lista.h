@@ -1,3 +1,16 @@
+/***********************************************************
+* lista.h
+*
+* GRUPO 2:
+* 
+* CALVENTE RODRIGUEZ, Andres
+* DOMINGUEZ GIGANTE, Sergio
+* FERNANDEZ TORRES, Lucia
+* AYALA VALENCIA, Alberto
+* BLIDARU , Mihai 
+*
+************************************************************/
+
 #ifndef LISTA_H
 #define LISTA_H
 

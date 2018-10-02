@@ -1,3 +1,15 @@
+/***********************************************************
+* test_hash.c
+*
+* GRUPO 2:
+* 
+* CALVENTE RODRIGUEZ, Andres
+* DOMINGUEZ GIGANTE, Sergio
+* FERNANDEZ TORRES, Lucia
+* AYALA VALENCIA, Alberto
+* BLIDARU , Mihai 
+*
+************************************************************/
 #include "../hash.h"
 #include <stdio.h>
 #include <string.h>

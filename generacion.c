@@ -101,8 +101,8 @@ void asignar(FILE* fpasm, char* nombre, int es_variable){
 
   if(es_variable){
     fprintf(fpasm, "\tpop dword eax\n");
-    fprintf(fpasm, "\tmov eax, [eax]");
-    fprintf(fpasm, "\tmov [_%s], eax", nombre);
+    fprintf(fpasm, "\tmov eax, [eax]\n");
+    fprintf(fpasm, "\tmov [_%s], eax\n", nombre);
   }else{
     fprintf(fpasm, "\tpop dword [_%s]\n", nombre);
   }

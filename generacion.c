@@ -356,8 +356,9 @@ void menor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
    se deja en la pila como en el resto de operaciones. Se deben usar etiquetas para poder
    gestionar los saltos necesarios para implementar las comparaciones.
 */
-void mayor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
-  fprintf(fpasm, "\n;-> Empieza mayor_igual\n");
+void mayor_igual(FILE* fpasm, int es_variable1, int es_variable2, __attribute__((unused)) int etiqueta){
+    fprintf(fpasm, "\n;-> Empieza mayor_igual\n");
+  fprintf(fpasm, "\tmov ebx, 0\n");
 
   fprintf(fpasm, "\tpop ecx\n");
 
@@ -369,11 +370,8 @@ void mayor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
     fprintf(fpasm, "\tmov eax, [eax]\n");
 
   fprintf(fpasm, "\tcmp eax, ecx\n");
-  fprintf(fpasm, "\tjge jge_true_%d\n", etiqueta);
-  fprintf(fpasm, "\tpush dword 0\n");
-  fprintf(fpasm, "\tjmp skip_jge%d\n", etiqueta);
-  fprintf(fpasm, "jge_true_%d:\n\tpush dword 1\n", etiqueta);
-  fprintf(fpasm, "skip_jge%d:\n", etiqueta);
+  fprintf(fpasm, "\tsetge bl\n"); /* Para eliminar completamente el uso de etiquetas*/
+  fprintf(fpasm, "\npush dword ebx\n");
 }
 
 

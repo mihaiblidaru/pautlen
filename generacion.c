@@ -1,6 +1,20 @@
+/**
+ * @file generacion.c
+ * @author Alberto Ayala
+ * @author Andres Calvente
+ * @author Lucía Fernandez
+ * @author Mihai Blidaru
+ * @author Sergio Dominguez 
+ 
+ * @brief Funciones para generar codigo ensamblador.
+ * @version 0.1
+ * @date 2018-10-05
+ * @copyright Copyright (c) 2018
+ * 
+ */
+
 #include <stdio.h>
 #include "generacion.h"
-
 
 /*
  *  Expresion regular para borrar todas las lineas de comentarios
@@ -9,15 +23,13 @@
  *   ^\s*fprintf\(fpasm, "\\n;->.*
  */
 
-/*
- * Esto es solo por si decidimos tener cadenas constantes
- * para tenerlas definidas en un solo sitio y poder cambiarlas rapidamente.
- * Por ejemplo __esp o los mensajes de error de division por cero
- */
-const char esp_backup_var_name[] = "__esp";
 
-/*
- * En .bss se reserva con resb, resw, resd, etc
+/**
+ * @brief Escribe el codigo de la seccion .bss
+ * Declara el segmento y reserva 32 bits para guardar
+ * el puntero de pila.
+ * 
+ * @param fpasm fichero donde se imprime el codigo nasm
  */
 void escribir_cabecera_bss(FILE* fpasm){
   fprintf(fpasm, "segment .bss\n");
@@ -25,37 +37,53 @@ void escribir_cabecera_bss(FILE* fpasm){
 }
 
 
-/*
-   Declaración (con directiva db) de las variables que contienen el texto de los mensajes para la identificación de errores en tiempo de ejecución.
-   En este punto, al menos, debes ser capaz de detectar la división por 0.
-*/
+/**
+ * @brief Escribe el codigo de la seccion .data
+ * 
+ * Declaración (con directiva db) de las variables que contienen el texto de
+ * los mensajes para la identificación de errores en tiempo de ejecución.
+ * 
+ * @param fpasm fichero donde se imprime el codigo nasm
+ */
 void escribir_subseccion_data(FILE* fpasm){
   fprintf(fpasm, "segment .data\n");
   fprintf(fpasm, "\tmsg_error_div_0 db \"Division por 0\",0\n");
 }
 
 
-/*
-   Para ser invocada en la sección .bss cada vez que se quiera declarar una variable:
-El argumento nombre es el de la variable.
-tipo puede ser ENTERO o BOOLEANO (observa la declaración de las constantes del principio del fichero).
-Esta misma función se invocará cuando en el compilador se declaren vectores, por eso se adjunta un argumento final (tamano) que para esta primera práctica siempre recibirá el valor 1.
-*/
+/**
+ * @brief Escribe en la seccion .bss la declaración de variables
+ * 
+ * @param fpasm fichero donde se imprime el codigo nasm
+ * @param nombre nombre de la variable.
+ * @param tamano tamaño del vector(para la primera practica recibe el valor 1)
+ */
 void declarar_variable(FILE* fpasm, char * nombre, __attribute__((unused)) int tipo,  int tamano){
   fprintf(fpasm, "\t_%s resd %d\n", nombre, tamano);
 }
 
+
+/**
+ * @brief Escribe el comienzo del segmento .text
+ * 
+ * Declara el segmento, exporta la etiqueta main y declara
+ * referencias externas a las funciones de olib.o
+ * 
+ * @param fpasm fichero donde se imprime el codigo nasm
+ */
 void escribir_segmento_codigo(FILE* fpasm){
   fprintf(fpasm, "segment .text\n");
   fprintf(fpasm, "\tglobal main\n");
   fprintf(fpasm, "\textern scan_int, scan_boolean, print_int, print_boolean, print_blank, print_endofline, print_string\n");
-
 }
 
-/*
-   En este punto se debe escribir, al menos, la etiqueta main y la sentencia
-   que guarda el puntero de pila en su variable (se recomienda usar __esp).
-*/
+/**
+ * @brief Escribe el principio de la función main.
+ * 
+ * Declara la etiqueta y guarda el puntero de pila.
+ * 
+ * @param fpasm fichero donde se imprime el codigo nasm
+ */
 void escribir_inicio_main(FILE* fpasm){
     fprintf(fpasm, "\n;-> Empieza inicio_main\n");
     fprintf(fpasm, "main:\n");
@@ -63,6 +91,21 @@ void escribir_inicio_main(FILE* fpasm){
 }
 
 
+/**
+ * @brief Escribe el final de la función main.
+ * 
+ * Al final del programa se escribe:
+ *     El código NASM para salir de manera controlada cuando se detecta un 
+ *       error en tiempo de ejecución (cada error saltará a una etiqueta situada
+ *       en esta zona en la que se imprimirá el correspondiente mensaje y se 
+ *       saltará a la zona de finalización del programa).
+ * 
+ *     En el final del programa se debe:
+ *       Restaurar el valor del puntero de pila (a partir de su variable __esp)
+ *       Salir del programa (ret).
+ *
+ * @param fpasm fichero donde se imprime el codigo nasm
+ */
 void escribir_fin(FILE* fpasm){
   fprintf(fpasm, "\n;-> Empieza fin\n");
   fprintf(fpasm, "\t jmp near fin\n");
@@ -71,21 +114,19 @@ void escribir_fin(FILE* fpasm){
   fprintf(fpasm, "\tcall print_string\n");
   fprintf(fpasm, "\tcall print_endofline\n");
   fprintf(fpasm, "\tjmp near fin\n");
-
   fprintf(fpasm, "fin:\n");
   fprintf(fpasm, "\tmov dword esp, [__esp]\n"); //Devolvemos el puntero a pila a su sitio inicial
   fprintf(fpasm, "\tret\n");  //Retorno de la función
-
 }
 
 
-/*
-   Función que debe ser invocada cuando se sabe un operando de una operación aritmético-lógica y se necesita introducirlo en la pila.
-nombre es la cadena de caracteres del operando tal y como debería aparecer en el fuente NASM
-es_variable indica si este operando es una variable (como por ejemplo b1) con un 1 u otra cosa (como por ejemplo 34)
-con un 0. Recuerda que en el primer caso internamente se representará como _b1 y, sin embargo,
-en el segundo se representará tal y como esté en el argumento (34).
-*/
+/**
+ * @brief Escribe un operando en la pila.
+ * 
+ * @param fpasm fichero donde se imprime el codigo nasm
+ * @param nombre nombre de la variable o un número en formato texto
+ * @param es_variable indica si el operando es una variable o un número
+ */
 void escribir_operando(FILE* fpasm, char* nombre, int es_variable){
   fprintf(fpasm, "\n;-> Empieza escribir_operando\n");
   if(es_variable){
@@ -96,6 +137,15 @@ void escribir_operando(FILE* fpasm, char* nombre, int es_variable){
 }
 
 
+/**
+ * @brief Asigna un valor a la variable de nombre -nombre-
+ * 
+ * Toma el valor de la cima de la pila y lo asigna a la variable -nombre-
+ * 
+ * @param fpasm fichero donde se imprime el codigo nasm
+ * @param nombre nombre de la variable
+ * @param es_variable indica si en la cima de la pila hay un número o una direccion de una variable
+ */
 void asignar(FILE* fpasm, char* nombre, int es_variable){
   fprintf(fpasm, "\n;-> Empieza asignar\n");
 
@@ -106,10 +156,19 @@ void asignar(FILE* fpasm, char* nombre, int es_variable){
   }else{
     fprintf(fpasm, "\tpop dword [_%s]\n", nombre);
   }
-
 }
 
 
+/**
+ * @brief Realiza la suma de dos operandos.
+ * 
+ * Extrae de la pila los dos operandos, realiza la operación de suma
+ * y guarda el resultado en la pila.
+ * 
+ * @param fpasm fichero donde se imprime el codigo nasm
+ * @param es_variable_1 indica si el primer operando es un referencia o un valor explicito
+ * @param es_variable_2 indica si el segundo operando es un referencia o un valor explicito
+ */
 void sumar(FILE* fpasm, int es_variable_1, int es_variable_2){
   fprintf(fpasm, "\n;-> Empieza sumar\n");
 
@@ -129,20 +188,20 @@ void sumar(FILE* fpasm, int es_variable_1, int es_variable_2){
   fprintf(fpasm, "\tpush dword eax\n");
 }
 
-/* FUNCIONES ARITMÉTICO-LÓGICAS BINARIAS */
-/*
-   En todas ellas se realiza la operación como se ha resumido anteriormente:
-Se extrae de la pila los operandos
-Se realiza la operación
-Se guarda el resultado en la pila
-   Los dos últimos argumentos indican respectivamente si lo que hay en la pila es una referencia a un valor o un valor explícito.
-   Deben tenerse en cuenta las peculiaridades de cada operación. En este sentido sí hay que mencionar explícitamente que, en el caso de la división,
-   se debe controlar si el divisor es “0” y en ese caso se debe saltar a la rutina de error controlado
-   (restaurando el puntero de pila en ese caso y comprobando en el retorno que no se produce “Segmentation Fault”)
-*/
+
+/**
+ * @brief Realiza la resta de dos operandos.
+ * 
+ * Extrae de la pila los dos operandos, realiza la resta(op1 - op2)
+ * y guarda el resultado en la pila.
+ * 
+ * @param fpasm fichero donde se imprime el codigo nasm
+ * @param es_variable_1 indica si el primer operando es un referencia o un valor explicito
+ * @param es_variable_2 indica si el segundo operando es un referencia o un valor explicito
+ */
 void restar(FILE* fpasm, int es_variable_1, int es_variable_2){
   fprintf(fpasm, "\n;-> Empieza restar\n");
-  fprintf(fpasm, "\tpop ecx\n");
+  fprintf(fpasm, "\tpop dword ecx\n");
 
   if(es_variable_2)
     fprintf(fpasm, "\tmov ecx, [ecx]\n");
@@ -157,19 +216,17 @@ void restar(FILE* fpasm, int es_variable_1, int es_variable_2){
 }
 
 
-/*
- * Se puede hacer un poco mejor:
- * Imul tiene tambien el formato:
- *    IMUL mem32 => EAX = EAX * mem_dword
- *
- * O sea que el segundo operando se podria multiplicar directamente
- * sin cargarlo previamente en un registro.
- *
- * Esto no lo tengas mucho en cuenta(probablemente lo dejemos tal como esta), porque
- * en realidad solo ahoraria una instruccion con el parametro 2
- * cuando no es un puntero.
+/**
+ * @brief Realiza la multiplicacion de dos operandos.
+ * 
+ * Extrae de la pila los dos operandos, realiza la operación de multiplicación
+ * y guarda el resultado en la pila.
+ * 
+ * @param fpasm fichero donde se imprime el codigo nasm
+ * @param es_variable_1 indica si el primer operando es un referencia o un valor explicito
+ * @param es_variable_2 indica si el segundo operando es un referencia o un valor explicito
  */
-void multiplicar(FILE* fpasm, int es_variable_1, int es_variable_2){  /*DUDA*/
+void multiplicar(FILE* fpasm, int es_variable_1, int es_variable_2){
   fprintf(fpasm, "\n;-> Empieza multiplicar\n");
 
   fprintf(fpasm, "\tpop dword eax\n"); //Primer operando
@@ -187,6 +244,19 @@ void multiplicar(FILE* fpasm, int es_variable_1, int es_variable_2){  /*DUDA*/
 }
 
 
+/**
+ * @brief Realiza la división de dos operandos.
+ * 
+ * Extrae de la pila los dos operandos. Realiza la división (op1 / op2)
+ * y guarda el resultado en la pila.
+ * 
+ * Si op2 == 0 la división no se realiza y se salta a la etiqueta err_div_0
+ * donde se imprimira un mensaje indicando el intento de division por cero.
+ * 
+ * @param fpasm fichero donde se imprime el codigo nasm
+ * @param es_variable_1 indica si el dividendo es un referencia o un valor explicito
+ * @param es_variable_2 indica si el divisor es un referencia o un valor explicito
+ */
 void dividir(FILE* fpasm, int es_variable_1, int es_variable_2){
   fprintf(fpasm, "\n;-> Empieza dividir\n");
 
@@ -200,13 +270,23 @@ void dividir(FILE* fpasm, int es_variable_1, int es_variable_2){
   if (es_variable_1)
     fprintf(fpasm, "\tmov eax, [eax]\n");
 
-  fprintf(fpasm, "\tcdq\n"); //extensión en signo del dividendo
+  fprintf(fpasm, "\tcdq\n"); //extensión en signo del dividendo EDX:EAX <= EAX
 
   fprintf(fpasm, "\tidiv ecx\n");
   fprintf(fpasm, "\tpush dword eax\n"); //resultado de la division está en eax
 }
 
 
+/**
+ * @brief Realiza la operación lógica "o" de dos operandos.
+ * 
+ * Extrae de la pila los dos operandos, realiza la operación "o"
+ * y guarda el resultado en la pila.
+ * 
+ * @param fpasm fichero donde se imprime el codigo nasm
+ * @param es_variable_1 indica si el primer operando es un referencia o un valor explicito
+ * @param es_variable_2 indica si el segundo operando es un referencia o un valor explicito
+ */
 void o(FILE* fpasm, int es_variable_1, int es_variable_2){
   fprintf(fpasm, "\n;-> Empieza o\n");
 
@@ -227,6 +307,16 @@ void o(FILE* fpasm, int es_variable_1, int es_variable_2){
 }
 
 
+/**
+ * @brief Realiza la operación lógica "y" de dos operandos.
+ * 
+ * Extrae de la pila los dos operandos, realiza la operación "y"
+ * y guarda el resultado en la pila.
+ * 
+ * @param fpasm fichero donde se imprime el codigo nasm
+ * @param es_variable_1 indica si el primer operando es un referencia o un valor explicito
+ * @param es_variable_2 indica si el segundo operando es un referencia o un valor explicito
+ */
 void y(FILE* fpasm, int es_variable_1, int es_variable_2){
   fprintf(fpasm, "\n;-> Empieza y\n");
 
@@ -246,10 +336,13 @@ void y(FILE* fpasm, int es_variable_1, int es_variable_2){
   fprintf(fpasm, "\tpush dword eax\n");
 }
 
-/*
-   Función aritmética de cambio de signo.
-   Es análoga a las binarias, excepto que sólo requiere de un acceso a la pila ya que sólo usa un operando.
-*/
+
+/**
+ * @brief Cambia el signo del entero que hay en la cima de la pila.
+ * 
+ * @param fpasm fichero donde se imprime el codigo nasm
+ * @param es_variable indica si lo que hay en la pila es un referencia o un valor explicito
+ */
 void cambiar_signo(FILE* fpasm, int es_variable){
   fprintf(fpasm, "\n;-> Empieza cambiar_signo\n");
   fprintf(fpasm, "\tpop dword eax\n");
@@ -263,6 +356,15 @@ void cambiar_signo(FILE* fpasm, int es_variable){
 }
 
 
+/**
+ * @brief Función monádica lógica de negación
+ * 
+ * Si encuentra en la cima de la pila un 0 deja en la cima un 1 y al contrario.
+ * 
+ * @param fpasm fichero donde se imprime el codigo nasm
+ * @param es_variable indica si lo que hay en la pila es un referencia o un valor explicito
+ * @param cuantos_no entero necesario para la gestión de etiquetas
+ */
 void no(FILE* fpasm, int es_variable, int cuantos_no){
   fprintf(fpasm, "\n;-> Empieza no\n");
 
@@ -280,16 +382,22 @@ void no(FILE* fpasm, int es_variable, int cuantos_no){
   fprintf(fpasm, "contNo_%d: \n", cuantos_no);  //Ponemos la etiqueta para seguir con el codigo
 }
 
-/*
-   Todas estas funciones reciben como argumento si los elementos a comparar son o no variables.
-   El resultado de las operaciones, que siempre será un booleano
-    (“1” si se cumple la comparación y “0” si no se cumple), se deja en la pila como en el resto de operaciones.
-     Se deben usar etiquetas para poder gestionar los saltos necesarios para implementar las comparaciones.
-*/
+
+/**
+ * @brief Compara dos operandos para comprobar si son distintos y deja el resultado en la pila
+ * 
+ * El resultado de las operaciones, que siempre será un booleano
+ *   (“1” si son iguales y “0” en caso contrario), y se deja en la pila.
+ * 
+ * @param fpasm fichero donde se imprime el codigo nasm
+ * @param es_variable1 indica si el primer operando es una referencia o un valor explicito
+ * @param es_variable2 indica si el primer operando es una referencia o un valor explicito
+ * @param etiqueta entero necesario para gestionar las etiquetas dentro de esta función
+ */
 void igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
   fprintf(fpasm, "\n;-> Empieza igual\n");
 
-  fprintf(fpasm, "\tpop ecx\n");
+  fprintf(fpasm, "\tpop dword ecx\n");
 
   if(es_variable2)
     fprintf(fpasm, "\tmov ecx, [ecx]\n");
@@ -307,10 +415,21 @@ void igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
 }
 
 
+/**
+ * @brief Compara dos operandos para comprobar si son distintos y deja el resultado en la pila
+ * 
+ * El resultado de las operaciones, que siempre será un booleano
+ *   (“1” si son distintos y “0” en caso contrario), y se deja en la pila.
+ * 
+ * @param fpasm fichero donde se imprime el codigo nasm
+ * @param es_variable1 indica si el primer operando es una referencia o un valor explicito
+ * @param es_variable2 indica si el primer operando es una referencia o un valor explicito
+ * @param etiqueta entero necesario para gestionar las etiquetas dentro de esta función
+ */
 void distinto(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
   fprintf(fpasm, "\n;-> Empieza distinto\n");
 
-    fprintf(fpasm, "\tpop ecx\n");
+    fprintf(fpasm, "\tpop dword ecx\n");
 
   if(es_variable2)
     fprintf(fpasm, "\tmov ecx, [ecx]\n");
@@ -328,10 +447,22 @@ void distinto(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
 }
 
 
+/**
+ * @brief Compara dos operandos para comprobar el primero es menor o igual que el segundo
+ * 
+ * El resultado de las operaciones, que siempre será un booleano
+ *   (“1” si el primer operando es menor o igual que el segundo y “0” en caso contrario), 
+ *   y se deja en la pila.
+ * 
+ * @param fpasm fichero donde se imprime el codigo nasm
+ * @param es_variable1 indica si el primer operando es una referencia o un valor explicito
+ * @param es_variable2 indica si el primer operando es una referencia o un valor explicito
+ * @param etiqueta entero necesario para gestionar las etiquetas dentro de esta función
+ */
 void menor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
   fprintf(fpasm, "\n;-> Empieza menor_igual\n");
 
-    fprintf(fpasm, "\tpop ecx\n");
+    fprintf(fpasm, "\tpop dword ecx\n");
 
   if(es_variable2)
     fprintf(fpasm, "\tmov ecx, [ecx]\n");
@@ -346,21 +477,25 @@ void menor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
   fprintf(fpasm, "\tjmp skip_jle%d\n", etiqueta);
   fprintf(fpasm, "jle_true_%d:\n\tpush dword 1\n", etiqueta);
   fprintf(fpasm, "skip_jle%d:\n", etiqueta);
-
 }
 
-/*
-   Todas estas funciones reciben como argumento si los elementos
-   a comparar son o no variables. El resultado de las operaciones,
-   que siempre será un booleano (“1” si se cumple la comparación y “0” si no se cumple),
-   se deja en la pila como en el resto de operaciones. Se deben usar etiquetas para poder
-   gestionar los saltos necesarios para implementar las comparaciones.
-*/
+
+/**
+ * @brief Compara dos operandos para comprobar el primero es mayot o igual que el segundo
+ * 
+ * El resultado de las operaciones, que siempre será un booleano
+ *   (“1” si el primer operando es mayor o igual que el segundo y “0” en caso contrario), 
+ *   y se deja en la pila.
+ * 
+ * @param fpasm fichero donde se imprime el codigo nasm
+ * @param es_variable1 indica si el primer operando es una referencia o un valor explicito
+ * @param es_variable2 indica si el primer operando es una referencia o un valor explicito
+ */
 void mayor_igual(FILE* fpasm, int es_variable1, int es_variable2, __attribute__((unused)) int etiqueta){
-    fprintf(fpasm, "\n;-> Empieza mayor_igual\n");
+  fprintf(fpasm, "\n;-> Empieza mayor_igual\n");
   fprintf(fpasm, "\tmov ebx, 0\n");
 
-  fprintf(fpasm, "\tpop ecx\n");
+  fprintf(fpasm, "\tpop dword ecx\n");
 
   if(es_variable2)
     fprintf(fpasm, "\tmov ecx, [ecx]\n");
@@ -371,14 +506,26 @@ void mayor_igual(FILE* fpasm, int es_variable1, int es_variable2, __attribute__(
 
   fprintf(fpasm, "\tcmp eax, ecx\n");
   fprintf(fpasm, "\tsetge bl\n"); /* Para eliminar completamente el uso de etiquetas*/
-  fprintf(fpasm, "\npush dword ebx\n");
+  fprintf(fpasm, "\tpush dword ebx\n");
 }
 
 
+/**
+ * @brief Compara dos operandos para comprobar el primero es menor que el segundo
+ * 
+ * El resultado de las operaciones, que siempre será un booleano
+ *   (“1” si el primer operando es menor que el segundo y “0” en caso contrario), 
+ *   y se deja en la pila.
+ * 
+ * @param fpasm fichero donde se imprime el codigo nasm
+ * @param es_variable1 indica si el primer operando es una referencia o un valor explicito
+ * @param es_variable2 indica si el primer operando es una referencia o un valor explicito
+ * @param etiqueta entero necesario para gestionar las etiquetas dentro de esta función
+ */
 void menor(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
   fprintf(fpasm, "\n;-> Empieza menor\n");
 
-  fprintf(fpasm, "\tpop ecx\n");
+  fprintf(fpasm, "\tpop dword ecx\n");
 
   if(es_variable2)
     fprintf(fpasm, "\tmov ecx, [ecx]\n");
@@ -396,9 +543,21 @@ void menor(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
 }
 
 
+/**
+ * @brief Compara dos operandos para comprobar el primero es mayor que el segundo
+ * 
+ * El resultado de las operaciones, que siempre será un booleano
+ *   (“1” si el primer operando es mayor que el segundo y “0” en caso contrario), 
+ *   y se deja en la pila.
+ * 
+ * @param fpasm fichero donde se imprime el codigo nasm
+ * @param es_variable1 indica si el primer operando es una referencia o un valor explicito
+ * @param es_variable2 indica si el primer operando es una referencia o un valor explicito
+ * @param etiqueta entero necesario para gestionar las etiquetas dentro de esta función
+ */
 void mayor(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
   fprintf(fpasm, "\n;-> Empieza mayor\n");
-    fprintf(fpasm, "\tpop ecx\n");
+    fprintf(fpasm, "\tpop dword ecx\n");
 
   if(es_variable2)
     fprintf(fpasm, "\tmov ecx, [ecx]\n");
@@ -416,6 +575,13 @@ void mayor(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
 }
 
 
+/**
+ * @brief Lee por teclado una variable(entero o booleano).
+ * 
+ * @param fpasm fichero donde se imprime el codigo nasm
+ * @param nombre nombre de la variable donde se va a guardar el valor leido
+ * @param tipo tipo de variable que se va a leer por teclado
+ */
 void leer(FILE* fpasm, char* nombre, int tipo){
   fprintf(fpasm, "\n;-> Empieza leer\n");
 
@@ -426,10 +592,16 @@ void leer(FILE* fpasm, char* nombre, int tipo){
     fprintf(fpasm, "\tcall scan_int\n");
   }
   fprintf(fpasm, "\tadd esp, 4\n");
-
 }
 
 
+/**
+ * @brief imprime una variable entera o booleana por consola
+ * 
+ * @param fpasm fichero donde se imprime el codigo nasm
+ * @param es_variable indica si el contendi a imprimir es una referencia o un valor explicito
+ * @param tipo tipo de la variable que se va a imprimir
+ */
 void escribir(FILE* fpasm, int es_variable, int tipo){
   fprintf(fpasm, "\n;-> Empieza escribir\n");
 

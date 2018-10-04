@@ -1,0 +1,33 @@
+main
+{
+	int x;
+	int y;
+	int z;
+	boolean b1;
+	boolean b2;
+	boolean b3;
+
+	x = 53;
+	y = 10;
+	z = 90;
+	z = x;
+	
+	z = x + y;
+	printf z;
+
+	z = x - y;
+	printf z;
+
+	z = x * y;
+	printf z;
+
+	z = x / y;
+	printf z;
+
+	scan b1;
+	scan b2;
+
+	b3 = b1 && b2
+	b3 = b1 || b2
+
+}

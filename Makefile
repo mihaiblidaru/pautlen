@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Wall -g -O0 -m32
 LDFLAGS = -m32 -g
-LDLIBS =
+LDLIBS = 
 AS = nasm
 ASFLAGS = -g -f elf32
 
@@ -22,11 +22,21 @@ programa%.asm: ej%
 programa%.o: programa%.asm
 	nasm -g -f elf32 -o $@ $<
 
-PHONY: clean all
+PHONY: clean coverage all
 
 clean:
 	ls *.o | sed -e 's/olib.o//'| xargs rm -f
-	rm -f ej1 ej2 ej3 ej4 programa1 programa2 programa3 programa4 *.asm
+	rm -f ej1 ej2 ej3 ej4 programa1 programa2 programa3 programa4 generacion.c.gcov *.asm *.gcda *.gcno
 
+coverage:
+	make CFLAGS="-Wall -Wextra -Wall -g -O0 -m32 -fprofile-arcs -ftest-coverage" LDLIBS="-lgcov" all
+	gcov -f generacion.c
+	rm -f *.gcda *.gcno
+	@echo ''
+	@echo 'Lineas no ejecutadas'
+	@echo ''
+	@cat generacion.c.gcov | grep '###'
+	@echo ''
+	
 #para que conserve los archivos asm despues de la compilacion
 .SECONDARY: programa1.asm programa2.asm programa4.asm programa3.asm programa5.asm

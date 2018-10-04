@@ -20,22 +20,22 @@
   Lista* lst = lista_crear();
 
   lista_pushfirst(lst, test3); // añade al principio de la lista
-  lst->pushfirst(lst, test3);    // lo mismo pero con otra sintaxis al estilo orientado a objetos
+
   
   lista_pushlast(lst, test4)      // añade al final de la lista
-  lst->pushlast(lst, test4);  // Lo mismo pero con otra sintaxis
+
   
   void* info1 = lista_popfirst(lst); // quita y devuelve el primer elemento de la lista
   void* info1 = lst->popfirst(lst); //Lo mismo
   
   lista_getat(lst, 1); // devuelve el elemento con indice 1 de la lista sin eliminarlo
-  lst->getat(lst, 1); lo mismo   
+
   
   lista_length(lst); //devuelve la longitud de la lista
-  lst->length(lst); //lo mismo
+
   
   lista_free(Lista* lista)  //destruye la lista
-  lst->free(lst) //lo mismo
+
   
 
 ```

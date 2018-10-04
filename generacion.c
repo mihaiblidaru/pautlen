@@ -85,9 +85,9 @@ void escribir_segmento_codigo(FILE* fpasm){
  * @param fpasm fichero donde se imprime el codigo nasm
  */
 void escribir_inicio_main(FILE* fpasm){
-    fprintf(fpasm, "\n;-> Empieza inicio_main\n");
-    fprintf(fpasm, "main:\n");
-    fprintf(fpasm, "\tmov [__esp], esp\n");
+  fprintf(fpasm, "\n;-> Empieza inicio_main\n");
+  fprintf(fpasm, "main:\n");
+  fprintf(fpasm, "\tmov [__esp], esp\n");
 }
 
 
@@ -429,7 +429,7 @@ void igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
 void distinto(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
   fprintf(fpasm, "\n;-> Empieza distinto\n");
 
-    fprintf(fpasm, "\tpop dword ecx\n");
+  fprintf(fpasm, "\tpop dword ecx\n");
 
   if(es_variable2)
     fprintf(fpasm, "\tmov ecx, [ecx]\n");
@@ -462,8 +462,7 @@ void distinto(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
 void menor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
   fprintf(fpasm, "\n;-> Empieza menor_igual\n");
 
-    fprintf(fpasm, "\tpop dword ecx\n");
-
+  fprintf(fpasm, "\tpop dword ecx\n");
   if(es_variable2)
     fprintf(fpasm, "\tmov ecx, [ecx]\n");
 
@@ -606,9 +605,9 @@ void escribir(FILE* fpasm, int es_variable, int tipo){
   fprintf(fpasm, "\n;-> Empieza escribir\n");
 
   if(es_variable){
-      fprintf(fpasm, "\tpop dword eax\n");
-      fprintf(fpasm, "\tmov eax, [eax]\n");
-      fprintf(fpasm, "\tpush dword eax\n");
+    fprintf(fpasm, "\tpop dword eax\n");
+    fprintf(fpasm, "\tmov eax, [eax]\n");
+    fprintf(fpasm, "\tpush dword eax\n");
   }
 
   if(tipo == BOOLEANO){

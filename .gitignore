@@ -59,3 +59,6 @@ programa2
 programa3
 programa4
 programa5
+
+*.gcda
+*.gcno

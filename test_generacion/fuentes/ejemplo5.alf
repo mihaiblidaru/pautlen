@@ -1,0 +1,19 @@
+main
+{
+	int x;
+	int y;
+	boolean a;
+	boolean b;
+	
+	scanf y;
+
+	x = y;
+
+	printf x;
+
+	scanf b;
+
+	a = b;
+
+	printf a;
+}

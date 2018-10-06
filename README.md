@@ -5,7 +5,101 @@
 |[Enunciado de la práctica](https://docs.google.com/document/d/1kYNRC2WBayJQeK93sLsM8Nc1hPL19X-lXwz5j2B-R1Y/edit)|[Ejemplos de reserva de memoria](#ejemplos-de-reserva-de-memoria)|[Tabla instrucciones x86](https://c9x.me/x86/)|
 |-----------------------------------------------------------------|----------------------------------------------|------|
 
+### Test de generación.c
 
+```
+gcov -f generacion.c
+Function 'escribir'
+Lines executed:100.00% of 12
+
+Function 'leer'
+Lines executed:100.00% of 8
+
+Function 'mayor'
+Lines executed:93.33% of 15
+
+Function 'menor'
+Lines executed:93.33% of 15
+
+Function 'mayor_igual'
+Lines executed:92.31% of 13
+
+Function 'menor_igual'
+Lines executed:93.33% of 15
+
+Function 'distinto'
+Lines executed:93.33% of 15
+
+Function 'igual'
+Lines executed:93.33% of 15
+
+Function 'no'
+Lines executed:100.00% of 12
+
+Function 'cambiar_signo'
+Lines executed:100.00% of 8
+
+Function 'y'
+Lines executed:90.91% of 11
+
+Function 'o'
+Lines executed:90.91% of 11
+
+Function 'dividir'
+Lines executed:92.86% of 14
+
+Function 'multiplicar'
+Lines executed:100.00% of 11
+
+Function 'restar'
+Lines executed:100.00% of 11
+
+Function 'sumar'
+Lines executed:100.00% of 11
+
+Function 'asignar'
+Lines executed:100.00% of 8
+
+Function 'escribir_operando'
+Lines executed:100.00% of 6
+
+Function 'escribir_fin'
+Lines executed:100.00% of 12
+
+Function 'escribir_inicio_main'
+Lines executed:100.00% of 5
+
+Function 'escribir_segmento_codigo'
+Lines executed:100.00% of 5
+
+Function 'declarar_variable'
+Lines executed:100.00% of 3
+
+Function 'escribir_subseccion_data'
+Lines executed:100.00% of 4
+
+Function 'escribir_cabecera_bss'
+Lines executed:100.00% of 4
+
+File 'generacion.c'
+Lines executed:96.31% of 244
+Creating 'generacion.c.gcov'
+
+rm -f *.gcda *.gcno
+
+Lineas no ejecutadas
+
+    #####:  265:    fprintf(fpasm, "\tmov ecx, [ecx]\n");
+    #####:  296:    fprintf(fpasm, "\tmov eax, [eax]\n");
+    #####:  326:    fprintf(fpasm, "\tmov eax, [eax]\n");
+    #####:  403:    fprintf(fpasm, "\tmov ecx, [ecx]\n");
+    #####:  435:    fprintf(fpasm, "\tmov ecx, [ecx]\n");
+    #####:  467:    fprintf(fpasm, "\tmov ecx, [ecx]\n");
+    #####:  500:    fprintf(fpasm, "\tmov ecx, [ecx]\n");
+    #####:  530:    fprintf(fpasm, "\tmov ecx, [ecx]\n");
+    #####:  562:    fprintf(fpasm, "\tmov ecx, [ecx]\n");
+
+```
 
 ### Ejemplos de uso de la lista enlazada:
 

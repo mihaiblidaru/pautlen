@@ -1,8 +1,8 @@
 # Práctica 2 - PAUTLEN 1311
 ## Reparto de Tokens Procedural
 
-|     Andrés                      |          Sergio                                                                                                                                                                                                                |   |                     |                                                                 |
-|---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---|---------------------|-----------------------------------------------------------------|
+|     Andrés                |                 Sergio                                          |
+|---------------------------|-----------------------------------------------------------------|
 | Token                     | Descripción                                                                                                                                                                                                              |   | Token               | Descripción                                                     |
 | class                     | Para declarar una clase                                                                                                                                                                                                  |   | inherits            | Para indicar que una clase hereda de otras                      |
 | instance_of               | Para instanciar una clase                                                                                                                                                                                                |   | discard             | Para liberar los recursos asociados a una instancia             |

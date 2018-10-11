@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include "hash.h"
 
 /**************** FUNCIONES ****************/
@@ -139,4 +140,11 @@ void* hash_buscar(TablaHash *tabla, const char *clave){
 		}
 	}
 	return NULL;
+}
+
+/** Devuelve si la tabla hash contiene una clave o no*/
+bool hash_contiene(TablaHash* tabla, const char *clave){
+	if(tabla != NULL && clave != NULL)
+		return hash_buscar(tabla, clave) != NULL;
+	return false;
 }

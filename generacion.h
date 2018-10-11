@@ -17,10 +17,6 @@
 
 #include <stdio.h>
 
-/* Declaraciones de tipos de datos del compilador */
-#define ENTERO	0
-#define BOOLEANO 	1
-
 /**
  * @brief Escribe el codigo de la seccion .bss
  * Declara el segmento y reserva 32 bits para guardar

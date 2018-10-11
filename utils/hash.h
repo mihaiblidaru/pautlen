@@ -48,4 +48,8 @@ int hash_insertar(TablaHash *tabla, const char *clave, void *info);
 //Busca en la tabla hash el nodo identificado por su clave y lo devuelve. NULL en caso contrario.
 void* hash_buscar(TablaHash *tabla, const char *clave);
 
+
+/** Devuelve si la tabla hash contiene una clave o no*/
+bool hash_contiene(TablaHash* tabla, const char *clave);
+
 #endif

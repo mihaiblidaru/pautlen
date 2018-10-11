@@ -1,19 +1,20 @@
 # Práctica 2 - PAUTLEN 1311
 ## Reparto de Tokens Procedural
 
-| Andrés | Sergio |
-| ------ | ----- |
-|class|inherits|
-|instance_of|discard|
-|itself|hidden|
-|secret|exposed|
-|unique|function|
-|return|main|
-|int|boolean|
-|array|if|
-|else|while|
-|scanf|printf|
-|false|true|
-|; # , = ( ) [ ] { }|: + - / * < > & ! .|
-|== != <= >=|&& OR ->|
-|Identidicadores, Enteros|Comentarios|
+|     Andrés                      |          Sergio                                                                                                                                                                                                                |   |                     |                                                                 |
+|---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---|---------------------|-----------------------------------------------------------------|
+| Token                     | Descripción                                                                                                                                                                                                              |   | Token               | Descripción                                                     |
+| class                     | Para declarar una clase                                                                                                                                                                                                  |   | inherits            | Para indicar que una clase hereda de otras                      |
+| instance_of               | Para instanciar una clase                                                                                                                                                                                                |   | discard             | Para liberar los recursos asociados a una instancia             |
+| itself                    | Para referirse al objeto dentro del que se encuentra                                                                                                                                                                     |   | hidden              | Cualificador de acceso                                          |
+| secret                    | Cualificador de acceso                                                                                                                                                                                                   |   | exposed             | Cualificador de acceso                                          |
+| unique                    | Indicador de que el miembro al que se refiere es de clase en oposición a ser de instancia                                                                                                                                |   | function            | Para declarar una función                                       |
+| return                    | Fin de función                                                                                                                                                                                                           |   | main                | Para nombrar el programa principal                              |
+| int                       | Tipos de dato básicos                                                                                                                                                                                                    |   | boolean             | Tipos de dato básicos                                           |
+| array                     | Para declarar arrays                                                                                                                                                                                                     |   | if                  | Para las sentencias de control de flujo de programa condicional |
+| else                      | Para las sentencias de control de flujo de programa condicional                                                                                                                                                          |   | while               | Para bucles                                                     |
+| scanf                     | Sentencias de entrada / salida                                                                                                                                                                                           |   | printf              | Sentencias de entrada / salida                                  |
+| false                     | Constantes booleanas                                                                                                                                                                                                     |   | true                | Constantes booleanas                                            |
+| ; # , = ( ) [ ] { }       |                                                                                                                                                                                                                          |   | : + - / * < > & ! . |                                                                 |
+| == != <= >=               |  Comparación de igualdad Comparación de distinto Comparación de menor o igual  Comparación de mayor o igual                                                                                                              |   | && || ->            |  AND OR   Operador de acceso (flecha)                           |
+| Identidicadores y Enteros |  Comienzan por letra mayúscula o minúscula,   seguida por cualquier cantidad, incluida 0,   de letras mayúsculas o minúsculas y dígitos. No pueden tener una longitud superior a 50  La notación habitual en matemáticas |   | Eneros              | Desde el símbolo // hasta el final de la línea donde esté       |

@@ -27,12 +27,14 @@ typedef enum { ENTERO, BOOLEANO } TIPO;
 /* Clase de un símbolo: pueden ser variables atómicas (escalares) o listas/arrays (vectores) */
 typedef enum { ESCALAR, VECTOR } CLASE;
 
+#define LONGITUD_MAXIMA_INDENTIFICADOR 256
 
 typedef struct {
 /****** campos comunes usados para todos los tipos de simbolos ******/
-    char *identificador;
+    char identificador[256];
+
     CATEGORIA categoria;
-    /* clase de simbolo funcion, variable global o local*/
+/* categoria de simbolo funcion, variable global o local*/
     
 /********************************************************************/
     
@@ -49,16 +51,14 @@ typedef struct {
 /********************************************************************/
     
 /****************** Solo para las variables locales******************/
-    int pos_variable_local; /* Probablemente sea la posición que ocupara
-    una variable local en la pila con respeto a esp o ebp. Ej:
+    int pos_variable_local; /* Por lo que he leido en otros repositorios
+    es el orden de declaración de las variables
 
     void mi_funcion(){
-        int a, b;
-        a = 2; esto se traduce a ->	mov	DWORD PTR -8[ebp], 2
-        b = 3; esto se traduce a -> mov	DWORD PTR -4[ebp], 3
+        int a; ->posicion 0 
+        int b; -> posicion 1
     }
 
-    aqui se guadará el -8 o el -4 del ejemplo anterior.
     
 /*********************************************************************/
 

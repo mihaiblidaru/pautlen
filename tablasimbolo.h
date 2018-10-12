@@ -34,44 +34,38 @@ TablaSimbolos* TS_crear();
 void TS_eliminar(TablaSimbolos* ts);
 
 /**
- * @brief Inserta en la tabla de simbolos la definicion de una funcion.
+ * @brief Cambia de ambito seleccionado.
  * 
- * Inserta en la tabla de simbolos activa una función.
- * Si el ambito activo es el local no se debe hacer nada y devolver error
- * ya que no se pueden anidar funciones.
- * 
- * Hay que comprobar que el simbolo no este presente:
- *      para eso está la función hash_contiene.
- *    * 
- * @param ts Tabla de simbolos
- * @param nombre Nombre de la funcion a declarar
- * @param num_parametros número de parametros de la funcion
- * @param num_var_locales número de variables locales dentro de la función
- * @return TablaSimbolos* 
- */
-TablaSimbolos* TS_insertaFuncion(TablaSimbolos* ts, char* nombre,
-                              int num_parametros, int num_var_locales);
-
-
-/**
- * @brief Inserta una variable en el ambito seleccionado
- * 
- * @param ts 
- * @param nombre 
- * @param tamano 
- * @return TablaSimbolos* 
- */
-TablaSimbolos* TS_insertaVariable(TablaSimbolos *ts, char* nombre, int tamano);
-
-
-/**
- * @brief Cambia de ambito seleccionado
+ * Cuando se cambia de local a global, se destruye el local.
  * 
  * @param ts tabla de simbolos
  * @return TablaSimbolos* 
  */
 TablaSimbolos* TS_cambiaAmbito(TablaSimbolos* ts);
 
+/**
+ * @brief inserta un simbolo en la tabla hash activas
+ * 
+ * Cuidado: las funciones no se pueden insertar en la tabla local
+ * 
+ * En los dos casos hay que comprobar que no exista es simbolo.
+ * Esto se puede hacer con hash_contiene.
+ * 
+ * la clave para la tabla hash va a ser el identificador del simbolo
+ * 
+ * @param ts 
+ * @param simbolo 
+ * @return TablaSimbolos* 
+ */
+TablaSimbolos* TS_insertarSimbolo(TablaSimbolos* ts, InfoSimbolo* simbolo);
+
+/**
+ * @brief Devuelve un simbolo de la tabla hash activa
+ * 
+ * @param ts 
+ * @param clave 
+ * @return InfoSimbolo* 
+ */
 InfoSimbolo* TS_buscar(TablaSimbolos*ts, const char* clave);
 
 

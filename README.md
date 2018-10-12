@@ -5,7 +5,7 @@
 |[Enunciado de la práctica](https://docs.google.com/document/d/1kYNRC2WBayJQeK93sLsM8Nc1hPL19X-lXwz5j2B-R1Y/edit)|[Ejemplos de reserva de memoria](#ejemplos-de-reserva-de-memoria)|[Tabla instrucciones x86](https://c9x.me/x86/)|
 |-----------------------------------------------------------------|----------------------------------------------|------|
 
-#OO
+# OO
 
 He subido dos .h de simbolo y tabla de simbolo.
 

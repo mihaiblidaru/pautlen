@@ -11,10 +11,13 @@ He subido dos .h de simbolo y tabla de simbolo.
 
 Basicamente hay una estructura InfoSimbolo que va a contener toda la infomación de un simbolo(variable, funcion, parametro).
 
-La tabla de simbolos contiene 2 tipos tablas_hash y un entero que representa cual de las dos tablas hay que usar para las operaciones de la tabla.
+Luego la estructura TablaSimbolos contiene 2 tipos tablas_hash y un entero que representa cual de las dos tablas hay que usar para las operaciones de la tabla de simbolos(2 tablas hash <=> 2 ambitos(global y local)).
 
 Para simplificar el trabajo por ahora, en la tabla de simbolos se insertan directamente estructuras InfoSimbolo y solamente se tendra que gestionar la inserción, la busqueda y el cambio de ambito.
 
+La inserción será probablemente la más complicada ya que hay que controlar varias cosas:
+1. que no exista ningun otro simbolo con ese nombre
+2. que no se inserte una función dentro del ambito local
    
 
 La otra opcion era tener funciones como insertaFuncion, insertaVariable etc pero como la información que tenemos es bastante ambigua he pensado que para tenerlo acabado es mas simple tenerlo asi.

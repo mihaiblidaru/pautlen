@@ -14,6 +14,7 @@
 #define HASH
 
 #include <stdio.h>
+#include <stdbool.h>
 
 /**************** CONSTANTES ****************/
 #define OK 1

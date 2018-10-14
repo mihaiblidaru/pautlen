@@ -18,6 +18,10 @@
 #ifndef SIMBOLO_H
 #define SIMBOLO_H
 
+/**************** CONSTANTES ****************/
+#define OK 1
+#define ERROR 0
+
 /* Categoría de un símbolo: variable, parámetro de función o función */
 typedef enum { VARIABLE, PARAMETRO, FUNCION } CATEGORIA;
 
@@ -90,7 +94,7 @@ typedef struct {
 
 
 InfoSimbolo* InfoSimbolo_crear();
-void InfoSimbolo_eliminar(InfoSimbolo* is);
+int InfoSimbolo_eliminar(InfoSimbolo* is);
 
 
 #endif

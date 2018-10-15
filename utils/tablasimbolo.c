@@ -93,16 +93,13 @@ TablaSimbolos* TS_insertarSimbolo(TablaSimbolos* ts, InfoSimbolo* simbolo){
 
 InfoSimbolo* TS_buscar(TablaSimbolos*ts, const char* clave){
 
-    InfoSimbolo* result = NULL;
     if(!ts || !clave){
         return NULL;
     }
 
     if(ts->ambito == GLOBAL){
-        result = hash_buscar(ts->global, clave);
-        return result;
+        return hash_buscar(ts->global, clave);
     }
     
-    result = hash_buscar(ts->local, clave);
-    return result;
+    return hash_buscar(ts->local, clave);
 }

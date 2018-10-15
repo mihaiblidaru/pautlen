@@ -1,0 +1,50 @@
+#ifndef TOKENS_H
+#define TOKENS_H
+
+/* PALABRAS RESERVADAS */
+#define TOK_NONE 400
+#define TOK_CLASS 258
+#define TOK_INHERITS 259
+#define TOK_INSTANCE_OF 260
+#define TOK_DISCARD 261
+#define TOK_ITSELF 262
+#define TOK_FLECHA 263
+#define TOK_HIDEN 264
+#define TOK_SECRET 265
+#define TOK_EXPOSED 266
+#define TOK_UNIQUE 267
+
+#define TOK_FOR 268
+#define TOK_FUNCTION 272
+#define TOK_RETURN 273
+#define TOK_MAIN 274
+#define TOK_INT 275
+#define TOK_BOOLEAN 276
+#define TOK_ARRAY 278
+#define TOK_IF 280
+#define TOK_ELSE 281
+#define TOK_WHILE 282
+#define TOK_SCANF 283
+#define TOK_PRINTF 284
+
+/* OPERADORES */
+#define TOK_IGUAL 297
+#define TOK_DISTINTO 298
+#define TOK_MENORIGUAL 299
+#define TOK_MAYORIGUAL 300
+#define TOK_OR 301
+#define TOK_AND 302
+
+/* CONSTANTES */
+#define TOK_CONSTANTE_ENTERA 303
+#define TOK_FALSE 295
+#define TOK_TRUE 296
+
+
+/* IDENTIFICADOR */
+#define TOK_IDENTIFICADOR 305
+
+/* ERRORES */
+#define TOK_ERR -1
+
+#endif

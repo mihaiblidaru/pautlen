@@ -47,8 +47,4 @@
 /* ERRORES */
 #define TOK_ERR -1
 
-<<<<<<< HEAD
 #endif
-=======
-#endif
->>>>>>> 425aad9204e48819ad302fd829f5a283dfb2fdcd

@@ -13,7 +13,7 @@ ENTERO "-"?[0-9]+
 IDENTIFICADOR [a-zA-Z][a-zA-Z0-9]*
 COMENTARIO "//".*
 OPERADOR (";"|"#"|","|"="|"("|")"|"["|"]"|"{"|"}"|":"|"+"|"-"|"/"|"*"|"<"|">"|"&"|"!"|".")
-
+/* yytext es la palabra leida */
 %%
 class	        { fprintf(pf, "TOK_CLASS\t%d %s\n", TOK_CLASS, yytext);}
 inherits	    { fprintf(pf, "TOK_INHERITS\t%d %s\n", TOK_INHERITS, yytext);}

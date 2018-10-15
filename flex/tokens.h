@@ -20,7 +20,7 @@
 #define TOK_MAIN 274
 #define TOK_INT 275
 #define TOK_BOOLEAN 276
-#define TOK_ARRAY 278	
+#define TOK_ARRAY 278
 #define TOK_IF 280
 #define TOK_ELSE 281
 #define TOK_WHILE 282
@@ -47,4 +47,8 @@
 /* ERRORES */
 #define TOK_ERR -1
 
+<<<<<<< HEAD
 #endif
+=======
+#endif
+>>>>>>> 425aad9204e48819ad302fd829f5a283dfb2fdcd

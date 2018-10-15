@@ -1,8 +1,16 @@
 #ifndef TABLASIMBOLO_H
 #define TABLASIMBOLO_H
 
-#include "utils/hash.h"
+#include "hash.h"
 #include "simbolo.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+/**************** CONSTANTES ****************/
+#define DEF_TAM 10
+#define OK 1
+#define ERROR 0
 
 typedef enum { GLOBAL, LOCAL } Ambito;
 
@@ -31,7 +39,7 @@ TablaSimbolos* TS_crear();
  * @param ts tabla de simbolos a liberar
  */
 
-void TS_eliminar(TablaSimbolos* ts);
+int TS_eliminar(TablaSimbolos* ts);
 
 /**
  * @brief Cambia de ambito seleccionado.

@@ -15,39 +15,39 @@ COMENTARIO "//".*
 OPERADOR (";"|"#"|","|"="|"("|")"|"["|"]"|"{"|"}"|":"|"+"|"-"|"/"|"*"|"<"|">"|"&"|"!"|".")
 
 %%
-class	        { fprintf(pf, "TOK_CLASS         %d %s\n", TOK_CLASS, yytext);}
-inherits	    { fprintf(pf, "TOK_INHERITS      %d %s\n", TOK_INHERITS, yytext);}
-instance_of	    { fprintf(pf, "TOK_INSTANCE_OF   %d %s\n", TOK_INSTANCE_OF, yytext);}
-discard	        { fprintf(pf, "TOK_DISCARD       %d %s\n", TOK_DISCARD, yytext);}
-itself	        { fprintf(pf, "TOK_ITSELF        %d %s\n", TOK_ITSELF, yytext);}
-hidden	 	    { fprintf(pf, "TOK_HIDEN         %d %s\n", TOK_HIDEN, yytext);}
-secret	        { fprintf(pf, "TOK_SECRET        %d %s\n", TOK_SECRET, yytext);}
-exposed		    { fprintf(pf, "TOK_EXPOSED       %d %s\n", TOK_EXPOSED, yytext);}
-unique	        { fprintf(pf, "TOK_UNIQUE        %d %s\n", TOK_UNIQUE, yytext);}
-function	    { fprintf(pf, "TOK_FUNCTION      %d %s\n", TOK_FUNCTION, yytext);}
-return	        { fprintf(pf, "TOK_RETURN        %d %s\n", TOK_RETURN, yytext);}
-main		    { fprintf(pf, "TOK_MAIN          %d %s\n", TOK_MAIN, yytext);}
-int	            { fprintf(pf, "TOK_INT           %d %s\n", TOK_INT, yytext);}
-boolean 	    { fprintf(pf, "TOK_BOOLEAN       %d %s\n", TOK_BOOLEAN, yytext);}
-array	        { fprintf(pf, "TOK_ARRAY         %d %s\n", TOK_ARRAY, yytext);}
-if		        { fprintf(pf, "TOK_IF            %d %s\n", TOK_IF, yytext);}
-else	        { fprintf(pf, "TOK_ELSE          %d %s\n", TOK_ELSE, yytext);}
-while		    { fprintf(pf, "TOK_WHILE         %d %s\n", TOK_WHILE, yytext);}
-scanf	        { fprintf(pf, "TOK_SCANF         %d %s\n", TOK_SCANF, yytext);}
-printf		    { fprintf(pf, "TOK_PRINTF        %d %s\n", TOK_PRINTF, yytext);}
-false	        { fprintf(pf, "TOK_FALSE         %d %s\n", TOK_FALSE, yytext);}
-true	        { fprintf(pf, "TOK_TRUE          %d %s\n", TOK_TRUE, yytext);}
-"=="		    { fprintf(pf, "TOK_IGUAL         %d %s\n", TOK_IGUAL, yytext);}
-"!="		    { fprintf(pf, "TOK_DISTINTO      %d %s\n", TOK_DISTINTO, yytext);}
-"<="		    { fprintf(pf, "TOK_MENORIGUAL    %d %s\n", TOK_MENORIGUAL, yytext);}
-">="		    { fprintf(pf, "TOK_MAYORIGUAL    %d %s\n", TOK_MAYORIGUAL, yytext);}
-"&&"		    { fprintf(pf, "TOK_AND           %d %s\n", TOK_AND, yytext);}
-"||"		    { fprintf(pf, "TOK_OR            %d %s\n", TOK_OR, yytext);}
-"->"		    { fprintf(pf, "TOK_FLECHA        %d %s\n", TOK_FLECHA, yytext);}
-{ENTERO}	    { fprintf(pf, "TOK_CONSTANTE_ENTERA %d %s\n",TOK_CONSTANTE_ENTERA, yytext);}
-{IDENTIFICADOR}	{ fprintf(pf, "TOK_IDENTIFICADOR %d %s\n",TOK_IDENTIFICADOR, yytext);}
+class	        { fprintf(pf, "TOK_CLASS\t%d %s\n", TOK_CLASS, yytext);}
+inherits	    { fprintf(pf, "TOK_INHERITS\t%d %s\n", TOK_INHERITS, yytext);}
+instance_of	    { fprintf(pf, "TOK_INSTANCE_OF\t%d %s\n", TOK_INSTANCE_OF, yytext);}
+discard	        { fprintf(pf, "TOK_DISCARD\t%d %s\n", TOK_DISCARD, yytext);}
+itself	        { fprintf(pf, "TOK_ITSELF\t%d %s\n", TOK_ITSELF, yytext);}
+hidden	 	    { fprintf(pf, "TOK_HIDEN\t%d %s\n", TOK_HIDEN, yytext);}
+secret	        { fprintf(pf, "TOK_SECRET\t%d %s\n", TOK_SECRET, yytext);}
+exposed		    { fprintf(pf, "TOK_EXPOSED\t%d %s\n", TOK_EXPOSED, yytext);}
+unique	        { fprintf(pf, "TOK_UNIQUE\t%d %s\n", TOK_UNIQUE, yytext);}
+function	    { fprintf(pf, "TOK_FUNCTION\t%d %s\n", TOK_FUNCTION, yytext);}
+return	        { fprintf(pf, "TOK_RETURN\t%d %s\n", TOK_RETURN, yytext);}
+main		    { fprintf(pf, "TOK_MAIN\t%d %s\n", TOK_MAIN, yytext);}
+int	            { fprintf(pf, "TOK_INT\t%d %s\n", TOK_INT, yytext);}
+boolean 	    { fprintf(pf, "TOK_BOOLEAN\t%d %s\n", TOK_BOOLEAN, yytext);}
+array	        { fprintf(pf, "TOK_ARRAY\t%d %s\n", TOK_ARRAY, yytext);}
+if		        { fprintf(pf, "TOK_IF\t%d %s\n", TOK_IF, yytext);}
+else	        { fprintf(pf, "TOK_ELSE\t%d %s\n", TOK_ELSE, yytext);}
+while		    { fprintf(pf, "TOK_WHILE\t%d %s\n", TOK_WHILE, yytext);}
+scanf	        { fprintf(pf, "TOK_SCANF\t%d %s\n", TOK_SCANF, yytext);}
+printf		    { fprintf(pf, "TOK_PRINTF\t%d %s\n", TOK_PRINTF, yytext);}
+false	        { fprintf(pf, "TOK_FALSE\t%d %s\n", TOK_FALSE, yytext);}
+true	        { fprintf(pf, "TOK_TRUE\t%d %s\n", TOK_TRUE, yytext);}
+"=="		    { fprintf(pf, "TOK_IGUAL\t%d %s\n", TOK_IGUAL, yytext);}
+"!="		    { fprintf(pf, "TOK_DISTINTO\t%d %s\n", TOK_DISTINTO, yytext);}
+"<="		    { fprintf(pf, "TOK_MENORIGUAL\t%d %s\n", TOK_MENORIGUAL, yytext);}
+">="		    { fprintf(pf, "TOK_MAYORIGUAL\t%d %s\n", TOK_MAYORIGUAL, yytext);}
+"&&"		    { fprintf(pf, "TOK_AND\t%d %s\n", TOK_AND, yytext);}
+"||"		    { fprintf(pf, "TOK_OR\t%d %s\n", TOK_OR, yytext);}
+"->"		    { fprintf(pf, "TOK_FLECHA\t%d %s\n", TOK_FLECHA, yytext);}
+{ENTERO}	    { fprintf(pf, "TOK_CONSTANTE_ENTERA\t%d %s\n",TOK_CONSTANTE_ENTERA, yytext);}
+{IDENTIFICADOR}	{ fprintf(pf, "TOK_IDENTIFICADOR\t%d %s\n",TOK_IDENTIFICADOR, yytext);}
 {COMENTARIO}	{ fprintf(pf, "TOK_COMENTARIO    317(no hay token definido) %s\n", yytext);}
-{OPERADOR}	    { fprintf(pf, "SIMBOLO_SIMPLE    %d %s\n", (int)yytext[0], yytext);}
+{OPERADOR}	    { fprintf(pf, "SIMBOLO_SIMPLE\t%d %s\n", (int)yytext[0], yytext);}
 
 %%
 

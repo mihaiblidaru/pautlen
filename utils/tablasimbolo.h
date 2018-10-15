@@ -76,6 +76,4 @@ TablaSimbolos* TS_insertarSimbolo(TablaSimbolos* ts, InfoSimbolo* simbolo);
  */
 InfoSimbolo* TS_buscar(TablaSimbolos*ts, const char* clave);
 
-
-
 #endif

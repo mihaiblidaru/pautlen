@@ -6,55 +6,58 @@ FILE *pf = NULL;
 %}
 
 %option noyywrap
+%option nounput
+%option noinput
 
 ENTERO "-"?[0-9]+
 IDENTIFICADOR [a-zA-Z][a-zA-Z0-9]*
-COMENTARIO ["//"][a-zA-Z0-9]+
+COMENTARIO "//".*
 OPERADOR (";"|"#"|","|"="|"("|")"|"["|"]"|"{"|"}"|":"|"+"|"-"|"/"|"*"|"<"|">"|"&"|"!"|".")
 
 %%
-class	{ fprintf(pf,"TOK_CLASS    %d class\n", TOK_CLASS);}
-inherits	{ fprintf(pf,"TOK_INHERITS    %d inherits\n", TOK_INHERITS);}
-instance_of	{ fprintf(pf,"TOK_INSTANCE_OF    %d instance_of\n", TOK_INSTANCE_OF);}
-discard	{ fprintf(pf,"TOK_DISCARD    %d discard\n", TOK_DISCARD);}
-itself	{ fprintf(pf,"TOK_ITSELF    %d itself\n", TOK_ITSELF);}
-hidden	 	{ fprintf(pf,"TOK_HIDEN    %d hidden\n", TOK_HIDEN);}
-secret	{ fprintf(pf,"TOK_SECRET    %d secret\n", TOK_SECRET);}
-exposed		{ fprintf(pf,"TOK_EXPOSED    %d exposed\n", TOK_EXPOSED);}
-unique	{ fprintf(pf,"TOK_UNIQUE    %d unique\n", TOK_UNIQUE);}
-function	{ fprintf(pf,"TOK_FUNCTION    %d function\n", TOK_FUNCTION);}
-return	{ fprintf(pf,"TOK_RETURN    %d return\n", TOK_RETURN);}
-main		{ fprintf(pf,"TOK_MAIN    %d main\n", TOK_MAIN);}
-int	{ fprintf(pf,"TOK_INT    %d int\n", TOK_INT);}
-boolean 	{ fprintf(pf,"TOK_BOOLEAN    %d boolean\n", TOK_BOOLEAN);}
-array	{ fprintf(pf,"TOK_ARRAY    %d array\n", TOK_ARRAY);}
-if		{ fprintf(pf,"TOK_IF    %d if\n", TOK_IF);}
-else	{ fprintf(pf,"TOK_ELSE    %d else\n", TOK_ELSE);}
-while		{ fprintf(pf,"TOK_WHILE    %d while\n", TOK_WHILE);}
-scanf	{ fprintf(pf,"TOK_SCANF    %d scanf\n", TOK_SCANF);}
-printf		{ fprintf(pf,"TOK_PRINTF    %d printf\n", TOK_PRINTF);}
-false	{ fprintf(pf,"TOK_FALSE    %d false\n", TOK_FALSE);}
-true	{ fprintf(pf,"TOK_TRUE    %d true\n", TOK_TRUE);}
-"=="		{ fprintf(pf,"TOK_IGUAL    %d igual\n", TOK_IGUAL);}
-"!="		{ fprintf(pf,"TOK_DISTINTO    %d distinto\n", TOK_DISTINTO);}
-"<="		{ fprintf(pf,"TOK_MENORIGUAL    %d menorigual\n", TOK_MENORIGUAL);}
-">="		{ fprintf(pf,"TOK_MAYORIGUAL    %d mayorigual\n", TOK_MAYORIGUAL);}
-"&&"		{ fprintf(pf,"TOK_AND    %d and\n", TOK_AND);}
-"||"		{ fprintf(pf,"TOK_OR    %d or\n", TOK_OR);}
-"->"		{ fprintf(pf,"TOK_FLECHA    %d flecha\n", TOK_FLECHA);}
-{ENTERO}	{ fprintf(pf,"TOK_ENTERO    315(no hay token definido) entero\n");}
-{IDENTIFICADOR}	{ fprintf(pf,"TOK_IDENTIFICADOR    316(no hay token definido) identificador\n");}
-{COMENTARIO}	{ fprintf(pf,"TOK_COMENTARIO    317(no hay token definido) comentario\n");}
-{OPERADOR}	{ fprintf(pf,"TOK_OPERADOR    318(no hay token definido) operador\n");}
+class	        { fprintf(pf, "TOK_CLASS         %d %s\n", TOK_CLASS, yytext);}
+inherits	    { fprintf(pf, "TOK_INHERITS      %d %s\n", TOK_INHERITS, yytext);}
+instance_of	    { fprintf(pf, "TOK_INSTANCE_OF   %d %s\n", TOK_INSTANCE_OF, yytext);}
+discard	        { fprintf(pf, "TOK_DISCARD       %d %s\n", TOK_DISCARD, yytext);}
+itself	        { fprintf(pf, "TOK_ITSELF        %d %s\n", TOK_ITSELF, yytext);}
+hidden	 	    { fprintf(pf, "TOK_HIDEN         %d %s\n", TOK_HIDEN, yytext);}
+secret	        { fprintf(pf, "TOK_SECRET        %d %s\n", TOK_SECRET, yytext);}
+exposed		    { fprintf(pf, "TOK_EXPOSED       %d %s\n", TOK_EXPOSED, yytext);}
+unique	        { fprintf(pf, "TOK_UNIQUE        %d %s\n", TOK_UNIQUE, yytext);}
+function	    { fprintf(pf, "TOK_FUNCTION      %d %s\n", TOK_FUNCTION, yytext);}
+return	        { fprintf(pf, "TOK_RETURN        %d %s\n", TOK_RETURN, yytext);}
+main		    { fprintf(pf, "TOK_MAIN          %d %s\n", TOK_MAIN, yytext);}
+int	            { fprintf(pf, "TOK_INT           %d %s\n", TOK_INT, yytext);}
+boolean 	    { fprintf(pf, "TOK_BOOLEAN       %d %s\n", TOK_BOOLEAN, yytext);}
+array	        { fprintf(pf, "TOK_ARRAY         %d %s\n", TOK_ARRAY, yytext);}
+if		        { fprintf(pf, "TOK_IF            %d %s\n", TOK_IF, yytext);}
+else	        { fprintf(pf, "TOK_ELSE          %d %s\n", TOK_ELSE, yytext);}
+while		    { fprintf(pf, "TOK_WHILE         %d %s\n", TOK_WHILE, yytext);}
+scanf	        { fprintf(pf, "TOK_SCANF         %d %s\n", TOK_SCANF, yytext);}
+printf		    { fprintf(pf, "TOK_PRINTF        %d %s\n", TOK_PRINTF, yytext);}
+false	        { fprintf(pf, "TOK_FALSE         %d %s\n", TOK_FALSE, yytext);}
+true	        { fprintf(pf, "TOK_TRUE          %d %s\n", TOK_TRUE, yytext);}
+"=="		    { fprintf(pf, "TOK_IGUAL         %d %s\n", TOK_IGUAL, yytext);}
+"!="		    { fprintf(pf, "TOK_DISTINTO      %d %s\n", TOK_DISTINTO, yytext);}
+"<="		    { fprintf(pf, "TOK_MENORIGUAL    %d %s\n", TOK_MENORIGUAL, yytext);}
+">="		    { fprintf(pf, "TOK_MAYORIGUAL    %d %s\n", TOK_MAYORIGUAL, yytext);}
+"&&"		    { fprintf(pf, "TOK_AND           %d %s\n", TOK_AND, yytext);}
+"||"		    { fprintf(pf, "TOK_OR            %d %s\n", TOK_OR, yytext);}
+"->"		    { fprintf(pf, "TOK_FLECHA        %d %s\n", TOK_FLECHA, yytext);}
+{ENTERO}	    { fprintf(pf, "TOK_CONSTANTE_ENTERA %d %s\n",TOK_CONSTANTE_ENTERA, yytext);}
+{IDENTIFICADOR}	{ fprintf(pf, "TOK_IDENTIFICADOR %d %s\n",TOK_IDENTIFICADOR, yytext);}
+{COMENTARIO}	{ fprintf(pf, "TOK_COMENTARIO    317(no hay token definido) %s\n", yytext);}
+{OPERADOR}	    { fprintf(pf, "SIMBOLO_SIMPLE    %d %s\n", (int)yytext[0], yytext);}
+
 %%
 
 int main(int argc, char **argv){
 
-
-	if(argc<3){
+	if(argc < 3){
 		fprintf(stderr, "Error en el numero de fichero de entradas");
 		return -1;
 	}
+
 	yyin = fopen(argv[1], "r");
 	if(!yyin){
 		fprintf(stderr, "Error en el fichero de entrada");

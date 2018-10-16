@@ -98,6 +98,7 @@ int insertarNodoGrafo(Grafo *grafo, char *nombre, void *info, char** padres,int 
 
 	if(!padres){ //si no tiene padres, lo añado al array de raices, y al array de nodos totales
 		lista_pushlast(grafo->raices, nodoActual);
+		lista_pushlast(grafo->nodos, nodoActual);
 		return OK;
 	}
 

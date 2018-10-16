@@ -23,20 +23,23 @@
 #define ERROR 0
 
 /* Categoría de un símbolo: variable, parámetro de función o función */
-typedef enum { VARIABLE, PARAMETRO, FUNCION } CATEGORIA;
+typedef enum { 
+    VARIABLE, PARAMETRO, FUNCION, CLASE, 
+    METODO_SOBREESCRIBIBLE, METODO_NO_SOBREESCRIBIBLE,
+    ATRIBUTO_CLASE, ATRIBUTO_INSTANCIA
+} CATEGORIA;
 
 /* Tipo de un símbolo: sólo se trabajará con enteros y booleanos */
 typedef enum { ENTERO, BOOLEANO } TIPO;
 
 /* Clase de un símbolo: pueden ser variables atómicas (escalares) o listas/arrays (vectores) */
-typedef enum { ESCALAR, VECTOR } CLASE;
+typedef enum { ESCALAR, PUNTERO, VECTOR, OBJETO } CLASE;
 
 #define LONGITUD_MAXIMA_INDENTIFICADOR 256
 
 typedef struct {
 /****** campos comunes usados para todos los tipos de simbolos ******/
     char identificador[256];
-
     CATEGORIA categoria;
 /* categoria de simbolo funcion, variable global o local*/
     
@@ -53,25 +56,16 @@ typedef struct {
     /* Tamaño de la variable. Si es un vector será distindo de 1*/
     int tamano;
 /********************************************************************/
-    
-/****************** Solo para las variables locales******************/
-    int pos_variable_local; /* Por lo que he leido en otros repositorios
-    es el orden de declaración de las variables
-
-    void mi_funcion(){
-        int a; ->posicion 0 
-        int b; -> posicion 1
-    }
-    */
-    
-/*********************************************************************/
-
-/*************************** funciones********************************/
-    int num_parametros;
-    
-    int num_variables_locales; /** Esto servirá para saber cuanto tamaño habrá
-    que reservar en la pila para las variables locales.*/
-/*********************************************************************/
+    int direcciones;        /* >=1  SI ES VARIABLE 1*/
+	int numero_parametros;  /* >=0 */
+	int numero_variables_locales;	/* >=0 */
+	int posicion_variable_local;	/* >=1 */
+	int posicion_parametro;		/* >=0 */
+	int dimension;		/* 1,2  */
+	int tamanio;		/* 1-64 */
+	int filas;			/* 1-64 */
+	int columnas;		/* 1-64 */
+	int capacidad;		/* 1-64 */
 }InfoSimbolo;
 
 

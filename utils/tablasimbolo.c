@@ -38,5 +38,6 @@ int TS_eliminar(TablaSimbolos* ts){
         return ERROR;
     }
     free(ts);
+    return OK;
 
 }

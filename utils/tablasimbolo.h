@@ -8,7 +8,7 @@
 #include <string.h>
 
 /**************** CONSTANTES ****************/
-#define DEF_TAM 10
+#define DEF_TAM 1000
 #define OK 1
 #define ERROR 0
 

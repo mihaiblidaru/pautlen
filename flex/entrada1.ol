@@ -3,7 +3,7 @@ class
 inherits
 instance_of	
 discard
-itsef
+itself
 hidden
 secret
 exposed

@@ -3,10 +3,10 @@ CFLAGS = -Wall -Wextra -g -O0
 
 all: omicron
 
-omicron: lex.yy.c
+omicron: lex.yy.c tokens.h
 	$(CC) $(CFLAGS) $^ -o $@
 
-lex.yy.c: omicron.l
+lex.yy.c: omicron.l 
 	flex $^
 
 clean: 

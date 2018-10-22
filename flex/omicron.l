@@ -13,7 +13,7 @@ FILE *pf = NULL;
 %option nounput
 %option noinput
 
-ENTERO "-"?[0-9]+
+ENTERO [-+]?[0-9]+
 IDENTIFICADOR [a-zA-Z][a-zA-Z0-9]*
 COMENTARIO "//".*
 OPERADOR (";"|"#"|","|"="|"("|")"|"["|"]"|"{"|"}"|":"|"+"|"-"|"/"|"*"|"<"|">"|"&"|"!"|".")
@@ -56,22 +56,23 @@ true            { fprintf(pf, "TOK_TRUE\t%d\t%s\n", TOK_TRUE, yytext); nColumna 
 "||"            { fprintf(pf, "TOK_OR\t%d\t%s\n", TOK_OR, yytext); nColumna += yyleng; return TOK_OR;}
 "->"            { fprintf(pf, "TOK_FLECHA\t%d\t%s\n", TOK_FLECHA, yytext); nColumna += yyleng; return TOK_FLECHA;}
 
-{IDENTIFICADOR} { if (yyleng < 50){
+{IDENTIFICADOR} { if (yyleng <= MAX_LONG_ID){
                       fprintf(pf, "TOK_IDENTIFICADOR\t%d\t%s\n", TOK_IDENTIFICADOR, yytext);
                       nColumna += yyleng;
                       return TOK_IDENTIFICADOR;
                   } else {
-                      fprintf(pf, "TOK_ERROR\t%d\t%s\n",TOK_ERROR, yytext);
-                      fprintf(yyout, "%s:%d:%d Error morfologico(Identificador demasiado largo. Max=50)\n\t \033[0;31m %s \033[0m\n\n", input_file_name, nLinea, nColumna, yytext);
+                      fprintf(pf, "TOK_ERROR\t%d\t%s\n", TOK_ERROR, yytext);
+                      fprintf(yyout, "%s:%d:%d Error morfologico(Identificador demasiado largo(%d). Max=%d)\n\t \033[0;31m %s \033[0m\n\n", 
+                              input_file_name, nLinea, nColumna, yyleng, MAX_LONG_ID, yytext);
                       nColumna += yyleng;
                       return TOK_ERROR;
                   }
                 }
 
-{ENTERO}        { fprintf(pf, "TOK_CONSTANTE_ENTERA\t%d\t%s\n",TOK_CONSTANTE_ENTERA, yytext); nColumna += yyleng; return TOK_CONSTANTE_ENTERA;}
+{ENTERO}        { fprintf(pf, "TOK_CONSTANTE_ENTERA\t%d\t%s\n", TOK_CONSTANTE_ENTERA, yytext); nColumna += yyleng; return TOK_CONSTANTE_ENTERA;}
 {COMENTARIO}    { }
 {OPERADOR}      { fprintf(pf, "SIMBOLO SIMPLE\t%d\t%s\n", (int)yytext[0], yytext); nColumna += yyleng; return (int)yytext[0];}
-{ERROR}         { fprintf(pf, "TOK_ERROR\t%d\t%s\n",TOK_ERROR, yytext);
+{ERROR}         { fprintf(pf, "TOK_ERROR\t%d\t%s\n", TOK_ERROR, yytext);
                   fprintf(yyout, "%s:%d:%d Error morfologico(Token no reconocido):\n\t \033[0;31m %s \033[0m\n\n", input_file_name, nLinea, nColumna, yytext);
                   nColumna += yyleng;
                   return TOK_ERROR;}

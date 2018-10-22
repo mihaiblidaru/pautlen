@@ -66,7 +66,7 @@
 #define TOK_CLEAR 313
 #define TOK_SIZE 314
 #define TOK_CONTAINS  315
-#define TOK_CONSTANTE_REAL  315
+#define TOK_CONSTANTE_REAL  316
 
 
 #endif

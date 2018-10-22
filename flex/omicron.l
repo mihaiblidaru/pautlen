@@ -63,6 +63,7 @@ true            { fprintf(pf, "TOK_TRUE\t%d\t%s\n", TOK_TRUE, yytext); nColumna 
                   } else {
                       fprintf(pf, "TOK_ERROR\t%d\t%s\n",TOK_ERROR, yytext);
                       fprintf(yyout, "%s:%d:%d Error morfologico(Identificador demasiado largo. Max=50)\n\t \033[0;31m %s \033[0m\n\n", input_file_name, nLinea, nColumna, yytext);
+                      nColumna += yyleng;
                       return TOK_ERROR;
                   }
                 }

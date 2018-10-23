@@ -15,26 +15,12 @@
 #define LISTA_H
 
 #include <stdbool.h>
-
-typedef struct _Nodo Nodo;
-
-typedef struct Lista{
-	Nodo* first;
-	Nodo* last;
-	int num;
-}Lista;
+typedef struct _Lista Lista;
 
 Lista* lista_crear();
 
-void* lista_getif(Lista* lista, int(*cmp_funct)(void* o1, void* o2), void* second_arg);
-
-bool lista_pushfirst(Lista *list, void *data);
-bool lista_pushlast(Lista *list, void *data);
-
-bool lista_addat(Lista *list, int index, void *data);
-void *lista_getat(Lista *list, int index);
-
-bool lista_getnext(Lista *list, Nodo *obj);
+bool lista_addlast(Lista *list, void *data);
+void *lista_get(Lista *list, int index);
 void lista_free(Lista *list, void(*free_data_funct)(void*));
 
 int lista_length(Lista *lista);

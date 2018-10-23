@@ -56,7 +56,7 @@ NodoGrafo* crearNodoGrafo(Grafo* grafo, char *nombre, void *info){
 	}
 
 	for(i=0;i<lista_length(grafo->nodos); i++){
-		aux = lista_getat(grafo->nodos, i);
+		aux = lista_get(grafo->nodos, i);
 		if(strcmp(aux->nombre, nombre) == 0){
 			return ERROR;
 		}
@@ -70,8 +70,6 @@ NodoGrafo* crearNodoGrafo(Grafo* grafo, char *nombre, void *info){
 	nodo->info = info;
 	nodo->predecesores = lista_crear();
 	nodo->descendientes = lista_crear();
-
-	lista_pushlast(grafo->nodos, nodo);
 
 	return nodo;
 }
@@ -97,19 +95,20 @@ int insertarNodoGrafo(Grafo *grafo, char *nombre, void *info, char** padres,int 
 	nodoActual = crearNodoGrafo(grafo, nombre, info);
 
 	if(!padres){ //si no tiene padres, lo añado al array de raices, y al array de nodos totales
-		lista_pushlast(grafo->raices, nodoActual);
-		lista_pushlast(grafo->nodos, nodoActual);
+		lista_addlast(grafo->raices, nodoActual);
+		lista_addlast(grafo->nodos, nodoActual);
 		return OK;
 	}
+	lista_addlast(grafo->nodos, nodoActual);
 
 
 	//ahora buscar en todos los nodos los q coinciden con los padres, y asignar doblemente
 	for(i=0;i<lista_length(grafo->nodos);i++){
-		nodoAux = lista_getat(grafo->nodos, i);
+		nodoAux = lista_get(grafo->nodos, i);
 		for(j=0;j<numPadres;j++){
 			if(strcmp(nodoAux->nombre, padres[j]) == 0){ //cuando encuentro el padre
-				lista_pushlast(nodoActual->predecesores,nodoAux);
-				lista_pushlast(nodoAux->descendientes,nodoActual);
+				lista_addlast(nodoActual->predecesores,nodoAux);
+				lista_addlast(nodoAux->descendientes,nodoActual);
 				break;
 			}
 		}
@@ -132,7 +131,7 @@ NodoGrafo* buscarNodoProfundidad(Grafo *grafo, char *nombre){
 
 	for(i=0;i<lista_length(grafo->raices);i++){
 
-		aux = recBuscarNodoProfundidad(lista_getat(grafo->raices, i), nombre);
+		aux = recBuscarNodoProfundidad(lista_get(grafo->raices, i), nombre);
 		if(aux!=NULL){
 			return aux;
 		}
@@ -154,7 +153,7 @@ NodoGrafo* recBuscarNodoProfundidad(NodoGrafo * actual,char * nombre){
 		return actual;
 	}
 	for( i=0;i<lista_length(actual->descendientes);i++){
-		aux = recBuscarNodoProfundidad(lista_getat(actual->descendientes,i),nombre);
+		aux = recBuscarNodoProfundidad(lista_get(actual->descendientes,i),nombre);
 		if(aux!=NULL){
 			return aux;
 		}

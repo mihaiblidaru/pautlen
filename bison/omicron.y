@@ -103,6 +103,33 @@
   /*
     HOJA 1 SERGIO
   */
+  <clase_vector>:         TOK_ARRAY <tipo> "[" <constante_entera> "]"
+                        | TOK_ARRAY <tipo> "[" <constante_entera> "," <constante_entera> "]"
+                        ;
+  <clase_conjunto>:       TOK_SET TOK_OF <constante_entera>
+                        ;
+  <identificadores>:      <identificador>
+                        | <identificador> "," <identificadores>
+                        ;
+  <funciones>:            <funcion> <funciones>
+                        | /* Vacio */
+                        ;
+  <funcion>:              TOK_FUNCTION <modificador_acceso> <tipo_retorno> <identificador>
+                          "(" <parametros_funcion> ")" "{" <declaraciones_funcion> <sentencias> "}"
+                        ;
+  <tipo_retorno>:         TOK_NONE
+                        | <tipo>
+                        ;
+  <parametros_funcion>:   <parametro_funcion> <resto_parametros_funcion>
+                        | /* Vacio */
+                        ;
+  <resto_parametros_funcion>:   ";" <parametro_funcion> <resto_parametros_funcion>
+                              | /* Vacio */
+                              ;
+  /*
+    HOJA 2 SERGIO
+  */
+
 
 %%
 

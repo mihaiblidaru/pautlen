@@ -30,7 +30,6 @@
 %token TOK_WHILE
 %token TOK_SCANF
 %token TOK_PRINTF
-%token TOK_MAIN
 
 /* IDENTIFICADOR */
 %token TOK_IDENTIFICADOR
@@ -75,59 +74,109 @@
 %%
   /*Seccion de Reglas*/
 
-  <programa>:   TOK_MAIN "{" <funciones> <declaraciones> <funciones> <sentencias> "}"
-              | TOK_MAIN "{" <declaraciones> <funciones> <sentencias> "}"
-              | TOK_MAIN "{" <funciones> <sentencias> "}"
-              ;
-  <declaraciones>:    <declaracion>
-                    | <declaracion> <declaraciones>
-                    ;
-  <declaracion>:      <modificador_acceso> <clase> <identificadores> ";"
-                    | <modificador_acceso> <declaracion_clase> ";"
-                    ;
-  <modificador_acceso>:   TOK_HIDDEN TOK_UNIQUE
-                        | TOK_SECRET TOK_UNIQUE
-                        | TOK_EXPOSED TOK_UNIQUE
-                        | TOK_HIDDEN
-                        | TOK_SECRET
-                        | TOK_EXPOSED
-                        | TOK_UNIQUE
-                        | /* Vacio */
-                        ;
-  <clase>:                <clase_escalar>
-                        | <clase_puntero>
-                        | <clase_vector>
-                        | <clase_conjunto>
-                        | <clase_objeto>
-                        ;
+  programa:                     TOK_MAIN "{" declaraciones funciones sentencias "}"
+                              | TOK_MAIN "{" funciones sentencias "}"
+                            /*| TOK_MAIN "{" funciones declaraciones funciones sentencias "}"*/
+                              ;
+  declaraciones:                declaracion
+                              | declaracion declaraciones
+                              ;
+  declaracion:                  modificador_acceso clase identificadores ";"
+                              | modificador_acceso declaracion_clase ";"
+                              ;
+  modificador_acceso:           TOK_HIDDEN TOK_UNIQUE
+                              | TOK_SECRET TOK_UNIQUE
+                              | TOK_EXPOSED TOK_UNIQUE
+                              | TOK_HIDDEN
+                              | TOK_SECRET
+                              | TOK_EXPOSED
+                              | TOK_UNIQUE
+                              | /* Vacio */
+                              ;
+  clase:                        clase_escalar
+                            /*| clase_puntero*/
+                              | clase_vector
+                            /*| clase_conjunto*/
+                              | clase_objeto
+                              ;
   /*
     HOJA 1 SERGIO
   */
-  <clase_vector>:         TOK_ARRAY <tipo> "[" <constante_entera> "]"
-                        | TOK_ARRAY <tipo> "[" <constante_entera> "," <constante_entera> "]"
-                        ;
-  <clase_conjunto>:       TOK_SET TOK_OF <constante_entera>
-                        ;
-  <identificadores>:      <identificador>
-                        | <identificador> "," <identificadores>
-                        ;
-  <funciones>:            <funcion> <funciones>
-                        | /* Vacio */
-                        ;
-  <funcion>:              TOK_FUNCTION <modificador_acceso> <tipo_retorno> <identificador>
-                          "(" <parametros_funcion> ")" "{" <declaraciones_funcion> <sentencias> "}"
-                        ;
-  <tipo_retorno>:         TOK_NONE
-                        | <tipo>
-                        ;
-  <parametros_funcion>:   <parametro_funcion> <resto_parametros_funcion>
-                        | /* Vacio */
-                        ;
-  <resto_parametros_funcion>:   ";" <parametro_funcion> <resto_parametros_funcion>
+  clase_vector:                 TOK_ARRAY tipo "[" constante_entera "]"
+                            /*| TOK_ARRAY tipo "[" constante_entera "," constante_entera "]"*/
+                              ;
+/*clase_conjunto:               TOK_SET TOK_OF constante_entera
+                              ;*/
+  identificadores:              identificador
+                              | identificador "," identificadores
+                              ;
+  funciones:                    funcion funciones
+                              | /* Vacio */
+                              ;
+  funcion:                      TOK_FUNCTION modificador_acceso tipo_retorno identificador
+                                "(" parametros_funcion ")" "{" declaraciones_funcion sentencias "}"
+                              ;
+  tipo_retorno:                 TOK_NONE
+                              | tipo
+                              ;
+  parametros_funcion:           parametro_funcion resto_parametros_funcion
+                              | /* Vacio */
+                              ;
+  resto_parametros_funcion:     ";" parametro_funcion resto_parametros_funcion
                               | /* Vacio */
                               ;
   /*
     HOJA 2 SERGIO
+  */
+  bloque:                       condicional
+                              | bucle
+                            /*| seleccion*/
+                              ;
+  asignacion:                   identificador "=" exp
+                              | elemento_vector "=" exp
+                              | elemento_vector "=" TOK_INSTANCE_OF identificador "(" lista_expresiones ")"
+                            /*| acceso "=" exp*/
+                            /*| identificador "=" TOK_MALLOC*/
+                            /*| identificador "=" "&" identificador*/
+                              | identificador "=" TOK_INSTANCE_OF identificador "(" lista_expresiones ")"
+                              | identificador_clase "." identificador "=" exp
+                              ;
+  elemento_vector:              identificador "[" exp "]"
+                            /*| identificador "[" exp "," exp "]"*/
+                              ;
+  condicional:                  TOK_IF "(" exp ")" "{" sentencias "}"
+                              | TOK_IF "(" exp ")" "{" sentencias "}" TOK_ELSE "{" sentencias "}"
+                              ;
+  /*
+    HOJA 3 SERGIO
+  */
+/*operacion_conjunto:           TOK_UNION "(" identificador "," identificador "," identificador ")"
+                              | TOK_INTERSECTION "(" identificador "," identificador "," identificador ")"
+                              | TOK_ADD "(" exp "," identificador ")"
+                              | TOK_CLEAR "(" identificador ")"
+                              ;*/
+                                exp "+" exp
+                              | exp "-" exp
+                              | exp "/" exp
+                              | exp "*" exp
+                              | "-" exp
+                              | exp TOK_AND exp
+                              | exp TOK_OR exp
+                              | "!" exp
+                              | identificador
+                              | constante
+                              | "(" exp ")"
+                              | "(" comparacion ")"
+                            /*| acceso*/
+                              | elemento_vector
+                            /*| TOK_SIZE "(" identificador ")"*/
+                            /*| TOK_CONTAINS "(" exp, identificador ")"*/
+                              | identificador "(" lista_expresiones ")"
+                              | identificador_clase "." identificador "(" lista_expresiones ")"
+                              | identificador_clase "." identificador
+                              ;
+  /*
+    HOJA 4 SERGIO
   */
 
 

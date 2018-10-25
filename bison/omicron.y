@@ -155,7 +155,7 @@
                               | TOK_ADD "(" exp "," identificador ")"
                               | TOK_CLEAR "(" identificador ")"
                               ;*/
-                                exp "+" exp
+  exp:                          exp "+" exp
                               | exp "-" exp
                               | exp "/" exp
                               | exp "*" exp
@@ -177,6 +177,23 @@
                               ;
   /*
     HOJA 4 SERGIO
+  */
+  constante:                    constante_logica
+                              | constante_entera
+                            /*| constante_real*/
+                              ;
+  constante_logica:             TOK_TRUE
+                              | TOK_FALSE
+                              ;
+  constante_entera:             numero
+                              ;
+  numero:                       digito
+                              | numero digito
+                              ;
+/*constante_real:               constante_entera "." constante_entera
+                              ;*/
+  /*
+    HOJA 5 SERGIO
   */
 
 

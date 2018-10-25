@@ -75,7 +75,35 @@
 %%
   /*Seccion de Reglas*/
 
-  programa: TOK_MAIN
+  <programa>:   TOK_MAIN "{" <funciones> <declaraciones> <funciones> <sentencias> "}"
+              | TOK_MAIN "{" <declaraciones> <funciones> <sentencias> "}"
+              | TOK_MAIN "{" <funciones> <sentencias> "}"
+              ;
+  <declaraciones>:    <declaracion>
+                    | <declaracion> <declaraciones>
+                    ;
+  <declaracion>:      <modificador_acceso> <clase> <identificadores> ";"
+                    | <modificador_acceso> <declaracion_clase> ";"
+                    ;
+  <modificador_acceso>:   TOK_HIDDEN TOK_UNIQUE
+                        | TOK_SECRET TOK_UNIQUE
+                        | TOK_EXPOSED TOK_UNIQUE
+                        | TOK_HIDDEN
+                        | TOK_SECRET
+                        | TOK_EXPOSED
+                        | TOK_UNIQUE
+                        | /* Vacio */
+                        ;
+  <clase>:                <clase_escalar>
+                        | <clase_puntero>
+                        | <clase_vector>
+                        | <clase_conjunto>
+                        | <clase_objeto>
+                        ;
+  /*
+    HOJA 1 SERGIO
+  */
+
 %%
 
 /*Seccion de Funciones de Usuario*/

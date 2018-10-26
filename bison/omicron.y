@@ -4,7 +4,10 @@
   /*Delimitadores de Codigo C*/
   #include <stdio.h>
   extern int yylex();
-
+  extern int nLinea;
+  extern int nColumna;
+  extern char *input_file_name;
+  extern FILE *pf;
 %}
 
 /* PALABRAS RESERVADAS */

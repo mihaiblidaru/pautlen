@@ -58,5 +58,6 @@ int insertarNodoGrafo(Grafo *grafo, char *nombre, void *info, char** padres,int 
 //Devuelve el nodo en caso de que se encuentre y NULL en caso de que no.
 NodoGrafo* recBuscarNodoProfundidad(NodoGrafo * actual,char * nombre);
 NodoGrafo* buscarNodoProfundidad(Grafo *grafo, char *nombre);
+void crearRepresentacionGrafo(Grafo* grafo, char* path);
 
 #endif

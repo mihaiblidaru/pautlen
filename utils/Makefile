@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -g -O0
 
-TESTS = test_lista test_hash test_grafo test_tabla_simbolos1 test_tabla_simbolos2 
+TESTS = test_lista test_hash test_grafo test_grafo2 test_tabla_simbolos1 test_tabla_simbolos2 
 
 all: $(TESTS)
 
@@ -15,6 +15,9 @@ test_hash: tests/test_hash.o hash.o
 test_grafo: tests/test_grafo.o grafo.o lista.o
 	$(CC) $^ -o $@
 
+test_grafo2: tests/test_grafo2.o grafo.o lista.o
+	$(CC) $^ -o $@
+
 test_simbolo:tests/test_tablasimbolos.o hash.o simbolo.o tablasimbolo.o
 	$(CC) $^ -o $@
 
@@ -26,3 +29,7 @@ test_tabla_simbolos2: tests/test_tabla_simbolos2.o hash.o simbolo.o tablasimbolo
 
 clean: 
 	rm -f tests/*.o lista.o $(TESTS) grafo.o hash.o prueba_simbolos.o hash.o simbolo.o tablasimbolo.o
+
+test: test_grafo2
+	./test_grafo2
+	dot -Tpdf grafo.dot -o grafo.pdf

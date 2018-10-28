@@ -175,3 +175,31 @@ void printNodoGrafo(NodoGrafo* nodo){
 	printf("\n\n");
 }
 
+
+void crearRepresentacionGrafo(Grafo* g, char* path){
+	FILE* fp = fopen(path, "w");
+	const char* prefix = "CLASE";
+	int i, j;
+
+	fprintf(fp, "digraph clases  { rankdir=TB;\n");
+	fprintf(fp, "edge [arrowhead = normal]\n");
+	fprintf(fp, "graph [pad=\"0.5\", nodesep=\"0.5\", ranksep=\"0.75\"];\n");
+	fprintf(fp, "node[shape = record];\n");
+	
+
+
+	for(i=0; i < lista_length(g->nodos); i++){
+		NodoGrafo* nodo = lista_get(g->nodos, i);
+		fprintf(fp, "%s%s [label=\"{%s}\"];\n", prefix, nodo->nombre, nodo->nombre);
+		Lista* padres = nodo->predecesores;
+		for(j = 0; j < lista_length(padres); j++){
+			NodoGrafo* padre = lista_get(padres, j);
+			fprintf(fp, "   %s%s -> %s%s;\n", prefix, padre->nombre, prefix, nodo->nombre);
+		}
+
+
+	}
+	fprintf(fp, "}\n");
+
+}
+

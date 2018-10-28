@@ -29,16 +29,19 @@ int main(){
     padres2b[0] = strdup("1b");
 
 
-    insertarNodoGrafo(grafo, "1a", "info1", NULL,0);
     insertarNodoGrafo(grafo, "1b", "info2", NULL,0);
+    insertarNodoGrafo(grafo, "1a", "info1", NULL,0);
     insertarNodoGrafo(grafo, "2a", "info3", padres2a, 2);
     insertarNodoGrafo(grafo, "2b", "info5", padres2b, 1);
+    insertarNodoGrafo(grafo, "3", "info5", padres2b, 1);
 
     
     printNodoGrafo(buscarNodoProfundidad(grafo, "1a"));
     printNodoGrafo(buscarNodoProfundidad(grafo, "1b"));
     printNodoGrafo(buscarNodoProfundidad(grafo, "2a"));
     printNodoGrafo(buscarNodoProfundidad(grafo, "2b"));
+    
+    crearRepresentacionGrafo(grafo, "grafo.dot");
     
     eliminarGrafo(grafo);
 

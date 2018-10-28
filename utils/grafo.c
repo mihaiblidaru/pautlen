@@ -181,24 +181,52 @@ void crearRepresentacionGrafo(Grafo* g, char* path){
 	const char* prefix = "CLASE";
 	int i, j;
 
-	fprintf(fp, "digraph clases  { rankdir=TB;\n");
-	fprintf(fp, "edge [arrowhead = normal]\n");
-	fprintf(fp, "graph [pad=\"0.5\", nodesep=\"0.5\", ranksep=\"0.75\"];\n");
-	fprintf(fp, "node[shape = record];\n");
-	
+	srand(64414);
+	/*esto es solo para probar como salen algunas cosas*/
+	char *nombres_funciones_aleatorios[]= {
+		"test1",
+		"calculaSuma",
+		"calculaResta",
+		"calculaMultiplicacion",
+		"dibujaMapa",
+		"comer",
+		"hacer_la_cama",
+		"limpiar_memoria",
+		"convertir",
+		"json2vector",
+		"vector2json"
+	};
 
+
+	fprintf(fp, "digraph clases { \n    rankdir=TB;\n");
+	fprintf(fp, "    graph [pad=\"0.5\", nodesep=\"0.5\", ranksep=\"0.75\"];\n");
+	fprintf(fp, "    edge [dir=back, arrowtail = onormal]\n");
+	fprintf(fp, "    node[shape = record];\n\n");
+	
+	for(i=0; i < lista_length(g->nodos); i++){
+		NodoGrafo* nodo = lista_get(g->nodos, i);
+		fprintf(fp, "    %s%s [label=\"{%s|", prefix, nodo->nombre, nodo->nombre);
+		int num_funciones = rand() % 6 +1;
+			for(int k=0; k < num_funciones; k++){
+				fprintf(fp, "%s\\l", nombres_funciones_aleatorios[rand() % 11]);
+			}
+		fprintf(fp, "}\"];\n");
+	}
+
+	fprintf(fp, "\n");
 
 	for(i=0; i < lista_length(g->nodos); i++){
 		NodoGrafo* nodo = lista_get(g->nodos, i);
-		fprintf(fp, "%s%s [label=\"{%s}\"];\n", prefix, nodo->nombre, nodo->nombre);
 		Lista* padres = nodo->predecesores;
 		for(j = 0; j < lista_length(padres); j++){
 			NodoGrafo* padre = lista_get(padres, j);
-			fprintf(fp, "   %s%s -> %s%s;\n", prefix, padre->nombre, prefix, nodo->nombre);
-		}
-
+			fprintf(fp, "    %s%s -> %s%s;\n", prefix, padre->nombre, prefix, nodo->nombre);
+		}	
 
 	}
+
+
+	
 	fprintf(fp, "}\n");
 
 }

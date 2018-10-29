@@ -17,7 +17,7 @@
 %token TOK_INSTANCE_OF
 %token TOK_DISCARD
 %token TOK_ITSELF
-%token TOK_FLECHA
+/*%token TOK_FLECHA*/
 %token TOK_HIDDEN
 %token TOK_SECRET
 %token TOK_EXPOSED
@@ -50,11 +50,11 @@
 %token TOK_FALSE
 %token TOK_TRUE
 
-/* ERRORES */
-%token TOK_ERROR
+/* ERRORES 
+%token TOK_ERROR*/
 
 /* ESTOS NO APARECERAN SI NO HAY PUNTEROS, FLOAT, CONJUNTOS, SWITCH, FOR */
-%token TOK_FOR
+/*%token TOK_FOR
 %token TOK_SWITCH
 %token TOK_CASE
 %token TOK_DEFAULT
@@ -62,7 +62,7 @@
 %token TOK_MALLOC
 %token TOK_CPRINTF
 %token TOK_FREE
-%token TOK_SET
+/*%token TOK_SET
 %token TOK_OF
 %token TOK_UNION
 %token TOK_INTERSECTION
@@ -70,7 +70,7 @@
 %token TOK_CLEAR
 %token TOK_SIZE
 %token TOK_CONTAINS
-%token TOK_CONSTANTE_REAL
+%token TOK_CONSTANTE_REAL*/
 
 %start programa
 
@@ -87,6 +87,7 @@
   declaracion:                  modificador_acceso clase identificadores ";"
                               | modificador_acceso declaracion_clase ";"
                               ;
+
   modificador_acceso:           TOK_HIDDEN TOK_UNIQUE
                               | TOK_SECRET TOK_UNIQUE
                               | TOK_EXPOSED TOK_UNIQUE
@@ -102,14 +103,36 @@
                             /*| clase_conjunto*/
                               | clase_objeto
                               ;
-  /*
-    HOJA 1 SERGIO
-  */
+ 
+	declaracion_clase:						modificadores_clase TOK_CLASS identificador TOK_INHERITS identificadores "{" declaraciones identificadores "}"
+															| modificadores_clase TOK_CLASS identificador "{" declaraciones identificadores "}"
+															;
+	
+	modificadores_clase:					/*vacio*/
+															;
+
+	clase_escalar: 								tipo
+															;
+
+	tipo:													TOK_INT
+															| TOK_BOOLEAN
+														/*| TOK_FLOAT */
+															;
+	
+	clase_objeto:									"{" identificadores "}"
+															;
+
+	clase_puntero:									tipo "*"
+														/*| clase_puntero "*" */
+															;
+
+
   clase_vector:                 TOK_ARRAY tipo "[" constante_entera "]"
                             /*| TOK_ARRAY tipo "[" constante_entera "," constante_entera "]"*/
                               ;
 /*clase_conjunto:               TOK_SET TOK_OF constante_entera
                               ;*/
+
   identificadores:              identificador
                               | identificador "," identificadores
                               ;
@@ -119,18 +142,50 @@
   funcion:                      TOK_FUNCTION modificador_acceso tipo_retorno identificador
                                 "(" parametros_funcion ")" "{" declaraciones_funcion sentencias "}"
                               ;
+
   tipo_retorno:                 TOK_NONE
                               | tipo
                               ;
+
   parametros_funcion:           parametro_funcion resto_parametros_funcion
                               | /* Vacio */
                               ;
+
   resto_parametros_funcion:     ";" parametro_funcion resto_parametros_funcion
                               | /* Vacio */
                               ;
-  /*
-    HOJA 2 SERGIO
-  */
+  
+	parametro_funcion:						tipo identificador
+															;
+
+	declaraciones_funcion:				declaraciones
+														/*|vacio*/
+															;
+
+	sentencias: 									sentencia
+															|	sentencia sentencias
+															;
+
+	sentencia: 										sentencia_simple ";" 
+															|	bloque
+															;
+
+	sentencia_simple:							asignacion
+															|	lectura
+															| escritura
+														/*|liberacion*/
+															| retorno_funcion
+														/*|operacion_conjunto*/
+															| identificador_clase "." identificador "{" lista_expresiones "}"
+															| identificador "{" lista_expresiones "}"
+															| destruir_objeto
+															;
+
+	
+	destruir_objeto:							TOK_DISCARD identificador
+															;
+	
+	
   bloque:                       condicional
                               | bucle
                             /*| seleccion*/
@@ -150,9 +205,38 @@
   condicional:                  TOK_IF "(" exp ")" "{" sentencias "}"
                               | TOK_IF "(" exp ")" "{" sentencias "}" TOK_ELSE "{" sentencias "}"
                               ;
-  /*
-    HOJA 3 SERGIO
-  */
+  
+	bucle: 												TOK_WHILE "(" exp ")" "{" sentencias "}"
+														/*| TOK_FOR "(" identificador")" "=" exp ";" ")" "{" sentencias "}"*/
+															;
+
+	lectura: 											TOK_SCANF identificador
+															| TOK_SCANF elemento_vector
+															;
+
+	escritura:										TOK_PRINTF exp
+														/*|	TOK_CPRINTF identificador */
+															;
+
+	/*liberacion: 								TOK_FREE identificador 
+															;*/
+
+	/*acceso: 										*identificador
+															|	*acceso
+															;*/
+
+	retorno_funcion:							TOK_RETURN exp
+															| TOK_RETURN TOK_NONE
+															;
+
+	/*seleccion: 									TOK_SWITCH "(" exp ")" "{" casos_seleccion "}"
+															;*/
+
+	/*casos_seleccion: 					;
+	
+	
+
+
 /*operacion_conjunto:           TOK_UNION "(" identificador "," identificador "," identificador ")"
                               | TOK_INTERSECTION "(" identificador "," identificador "," identificador ")"
                               | TOK_ADD "(" exp "," identificador ")"
@@ -178,9 +262,28 @@
                               | identificador_clase "." identificador "(" lista_expresiones ")"
                               | identificador_clase "." identificador
                               ;
-  /*
-    HOJA 4 SERGIO
-  */
+
+	identificador_clase:					identificador
+															|	TOK_ITSELF
+															;
+	
+	lista_expresiones: 						exp resto_lista_expresiones
+														/*|	vacio */
+															;
+
+	resto_lista_expresiones: 			"," exp resto_lista_expresiones
+														/*|vacio */
+															;
+
+	comparacion: 									exp TOK_IGUAL exp
+															|	exp TOK_DISTINTO exp
+															|	exp TOK_MENORIGUAL exp
+															|	exp TOK_MAYORIGUAL exp
+															|	exp "<" exp
+															|	exp ">" exp
+															;
+
+
   constante:                    constante_logica
                               | constante_entera
                             /*| constante_real*/
@@ -195,9 +298,25 @@
                               ;
 /*constante_real:               constante_entera "." constante_entera
                               ;*/
-  /*
-    HOJA 5 SERGIO
-  */
+ 
+
+	identificador: 								letra
+                              | letra cola_identificador
+                              ;
+
+	cola_identificador: 					alfanumerico
+                              | alfanumerico cola_identificador
+                              ;
+
+	alfanumerico: 								letra
+                              | digito
+                              ;
+
+	letra:												TOK_IDENTIFICADOR/*a-z-A-Z*/
+															;
+
+	digito:											TOK_CONSTANTE_ENTERA
+															;
 
 
 %%

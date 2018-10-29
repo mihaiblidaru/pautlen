@@ -50,284 +50,233 @@
 %token TOK_FALSE
 %token TOK_TRUE
 
-/* ERRORES 
-%token TOK_ERROR*/
 
-/* ESTOS NO APARECERAN SI NO HAY PUNTEROS, FLOAT, CONJUNTOS, SWITCH, FOR */
-/*%token TOK_FOR
-%token TOK_SWITCH
-%token TOK_CASE
-%token TOK_DEFAULT
-%token TOK_FLOAT
-%token TOK_MALLOC
-%token TOK_CPRINTF
-%token TOK_FREE
-/*%token TOK_SET
-%token TOK_OF
-%token TOK_UNION
-%token TOK_INTERSECTION
-%token TOK_ADD
-%token TOK_CLEAR
-%token TOK_SIZE
-%token TOK_CONTAINS
-%token TOK_CONSTANTE_REAL*/
+/* Esto quita los warnings */
+/* que lo he encontrado en este repositorio */
+/* https://raw.githubusercontent.com/pablomm/pautlen/master/src/alfa.y */
+%left '+' '-' TOK_OR
+%left '*' '/' TOK_AND
+%right '!'
 
 %start programa
 
 %%
-  /*Seccion de Reglas*/
 
-  programa:                     TOK_MAIN "{" declaraciones funciones sentencias "}"
-                              | TOK_MAIN "{" funciones sentencias "}"
-                            /*| TOK_MAIN "{" funciones declaraciones funciones sentencias "}"*/
-                              ;
-  declaraciones:                declaracion
-                              | declaracion declaraciones
-                              ;
-  declaracion:                  modificador_acceso clase identificadores ";"
-                              | modificador_acceso declaracion_clase ";"
-                              ;
-
-  modificador_acceso:           TOK_HIDDEN TOK_UNIQUE
-                              | TOK_SECRET TOK_UNIQUE
-                              | TOK_EXPOSED TOK_UNIQUE
-                              | TOK_HIDDEN
-                              | TOK_SECRET
-                              | TOK_EXPOSED
-                              | TOK_UNIQUE
-                              | /* Vacio */
-                              ;
-  clase:                        clase_escalar
-                            /*| clase_puntero*/
-                              | clase_vector
-                            /*| clase_conjunto*/
-                              | clase_objeto
-                              ;
- 
-	declaracion_clase:						modificadores_clase TOK_CLASS identificador TOK_INHERITS identificadores "{" declaraciones identificadores "}"
-															| modificadores_clase TOK_CLASS identificador "{" declaraciones identificadores "}"
-															;
-	
-	modificadores_clase:					/*vacio*/
-															;
-
-	clase_escalar: 								tipo
-															;
-
-	tipo:													TOK_INT
-															| TOK_BOOLEAN
-														/*| TOK_FLOAT */
-															;
-	
-	clase_objeto:									"{" identificadores "}"
-															;
-
-	clase_puntero:									tipo "*"
-														/*| clase_puntero "*" */
-															;
+programa:                   TOK_MAIN '{' declaraciones funciones sentencias '}'
+                          | TOK_MAIN '{' funciones sentencias '}' 
+                          ;
 
 
-  clase_vector:                 TOK_ARRAY tipo "[" constante_entera "]"
-                            /*| TOK_ARRAY tipo "[" constante_entera "," constante_entera "]"*/
-                              ;
-/*clase_conjunto:               TOK_SET TOK_OF constante_entera
-                              ;*/
-
-  identificadores:              identificador
-                              | identificador "," identificadores
-                              ;
-  funciones:                    funcion funciones
-                              | /* Vacio */
-                              ;
-  funcion:                      TOK_FUNCTION modificador_acceso tipo_retorno identificador
-                                "(" parametros_funcion ")" "{" declaraciones_funcion sentencias "}"
-                              ;
-
-  tipo_retorno:                 TOK_NONE
-                              | tipo
-                              ;
-
-  parametros_funcion:           parametro_funcion resto_parametros_funcion
-                              | /* Vacio */
-                              ;
-
-  resto_parametros_funcion:     ";" parametro_funcion resto_parametros_funcion
-                              | /* Vacio */
-                              ;
-  
-	parametro_funcion:						tipo identificador
-															;
-
-	declaraciones_funcion:				declaraciones
-														/*|vacio*/
-															;
-
-	sentencias: 									sentencia
-															|	sentencia sentencias
-															;
-
-	sentencia: 										sentencia_simple ";" 
-															|	bloque
-															;
-
-	sentencia_simple:							asignacion
-															|	lectura
-															| escritura
-														/*|liberacion*/
-															| retorno_funcion
-														/*|operacion_conjunto*/
-															| identificador_clase "." identificador "{" lista_expresiones "}"
-															| identificador "{" lista_expresiones "}"
-															| destruir_objeto
-															;
-
-	
-	destruir_objeto:							TOK_DISCARD identificador
-															;
-	
-	
-  bloque:                       condicional
-                              | bucle
-                            /*| seleccion*/
-                              ;
-  asignacion:                   identificador "=" exp
-                              | elemento_vector "=" exp
-                              | elemento_vector "=" TOK_INSTANCE_OF identificador "(" lista_expresiones ")"
-                            /*| acceso "=" exp*/
-                            /*| identificador "=" TOK_MALLOC*/
-                            /*| identificador "=" "&" identificador*/
-                              | identificador "=" TOK_INSTANCE_OF identificador "(" lista_expresiones ")"
-                              | identificador_clase "." identificador "=" exp
-                              ;
-  elemento_vector:              identificador "[" exp "]"
-                            /*| identificador "[" exp "," exp "]"*/
-                              ;
-  condicional:                  TOK_IF "(" exp ")" "{" sentencias "}"
-                              | TOK_IF "(" exp ")" "{" sentencias "}" TOK_ELSE "{" sentencias "}"
-                              ;
-  
-	bucle: 												TOK_WHILE "(" exp ")" "{" sentencias "}"
-														/*| TOK_FOR "(" identificador")" "=" exp ";" ")" "{" sentencias "}"*/
-															;
-
-	lectura: 											TOK_SCANF identificador
-															| TOK_SCANF elemento_vector
-															;
-
-	escritura:										TOK_PRINTF exp
-														/*|	TOK_CPRINTF identificador */
-															;
-
-	/*liberacion: 								TOK_FREE identificador 
-															;*/
-
-	/*acceso: 										*identificador
-															|	*acceso
-															;*/
-
-	retorno_funcion:							TOK_RETURN exp
-															| TOK_RETURN TOK_NONE
-															;
-
-	/*seleccion: 									TOK_SWITCH "(" exp ")" "{" casos_seleccion "}"
-															;*/
-
-	/*casos_seleccion: 					;
-	
-	
+declaraciones:              declaracion
+                          | declaracion declaraciones;
 
 
-/*operacion_conjunto:           TOK_UNION "(" identificador "," identificador "," identificador ")"
-                              | TOK_INTERSECTION "(" identificador "," identificador "," identificador ")"
-                              | TOK_ADD "(" exp "," identificador ")"
-                              | TOK_CLEAR "(" identificador ")"
-                              ;*/
-  exp:                          exp "+" exp
-                              | exp "-" exp
-                              | exp "/" exp
-                              | exp "*" exp
-                              | "-" exp
-                              | exp TOK_AND exp
-                              | exp TOK_OR exp
-                              | "!" exp
-                              | identificador
-                              | constante
-                              | "(" exp ")"
-                              | "(" comparacion ")"
-                            /*| acceso*/
-                              | elemento_vector
-                            /*| TOK_SIZE "(" identificador ")"*/
-                            /*| TOK_CONTAINS "(" exp, identificador ")"*/
-                              | identificador "(" lista_expresiones ")"
-                              | identificador_clase "." identificador "(" lista_expresiones ")"
-                              | identificador_clase "." identificador
-                              ;
-
-	identificador_clase:					identificador
-															|	TOK_ITSELF
-															;
-	
-	lista_expresiones: 						exp resto_lista_expresiones
-														/*|	vacio */
-															;
-
-	resto_lista_expresiones: 			"," exp resto_lista_expresiones
-														/*|vacio */
-															;
-
-	comparacion: 									exp TOK_IGUAL exp
-															|	exp TOK_DISTINTO exp
-															|	exp TOK_MENORIGUAL exp
-															|	exp TOK_MAYORIGUAL exp
-															|	exp "<" exp
-															|	exp ">" exp
-															;
+declaracion:                modificador_acceso clase identificadores ';'
+                          | modificador_acceso declaracion_clase ';' 
+                          ;
 
 
-  constante:                    constante_logica
-                              | constante_entera
-                            /*| constante_real*/
-                              ;
-  constante_logica:             TOK_TRUE
-                              | TOK_FALSE
-                              ;
-  constante_entera:             numero
-                              ;
-  numero:                       digito
-                              | numero digito
-                              ;
-/*constante_real:               constante_entera "." constante_entera
-                              ;*/
- 
+modificador_acceso:         TOK_HIDDEN TOK_UNIQUE
+                          | TOK_SECRET TOK_UNIQUE
+                          | TOK_EXPOSED TOK_UNIQUE
+                          | TOK_HIDDEN
+                          | TOK_SECRET
+                          | TOK_EXPOSED
+                          | TOK_UNIQUE
+                          | 
+                          ;
 
-	identificador: 								letra
-                              | letra cola_identificador
-                              ;
 
-	cola_identificador: 					alfanumerico
-                              | alfanumerico cola_identificador
-                              ;
+clase:                      clase_escalar
+                          | clase_vector
+                          | clase_objeto 
+                          ;
 
-	alfanumerico: 								letra
-                              | digito
-                              ;
 
-	letra:												TOK_IDENTIFICADOR/*a-z-A-Z*/
-															;
+declaracion_clase:          modificadores_clase TOK_CLASS identificador TOK_INHERITS identificadores '{' declaraciones funciones '}'
+                          | modificadores_clase TOK_CLASS identificador '{' declaraciones funciones '}' 
+                          ;
 
-	digito:											TOK_CONSTANTE_ENTERA
-															;
 
+modificadores_clase:      ;
+
+
+clase_escalar:              tipo
+                          ;
+
+
+tipo:                       TOK_INT
+                          | TOK_BOOLEAN 
+                          ;
+
+
+clase_objeto:               '{' identificador '}' 
+                          ;
+
+
+clase_vector:               TOK_ARRAY tipo '[' constante_entera ']' 
+                          ;
+
+
+identificadores:            identificador
+                          | identificador ',' identificadores 
+                          ;
+
+funciones:                  funcion funciones
+                          | 
+                          ;
+
+
+funcion:                    TOK_FUNCTION modificador_acceso tipo_retorno identificador '(' parametros_funcion ')' '{' declaraciones_funcion sentencias '}'
+                          ;
+
+
+tipo_retorno:               TOK_NONE
+                          | tipo 
+                          ;
+
+
+parametros_funcion:         parametro_funcion resto_parametros_funcion
+                          | 
+                          ;
+
+
+resto_parametros_funcion:   ';' parametro_funcion resto_parametros_funcion
+                          | 
+                          ;
+
+
+parametro_funcion:          tipo identificador
+                          ;
+
+
+declaraciones_funcion:      declaraciones
+                          | 
+                          ;
+
+
+sentencias:                 sentencia
+                          | sentencia sentencias
+                          ;
+
+
+sentencia:                  sentencia_simple ';'
+                          | bloque
+                          ;
+
+
+sentencia_simple:           asignacion
+                          | lectura
+                          | escritura
+                          | retorno_funcion
+                          | identificador_clase '.' identificador '(' lista_expresiones ')'
+                          | identificador '(' lista_expresiones ')'
+                          | destruir_objeto
+                          ;
+
+
+destruir_objeto:            TOK_DISCARD identificador
+                          ;
+
+
+bloque:                     condicional
+                          | bucle 
+                          ;
+
+
+asignacion:                 identificador '=' exp
+                          | elemento_vector '=' exp
+                          | elemento_vector '=' TOK_INSTANCE_OF identificador '(' lista_expresiones ')'
+                          | identificador '=' TOK_INSTANCE_OF identificador '(' lista_expresiones ')'
+                          | identificador_clase '.' identificador '=' exp 
+                          ;
+
+
+elemento_vector:            identificador '[' exp ']'
+                          ;
+
+
+condicional:                TOK_IF '(' exp ')' '{' sentencias '}'
+                          | TOK_IF '(' exp ')' '{' sentencias '}' TOK_ELSE '{' sentencias '}' 
+                          ;
+
+
+bucle:                      TOK_WHILE '(' exp ')' '{' sentencias '}' 
+                          ;
+
+
+lectura:                    TOK_SCANF identificador
+                          | TOK_SCANF elemento_vector 
+                          ;
+
+
+escritura:                  TOK_PRINTF exp 
+                          ;
+
+
+retorno_funcion:            TOK_RETURN exp
+                          | TOK_RETURN TOK_NONE 
+                          ;
+
+
+exp:                        exp '+' exp
+                          | exp '-' exp
+                          | exp '/' exp
+                          | exp '*' exp
+                          | '-' exp
+                          | exp TOK_AND exp
+                          | exp TOK_OR exp
+                          | '!' exp
+                          | identificador
+                          | constante
+                          | '(' exp ')'
+                          | '(' comparacion ')'
+                          | elemento_vector
+                          | identificador '(' lista_expresiones ')'
+                          | identificador_clase '.' identificador '(' lista_expresiones ')'
+                          | identificador_clase '.' identificador 
+                          ;
+
+
+identificador_clase:        identificador
+                          | TOK_ITSELF 
+                          ;
+
+
+lista_expresiones:          exp resto_lista_expresiones
+                          | 
+                          ;
+
+
+resto_lista_expresiones:    ',' exp resto_lista_expresiones
+                          | 
+                          ;
+
+
+comparacion:                exp TOK_IGUAL exp
+                          | exp TOK_DISTINTO exp
+                          | exp TOK_MENORIGUAL exp
+                          | exp TOK_MAYORIGUAL exp
+                          | exp '<' exp
+                          | exp '>' exp 
+                          ;
+
+
+constante:                  constante_logica
+                          | constante_entera 
+                          ;
+
+
+constante_logica:           TOK_TRUE
+                          | TOK_FALSE 
+                          ;
+
+
+constante_entera:           TOK_CONSTANTE_ENTERA 
+                          ;
+
+
+identificador:              TOK_IDENTIFICADOR 
+                          ;
 
 %%
-
-/*Seccion de Funciones de Usuario*/
-
-
-/*
-PAG1:A->Clase inc
-PAG2:A-> Restoparamfun inc
-PAG1:A->condi inc
-PAG1:a->exp
-PAG1:a->constent inc
-*/

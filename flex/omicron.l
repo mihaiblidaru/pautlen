@@ -13,7 +13,7 @@ FILE *pf = NULL;
 %option nounput
 %option noinput
 
-ENTERO [-+]?[0-9]+
+ENTERO [0-9]+
 IDENTIFICADOR [a-zA-Z][a-zA-Z0-9]*
 COMENTARIO "//".*
 OPERADOR (";"|"#"|","|"="|"("|")"|"["|"]"|"{"|"}"|":"|"+"|"-"|"/"|"*"|"<"|">"|"&"|"!"|".")

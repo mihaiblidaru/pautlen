@@ -3,10 +3,11 @@ CFLAGS = -Wall -Wextra -Werror -g -O0
 
 .PHONY: test all clean
 
-
 all: pruebaMorfo
 
-pruebaMorfo: lex.yy.c tokens.h
+pruebaMorfo: pruebaMorfo.o lex.yy.o
+
+lex.yy.o: lex.yy.c tokens.h
 	$(CC) $(CFLAGS) $^ -o $@
 
 lex.yy.c: omicron.l 

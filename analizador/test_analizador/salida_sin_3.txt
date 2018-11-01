@@ -1,0 +1,57 @@
+;D:	main
+;D:	{
+;D:	int
+;R:	modificadores_acceso:  
+;R:	tipo:	TOK_INT 
+;D:	x
+;R:	clase_escalar:	tipo 
+;R:	clase:	clase_escalar 
+;D:	;
+;R:	identificadores:	TOK_IDENTIFICADOR 
+;R:	declaracion: modificadores_acceso  clase identificadores ';' 
+;D:	int
+;R:	modificadores_acceso:  
+;R:	tipo:	TOK_INT 
+;D:	y
+;R:	clase_escalar:	tipo 
+;R:	clase:	clase_escalar 
+;D:	;
+;R:	identificadores:	TOK_IDENTIFICADOR 
+;R:	declaracion: modificadores_acceso  clase identificadores ';' 
+;D:	int
+;R:	modificadores_acceso:  
+;R:	tipo:	TOK_INT 
+;D:	z
+;R:	clase_escalar:	tipo 
+;R:	clase:	clase_escalar 
+;D:	;
+;R:	identificadores:	TOK_IDENTIFICADOR 
+;R:	declaracion: modificadores_acceso  clase identificadores ';' 
+;D:	class
+;R:	modificadores_acceso:  
+;R:	modificadores_clase:	
+;D:	A
+;D:	{
+;D:	function
+;R:	declaraciones_funcion:	
+;D:	boolean
+;R:	modificadores_acceso:  
+;R:	tipo:	TOK_BOOLEAN 
+;R:	tipo_retorno: tipo 
+;D:	mA1
+;D:	(
+;D:	int
+;R:	tipo:	TOK_INT 
+;D:	p1
+;R:	parametro_funcino:	tipo TOK_IDENTIFICADOR 
+;D:	)
+;R:	resto_parametros_funcion:	
+;R:	parametros_funcion:	parametro_funcion resto_parametros_funcion 
+;D:	{
+;D:	x
+;R:	declaraciones_funcion:	
+;D:	=
+;D:	p1
+;D:	+
+;R:	exp:	TOK_IDENTIFICADOR 
+;D:	+

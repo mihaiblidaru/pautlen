@@ -1,0 +1,168 @@
+;D:	main
+;D:	{
+;D:	int
+;R:	modificadores_acceso:  
+;R:	tipo:	TOK_INT 
+;D:	x
+;R:	clase_escalar:	tipo 
+;R:	clase:	clase_escalar 
+;D:	,
+;D:	resultado
+;D:	;
+;R:	identificadores:	TOK_IDENTIFICADOR 
+;R:	identificadores: TOK_IDENTIFICADOR ',' identificadores 
+;R:	declaracion: modificadores_acceso  clase identificadores ';' 
+;D:	class
+;R:	modificadores_acceso:  
+;R:	modificadores_clase:	
+;D:	A
+;D:	{
+;D:	hidden
+;D:	unique
+;R:	modificadores_acceso:  TOK_HIDDEN TOK_UNIQUE 
+;D:	boolean
+;R:	tipo:	TOK_BOOLEAN 
+;D:	aa
+;R:	clase_escalar:	tipo 
+;R:	clase:	clase_escalar 
+;D:	;
+;R:	identificadores:	TOK_IDENTIFICADOR 
+;R:	declaracion: modificadores_acceso  clase identificadores ';' 
+;D:	secret
+;D:	boolean
+;R:	modificadores_acceso:  TOK_SECRET  
+;R:	tipo:	TOK_BOOLEAN 
+;D:	aa2
+;R:	clase_escalar:	tipo 
+;R:	clase:	clase_escalar 
+;D:	;
+;R:	identificadores:	TOK_IDENTIFICADOR 
+;R:	declaracion: modificadores_acceso  clase identificadores ';' 
+;D:	unique
+;R:	modificadores_acceso:  TOK_UNIQUE  
+;D:	int
+;R:	tipo:	TOK_INT 
+;D:	aa3
+;R:	clase_escalar:	tipo 
+;R:	clase:	clase_escalar 
+;D:	;
+;R:	identificadores:	TOK_IDENTIFICADOR 
+;R:	declaracion: modificadores_acceso  clase identificadores ';' 
+;D:	boolean
+;R:	modificadores_acceso:  
+;R:	tipo:	TOK_BOOLEAN 
+;D:	aa4
+;R:	clase_escalar:	tipo 
+;R:	clase:	clase_escalar 
+;D:	;
+;R:	identificadores:	TOK_IDENTIFICADOR 
+;R:	declaracion: modificadores_acceso  clase identificadores ';' 
+;D:	{
+;R:	modificadores_acceso:  
+;D:	A
+;D:	}
+;R:	clase_objeto:	'{' TOK_IDENTIFICADOR '}' 
+;R:	clase:	clase_objeto 
+;D:	aaa
+;D:	;
+;R:	identificadores:	TOK_IDENTIFICADOR 
+;R:	declaracion: modificadores_acceso  clase identificadores ';' 
+;D:	function
+;R:	declaraciones:	declaracion 
+;R:	declaraciones:  declaracion declaraciones 
+;R:	declaraciones:  declaracion declaraciones 
+;R:	declaraciones:  declaracion declaraciones 
+;R:	declaraciones:  declaracion declaraciones 
+;R:	declaraciones_funcion:	declaraciones 
+;D:	int
+;R:	modificadores_acceso:  
+;R:	tipo:	TOK_INT 
+;R:	tipo_retorno: tipo 
+;D:	mA1
+;D:	(
+;D:	int
+;R:	tipo:	TOK_INT 
+;D:	p1
+;R:	parametro_funcino:	tipo TOK_IDENTIFICADOR 
+;D:	)
+;R:	resto_parametros_funcion:	
+;R:	parametros_funcion:	parametro_funcion resto_parametros_funcion 
+;D:	{
+;D:	return
+;R:	declaraciones_funcion:	
+;D:	2
+;R:	constante_entera:	TOK_CONSTANTE_ENTERA 
+;R:	constante: constante_entera 
+;R:	exp:	constante 
+;D:	*
+;D:	p1
+;D:	;
+;R:	exp:	TOK_IDENTIFICADOR 
+;R:	exp:	exp '*' exp 
+;R:	retorno_funcion:	TOK_RETURN exp 
+;R:	sentencia_simple: retorno_funcion 
+;R:	sentencia:	sentencia_simple ';' 
+;D:	}
+;R:	sentencias:	sentencia 
+;R:	funcion:   TOK_FUNCTION modificadores_acceso tipo_retorno TOK_IDENTIFICADOR  '(' parametros_funcion ')' '{' declaraciones_funcion sentencias '}' 
+;D:	}
+;R:	funciones:	
+;R:	funciones:	funcion funciones 
+;R:	declaracion_clase:	modificadores_clase TOK_CLASS  TOK_IDENTIFICADOR '{' declaraciones_funcion funciones '}' 
+;D:	;
+;R:	declaracion: modificadores_acceso declaracion_clase ';' 
+;D:	{
+;R:	modificadores_acceso:  
+;D:	A
+;D:	}
+;R:	clase_objeto:	'{' TOK_IDENTIFICADOR '}' 
+;R:	clase:	clase_objeto 
+;D:	a
+;D:	;
+;R:	identificadores:	TOK_IDENTIFICADOR 
+;R:	declaracion: modificadores_acceso  clase identificadores ';' 
+;D:	scanf
+;R:	declaraciones:	declaracion 
+;R:	declaraciones:  declaracion declaraciones 
+;R:	declaraciones:  declaracion declaraciones 
+;R:	funciones:	
+;D:	x
+;D:	;
+;R:	lectura:	TOK_SCANF TOK_IDENTIFICADOR 
+;R:	sentencia_simple: lectura 
+;R:	sentencia:	sentencia_simple ';' 
+;D:	resultado
+;D:	=
+;D:	x
+;D:	*
+;R:	exp:	TOK_IDENTIFICADOR 
+;D:	A
+;D:	.
+;R:	identificador_clase: TOK_IDENTIFICADOR 
+;D:	a
+;D:	(
+;D:	2
+;R:	constante_entera:	TOK_CONSTANTE_ENTERA 
+;R:	constante: constante_entera 
+;R:	exp:	constante 
+;D:	)
+;R:	resto_lista_expresiones:	
+;R:	lista_expresiones:	exp resto_lista_expresiones 
+;R:	exp:	identificador_clase '.' TOK_IDENTIFICADOR   '(' lista_expresiones ')' 
+;R:	exp:	exp '*' exp 
+;D:	;
+;R:	asignacion:	TOK_IDENTIFICADOR '=' exp 
+;R:	sentencia_simple:	asignacion 
+;R:	sentencia:	sentencia_simple ';' 
+;D:	printf
+;D:	resultado
+;D:	;
+;R:	exp:	TOK_IDENTIFICADOR 
+;R:	escritura:	TOK_PRINTF exp 
+;R:	sentencia_simple: escritura 
+;R:	sentencia:	sentencia_simple ';' 
+;D:	}
+;R:	sentencias:	sentencia 
+;R:	sentencias: sentencia  sentencias 
+;R:	sentencias: sentencia  sentencias 
+;R:	programa: TOK_MAIN '{' declaraciones funciones sentencias '}'

@@ -1,0 +1,72 @@
+#ifndef TOKENS_H
+#define TOKENS_H
+
+#define MAX_LONG_ID 50
+
+
+/* PALABRAS RESERVADAS */
+#define TOK_NONE 200
+#define TOK_CLASS 201
+#define TOK_INHERITS 202
+#define TOK_INSTANCE_OF 203
+#define TOK_DISCARD 204
+#define TOK_ITSELF 205
+#define TOK_FLECHA 206
+#define TOK_HIDDEN 207
+#define TOK_SECRET 208
+#define TOK_EXPOSED 209
+#define TOK_UNIQUE 210
+#define TOK_FUNCTION 211
+#define TOK_RETURN 212
+#define TOK_MAIN 213
+#define TOK_INT 214
+#define TOK_BOOLEAN 215
+#define TOK_ARRAY 216	
+#define TOK_IF 217
+#define TOK_ELSE 218
+#define TOK_WHILE 219
+#define TOK_SCANF 220
+#define TOK_PRINTF 221
+
+/* IDENTIFICADOR */
+#define TOK_IDENTIFICADOR 222
+
+/* OPERADORES */
+#define TOK_IGUAL 223
+#define TOK_DISTINTO 224
+#define TOK_MENORIGUAL 225
+#define TOK_MAYORIGUAL 226
+#define TOK_OR 227
+#define TOK_AND 228
+
+/* CONSTANTES */
+#define TOK_CONSTANTE_ENTERA 229
+#define TOK_FALSE 230 
+#define TOK_TRUE 231
+
+
+/* ERRORES */
+#define TOK_ERROR -1
+
+/* ESTOS NO APARECERAN SI NO HAY PUNTEROS, FLOAT, CONJUNTOS, SWITCH, FOR */
+
+#define TOK_FOR	300
+#define TOK_SWITCH 301
+#define TOK_CASE 302
+#define TOK_DEFAULT 303
+#define TOK_FLOAT 304
+#define TOK_MALLOC 305
+#define TOK_CPRINTF  306
+#define TOK_FREE  307
+#define TOK_SET 308
+#define TOK_OF 309
+#define TOK_UNION 310
+#define TOK_INTERSECTION 311
+#define TOK_ADD  312
+#define TOK_CLEAR 313
+#define TOK_SIZE 314
+#define TOK_CONTAINS  315
+#define TOK_CONSTANTE_REAL  316
+
+
+#endif

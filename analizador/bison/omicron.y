@@ -7,6 +7,7 @@
   extern int MAX_LONG_ID;
   extern int nLinea;
   extern int nColumna;
+  extern FILE *pf;
   void yyerror(char* s);
 %}
 
@@ -65,8 +66,8 @@
 
 %%
 
-programa:                   TOK_MAIN '{' declaraciones funciones sentencias '}'
-                          | TOK_MAIN '{' funciones sentencias '}'
+programa:                   TOK_MAIN '{' declaraciones funciones sentencias '}' { fprintf(pf, "HELOWI\n");}
+                          | TOK_MAIN '{' funciones sentencias '}'               { fprintf(pf, "HELOWI\n");}
                           ;
 
 

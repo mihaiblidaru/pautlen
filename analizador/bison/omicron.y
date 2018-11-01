@@ -84,7 +84,7 @@ modificador_acceso:         TOK_HIDDEN TOK_UNIQUE
                           | TOK_SECRET
                           | TOK_EXPOSED
                           | TOK_UNIQUE
-                          |
+                          | /* Vacio */
                           ;
 
 
@@ -124,7 +124,7 @@ identificadores:            identificador
                           ;
 
 funciones:                  funcion funciones
-                          |
+                          | /* Vacio */
                           ;
 
 
@@ -138,12 +138,12 @@ tipo_retorno:               TOK_NONE
 
 
 parametros_funcion:         parametro_funcion resto_parametros_funcion
-                          |
+                          | /* Vacio */
                           ;
 
 
 resto_parametros_funcion:   ';' parametro_funcion resto_parametros_funcion
-                          |
+                          | /* Vacio */
                           ;
 
 
@@ -152,7 +152,7 @@ parametro_funcion:          tipo identificador
 
 
 declaraciones_funcion:      declaraciones
-                          |
+                          | /* Vacio */
                           ;
 
 
@@ -245,12 +245,12 @@ identificador_clase:        identificador
 
 
 lista_expresiones:          exp resto_lista_expresiones
-                          |
+                          | /* Vacio */
                           ;
 
 
 resto_lista_expresiones:    ',' exp resto_lista_expresiones
-                          |
+                          | /* Vacio */
                           ;
 
 

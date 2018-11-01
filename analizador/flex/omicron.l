@@ -1,8 +1,7 @@
 %{
 #include <stdio.h>
 #include <string.h>
-#include "../bison/y.tab.h"
-#define MAX_LONG_ID 50
+#include "tokens.h"
 int nLinea = 1;
 int nColumna = 1;
 char *input_file_name;
@@ -14,7 +13,7 @@ FILE *pf = NULL;
 %option nounput
 %option noinput
 
-ENTERO [-+]?[0-9]+
+ENTERO [0-9]+
 IDENTIFICADOR [a-zA-Z][a-zA-Z0-9]*
 COMENTARIO "//".*
 OPERADOR (";"|"#"|","|"="|"("|")"|"["|"]"|"{"|"}"|":"|"+"|"-"|"/"|"*"|"<"|">"|"&"|"!"|".")
@@ -62,20 +61,21 @@ true            { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return T
                       nColumna += yyleng;
                       return TOK_IDENTIFICADOR;
                   } else {
-                      fprintf(pf, "TOK_ERROR\t%d\t%s\n", -1, yytext);
+                      fprintf(pf, "TOK_ERROR\t%d\t%s\n", TOK_ERROR, yytext);
                       fprintf(yyout, "%s:%d:%d Error morfologico(Identificador demasiado largo(%d). Max=%d)\n\t \033[0;31m %s \033[0m\n\n",
                               input_file_name, nLinea, nColumna, yyleng, MAX_LONG_ID, yytext);
                       nColumna += yyleng;
-                      return -1;
+                      return TOK_ERROR;
                   }
                 }
 
 {ENTERO}        { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return TOK_CONSTANTE_ENTERA;}
 {COMENTARIO}    { }
 {OPERADOR}      { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return (int)yytext[0];}
-{ERROR}         { fprintf(pf, "TOK_ERROR\t%d\t%s\n", -1, yytext);
+{ERROR}         { fprintf(pf, "TOK_ERROR\t%d\t%s\n", TOK_ERROR, yytext);
                   fprintf(yyout, "%s:%d:%d Error morfologico(Token no reconocido):\n\t \033[0;31m %s \033[0m\n\n", input_file_name, nLinea, nColumna, yytext);
                   nColumna += yyleng;
-                  return -1;}
+                  return TOK_ERROR;}
 
 %%
+

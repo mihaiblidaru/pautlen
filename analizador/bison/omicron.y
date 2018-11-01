@@ -50,6 +50,8 @@
 %token TOK_FALSE
 %token TOK_TRUE
 
+/* ERROR */
+%token TOK_ERROR
 
 /* Esto quita los warnings */
 /* que lo he encontrado en este repositorio */

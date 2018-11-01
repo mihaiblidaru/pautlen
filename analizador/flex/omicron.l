@@ -1,12 +1,12 @@
 %{
 #include <stdio.h>
 #include <string.h>
-#include "tokens.h"
+#include "../bison/y.tab.h"
+#define MAX_LONG_ID 50
 int nLinea = 1;
 int nColumna = 1;
 char *input_file_name;
 FILE *pf = NULL;
-
 %}
 
 %option noyywrap
@@ -78,4 +78,3 @@ true            { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return T
                   return TOK_ERROR;}
 
 %%
-

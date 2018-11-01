@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "bison/y.tab.h"
 extern char *input_file_name;
 extern FILE *pf;
 extern FILE *yyin;
 extern int yylex_destroy();
+extern int yyparse();
 
 int main(int argc, char **argv){
 

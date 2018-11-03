@@ -9,7 +9,7 @@
   extern int nColumna;
   extern int yylineno;
   extern FILE *pf;
-  void yyerror(char* s);
+  void yyerror(const char* s);
 %}
 
 /* PALABRAS RESERVADAS */
@@ -430,6 +430,6 @@ identificador:
 
 %%
 
-void yyerror(char* s){
+void yyerror(const char* s){
   fprintf(stderr,"Error | Line: %d\n%s\n", yylineno, s);
 }

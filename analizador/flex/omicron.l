@@ -12,6 +12,7 @@ FILE *pf = NULL;
 %option noyywrap
 %option nounput
 %option noinput
+%option yylineno
 
 ENTERO [0-9]+
 IDENTIFICADOR [a-zA-Z][a-zA-Z0-9]*
@@ -56,12 +57,12 @@ true            { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return T
 "||"            { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return TOK_OR;}
 "->"            { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return TOK_FLECHA;}
 
+{ENTERO}        { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return TOK_CONSTANTE_ENTERA;}
 {IDENTIFICADOR} { if (yyleng <= MAX_LONG_ID){
                       fprintf(pf, ";D:\t%s\n", yytext);
                       nColumna += yyleng;
                       return TOK_IDENTIFICADOR;
                   } else {
-                      fprintf(pf, "TOK_ERROR\t%d\t%s\n", TOK_ERROR, yytext);
                       fprintf(yyout, "%s:%d:%d Error morfologico(Identificador demasiado largo(%d). Max=%d)\n\t \033[0;31m %s \033[0m\n\n",
                               input_file_name, nLinea, nColumna, yyleng, MAX_LONG_ID, yytext);
                       nColumna += yyleng;
@@ -69,11 +70,10 @@ true            { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return T
                   }
                 }
 
-{ENTERO}        { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return TOK_CONSTANTE_ENTERA;}
+
 {COMENTARIO}    { }
 {OPERADOR}      { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return (int)yytext[0];}
-{ERROR}         { fprintf(pf, "TOK_ERROR\t%d\t%s\n", TOK_ERROR, yytext);
-                  fprintf(yyout, "%s:%d:%d Error morfologico(Token no reconocido):\n\t \033[0;31m %s \033[0m\n\n", input_file_name, nLinea, nColumna, yytext);
+{ERROR}         { fprintf(yyout, "%s:%d:%d Error morfologico(Token no reconocido):\n\t \033[0;31m %s \033[0m\n\n", input_file_name, nLinea, nColumna, yytext);
                   nColumna += yyleng;
                   return TOK_ERROR;}
 

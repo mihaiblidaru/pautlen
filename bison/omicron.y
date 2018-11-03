@@ -54,9 +54,10 @@
 /* Esto quita los warnings */
 /* que lo he encontrado en este repositorio */
 /* https://raw.githubusercontent.com/pablomm/pautlen/master/src/alfa.y */
-%left '+' '-' TOK_OR
-%left '*' '/' TOK_AND
-%right '!'
+%left TOK_AND TOK_OR
+%left '+' '-'
+%left '*' '/' 
+
 
 %start programa
 

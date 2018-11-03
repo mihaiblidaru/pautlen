@@ -5,8 +5,9 @@ int y;
 int z;
 
 class A {
+    int i;
 		function boolean mA1 (int p1) {
-            x=p1++y;
+            x=p1+y;
             return true;
 		}
   };

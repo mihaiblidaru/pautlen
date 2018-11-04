@@ -121,9 +121,9 @@ clase:
 ;
 
 declaracion_clase:
-  modificadores_clase TOK_CLASS TOK_IDENTIFICADOR TOK_INHERITS identificadores '{' declaraciones funciones '}'
+  modificadores_clase TOK_CLASS identificador TOK_INHERITS identificadores '{' declaraciones funciones '}'
     { fprintf(pf, ";R:\tdeclaracion_clase: modificadores_clase TOK_CLASS identificador TOK_INHERITS identificadores '{' declaraciones funciones '}'\n");}
-| modificadores_clase TOK_CLASS TOK_IDENTIFICADOR '{' declaraciones funciones '}'
+| modificadores_clase TOK_CLASS identificador '{' declaraciones funciones '}'
     { fprintf(pf, ";R:\tdeclaracion_clase: modificadores_clase TOK_CLASS TOK_IDENTIFICADOR '{' declaraciones funciones '}'\n");}
 ;
 
@@ -149,7 +149,7 @@ tipo:
 
 
 clase_objeto:
-  '{' TOK_IDENTIFICADOR '}'
+  '{' identificador '}'
     { fprintf(pf, ";R:\tclase_objeto: '{' TOK_IDENTIFICADOR '}'\n");}
 ;
 
@@ -161,9 +161,9 @@ clase_vector:
 
 
 identificadores:
-  TOK_IDENTIFICADOR
+  identificador
     { fprintf(pf, ";R:\tidentificadores: TOK_IDENTIFICADOR\n");}
-| TOK_IDENTIFICADOR ',' identificadores
+| identificador ',' identificadores
     { fprintf(pf, ";R:\tidentificadores: TOK_IDENTIFICADOR ',' identificadores\n");}
 ;
 
@@ -177,7 +177,7 @@ funciones:
 
 
 funcion:
-  TOK_FUNCTION modificadores_acceso tipo_retorno TOK_IDENTIFICADOR '(' parametros_funcion ')' '{' declaraciones_funcion sentencias '}'
+  TOK_FUNCTION modificadores_acceso tipo_retorno identificador '(' parametros_funcion ')' '{' declaraciones_funcion sentencias '}'
     { fprintf(pf, ";R:\tfuncion: TOK_FUNCTION modificadores_acceso tipo_retorno TOK_IDENTIFICADOR '(' parametros_funcion ')' '{' declaraciones_funcion sentencias '}'\n");}
 ;
 
@@ -187,7 +187,7 @@ tipo_retorno:
     { fprintf(pf, ";R:\ttipo_retorno: TOK_NONE\n"); }
 | tipo
     { fprintf(pf, ";R:\ttipo_retorno: tipo\n"); }
-| clase_objeto 
+| clase_objeto
     { fprintf(pf, ";R:\ttipo_retorno: clase_objeto\n"); }
 ;
 

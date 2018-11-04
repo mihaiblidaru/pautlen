@@ -6,6 +6,7 @@
   extern int yylex();
   extern int nColumna;
   extern int yylineno;
+  extern int yyleng;
   extern FILE *pf;
   void yyerror(const char* s);
 %}
@@ -183,9 +184,11 @@ funcion:
 
 tipo_retorno:
   TOK_NONE
-    { fprintf(pf, ";R:\ttipo_retorno: TOK_NONE\n");}
+    { fprintf(pf, ";R:\ttipo_retorno: TOK_NONE\n"); }
 | tipo
-    { fprintf(pf, ";R:\ttipo_retorno: tipo\n");}
+    { fprintf(pf, ";R:\ttipo_retorno: tipo\n"); }
+| clase_objeto 
+    { fprintf(pf, ";R:\ttipo_retorno: clase_objeto\n"); }
 ;
 
 
@@ -207,7 +210,9 @@ resto_parametros_funcion:
 
 parametro_funcion:
   tipo TOK_IDENTIFICADOR
-    { fprintf(pf, ";R:\tparametro_funcion: tipo TOK_IDENTIFICADOR\n");}
+    { fprintf(pf, ";R:\tparametro_funcion: tipo TOK_IDENTIFICADOR\n"); }
+| clase_objeto TOK_IDENTIFICADOR
+    { fprintf(pf, ";R:\tparametro_funcion: clase_objeto TOK_IDENTIFICADOR\n"); }
 ;
 
 
@@ -423,5 +428,5 @@ constante_entera:
 %%
 
 void yyerror(__attribute__((unused))const char* s){
-    fprintf(stderr,"ERROR SINTÁCTICO:%d:%d\n", yylineno, nColumna);
+    fprintf(stderr,"ERROR SINTÁCTICO:%d:%d\n", yylineno, nColumna - yyleng);
 }

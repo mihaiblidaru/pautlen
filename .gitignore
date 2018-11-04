@@ -70,3 +70,4 @@ analizador/bison/y.tab.h
 analizador/bison/y.tab.c
 analizador/omicron
 
+analizador/misalida*.txt

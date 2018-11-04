@@ -5,7 +5,7 @@ int y;
 int z;
 
 z=x+y;
-printf $;
+printf aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa;
 
 }
 

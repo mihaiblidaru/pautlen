@@ -43,7 +43,7 @@
 ;D:	int
 ;R:	tipo:	TOK_INT 
 ;D:	p1
-;R:	parametro_funcino:	tipo TOK_IDENTIFICADOR 
+;R:	parametro_funcion:	tipo TOK_IDENTIFICADOR 
 ;D:	)
 ;R:	resto_parametros_funcion:	
 ;R:	parametros_funcion:	parametro_funcion resto_parametros_funcion 

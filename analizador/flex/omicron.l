@@ -3,7 +3,6 @@
 #include <string.h>
 #include "../bison/y.tab.h"
 #define MAX_LONG_ID 50
-int nLinea = 1;
 int nColumna = 1;
 char *input_file_name;
 FILE *pf = NULL;
@@ -24,7 +23,7 @@ ERROR .
 %%
 " "             { nColumna += yyleng;}
 "\t"            { nColumna += yyleng;}
-"\n"            { nColumna = 1; nLinea += 1;}
+"\n"            { nColumna = 1;}
 none            { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return TOK_NONE;}
 class           { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return TOK_CLASS;}
 inherits        { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return TOK_INHERITS;}
@@ -63,8 +62,8 @@ true            { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return T
                       nColumna += yyleng;
                       return TOK_IDENTIFICADOR;
                   } else {
-                      fprintf(yyout, "%s:%d:%d Error morfologico(Identificador demasiado largo(%d). Max=%d)\n\t \033[0;31m %s \033[0m\n\n",
-                              input_file_name, nLinea, nColumna, yyleng, MAX_LONG_ID, yytext);
+                      fprintf(yyout, "ERROR MORFOLÓGICO:%d:%d:IDENTIFICADOR DEMASIADO LARGO (\033[0;31m%s\033[0m)\n",
+                              yylineno, nColumna, yytext);
                       nColumna += yyleng;
                       return TOK_ERROR;
                   }
@@ -72,8 +71,8 @@ true            { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return T
 
 
 {COMENTARIO}    { }
-{OPERADOR}      { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return (int)yytext[0];}
-{ERROR}         { fprintf(yyout, "%s:%d:%d Error morfologico(Token no reconocido):\n\t \033[0;31m %s \033[0m\n\n", input_file_name, nLinea, nColumna, yytext);
+{OPERADOR}      { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return (int) yytext[0];}
+{ERROR}         { fprintf(yyout, "ERROR MORFOLOGICO:%d:%d:CARACTER INVALIDO (%s)\n", yylineno, nColumna, yytext);
                   nColumna += yyleng;
                   return TOK_ERROR;}
 

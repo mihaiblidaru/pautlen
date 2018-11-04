@@ -232,13 +232,13 @@
 ;D:	discard
 ;D:	miA
 ;R:	destruir_objeto:	TOK_DISCARD TOK_IDENTIFICADOR 
-;R:	sentecia_simple: destruir_objeto 
+;R:	sentencia_simple: destruir_objeto 
 ;D:	;
 ;R:	sentencia:	sentencia_simple ';' 
 ;D:	discard
 ;D:	miB
 ;R:	destruir_objeto:	TOK_DISCARD TOK_IDENTIFICADOR 
-;R:	sentecia_simple: destruir_objeto 
+;R:	sentencia_simple: destruir_objeto 
 ;D:	;
 ;R:	sentencia:	sentencia_simple ';' 
 ;D:	}

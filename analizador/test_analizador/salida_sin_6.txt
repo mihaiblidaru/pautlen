@@ -56,7 +56,7 @@
 ;D:	int
 ;R:	tipo:	TOK_INT 
 ;D:	p1
-;R:	parametro_funcino:	tipo TOK_IDENTIFICADOR 
+;R:	parametro_funcion:	tipo TOK_IDENTIFICADOR 
 ;D:	)
 ;R:	resto_parametros_funcion:	
 ;R:	parametros_funcion:	parametro_funcion resto_parametros_funcion 
@@ -247,7 +247,7 @@
 ;D:	discard
 ;D:	miA
 ;R:	destruir_objeto:	TOK_DISCARD TOK_IDENTIFICADOR 
-;R:	sentecia_simple: destruir_objeto 
+;R:	sentencia_simple: destruir_objeto 
 ;D:	;
 ;R:	sentencia:	sentencia_simple ';' 
 ;D:	}

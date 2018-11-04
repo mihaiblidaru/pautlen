@@ -15,7 +15,7 @@ flex/lex.yy.c: flex/omicron.l
 	flex $^ && mv lex.yy.c flex/
 
 bison/y.tab.o: bison/y.tab.c
-	$(CC) $(CFLAGS) -DYYERROR_VERBOSE $< -o $@
+	$(CC) $(CFLAGS) $< -o $@
 
 bison/y.tab.h: bison/omicron.y
 	bison -d -y -v $<

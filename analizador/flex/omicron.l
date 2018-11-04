@@ -13,8 +13,8 @@ FILE *pf = NULL;
 %option noinput
 %option yylineno
 
-ENTERO [0-9]+
-IDENTIFICADOR [a-zA-Z][a-zA-Z0-9]*
+DIGITO [0-9]
+LETRA [a-zA-Z]
 COMENTARIO "//".*
 OPERADOR (";"|"#"|","|"="|"("|")"|"["|"]"|"{"|"}"|":"|"+"|"-"|"/"|"*"|"<"|">"|"&"|"!"|".")
 ERROR .
@@ -56,20 +56,8 @@ true            { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return T
 "||"            { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return TOK_OR;}
 "->"            { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return TOK_FLECHA;}
 
-{ENTERO}        { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return TOK_CONSTANTE_ENTERA;}
-{IDENTIFICADOR} { if (yyleng <= MAX_LONG_ID){
-                      fprintf(pf, ";D:\t%s\n", yytext);
-                      nColumna += yyleng;
-                      return TOK_IDENTIFICADOR;
-                  } else {
-                      fprintf(yyout, "ERROR MORFOLÓGICO:%d:%d:IDENTIFICADOR DEMASIADO LARGO (\033[0;31m%s\033[0m)\n",
-                              yylineno, nColumna, yytext);
-                      nColumna += yyleng;
-                      return TOK_ERROR;
-                  }
-                }
-
-
+{DIGITO}        { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return TOK_DIGITO;}
+{LETRA}         { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return TOK_LETRA; }
 {COMENTARIO}    { }
 {OPERADOR}      { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return (int) yytext[0];}
 {ERROR}         { fprintf(yyout, "ERROR MORFOLOGICO:%d:%d:CARACTER INVALIDO (%s)\n", yylineno, nColumna, yytext);

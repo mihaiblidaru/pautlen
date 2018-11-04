@@ -59,6 +59,14 @@ programa2
 programa3
 programa4
 programa5
+programa6
+
 
 *.gcda
 *.gcno
+analizador/bison/y.output
+analizador/flex/lex.yy.c
+analizador/bison/y.tab.h
+analizador/bison/y.tab.c
+analizador/omicron
+

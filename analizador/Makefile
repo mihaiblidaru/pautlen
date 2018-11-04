@@ -26,7 +26,7 @@ bison/y.tab.c: bison/omicron.y
 	mv y.* bison/
 
 clean:
-	rm -f *.o omicron flex/lex.yy.c misalida*.txt bison/y.*
+	rm -f *.o flex/*.o bison/*.o omicron flex/lex.yy.c misalida*.txt bison/y.*
 
 test:
 	./omicron test_analizador/entrada_sin_1.ol misalida1.txt

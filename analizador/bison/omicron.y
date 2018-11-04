@@ -122,7 +122,7 @@ clase:
 
 declaracion_clase:
   modificadores_clase TOK_CLASS TOK_IDENTIFICADOR TOK_INHERITS identificadores '{' declaraciones funciones '}'
-    { fprintf(pf, ";R:\tdeclaracion_clase: modificadores_clase TOK_CLASS identificador TOK_INHERITS identificadores '{' declaraciones funciones '}'\n");}
+    { fprintf(pf, ";R:\tdeclaracion_clase: modificadores_clase TOK_CLASS TOK_IDENTIFICADOR TOK_INHERITS identificadores '{' declaraciones funciones '}'\n");}
 | modificadores_clase TOK_CLASS TOK_IDENTIFICADOR '{' declaraciones funciones '}'
     { fprintf(pf, ";R:\tdeclaracion_clase: modificadores_clase TOK_CLASS TOK_IDENTIFICADOR '{' declaraciones funciones '}'\n");}
 ;
@@ -187,7 +187,7 @@ tipo_retorno:
     { fprintf(pf, ";R:\ttipo_retorno: TOK_NONE\n"); }
 | tipo
     { fprintf(pf, ";R:\ttipo_retorno: tipo\n"); }
-| clase_objeto 
+| clase_objeto
     { fprintf(pf, ";R:\ttipo_retorno: clase_objeto\n"); }
 ;
 

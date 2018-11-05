@@ -4,7 +4,6 @@
 #include "../bison/y.tab.h"
 #define MAX_LONG_ID 50
 int nColumna = 1;
-char *input_file_name;
 FILE *pf = NULL;
 %}
 

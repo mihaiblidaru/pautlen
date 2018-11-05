@@ -33,8 +33,6 @@ test:
 	meld misalida1.txt test_analizador/salida_sin_1.txt
 	./omicron test_analizador/entrada_sin_2.ol misalida2.txt
 	meld misalida2.txt test_analizador/salida_sin_2.txt
-	./omicron test_analizador/entrada_sin_3.ol misalida3.txt
-	meld misalida3.txt test_analizador/salida_sin_3.txt
 	./omicron test_analizador/entrada_sin_4.ol misalida4.txt
 	meld misalida4.txt test_analizador/salida_sin_4.txt
 	./omicron test_analizador/entrada_sin_5.ol misalida5.txt

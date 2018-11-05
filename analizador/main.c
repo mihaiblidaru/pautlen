@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-extern char *input_file_name;
 extern FILE *pf;
 extern FILE *yyin;
 extern int yylex_destroy();
@@ -22,8 +21,6 @@ int main(int argc, char **argv){
         perror(" ");
         return -1;
     }
-
-    input_file_name = argv[1]; /* Para poder imprimir el nombre del la entrada al mostrar errores usando el estilo de gcc */
 
     pf = fopen(argv[2], "w");
     if(!pf){

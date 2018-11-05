@@ -428,5 +428,7 @@ constante_entera:
 %%
 
 void yyerror(__attribute__((unused))const char* s){
-    fprintf(stderr,"ERROR SINTÁCTICO:%d:%d\n", yylineno, nColumna - yyleng);
+    // Si el error es de verdad sintactico
+    if(yychar != TOK_ERROR)
+        fprintf(stderr,"ERROR SINTÁCTICO:%d:%d\n", yylineno, nColumna - yyleng);
 }

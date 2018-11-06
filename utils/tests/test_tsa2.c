@@ -1,6 +1,6 @@
 #include "../simbolo.h"
 #include "../hash.h"
-#include "../tablasimbolo.h"
+#include "../tsa.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,7 +9,7 @@
 //ES MUY CUTRE LO SEE!
 int main(){
 
-    TablaSimbolos* ts = NULL;
+    TSA* ts = NULL;
 
     InfoSimbolo* sim1 = NULL;
     InfoSimbolo* result = NULL;
@@ -30,18 +30,18 @@ int main(){
     
     
     fprintf(stdout, "Creando ts...\n");
-    ts = TS_crear();
+    ts = TSA_crear();
 
     fprintf(stdout, "Ámbito actual: %d\n", ts->ambito);
     fprintf(stdout, "Cambiando ámbito...\n");
-    TS_cambiaAmbito(ts);
+    TSA_cambiaAmbito(ts);
     fprintf(stdout, "Ámbito actual: %d\n", ts->ambito);
 
     fprintf(stdout, "Insertando sim1 (%s)\n", sim1->identificador);
-    TS_insertarSimbolo(ts, sim1);
+    TSA_insertarSimbolo(ts, sim1);
 
     fprintf(stdout, "Buscando sim1...\n");
-    result = TS_buscar(ts, sim1->identificador);
+    result = TSA_buscar(ts, sim1->identificador);
     fprintf(stdout, "Resultado de la búsqueda:\n");
     fprintf(stdout,"clase: %d\ncategoria: %d\ntipo: %d\ntamaño: %d\nidentificador: %s\n",result->clase,result->categoria,result->tipo,result->tamano,result->identificador);
 
@@ -50,7 +50,7 @@ int main(){
     fprintf(stdout, "Eliminando sim1...\n");
     InfoSimbolo_eliminar(sim1);
     fprintf(stdout, "Eliminando ts...\n");
-    TS_eliminar(ts);
+    TSA_eliminar(ts);
 
     return 0;
 }

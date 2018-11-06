@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -g -O0
+CFLAGS = -Wall -Wextra -g -O0 -std=gnu11
 
 TESTS = test_lista test_hash test_grafo test_grafo2 test_tabla_simbolos1 test_tabla_simbolos2 
 

@@ -1,6 +1,6 @@
 #include "../simbolo.h"
 #include "../hash.h"
-#include "../tablasimbolo.h"
+#include "../tsa.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -35,7 +35,7 @@ int main(){
     fprintf(stdout,"clase: %d\ncategoria: %d\ntipo: %d\ntamaño: %d\nidentificador: %s\n",sim2->clase,sim2->categoria,sim2->tipo,sim2->tamano,sim2->identificador);
 
 
-    TablaSimbolos *tabla = TS_crear();
+    TSA *tabla = TSA_crear();
     if(tabla==NULL){
         fprintf(stderr,"error al crear tabla de símbolos");
     }
@@ -80,7 +80,7 @@ int main(){
     }
     printf("Empezando test de hash.\n");
 
-    if(TS_eliminar(tabla)==0){
+    if(TSA_eliminar(tabla)==0){
         fprintf(stderr,"fallo liberando tabla de simbolos\n");
     }else{
          printf("liberado de la tabla de simbolos correcto\n");

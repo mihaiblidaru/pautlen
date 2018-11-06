@@ -1,24 +1,24 @@
 #include "hash.h"
 #include "simbolo.h"
-#include "tablasimbolo.h"
+#include "tsa.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 
 
-TablaSimbolos* TS_crear(){
-     TablaSimbolos* nueva = calloc(1,sizeof(TablaSimbolos));
+TSA* TSA_crear(){
+     TSA* nueva = calloc(1,sizeof(TSA));
 	if(nueva == NULL){
 		return NULL;
 	}else{
         nueva->ambito = LOCAL;
         nueva->global = hash_crear(DEF_TAM);
-        if(nueva->global ==NULL){
+        if(nueva->global == NULL){
             return NULL;
         }
         nueva->local = hash_crear(DEF_TAM);
-        if(nueva->local ==NULL){
+        if(nueva->local == NULL){
             return NULL;
         }
         return nueva;
@@ -26,7 +26,7 @@ TablaSimbolos* TS_crear(){
 }
 //Como me gusta contradecirte elimino la info de las tablas
 //Ademas cambio el prototipo de la funcion
-int TS_eliminar(TablaSimbolos* ts){
+int TSA_eliminar(TSA* ts){
 
     if(ts == NULL)
 		return ERROR;
@@ -41,7 +41,7 @@ int TS_eliminar(TablaSimbolos* ts){
     return OK;
 }
 
-TablaSimbolos* TS_cambiaAmbito(TablaSimbolos* ts){
+TSA* TSA_cambiaAmbito(TSA* ts){
 
     if(!ts){
         return NULL;
@@ -60,7 +60,7 @@ TablaSimbolos* TS_cambiaAmbito(TablaSimbolos* ts){
 }
 
 
-TablaSimbolos* TS_insertarSimbolo(TablaSimbolos* ts, InfoSimbolo* simbolo){
+TSA* TSA_insertarSimbolo(TSA* ts, InfoSimbolo* simbolo){
 
     if(!ts || !simbolo){
         return NULL;
@@ -91,7 +91,7 @@ TablaSimbolos* TS_insertarSimbolo(TablaSimbolos* ts, InfoSimbolo* simbolo){
 }
 
 
-InfoSimbolo* TS_buscar(TablaSimbolos*ts, const char* clave){
+InfoSimbolo* TSA_buscar(TSA*ts, const char* clave){
 
     if(!ts || !clave){
         return NULL;

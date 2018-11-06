@@ -48,7 +48,7 @@ int main(){
     printf("%s length\n", len != 4 ? "Fail":"OK");
     lista_free(lista, NULL);
     
-
+    return 0;
 }
 
 

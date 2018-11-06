@@ -1,5 +1,5 @@
-#ifndef TABLASIMBOLO_H
-#define TABLASIMBOLO_H
+#ifndef TSA_H
+#define TSA_H
 
 #include "hash.h"
 #include "simbolo.h"
@@ -18,7 +18,7 @@ typedef struct {
   Ambito ambito;
   TablaHash* global;
   TablaHash* local;
-} TablaSimbolos;
+} TSA;
 
 /**
  * @brief Crea una tabla de simbolos vacia.
@@ -26,9 +26,9 @@ typedef struct {
  * Crea la tabla, inicializa las dos tablas internas y
  * la deja por defecto en el ambito local.
  *
- * @return TablaSimbolos* tabla de simbolos creada
+ * @return TSA* tabla de simbolos creada
  */
-TablaSimbolos* TS_crear();
+TSA* TSA_crear();
 
 /**
  * @brief Libera memoria de la tabla de simbolos.
@@ -39,7 +39,7 @@ TablaSimbolos* TS_crear();
  * @param ts tabla de simbolos a liberar
  */
 
-int TS_eliminar(TablaSimbolos* ts);
+int TSA_eliminar(TSA* ts);
 
 /**
  * @brief Cambia de ambito seleccionado.
@@ -47,9 +47,9 @@ int TS_eliminar(TablaSimbolos* ts);
  * Cuando se cambia de local a global, se destruye el local.
  * 
  * @param ts tabla de simbolos
- * @return TablaSimbolos* 
+ * @return TSA* 
  */
-TablaSimbolos* TS_cambiaAmbito(TablaSimbolos* ts);
+TSA* TSA_cambiaAmbito(TSA* ts);
 
 /**
  * @brief inserta un simbolo en la tabla hash activas
@@ -63,9 +63,9 @@ TablaSimbolos* TS_cambiaAmbito(TablaSimbolos* ts);
  * 
  * @param ts 
  * @param simbolo 
- * @return TablaSimbolos* 
+ * @return TSA* 
  */
-TablaSimbolos* TS_insertarSimbolo(TablaSimbolos* ts, InfoSimbolo* simbolo);
+TSA* TSA_insertarSimbolo(TSA* ts, InfoSimbolo* simbolo);
 
 /**
  * @brief Devuelve un simbolo de la tabla hash activa
@@ -74,6 +74,6 @@ TablaSimbolos* TS_insertarSimbolo(TablaSimbolos* ts, InfoSimbolo* simbolo);
  * @param clave 
  * @return InfoSimbolo* 
  */
-InfoSimbolo* TS_buscar(TablaSimbolos*ts, const char* clave);
+InfoSimbolo* TSA_buscar(TSA*ts, const char* clave);
 
 #endif

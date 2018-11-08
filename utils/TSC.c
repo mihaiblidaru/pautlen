@@ -145,36 +145,59 @@ int abrirClase(TSC* t, char* id_clase, Lista* lista_padres) {
 
     nodoActual = crearNodoGrafo(t, id_clase, tsa);
 
-    if (!lista_padres) {  // si no tiene padres, lo añado al array de raices, y al array de nodos totales
-        lista_addlast(t->raices, nodoActual);
-        lista_addlast(t->nodos, nodoActual);
-        return OK;
-    }
-    lista_addlast(t->nodos, nodoActual);
+int abrirClase (TSC* t, char* id_clase, Lista* lista_padres){
 
-    // ahora buscar en todos los nodos los q coinciden con los padres, y asignar doblemente
-    for (i = 0; i < lista_length(t->nodos); i++) {
-        nodoAux = lista_get(t->nodos, i);
-        for (j = 0; j < lista_length(lista_padres); j++) {
-            if (strcmp(nodoAux->nombre, lista_get(lista_padres, i)) == 0) {  // cuando encuentro el padre
-                lista_addlast(nodoActual->predecesores, nodoAux);
-                lista_addlast(nodoAux->descendientes, nodoActual);
-                break;
-            }
-        }
-    }
+	int i, j; 
+	NodoGrafo* nodoActual ,*nodoAux = NULL;
+	if(!t || !id_clase || !lista_padres){
+		return ERROR;
+	}
+	TSA* tsa = TSA_crear();
+	if(!tsa){
+		return ERROR;
+	}
 
-    return OK;
+	nodoActual = crearNodoGrafo(t, id_clase, tsa);
+
+	if(!lista_padres){ //si no tiene padres, lo añado al array de raices, y al array de nodos totales
+		lista_addlast(t->raices, nodoActual);
+		lista_addlast(t->nodos, nodoActual);
+		return OK;
+	}
+	lista_addlast(t->nodos, nodoActual);
+
+	//ahora buscar en todos los nodos los q coinciden con los padres, y asignar doblemente
+	for(i=0;i<lista_length(t->nodos);i++){
+		nodoAux = lista_get(t->nodos, i);
+		for(j=0;j<lista_length(lista_padres);j++){
+			if(strcmp(nodoAux->nombre, lista_get(lista_padres, i)) == 0){ //cuando encuentro el padre
+				lista_addlast(nodoActual->predecesores,nodoAux);
+				lista_addlast(nodoAux->descendientes,nodoActual);
+				break;
+			}
+		}
+	}
+	return OK;					   
 }
 
-int cerrarClase(TSC* t,
-                char* id_clase,
-                int num_atributos_clase,
-                int num_atributos_instancia,
-                int num_metodos_sobreescribibles,
-                int num_metodos_no_sobreescribibles) {
-    return 0;
-}
+
+int cerrarClase(TSC* t, char* id_clase, int num_atributos_clase, int num_atributos_instancia,
+ 					int num_metodos_sobreescribibles, int num_metodos_no_sobreescribibles){
+
+	if(!t||!id_clase||num_atributos_clase<0|| num_atributos_instancia<0||
+		num_metodos_sobreescribibles<0||num_metodos_no_sobreescribibles<0){
+			return ERROR;
+		}
+
+	
+
+
+
+
+
+
+				return 0;	
+				}
 
 void cerrarTablaSimbolosClases(TSC* t) {
     if (!t) {
@@ -238,7 +261,7 @@ int buscarIdEnJerarquiaDesdeClase(TSC* t,
                                   char* nombre_ambito_encontrado);
 
 int buscarIdNoCualificado(TSC* t,
-                          tablaSimbolosAmbitos tabla_main,
+                          TSA* tabla_main,
                           char* nombre_id,
                           char* nombre_clase_desde,
                           InfoSimbolo** e,
@@ -274,4 +297,4 @@ int buscarParaDeclararIdLocalEnMetodo(	TSC *t,
 							char * nombre_clase,
 							char * nombre_id,
 							InfoSimbolo ** e, 
-							char * nombre_ambito_encontrado)
+							char * nombre_ambito_encontrado);

@@ -136,9 +136,6 @@ void printNodoGrafo(NodoGrafo* nodo){
 }
 
 
-
-
-
 TSC* iniciarTablaSimbolosClases(char * nombre){
 
 	TSC* grafo = calloc(1, sizeof(TSC));
@@ -196,6 +193,7 @@ int cerrarClase(TSC* t, char* id_clase, int num_atributos_clase, int num_atribut
 			return ERROR;
 		}
 
+
 	
 
 
@@ -203,8 +201,8 @@ int cerrarClase(TSC* t, char* id_clase, int num_atributos_clase, int num_atribut
 
 
 
-				return 0;	
-				}
+		return 0;	
+}
 
 void cerrarTablaSimbolosClases(TSC* t){
 	if(!t){

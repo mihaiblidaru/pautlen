@@ -35,6 +35,8 @@ typedef enum { ENTERO, BOOLEANO } TIPO;
 /* Clase de un símbolo: pueden ser variables atómicas (escalares) o listas/arrays (vectores) */
 typedef enum { ESCALAR, PUNTERO, VECTOR, OBJETO } CLASE;
 
+typedef enum { NINGUNO, ACCESO_CLASE, ACCESO_HERENCIA, ACCESO_TODOS }TIPO_ACCESO;
+
 #define LONGITUD_MAXIMA_INDENTIFICADOR 256
 
 typedef struct {
@@ -66,6 +68,17 @@ typedef struct {
 	int filas;			/* 1-64 */
 	int columnas;		/* 1-64 */
 	int capacidad;		/* 1-64 */
+    int numero_atributos_clase;
+    int num_atributos_instancia;
+    int num_metodos_sobreescribibles;
+    int nun_metodos_no_sobreescribibles;
+    int tipo_acceso;
+    int tipo_miembro;
+    int posicion_atributo_instancia;
+    int posicion_metodo_sobreescribible;
+    int num_acumulado_atributos_instancia;
+    int num_acumulado_metodos_sobreescritura;
+    int* tipo_args;
 }InfoSimbolo;
 
 

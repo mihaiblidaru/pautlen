@@ -234,7 +234,6 @@ int abrirClase (TSC* t, char* id_clase, Lista* lista_padres){
 	}
 	lista_addlast(grafo->nodos, nodoActual);
 
-
 	//ahora buscar en todos los nodos los q coinciden con los padres, y asignar doblemente
 	for(i=0;i<lista_length(grafo->nodos);i++){
 		nodoAux = lista_get(grafo->nodos, i);
@@ -246,22 +245,19 @@ int abrirClase (TSC* t, char* id_clase, Lista* lista_padres){
 			}
 		}
 	}
-
-	return OK;
-						   
+	return OK;					   
 }
 
 
-int cerrarClase(TSC* t,
-                char* id_clase, 
-                int num_atributos_clase, 
-                int num_atributos_instancia, 
-                int num_metodos_sobreescribibles, 
-                int num_metodos_no_sobreescribibles){
+int cerrarClase(TSC* t, char* id_clase, int num_atributos_clase, int num_atributos_instancia,
+ 					int num_metodos_sobreescribibles, int num_metodos_no_sobreescribibles){
 
+	if(!t||!id_clase||num_atributos_clase<0|| num_atributos_instancia<0||
+		num_metodos_sobreescribibles<0||num_metodos_no_sobreescribibles<0){
+			return ERROR;
+		}
 
-
-
+	
 
 
 
@@ -269,7 +265,7 @@ int cerrarClase(TSC* t,
 
 
 					
-				}
+}
 
 void cerrarTablaSimbolosClases(TSC* t){
 	if(!t){

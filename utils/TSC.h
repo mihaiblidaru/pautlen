@@ -34,25 +34,24 @@ typedef struct TSC {
     Lista* nodos;  
 } TSC;
 
-/**************** FUNCIONES ****************/
-//Crea el grafo bidireccional
-TSC* crearGrafo();
+TSC* iniciarTablaSimbolosClases(char * nombre);
 
-//Elimina el grafo.
-//Devuelve OK en caso de que se elimine correctamente y ERROR en caso contrario.
-int eliminarGrafo(TSC* grafo);
+int abrirClase(TSC* t, char* id_clase);
 
-//Recibe la clave y la informacion, y devuelve un nuevo NodoGrafo. Reservara memoria y rellenara la estructura NodoGrafo.
-//Funcion auxiliar, se llama dentro de la funcion insertarNodoGrafo.
-NodoGrafo* crearNodoGrafo(TSC* grafo, char *nombre, void *info);
+int abrirClaseHeredaN (TSC* t, 
+                       char* id_clase, Lista* lista_padres);
 
-//Imprime un nodo
-void printNodoGrafo(NodoGrafo* nodo);
 
-//Inserta un nodo en el grafo. Para ello deberá utilizar la funcion auxiliar crearNodoGrafo.
-// Actualiza toda la relación de padres e hijos.
-//Devuelve OK en caso de que se inserte y ERROR en caso de que no.
-int insertarNodoGrafo(TSC *grafo, char *nombre, void *info, char** padres,int numPadres);
+int cerrarClase(TSC* t,
+                char* id_clase, 
+                int num_atributos_clase, 
+                int num_atributos_instancia, 
+                int num_metodos_sobreescribibles, 
+                int num_metodos_no_sobreescribibles);
+
+void cerrarTablaSimbolosClases(char * nombre);
+
+
 
 //Busqueda en Profundidad de un nodo en el grafo identificado por su nombre.
 //Devuelve el nodo en caso de que se encuentre y NULL en caso de que no.

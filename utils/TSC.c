@@ -231,3 +231,100 @@ void crearRepresentacionGrafo(TSC* g, char* path){
 
 }
 
+
+
+TSC* iniciarTablaSimbolosClases(char * nombre){
+
+
+
+
+
+
+
+
+
+
+	
+}
+
+int abrirClase(TSC* t, char* id_clase){
+
+
+
+
+
+
+
+
+
+
+	
+}
+
+int abrirClaseHeredaN (TSC* t, 
+                       char* id_clase, Lista* lista_padres){
+
+
+
+
+
+
+
+
+
+
+						   
+					   }
+
+
+int cerrarClase(TSC* t,
+                char* id_clase, 
+                int num_atributos_clase, 
+                int num_atributos_instancia, 
+                int num_metodos_sobreescribibles, 
+                int num_metodos_no_sobreescribibles){
+
+
+
+
+
+
+
+
+
+
+					
+				}
+
+void cerrarTablaSimbolosClases(char * nombre){
+
+
+
+
+
+
+
+
+
+
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

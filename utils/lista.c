@@ -60,7 +60,7 @@ void lista_free(Lista* l, void(*free_data_funct)(void*)){
 }
 
 bool lista_addstr(Lista *list, const char* str){
-    lista_addlast(list, strdup(str));
+    return lista_addlast(list, strdup(str));
 }
 
 

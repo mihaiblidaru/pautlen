@@ -49,7 +49,8 @@ int cerrarClase(TSC* t,
                 int num_metodos_sobreescribibles, 
                 int num_metodos_no_sobreescribibles);
 
-void cerrarTablaSimbolosClases(char * nombre);
+void cerrarTablaSimbolosClases(TSC* t);
+
 
 
 

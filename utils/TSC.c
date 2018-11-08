@@ -296,7 +296,7 @@ int cerrarClase(TSC* t,
 					
 				}
 
-void cerrarTablaSimbolosClases(char * nombre){
+void cerrarTablaSimbolosClases(TSC* t){
 
 
 

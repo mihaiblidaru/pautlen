@@ -103,3 +103,8 @@ InfoSimbolo* TSA_buscar(TSA*ts, const char* clave){
     
     return hash_buscar(ts->local, clave);
 }
+
+int buscarParaDeclararIdTablaSimbolosAmbitos(TSA* t, 
+                                    char* id, 
+                                    InfoSimbolo** e,  
+                                    char* id_ambito);

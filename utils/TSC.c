@@ -272,17 +272,13 @@ int cerrarClase(TSC* t,
 				}
 
 void cerrarTablaSimbolosClases(TSC* t){
-
-
-
-
-
-
-
-
-
-
-	
+	if(!t){
+    	return ERROR; 
+    }
+    lista_free(t->nodos, eliminarNodo);
+    lista_free(t->raices, NULL);
+	free(t->nombre);
+    return OK;	
 }
 
 

@@ -31,7 +31,8 @@ typedef struct NodoGrafo {
 
 typedef struct TSC {
 	Lista* raices;       
-    Lista* nodos;  
+    Lista* nodos; 
+    char* nombre; 
 } TSC;
 
 TSC* iniciarTablaSimbolosClases(char * nombre);

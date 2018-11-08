@@ -11,7 +11,7 @@
 *
 ************************************************************/
 
-#include "../grafo.h"
+#include "../TSC.h"
 #include <stdlib.h>
 #include <string.h>
 

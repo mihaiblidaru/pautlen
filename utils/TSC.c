@@ -13,7 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "grafo.h"
+#include "TSC.h"
 #include "lista.h"
 
 
@@ -24,9 +24,9 @@
 /**************** FUNCIONES ****************/
 void eliminarNodo(void* nodo);
 
-Grafo* crearGrafo(){
+TSC* crearGrafo(){
 
-	Grafo* grafo = calloc(1, sizeof(Grafo));
+	TSC* grafo = calloc(1, sizeof(TSC));
 	if(!grafo){
 		return NULL;
 	}
@@ -35,7 +35,7 @@ Grafo* crearGrafo(){
 	return grafo;
 }
 
-int eliminarGrafo(Grafo* grafo){
+int eliminarGrafo(TSC* grafo){
 
 	if(!grafo){
     	return ERROR; 
@@ -46,7 +46,7 @@ int eliminarGrafo(Grafo* grafo){
     return OK;
 }
 
-NodoGrafo* crearNodoGrafo(Grafo* grafo, char *nombre, void *info){
+NodoGrafo* crearNodoGrafo(TSC* grafo, char *nombre, void *info){
 
 	int i = 0;
 	NodoGrafo* aux = NULL;
@@ -84,7 +84,7 @@ void eliminarNodo(void* o){
 }
 
 
-int insertarNodoGrafo(Grafo *grafo, char *nombre, void *info, char** padres,int numPadres){
+int insertarNodoGrafo(TSC *grafo, char *nombre, void *info, char** padres,int numPadres){
 
 	int i, j; 
 	NodoGrafo* nodoActual ,*nodoAux = NULL;
@@ -120,7 +120,7 @@ int insertarNodoGrafo(Grafo *grafo, char *nombre, void *info, char** padres,int 
 
 //Busqueda en Profundidad de un nodo en el grafo identificado por su nombre (Si queréis podéis buscar en profundidad).
 //Devuelve el nodo en caso de que se encuentre y NULL en caso de que no.
-NodoGrafo* buscarNodoProfundidad(Grafo *grafo, char *nombre){
+NodoGrafo* buscarNodoProfundidad(TSC *grafo, char *nombre){
 
 	int i;
 	NodoGrafo * aux;
@@ -176,7 +176,7 @@ void printNodoGrafo(NodoGrafo* nodo){
 }
 
 
-void crearRepresentacionGrafo(Grafo* g, char* path){
+void crearRepresentacionGrafo(TSC* g, char* path){
 	FILE* fp = fopen(path, "w");
 	const char* prefix = "CLASE";
 	int i, j;

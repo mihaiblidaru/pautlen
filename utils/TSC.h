@@ -10,8 +10,8 @@
 * BLIDARU , Mihai 
 *
 ************************************************************/
-#ifndef GRAFO
-#define GRAFO
+#ifndef tsc
+#define tsc
 
 #include <stdio.h>
 #include "lista.h"
@@ -29,22 +29,22 @@ typedef struct NodoGrafo {
 	Lista* descendientes;
 } NodoGrafo;
 
-typedef struct Grafo {
+typedef struct TSC {
 	Lista* raices;       
     Lista* nodos;  
-} Grafo;
+} TSC;
 
 /**************** FUNCIONES ****************/
 //Crea el grafo bidireccional
-Grafo* crearGrafo();
+TSC* crearGrafo();
 
 //Elimina el grafo.
 //Devuelve OK en caso de que se elimine correctamente y ERROR en caso contrario.
-int eliminarGrafo(Grafo* grafo);
+int eliminarGrafo(TSC* grafo);
 
 //Recibe la clave y la informacion, y devuelve un nuevo NodoGrafo. Reservara memoria y rellenara la estructura NodoGrafo.
 //Funcion auxiliar, se llama dentro de la funcion insertarNodoGrafo.
-NodoGrafo* crearNodoGrafo(Grafo* grafo, char *nombre, void *info);
+NodoGrafo* crearNodoGrafo(TSC* grafo, char *nombre, void *info);
 
 //Imprime un nodo
 void printNodoGrafo(NodoGrafo* nodo);
@@ -52,12 +52,12 @@ void printNodoGrafo(NodoGrafo* nodo);
 //Inserta un nodo en el grafo. Para ello deberá utilizar la funcion auxiliar crearNodoGrafo.
 // Actualiza toda la relación de padres e hijos.
 //Devuelve OK en caso de que se inserte y ERROR en caso de que no.
-int insertarNodoGrafo(Grafo *grafo, char *nombre, void *info, char** padres,int numPadres);
+int insertarNodoGrafo(TSC *grafo, char *nombre, void *info, char** padres,int numPadres);
 
 //Busqueda en Profundidad de un nodo en el grafo identificado por su nombre.
 //Devuelve el nodo en caso de que se encuentre y NULL en caso de que no.
 NodoGrafo* recBuscarNodoProfundidad(NodoGrafo * actual,char * nombre);
-NodoGrafo* buscarNodoProfundidad(Grafo *grafo, char *nombre);
-void crearRepresentacionGrafo(Grafo* grafo, char* path);
+NodoGrafo* buscarNodoProfundidad(TSC *grafo, char *nombre);
+void crearRepresentacionGrafo(TSC* grafo, char* path);
 
 #endif

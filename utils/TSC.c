@@ -262,7 +262,7 @@ int abrirClase(TSC* t, char* id_clase){
 }
 
 int abrirClaseHeredaN (TSC* t, 
-                       char* id_clase, Lista* lista_padres){
+						char* id_clase, Lista* lista_padres){
 
 
 
@@ -297,17 +297,13 @@ int cerrarClase(TSC* t,
 				}
 
 void cerrarTablaSimbolosClases(TSC* t){
-
-
-
-
-
-
-
-
-
-
-	
+	if(!t){
+    	return ERROR; 
+    }
+    lista_free(t->nodos, eliminarNodo);
+    lista_free(t->raices, NULL);
+	free(t->nombre);
+    return OK;	
 }
 
 

@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "TSC.h"
+#include "TSA.h"
 #include "lista.h"
 
 
@@ -26,13 +27,7 @@ void eliminarNodo(void* nodo);
 
 TSC* crearGrafo(){
 
-	TSC* grafo = calloc(1, sizeof(TSC));
-	if(!grafo){
-		return NULL;
-	}
-	grafo->raices = lista_crear();
-	grafo->nodos = lista_crear();
-	return grafo;
+	
 }
 
 int eliminarGrafo(TSC* grafo){
@@ -86,35 +81,7 @@ void eliminarNodo(void* o){
 
 int insertarNodoGrafo(TSC *grafo, char *nombre, void *info, char** padres,int numPadres){
 
-	int i, j; 
-	NodoGrafo* nodoActual ,*nodoAux = NULL;
-	if(!grafo || !nombre || !info){
-		return ERROR;
-	}
-
-	nodoActual = crearNodoGrafo(grafo, nombre, info);
-
-	if(!padres){ //si no tiene padres, lo añado al array de raices, y al array de nodos totales
-		lista_addlast(grafo->raices, nodoActual);
-		lista_addlast(grafo->nodos, nodoActual);
-		return OK;
-	}
-	lista_addlast(grafo->nodos, nodoActual);
-
-
-	//ahora buscar en todos los nodos los q coinciden con los padres, y asignar doblemente
-	for(i=0;i<lista_length(grafo->nodos);i++){
-		nodoAux = lista_get(grafo->nodos, i);
-		for(j=0;j<numPadres;j++){
-			if(strcmp(nodoAux->nombre, padres[j]) == 0){ //cuando encuentro el padre
-				lista_addlast(nodoActual->predecesores,nodoAux);
-				lista_addlast(nodoAux->descendientes,nodoActual);
-				break;
-			}
-		}
-	}
-
-	return OK;
+	
 }
 
 
@@ -235,46 +202,54 @@ void crearRepresentacionGrafo(TSC* g, char* path){
 
 TSC* iniciarTablaSimbolosClases(char * nombre){
 
-
-
-
-
-
-
-
-
-
-	
+	TSC* grafo = calloc(1, sizeof(TSC));
+	if(!grafo){
+		return NULL;
+	}
+	grafo->raices = lista_crear();
+	grafo->nodos = lista_crear();
+	return grafo;	
 }
 
-int abrirClase(TSC* t, char* id_clase){
 
 
+int abrirClase (TSC* t, char* id_clase, Lista* lista_padres){
+
+	int i, j; 
+	NodoGrafo* nodoActual ,*nodoAux = NULL;
+	if(!t || !id_clase || !lista_padres){
+		return ERROR;
+	}
+	TSA* tsa = TSA_crear();
+	if(!tsa){
+		return ERROR;
+	}
+
+	nodoActual = crearNodoGrafo(t, id_clase, tsa);
+
+	if(!padres){ //si no tiene padres, lo añado al array de raices, y al array de nodos totales
+		lista_addlast(grafo->raices, nodoActual);
+		lista_addlast(grafo->nodos, nodoActual);
+		return OK;
+	}
+	lista_addlast(grafo->nodos, nodoActual);
 
 
+	//ahora buscar en todos los nodos los q coinciden con los padres, y asignar doblemente
+	for(i=0;i<lista_length(grafo->nodos);i++){
+		nodoAux = lista_get(grafo->nodos, i);
+		for(j=0;j<numPadres;j++){
+			if(strcmp(nodoAux->nombre, padres[j]) == 0){ //cuando encuentro el padre
+				lista_addlast(nodoActual->predecesores,nodoAux);
+				lista_addlast(nodoAux->descendientes,nodoActual);
+				break;
+			}
+		}
+	}
 
-
-
-
-
-
-	
-}
-
-int abrirClaseHeredaN (TSC* t, 
-                       char* id_clase, Lista* lista_padres){
-
-
-
-
-
-
-
-
-
-
+	return OK;
 						   
-					   }
+}
 
 
 int cerrarClase(TSC* t,

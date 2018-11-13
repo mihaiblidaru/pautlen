@@ -9,8 +9,7 @@
 
 /**************** CONSTANTES ****************/
 #define DEF_TAM 1000
-#define OK 1
-#define ERROR 0
+
 
 typedef enum { GLOBAL, LOCAL } Ambito;
 

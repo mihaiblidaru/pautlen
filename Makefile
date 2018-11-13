@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Wall -g -O0 -m32
+CFLAGS = -Wall -Wextra -Wall -g -O0 -m32 -Iinclude
 LDFLAGS = -m32 -g
 LDLIBS = 
 AS = nasm
@@ -57,7 +57,7 @@ clean:
 # ha llegado a ejecutar
 coverage:
 	@make clean
-	@make CFLAGS="-Wall -Wextra -Wall -g -O0 -m32 -fprofile-arcs -ftest-coverage" LDLIBS="-lgcov" all
+	@make CFLAGS="-Wall -Wextra -Wall -g -O0 -m32 -Iinclude -fprofile-arcs -ftest-coverage" LDLIBS="-lgcov" all
 	@gcov -f generacion.c
 	@rm -f test_generacion/*.gcda test_generacion/*.gcno
 	@rm -f *.gcda *.gcno

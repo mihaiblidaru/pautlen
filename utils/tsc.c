@@ -21,7 +21,6 @@
 #define OK 1
 #define ERROR 0
 
-
 void eliminarNodo(void* nodo);
 int eliminarGrafo(TSC* grafo) {
     if (!grafo) {
@@ -161,8 +160,6 @@ void crearRepresentacionTSC(TSC* g, char* path) {
     fprintf(fp, "}\n");
 }
 
-
-
 TSC* iniciarTablaSimbolosClases(char* nombre) {
     TSC* grafo = calloc(1, sizeof(TSC));
     if (!grafo) {
@@ -222,11 +219,9 @@ int cerrarClase(TSC* t,
 }
 
 void cerrarTablaSimbolosClases(TSC* t) {
-    if (!t) {
-        return ERROR;
+    if (t) {
+        lista_free(t->nodos, eliminarNodo);
+        lista_free(t->raices, NULL);
+        free(t->nombre);
     }
-    lista_free(t->nodos, eliminarNodo);
-    lista_free(t->raices, NULL);
-    free(t->nombre);
-    return OK;
 }

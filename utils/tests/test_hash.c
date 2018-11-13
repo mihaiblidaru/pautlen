@@ -10,7 +10,7 @@
 * BLIDARU , Mihai 
 *
 ************************************************************/
-#include "../hash.h"
+#include <hash.h>
 #include <stdio.h>
 #include <string.h>
 

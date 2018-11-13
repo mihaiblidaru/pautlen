@@ -15,7 +15,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include "hash.h"
-
+#include <omicron.h>
 /**************** FUNCIONES ****************/
 NodoHash* crearNodoHash(const char *clave, void *info);
 int funcionHash(const char *clave);

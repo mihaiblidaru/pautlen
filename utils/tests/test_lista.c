@@ -13,7 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../lista.h"
+#include <lista.h>
 
 int main(){
     Lista* lista = lista_crear();

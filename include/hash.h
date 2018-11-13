@@ -15,11 +15,7 @@
 
 #include <stdio.h>
 #include <stdbool.h>
-
-/**************** CONSTANTES ****************/
-#define OK 1
-#define ERROR 0
-
+#include "omicron.h"
 /**************** DECLARACIONES DE TIPOS ****************/
 typedef struct NodoHash {
 	char *clave;    //Identificador del nodo.

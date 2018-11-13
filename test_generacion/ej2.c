@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "../generacion.h"
+#include <generacion.h>
 
 int main (int argc, char** argv)
 {

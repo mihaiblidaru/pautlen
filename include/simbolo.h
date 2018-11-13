@@ -18,31 +18,29 @@
 #ifndef SIMBOLO_H
 #define SIMBOLO_H
 
-/**************** CONSTANTES ****************/
-#define OK 1
-#define ERROR 0
+#include "omicron.h"
 
 /* Categoría de un símbolo: variable, parámetro de función o función */
-typedef enum { 
+/*typedef enum { 
     VARIABLE, PARAMETRO, FUNCION, CLASE, 
     METODO_SOBREESCRIBIBLE, METODO_NO_SOBREESCRIBIBLE,
     ATRIBUTO_CLASE, ATRIBUTO_INSTANCIA
 } CATEGORIA;
-
+*/
 /* Tipo de un símbolo: sólo se trabajará con enteros y booleanos */
-typedef enum { ENTERO, BOOLEANO } TIPO;
-
+/*typedef enum { ENTERO, BOOLEANO } TIPO;
+*/
 /* Clase de un símbolo: pueden ser variables atómicas (escalares) o listas/arrays (vectores) */
-typedef enum { ESCALAR, PUNTERO, VECTOR, OBJETO } CLASE;
+/*typedef enum { ESCALAR, PUNTERO, VECTOR, OBJETO } CLASE;
 
 typedef enum { NINGUNO, ACCESO_CLASE, ACCESO_HERENCIA, ACCESO_TODOS }TIPO_ACCESO;
 
-#define LONGITUD_MAXIMA_INDENTIFICADOR 256
+#define LONGITUD_MAXIMA_INDENTIFICADOR 256*/
 
 typedef struct {
 /****** campos comunes usados para todos los tipos de simbolos ******/
     char identificador[256];
-    CATEGORIA categoria;
+    int categoria;
 /* categoria de simbolo funcion, variable global o local*/
     
 /********************************************************************/
@@ -50,10 +48,10 @@ typedef struct {
 /******* Para todos los tipos de variables globales o locales *******/
     
     /*escalar o vector*/
-    CLASE clase;
+    int clase;
 
     /* tipo de variable: Entero o Booleano */
-    TIPO tipo;
+    int tipo;
     
     /* Tamaño de la variable. Si es un vector será distindo de 1*/
     int tamano;

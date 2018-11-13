@@ -3,6 +3,8 @@
         "*.html": "html",
         "tsc.h": "c",
         "lista.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "generacion.h": "c",
+        "omicron.h": "c"
     }
 }

@@ -38,6 +38,7 @@ typedef struct TSC {
 TSC* iniciarTablaSimbolosClases(char * nombre);
 
 
+
 int abrirClase (TSC* t, 
                        char* id_clase, Lista* lista_padres);
 

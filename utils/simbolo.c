@@ -12,12 +12,11 @@ InfoSimbolo* InfoSimbolo_crear(){
 		return nuevo;
 	}
 }
-int InfoSimbolo_eliminar(InfoSimbolo* is){
 
+int InfoSimbolo_eliminar(InfoSimbolo* is){
 	if(is == NULL)
 		return ERROR;
 
 	free(is);
-	
 	return OK;
 }

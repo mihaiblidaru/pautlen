@@ -10,7 +10,7 @@
  * BLIDARU , Mihai
  *
  ************************************************************/
-#include "TSC.h"
+#include "tsc.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -21,9 +21,8 @@
 #define OK 1
 #define ERROR 0
 
-/**************** FUNCIONES ****************/
-void eliminarNodo(void* nodo);
 
+void eliminarNodo(void* nodo);
 int eliminarGrafo(TSC* grafo) {
     if (!grafo) {
         return ERROR;
@@ -122,93 +121,6 @@ void printNodoGrafo(NodoGrafo* nodo) {
     printf("\n\n");
 }
 
-TSC* iniciarTablaSimbolosClases(char* nombre) {
-    TSC* grafo = calloc(1, sizeof(TSC));
-    if (!grafo) {
-        return NULL;
-    }
-    grafo->raices = lista_crear();
-    grafo->nodos = lista_crear();
-    return grafo;
-}
-
-int abrirClase(TSC* t, char* id_clase, Lista* lista_padres) {
-    int i, j;
-    NodoGrafo *nodoActual, *nodoAux = NULL;
-    if (!t || !id_clase || !lista_padres) {
-        return ERROR;
-    }
-    TSA* tsa = TSA_crear();
-    if (!tsa) {
-        return ERROR;
-    }
-
-    nodoActual = crearNodoGrafo(t, id_clase, tsa);
-
-int abrirClase (TSC* t, char* id_clase, Lista* lista_padres){
-
-	int i, j; 
-	NodoGrafo* nodoActual ,*nodoAux = NULL;
-	if(!t || !id_clase || !lista_padres){
-		return ERROR;
-	}
-	TSA* tsa = TSA_crear();
-	if(!tsa){
-		return ERROR;
-	}
-
-	nodoActual = crearNodoGrafo(t, id_clase, tsa);
-
-	if(!lista_padres){ //si no tiene padres, lo añado al array de raices, y al array de nodos totales
-		lista_addlast(t->raices, nodoActual);
-		lista_addlast(t->nodos, nodoActual);
-		return OK;
-	}
-	lista_addlast(t->nodos, nodoActual);
-
-	//ahora buscar en todos los nodos los q coinciden con los padres, y asignar doblemente
-	for(i=0;i<lista_length(t->nodos);i++){
-		nodoAux = lista_get(t->nodos, i);
-		for(j=0;j<lista_length(lista_padres);j++){
-			if(strcmp(nodoAux->nombre, lista_get(lista_padres, i)) == 0){ //cuando encuentro el padre
-				lista_addlast(nodoActual->predecesores,nodoAux);
-				lista_addlast(nodoAux->descendientes,nodoActual);
-				break;
-			}
-		}
-	}
-	return OK;					   
-}
-
-
-int cerrarClase(TSC* t, char* id_clase, int num_atributos_clase, int num_atributos_instancia,
- 					int num_metodos_sobreescribibles, int num_metodos_no_sobreescribibles){
-
-	if(!t||!id_clase||num_atributos_clase<0|| num_atributos_instancia<0||
-		num_metodos_sobreescribibles<0||num_metodos_no_sobreescribibles<0){
-			return ERROR;
-		}
-
-	
-
-
-
-
-
-
-				return 0;	
-				}
-
-void cerrarTablaSimbolosClases(TSC* t) {
-    if (!t) {
-        return ERROR;
-    }
-    lista_free(t->nodos, eliminarNodo);
-    lista_free(t->raices, NULL);
-    free(t->nombre);
-    return OK;
-}
-
 void crearRepresentacionTSC(TSC* g, char* path) {
     FILE* fp = fopen(path, "w");
     const char* prefix = "CLASE";
@@ -249,52 +161,72 @@ void crearRepresentacionTSC(TSC* g, char* path) {
     fprintf(fp, "}\n");
 }
 
-int aplicarAccesos(TSC* t,
-                   char* nombre_clase_ambito_actual,
-                   char* clase_declaro,
-                   InfoSimbolo* pelem);
 
-int buscarIdEnJerarquiaDesdeClase(TSC* t,
-                                  char* nombre_id,
-                                  char* nombre_clase_desde,
-                                  InfoSimbolo** e,
-                                  char* nombre_ambito_encontrado);
 
-int buscarIdNoCualificado(TSC* t,
-                          TSA* tabla_main,
-                          char* nombre_id,
-                          char* nombre_clase_desde,
-                          InfoSimbolo** e,
-                          char* nombre_ambito_encontrado);
+TSC* iniciarTablaSimbolosClases(char* nombre) {
+    TSC* grafo = calloc(1, sizeof(TSC));
+    if (!grafo) {
+        return NULL;
+    }
+    grafo->raices = lista_crear();
+    grafo->nodos = lista_crear();
+    return grafo;
+}
 
-int buscarIdIDCualificadoClase(TSC* t,
-                               char* nombre_clase_cualifica,
-                               char* nombre_id,
-                               char* nombre_clase_desde,
-                               InfoSimbolo** e,
-                               char* nombre_ambito_encontrado);
+int abrirClase(TSC* t, char* id_clase, Lista* lista_padres) {
+    int i, j;
+    NodoGrafo *nodoActual, *nodoAux = NULL;
+    if (!t || !id_clase || !lista_padres) {
+        return ERROR;
+    }
+    TSA* tsa = TSA_crear();
+    if (!tsa) {
+        return ERROR;
+    }
 
-int buscarIdCualificadoInstancia(TSC* t,
-                                 TSA tabla_main,
-                                 char* nombre_instancia_cualifica,
-                                 char* nombre_id,
-                                 char* nombre_clase_desde,
-                                 InfoSimbolo** e,
-                                 char* nombre_ambito_encontrado);
-int buscarParaDeclararMiembroClase(TSC* t,
-                                   char* nombre_clase_desde,
-                                   char* nombre_miembro,
-                                   InfoSimbolo** e,
-                                   char* nombre_ambito_encontrado);
+    nodoActual = crearNodoGrafo(t, id_clase, tsa);
 
-int buscarParaDeclararMiembroInstancia(TSC* t,
-                                       char* nombre_clase_desde,
-                                       char* nombre_miembro,
-                                       InfoSimbolo** e,
-                                       char* nombre_ambito_encontrado);
+    if (!lista_padres) {  // si no tiene padres, lo añado al array de raices, y al array de nodos totales
+        lista_addlast(t->raices, nodoActual);
+        lista_addlast(t->nodos, nodoActual);
+        return OK;
+    }
+    lista_addlast(t->nodos, nodoActual);
 
-int buscarParaDeclararIdLocalEnMetodo(	TSC *t, 
-							char * nombre_clase,
-							char * nombre_id,
-							InfoSimbolo ** e, 
-							char * nombre_ambito_encontrado);
+    // ahora buscar en todos los nodos los q coinciden con los padres, y asignar doblemente
+    for (i = 0; i < lista_length(t->nodos); i++) {
+        nodoAux = lista_get(t->nodos, i);
+        for (j = 0; j < lista_length(lista_padres); j++) {
+            if (strcmp(nodoAux->nombre, lista_get(lista_padres, i)) == 0) {  // cuando encuentro el padre
+                lista_addlast(nodoActual->predecesores, nodoAux);
+                lista_addlast(nodoAux->descendientes, nodoActual);
+                break;
+            }
+        }
+    }
+    return OK;
+}
+
+int cerrarClase(TSC* t,
+                char* id_clase,
+                int num_atributos_clase,
+                int num_atributos_instancia,
+                int num_metodos_sobreescribibles,
+                int num_metodos_no_sobreescribibles) {
+    if (!t || !id_clase || num_atributos_clase < 0 || num_atributos_instancia < 0 || num_metodos_sobreescribibles < 0 ||
+        num_metodos_no_sobreescribibles < 0) {
+        return ERROR;
+    }
+
+    return 0;
+}
+
+void cerrarTablaSimbolosClases(TSC* t) {
+    if (!t) {
+        return ERROR;
+    }
+    lista_free(t->nodos, eliminarNodo);
+    lista_free(t->raices, NULL);
+    free(t->nombre);
+    return OK;
+}

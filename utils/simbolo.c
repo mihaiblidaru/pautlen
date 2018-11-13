@@ -3,8 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-
-
 InfoSimbolo* InfoSimbolo_crear(){
     InfoSimbolo* nuevo = calloc(1,sizeof(InfoSimbolo));
 	if(nuevo == NULL){

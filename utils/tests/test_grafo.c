@@ -11,7 +11,7 @@
 *
 ************************************************************/
 
-#include "../TSC.h"
+#include "../tsc.h"
 #include <stdlib.h>
 #include <string.h>
 

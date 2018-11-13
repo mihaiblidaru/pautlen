@@ -1,6 +1,8 @@
 {
     "files.associations": {
+        "*.html": "html",
         "tsc.h": "c",
-        "lista.h": "c"
+        "lista.h": "c",
+        "stdio.h": "c"
     }
 }

@@ -1,8 +1,8 @@
 %{
 #include <stdio.h>
 #include <string.h>
+#include <omicron.h>
 #include "../bison/y.tab.h"
-#define MAX_LONG_ID 50
 int nColumna = 1;
 FILE *pf = NULL;
 %}

@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -c -Wall -Wextra -Werror -g -O0
+CFLAGS = -c -Wall -Wextra -Werror -g -O0 -I../include
 
 .PHONY: all clean
 

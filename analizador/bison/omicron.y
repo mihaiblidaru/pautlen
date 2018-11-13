@@ -3,6 +3,7 @@
 %{
   /*Delimitadores de Codigo C*/
   #include <stdio.h>
+  #include <omicron.h>
   extern int yylex();
   extern int nColumna;
   extern int yylineno;
@@ -52,7 +53,7 @@
 %token TOK_TRUE
 
 /* ERROR */
-%token TOK_ERROR
+/*%token TOK_ERROR*/
 
 /* Esto quita los warnings */
 /* que lo he encontrado en este repositorio */

@@ -1,7 +1,8 @@
-#include "simbolo.h"
+#include <simbolo.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <omicron.h>
 
 InfoSimbolo* InfoSimbolo_crear(){
     InfoSimbolo* nuevo = calloc(1,sizeof(InfoSimbolo));
@@ -15,7 +16,7 @@ InfoSimbolo* InfoSimbolo_crear(){
 
 int InfoSimbolo_eliminar(InfoSimbolo* is){
 	if(is == NULL)
-		return ERROR;
+		return ERR;
 
 	free(is);
 	return OK;

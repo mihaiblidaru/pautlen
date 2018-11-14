@@ -9,70 +9,66 @@
 
 /**************** CONSTANTES ****************/
 #define DEF_TAM 1000
+#include "hash.h"
+#include "simbolo.h"
 
-
-typedef enum { GLOBAL, LOCAL } Ambito;
+typedef enum { GLOBAL, LOCAL, NO_DEFINIDO} Ambito;
 
 typedef struct {
   Ambito ambito;
   TablaHash* global;
   TablaHash* local;
+  char* id_ambito_local;
+  char* id_ambito_global;
 } TSA;
 
-/**
- * @brief Crea una tabla de simbolos vacia.
- *
- * Crea la tabla, inicializa las dos tablas internas y
- * la deja por defecto en el ambito local.
- *
- * @return TSA* tabla de simbolos creada
- */
 TSA* TSA_crear();
-
-/**
- * @brief Libera memoria de la tabla de simbolos.
- *
- * De momento solo liberar las tablas hash. El contenido de las
- * tablas hash creo que no.
- *
- * @param ts tabla de simbolos a liberar
- */
-
 int TSA_eliminar(TSA* ts);
-
-/**
- * @brief Cambia de ambito seleccionado.
- * 
- * Cuando se cambia de local a global, se destruye el local.
- * 
- * @param ts tabla de simbolos
- * @return TSA* 
- */
 TSA* TSA_cambiaAmbito(TSA* ts);
+int TSA_insertarSimbolo(TSA* ts,
+                        char* id,
+                        int clase,
+                        int tipo,
+                        int estructura,
+                        int direcciones,
+                        int numero_parametros,
+                        int numero_variables_locales,
+                        int posicion_variable_local,
+                        int posicion_parametro,
+                        int dimension,
+                        int tamanio,
+                        int filas,
+                        int columnas,
+                        int capacidad,
+                        int numero_atributos_clase,
+                        int numero_atributos_instancia,
+                        int numero_metodos_sobreescribibles,
+                        int numero_metodos_no_sobreescribibles,
+                        int tipo_acceso,
+                        int tipo_miembro,
+                        int posicion_atributo_instancia,
+                        int posicion_metodo_sobreescribible,
+                        int num_acumulado_atributos_instancia,
+                        int num_acumulado_metodos_sobreescritura,
+                        int posicion_acumulada_atributos_instancia,
+                        int posicion_acumulada_metodos_sobreescritura,
+                        int* tipo_args);
+int abrirAmbitoPpalMain(TSA* t);
 
-/**
- * @brief inserta un simbolo en la tabla hash activas
- * 
- * Cuidado: las funciones no se pueden insertar en la tabla local
- * 
- * En los dos casos hay que comprobar que no exista es simbolo.
- * Esto se puede hacer con hash_contiene.
- * 
- * la clave para la tabla hash va a ser el identificador del simbolo
- * 
- * @param ts 
- * @param simbolo 
- * @return TSA* 
- */
-TSA* TSA_insertarSimbolo(TSA* ts, InfoSimbolo* simbolo);
+int abrirAmbitoMain(TSA * t, 
+                    char* id_ambito, 
+                    int categoria_ambito,
+                    int tipo_ambito,
+                    int tamanio);
 
-/**
- * @brief Devuelve un simbolo de la tabla hash activa
- * 
- * @param ts 
- * @param clave 
- * @return InfoSimbolo* 
- */
-InfoSimbolo* TSA_buscar(TSA*ts, const char* clave);
+int cerrarAmbitoMain(TSA* t);
+
+int buscarParaDeclararIdTablaSimbolosAmbitos(TSA* t, 
+                                    char* id, 
+                                    InfoSimbolo** e,  
+                                    char* id_ambito);
+
+int buscarTablaSimbolosAmbitosConPrefijos(TSA* t, char* id, InfoSimbolo** e, char* id_ambito);
+
 
 #endif

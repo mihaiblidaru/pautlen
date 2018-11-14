@@ -5,6 +5,9 @@
         "lista.h": "c",
         "stdio.h": "c",
         "generacion.h": "c",
-        "omicron.h": "c"
+        "omicron.h": "c",
+        "tsa.h": "c",
+        "simbolo.h": "c",
+        "hash.h": "c"
     }
 }

@@ -1,10 +1,12 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -g -O0 -std=gnu11 -I../include
+CFLAGS = -g -O0 -std=gnu11 -I../include
 
 TESTS = test_lista test_hash tsc.o
 
-all: $(TESTS)
+all: tablas
 
+tablas:
+	gcc $(CFLAGS) tsc.c hash.c lista.c tests/test_tablas.c tsa.c simbolo.c -o test_tabla
 
 test_lista: tests/test_lista.o lista.o
 	$(CC) $^ -o $@

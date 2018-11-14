@@ -61,12 +61,12 @@ TablaHash* hash_crear(int tam){
 
 
 //Elimina la tabla Hash.
-//Devuelve OK en caso de que se borre correctamente y ERROR en caso de que no.
+//Devuelve OK en caso de que se borre correctamente y ERR en caso de que no.
 int hash_eliminar(TablaHash *tabla){
 	int i;
 	NodoHash *aux, *aux2;
 	if(tabla == NULL)
-		return ERROR;
+		return ERR;
 
 	for(i = 0; i < tabla->tam; i++){
 		aux = tabla->nodo[i];
@@ -101,18 +101,18 @@ NodoHash* crearNodoHash(const char *clave, void *info){
 
 //Inserta en la tabla hash un nodo en un indice calculado por funcionHash.
 //Utilizara la funcionHash para saber donde insertar el nuevo elemento y debera crear dentro el nuevo nodo (crearNodoHash).
-//Devuelve OK en caso de que se inserte y ERROR en caso de que no.
+//Devuelve OK en caso de que se inserte y ERR en caso de que no.
 int hash_insertar(TablaHash *tabla, const char *clave, void *info){
 	int modulo;
 	NodoHash *aux = NULL, *aux2 = NULL;
 	if(tabla == NULL){
-		return ERROR;
+		return ERR;
 	}
 
 	modulo = mod(funcionHash(clave), tabla->tam);
 	aux2 = crearNodoHash(clave, info);	
 	if(aux2 == NULL){
-		return ERROR;
+		return ERR;
 	}
 	if(tabla->nodo[modulo] == NULL){
 		tabla->nodo[modulo] = aux2;

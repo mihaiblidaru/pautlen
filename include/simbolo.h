@@ -39,7 +39,7 @@ typedef enum { NINGUNO, ACCESO_CLASE, ACCESO_HERENCIA, ACCESO_TODOS }TIPO_ACCESO
 
 typedef struct {
 /****** campos comunes usados para todos los tipos de simbolos ******/
-    char identificador[256];
+    char *identificador;
     int categoria;
 /* categoria de simbolo funcion, variable global o local*/
     

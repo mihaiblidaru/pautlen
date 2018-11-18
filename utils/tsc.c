@@ -11,17 +11,14 @@
  *
  ************************************************************/
 
-#include <tsc.h>
+#include <lista.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <lista.h>
 #include <tsa.h>
-
+#include <tsc.h>
 
 NodoGrafo* recBuscarNodoProfundidad(NodoGrafo* actual, char* nombre);
-
-
 
 /**************************************************************************
  *                           Funciones básicas                             *
@@ -52,7 +49,7 @@ int cerrarTablaSimbolosClases(TSC* t) {
 int abrirClase(TSC* t, char* id_clase, Lista* lista_padres) {
     int i, j;
     NodoGrafo *nodoActual, *nodoAux = NULL;
-    if (!t || !id_clase || !lista_padres)
+    if (!t || !id_clase)
         return ERR;
 
     nodoActual = calloc(1, sizeof(NodoGrafo));
@@ -178,8 +175,17 @@ int buscarParaDeclararMiembroInstancia(TSC* t,
                                        char* nombre_clase_desde,
                                        char* nombre_miembro,
                                        InfoSimbolo** e,
-                                       char* nombre_ambito_encontrado);
+                                       char* nombre_ambito_encontrado) {
 
+    NodoGrafo* nodo_clase = buscarNodoProfundidad(t, nombre_clase_desde);
+
+    if(nodo_clase != NULL){
+        TSA* tsa_clase = nodo_clase->info;
+        //buscarParaDeclararIdTablaSimbolosAmbitos(tsa_clase, nombre_miembro, e, );
+    }
+
+    return ERR;
+}
 
 int buscarParaDeclararIdLocalEnMetodo(TSC* t,
                                       char* nombre_clase,

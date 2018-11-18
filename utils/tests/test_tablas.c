@@ -25,8 +25,7 @@ int main(int argc, char const* argv[]) {
     FILE* out = stderr;
     TSA* tsa_main = NULL;
     TSC* tabla_clases = NULL;
-    
-    
+
     /*
                _ . - = - . _
            . "  \  \   /  /  " .
@@ -43,12 +42,10 @@ int main(int argc, char const* argv[]) {
            . _/             \_ .
               " - ./. .\. - "
 
-        OJO con esta variable: limita el numero de 
+        OJO con esta variable: limita el numero de
         lineas que lee. Solo para depuración.
     */
-    int limite_lineas = 5;
-
-
+    int limite_lineas = 6;
 
     if (argc != 2) {
         fprintf(stderr, "Número de parametros incorrecto");
@@ -59,9 +56,9 @@ int main(int argc, char const* argv[]) {
 
     while (fgets(line, TAM_MAXIMO_LINEA, fp) && limite_lineas) {
         // elimina el caracter \n de la linea leida
-        if(line[strlen(line) - 1] == '\n')
+        if (line[strlen(line) - 1] == '\n')
             line[strlen(line) - 1] = 0;
-        
+
         Lista* words = tokenize(line);
         limite_lineas--;
         int i;
@@ -94,24 +91,53 @@ int main(int argc, char const* argv[]) {
         } else if (!strcmp(lista_get(words, 0), "buscar")) {
             if (!strcmp(lista_get(words, 1), "declarar_main")) {
                 if (buscarParaDeclararIdTablaSimbolosAmbitos(tsa_main, lista_get(words, 2), NULL, "main") == ERR) {
-                    fprintf(out, "buscar declarar_main %s: No encontrado: se puede declarar\n", (char*)lista_get(words, 2));    
-                }else{
-                    fprintf(out, "buscar declarar_main %s: Encontrado: NO se puede declarar\n", (char*)lista_get(words, 2));    
+                    fprintf(out, "buscar declarar_main %s: No encontrado: se puede declarar\n",
+                            (char*)lista_get(words, 2));
+                } else {
+                    fprintf(out, "buscar declarar_main %s: Encontrado: NO se puede declarar\n",
+                            (char*)lista_get(words, 2));
+                }
+            } else if (!strcmp(lista_get(words, 1), "declarar_miembro_instancia")) {
+                char* nombre_clase = lista_get(words, 2);
+                char* nombre_miembro = lista_get(words, 3);
+                InfoSimbolo* elem = 0x01;
+                char nombre_ambito_encontrado[50];
+
+                int result = buscarParaDeclararMiembroInstancia(tabla_clases, nombre_clase, nombre_miembro, &elem,
+                                                                nombre_ambito_encontrado);
+
+                
+                if (result == ERR) {
+                    fprintf(out, "buscar declarar_miembro_instancia %s: No encontrado: se puede declarar\n",
+                            (char*)lista_get(words, 2));
+                } else {
+                    fprintf(out, "buscar declarar_main %s: Encontrado: NO se puede declarar\n",
+                            (char*)lista_get(words, 2));
                 }
             }
 
         } else if (!strcmp(lista_get(words, 0), "insertar_tsa_main")) {
-
-            
-            /*
-            Aqui hay que rellenar con los parametros necesarios
-            TSA_insertarSimbolo(tsa_main, lista_get(words, 1),
-            
-            );*/
+            int categoria = atoi(lista_get(words, 2));
+            int tipo = atoi(lista_get(words, 3));
+            int clase = atoi(lista_get(words, 4));
+            int acceso = atoi(lista_get(words, 5));
+            int tipo_miembro = atoi(lista_get(words, 6));
+            int result = TSA_insertarSimbolo(tsa_main, lista_get(words, 1), categoria, tipo, clase, 0, 0, 0, 0, 0, 0, 0,
+                                             0, 0, 0, 0, 0, 0, 0, acceso, tipo_miembro, 0, 0, 0, 0, 0, NULL);
+            if (result == ERR) {
+                fprintf(out, "insertar_tsa_main %s: ERROR\n", (char*)lista_get(words, 1));
+            } else {
+                fprintf(out, "insertar_tsa_main\n");
+            }
 
         } else if (!strcmp(lista_get(words, 0), "abrir_clase")) {
             char* id_clase = lista_get(words, 1);
-            // abrir la clase en la tsc
+
+            if (abrirClase(tabla_clases, id_clase, NULL) == ERR) {
+                fprintf(out, "ERROR: %s\n", line);
+            } else {
+                fprintf(out, "%s\n", line);
+            }
 
         } else if (!strcmp(lista_get(words, 0), "insertar_tsc")) {
         } else if (!strcmp(lista_get(words, 0), "abrir_ambito_tsc")) {
@@ -133,8 +159,8 @@ int main(int argc, char const* argv[]) {
         } else if (!strcmp(lista_get(words, 0), "cerrar_tsc")) {
         }
 
-        // borro la lista de words actual
-        // como se que es una lista de string que han sido malloceados los libero con free
+        // borro la lista de palabras actual
+        // como se que es una lista de strings que han sido malloceados los libero con free
         lista_free(words, free);
     }
     fclose(fp);

@@ -64,9 +64,10 @@ TSA* TSA_cambiaAmbito(TSA* ts) {
 
 int TSA_insertarSimbolo(TSA* ts,
                         char* id,
+                        int categoria,
                         int clase,
                         int tipo,
-                        int estructura,
+                        int tamano,
                         int direcciones,
                         int numero_parametros,
                         int numero_variables_locales,
@@ -78,26 +79,49 @@ int TSA_insertarSimbolo(TSA* ts,
                         int columnas,
                         int capacidad,
                         int numero_atributos_clase,
-                        int numero_atributos_instancia,
-                        int numero_metodos_sobreescribibles,
-                        int numero_metodos_no_sobreescribibles,
+                        int num_atributos_instancia,
+                        int num_metodos_sobreescribibles,
+                        int nun_metodos_no_sobreescribibles,
                         int tipo_acceso,
                         int tipo_miembro,
                         int posicion_atributo_instancia,
                         int posicion_metodo_sobreescribible,
                         int num_acumulado_atributos_instancia,
                         int num_acumulado_metodos_sobreescritura,
-                        int posicion_acumulada_atributos_instancia,
-                        int posicion_acumulada_metodos_sobreescritura,
                         int* tipo_args) {
     if (!ts)
         return ERR;
     InfoSimbolo* simbolo = InfoSimbolo_crear();
 
     simbolo->identificador = strdup(id);
+    simbolo->categoria = categoria;
+    simbolo->clase = clase;
+    simbolo->tipo = tipo;
+    simbolo->tamano = tamano;
+    simbolo->direcciones = direcciones;
+    simbolo->numero_parametros = numero_parametros;
+    simbolo->numero_variables_locales = numero_variables_locales;
+    simbolo->posicion_variable_local = posicion_variable_local;
+    simbolo->posicion_parametro = posicion_parametro;
+    simbolo->dimension = dimension;
+    simbolo->tamanio = tamanio;
+    simbolo->filas = filas;
+    simbolo->columnas = columnas;
+    simbolo->capacidad = capacidad;
+    simbolo->numero_atributos_clase = numero_atributos_clase;
+    simbolo->num_atributos_instancia = num_atributos_instancia;
+    simbolo->num_metodos_sobreescribibles = num_metodos_sobreescribibles;
+    simbolo->nun_metodos_no_sobreescribibles = nun_metodos_no_sobreescribibles;
+    simbolo->tipo_acceso = tipo_acceso;
+    simbolo->tipo_miembro = tipo_miembro;
+    simbolo->posicion_atributo_instancia = posicion_atributo_instancia;
+    simbolo->posicion_metodo_sobreescribible = posicion_metodo_sobreescribible;
+    simbolo->num_acumulado_atributos_instancia = num_acumulado_atributos_instancia;
+    simbolo->num_acumulado_metodos_sobreescritura = num_acumulado_metodos_sobreescritura;
+    simbolo->tipo_args = tipo_args;
     
-    
-    if (ts->ambito == GLOBAL) {
+
+        if (ts->ambito == GLOBAL) {
         if (hash_contiene(ts->global, simbolo->identificador) == true) {
             return OK;
         } else {
@@ -106,7 +130,8 @@ int TSA_insertarSimbolo(TSA* ts,
             }
         }
         // AMBITO LOCAL
-    } else {
+    }
+    else {
         if (simbolo->categoria == FUNCION) {
             printf("No se puede insertar Funcion en la tabla local");
         } else if (hash_contiene(ts->local, simbolo->identificador) == true) {

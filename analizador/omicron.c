@@ -1,4 +1,4 @@
-#include "../omicron.h"
+#include "omicron.h"
 extern FILE *pf;
 extern FILE *yyin;
 extern int yylex_destroy();
@@ -37,5 +37,5 @@ int main(int argc, char **argv){
 
     /* Libera toda la memoria de flex */
     yylex_destroy();
-    return EXIT_SUCCESS;
+    return 0;
 }

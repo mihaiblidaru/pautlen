@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include "../include/generacion.h"
 
 /*  TIPOS  */
 
@@ -21,3 +22,6 @@ typedef struct
    int es_direccion;
    int etiqueta;
 }tipo_atributos;
+
+
+#endif

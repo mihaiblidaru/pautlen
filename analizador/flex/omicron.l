@@ -42,8 +42,10 @@ else            { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return T
 while           { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return TOK_WHILE;}
 scanf           { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return TOK_SCANF;}
 printf          { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return TOK_PRINTF;}
-false           { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return TOK_FALSE;}
-true            { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return TOK_TRUE;}
+false           { strcpy(yylval.atributos.lexema, yytext);
+                  fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return TOK_FALSE;}
+true            { strcpy(yylval.atributos.lexema, yytext);
+                  fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return TOK_TRUE;}
 
 "=="            { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return TOK_IGUAL;}
 "!="            { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return TOK_DISTINTO;}
@@ -53,12 +55,13 @@ true            { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return T
 "||"            { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return TOK_OR;}
 "->"            { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return TOK_FLECHA;}
 
-{ENTERO}        { fprintf(pf, ";D:\t%s\n", yytext);
-                  yy.atributos.valor_entero = atoi(yytext); /* Pasamos el valor al sintactico */
+{ENTERO}        { yylval.atributos.valor_entero = atoi(yytext); /* Para guardar valor */
+                  strcpy(yylval.atributos.lexema, yytext); /* Para escribir_operando() */
+                  fprintf(pf, ";D:\t%s\n", yytext);
                   nColumna += yyleng;
                   return TOK_CONSTANTE_ENTERA;}
 {IDENTIFICADOR} { if (yyleng <= MAX_LONG_ID){
-                      strcpy(yyval.atributos.lexema, yytext); /* Pasamos el valor al sintactico */
+                      strcpy(yylval.atributos.lexema, yytext); /* Pasamos el valor al sintactico */
                       fprintf(pf, ";D:\t%s\n", yytext);
                       nColumna += yyleng;
                       return TOK_IDENTIFICADOR;

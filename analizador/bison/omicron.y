@@ -8,7 +8,6 @@
   extern int yylineno;
   extern int yyleng;
   extern FILE *pf;
-  extern FILE *fpasm;
   void yyerror(const char* s);
 %}
 
@@ -49,8 +48,8 @@
 
 /* CONSTANTES */
 %token <atributos> TOK_CONSTANTE_ENTERA
-%token TOK_FALSE
-%token TOK_TRUE
+%token <atributos> TOK_FALSE
+%token <atributos> TOK_TRUE
 
 /* ERROR */
 %token TOK_ERROR
@@ -71,43 +70,49 @@
 
 %type <atributos> exp
 %type <atributos> identificadores
+%type <atributos> clase
+%type <atributos> clase_escalar
+%type <atributos> tipo
+%type <atributos> constante
+%type <atributos> constante_entera
+%type <atributos> constante_logica
 
 %start programa
 
 %%
 
 programa:
-  inicioTabla TOK_MAIN '{' declaraciones escritura_TS funciones escritura_main sentencias '}'
+  TOK_MAIN '{' declaraciones escritura_TS funciones escritura_main sentencias '}' escritura_fin
     { fprintf(pf, ";R:\tprograma: TOK_MAIN '{' declaraciones funciones sentencias '}'\n");}
 | TOK_MAIN '{' funciones sentencias '}'
     { fprintf(pf, ";R:\tprograma: TOK_MAIN '{' funciones sentencias '}'\n");}
 ;
-
+/*    TODO
 inicioTabla:
-  /* Vacio */
-    { fprintf(pf, ";R:\tinicioTabla: \n");
-      TSA* tsaPrincipal =  NULL;
-      tsaGlobal = TSA_crear();
-      TSA_abrirAmbitoGlobal(tsaGlobal);
-      TSA* tsaMain =  NULL;
-      abrirAmbitoPpalMain(tsaMain);
+   Vacio
+    { fprintf(pf, ";R:\tinicioTabla: \n");}
 ;
-
+*/
 escritura_TS:
   /* Vacio */
     { fprintf(pf, ";R:\tescritura_TS: \n");
-      tsa = TSA_crear();
-      escribir_subseccion_data(fpasm);
-      escribir_cabecera_bss(fpasm);
+      escribir_subseccion_data(pf);
+      escribir_cabecera_bss(pf);
       /* Escribir lo que contenga la tabla de simbolos */
-      escribir_segmento_codigo(fpasm);
+      escribir_segmento_codigo(pf);
     }
 ;
 
 escritura_main:
   /* Vacio */
     { fprintf(pf, ";R:\tescritura_main: \n");
-      escribir_inicio_main(fpasm);}
+      escribir_inicio_main(pf);}
+;
+
+escritura_fin:
+  /* Vacio */
+    { fprintf(pf, ";R:\tescritura_fin: \n");
+      escribir_fin(pf);}
 ;
 
 declaraciones:
@@ -121,7 +126,7 @@ declaraciones:
 declaracion:
   modificadores_acceso clase identificadores ';'
     { fprintf(pf, ";R:\tdeclaracion: modificadores_acceso clase identificadores ';'\n");
-      declarar_variable(fpasm, $3.lexema, $2.tipo, 1);
+      declarar_variable(pf, $3.lexema, $2.tipo, 1);
       }
 | modificadores_acceso declaracion_clase ';'
     { fprintf(pf, ";R:\tdeclaracion: modificadores_acceso declaracion_clase ';'\n");}
@@ -204,10 +209,9 @@ clase_vector:
 identificadores:
   TOK_IDENTIFICADOR
     { fprintf(pf, ";R:\tidentificadores: TOK_IDENTIFICADOR\n");
-      $$.lexema = $1;}
+      strcpy($$.lexema, $1.lexema);}
 | TOK_IDENTIFICADOR ',' identificadores
-    { fprintf(pf, ";R:\tidentificadores: TOK_IDENTIFICADOR ',' identificadores\n");
-      $$.lexema = $1;}
+    { fprintf(pf, ";R:\tidentificadores: TOK_IDENTIFICADOR ',' identificadores\n");}
 ;
 
 
@@ -289,9 +293,7 @@ sentencia_simple:
 | lectura
     { fprintf(pf, ";R:\tsentencia_simple: lectura\n");}
 | escritura
-    { fprintf(pf, ";R:\tsentencia_simple: escritura\n");
-      escribir_operando(fpasm, , $1.lexema, $1.es_direccion);
-      escribir(fpasm, $1.es_direccion, $1.tipo);}
+    { fprintf(pf, ";R:\tsentencia_simple: escritura\n");}
 | retorno_funcion
     { fprintf(pf, ";R:\tsentencia_simple: retorno_funcion\n");}
 | identificador_clase '.' TOK_IDENTIFICADOR '(' lista_expresiones ')'
@@ -320,8 +322,8 @@ bloque:
 asignacion:
   TOK_IDENTIFICADOR '=' exp
     { fprintf(pf, ";R:\tasignacion: TOK_IDENTIFICADOR '=' exp\n");
-      /* TODO :: VER SI EL IDENTIDICADOR ESTA EN TS */
-      asignar(fpasm, $1.lexema, 1);
+      /* TODO :: VER SI EL IDENTIDICADOR ESTA EN TS Y VER ALSO LOS TIPOS */
+      asignar(pf, $1.lexema, 1);
       /* TODO :: Si no esta error */}
 | elemento_vector '=' exp
     { fprintf(pf, ";R:\tasignacion: elemento_vector '=' exp\n");}
@@ -365,9 +367,9 @@ lectura:
 escritura:
   TOK_PRINTF exp
     { fprintf(pf, ";R:\tescritura: TOK_PRINTF exp\n");
-      $$.tipo = $2.tipo;
-      $$.es_direccion = $2.es_direccion;
-      $$.lexema = $2.lexema;}
+      /* TODO :: VER SI EL IDENTIDICADOR ESTA EN TS */
+      escribir(pf, $2.es_direccion, $2.tipo);
+      /* TODO :: Si no esta error */}
 ;
 
 
@@ -381,7 +383,10 @@ retorno_funcion:
 
 exp:
   exp '+' exp
-    { fprintf(pf, ";R:\texp: exp '+' exp\n");}
+    { fprintf(pf, ";R:\texp: exp '+' exp\n");
+      /* TODO :: ¿Seria mirar los tipos si coinciden?*/
+      sumar(pf, $1.es_direccion, $3.es_direccion);
+      /* TODO :: Si no esta error, si son ids */}
 | exp '-' exp
     { fprintf(pf, ";R:\texp: exp '-' exp\n");}
 | exp '/' exp
@@ -399,10 +404,11 @@ exp:
 | TOK_IDENTIFICADOR
     { fprintf(pf, ";R:\texp: TOK_IDENTIFICADOR\n");
       /* TODO :: VER SI EL IDENTIDICADOR ESTA EN TS */
-      escribir_operando(fpasm, $1, 1);
+      escribir_operando(pf, $1.lexema, 1);
       /* TODO :: Si no esta error */}
 | constante
-    { fprintf(pf, ";R:\texp: constante\n");}
+    { fprintf(pf, ";R:\texp: constante\n");
+      $$.tipo = $1.tipo;}
 | '(' exp ')'
     { fprintf(pf, ";R:\texp: '(' exp ')'\n");}
 | '(' comparacion ')'
@@ -460,26 +466,31 @@ comparacion:
 
 constante:
   constante_logica
-    { fprintf(pf, ";R:\tconstante:\tconstante_logica\n");}
+    { fprintf(pf, ";R:\tconstante:\tconstante_logica\n");
+    $$.tipo = $1.tipo;}
 | constante_entera
-    { fprintf(pf, ";R:\tconstante: constante_entera\n");}
+    { fprintf(pf, ";R:\tconstante: constante_entera\n");
+    $$.tipo = $1.tipo;}
 ;
 
-
+/* TODO :: Subir los valores para arriba para la TS */
 constante_logica:
   TOK_TRUE
     { fprintf(pf, ";R:\tconstante_logica:\tTOK_TRUE\n");
-      escribir_operando(fpasm, $1, 0);}
+      escribir_operando(pf, $1.lexema, 0);
+      $$.tipo = BOOLEANO;}
 | TOK_FALSE
     { fprintf(pf, ";R:\tconstante_logica:\tTOK_FALSE\n");
-      escribir_operando(fpasm, $1, 0);}
+      escribir_operando(pf, $1.lexema, 0);
+      $$.tipo = BOOLEANO;}
 ;
 
 
 constante_entera:
   TOK_CONSTANTE_ENTERA
     { fprintf(pf, ";R:\tconstante_entera:\tTOK_CONSTANTE_ENTERA\n");
-      escribir_operando(fpasm, $1.valor_entero, 0);}
+      escribir_operando(pf, $1.lexema, 0);
+      $$.tipo = ENTERO;}
 ;
 
 %%

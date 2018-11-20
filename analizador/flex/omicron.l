@@ -1,7 +1,5 @@
 %{
-#include <stdio.h>
-#include <string.h>
-#include <omicron.h>
+#include "../omicron.h"
 #include "../bison/y.tab.h"
 int nColumna = 1;
 FILE *pf = NULL;
@@ -55,8 +53,12 @@ true            { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return T
 "||"            { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return TOK_OR;}
 "->"            { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return TOK_FLECHA;}
 
-{ENTERO}        { fprintf(pf, ";D:\t%s\n", yytext); nColumna += yyleng; return TOK_CONSTANTE_ENTERA;}
+{ENTERO}        { fprintf(pf, ";D:\t%s\n", yytext);
+                  yy.atributos.valor_entero = atoi(yytext); /* Pasamos el valor al sintactico */
+                  nColumna += yyleng;
+                  return TOK_CONSTANTE_ENTERA;}
 {IDENTIFICADOR} { if (yyleng <= MAX_LONG_ID){
+                      strcpy(yyval.atributos.lexema, yytext); /* Pasamos el valor al sintactico */
                       fprintf(pf, ";D:\t%s\n", yytext);
                       nColumna += yyleng;
                       return TOK_IDENTIFICADOR;

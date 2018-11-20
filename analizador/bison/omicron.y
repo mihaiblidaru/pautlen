@@ -2,13 +2,13 @@
 
 %{
   /*Delimitadores de Codigo C*/
-  #include <stdio.h>
-  #include <omicron.h>
+  #include "../omicron.h"
   extern int yylex();
   extern int nColumna;
   extern int yylineno;
   extern int yyleng;
   extern FILE *pf;
+  extern FILE *fpasm;
   void yyerror(const char* s);
 %}
 
@@ -37,7 +37,7 @@
 %token TOK_PRINTF
 
 /* IDENTIFICADOR */
-%token TOK_IDENTIFICADOR
+%token <atributos> TOK_IDENTIFICADOR
 
 /* OPERADORES */
 %token TOK_IGUAL
@@ -48,12 +48,12 @@
 %token TOK_AND
 
 /* CONSTANTES */
-%token TOK_CONSTANTE_ENTERA
+%token <atributos> TOK_CONSTANTE_ENTERA
 %token TOK_FALSE
 %token TOK_TRUE
 
 /* ERROR */
-/*%token TOK_ERROR*/
+%token TOK_ERROR
 
 /* Esto quita los warnings */
 /* que lo he encontrado en este repositorio */
@@ -64,17 +64,51 @@
 
 %locations
 
+%union
+{
+  tipo_atributos atributos;
+}
+
+%type <atributos> exp
+%type <atributos> identificadores
+
 %start programa
 
 %%
 
 programa:
-  TOK_MAIN '{' declaraciones funciones sentencias '}'
+  inicioTabla TOK_MAIN '{' declaraciones escritura_TS funciones escritura_main sentencias '}'
     { fprintf(pf, ";R:\tprograma: TOK_MAIN '{' declaraciones funciones sentencias '}'\n");}
 | TOK_MAIN '{' funciones sentencias '}'
     { fprintf(pf, ";R:\tprograma: TOK_MAIN '{' funciones sentencias '}'\n");}
 ;
 
+inicioTabla:
+  /* Vacio */
+    { fprintf(pf, ";R:\tinicioTabla: \n");
+      TSA* tsaPrincipal =  NULL;
+      tsaGlobal = TSA_crear();
+      TSA_abrirAmbitoGlobal(tsaGlobal);
+      TSA* tsaMain =  NULL;
+      abrirAmbitoPpalMain(tsaMain);
+;
+
+escritura_TS:
+  /* Vacio */
+    { fprintf(pf, ";R:\tescritura_TS: \n");
+      tsa = TSA_crear();
+      escribir_subseccion_data(fpasm);
+      escribir_cabecera_bss(fpasm);
+      /* Escribir lo que contenga la tabla de simbolos */
+      escribir_segmento_codigo(fpasm);
+    }
+;
+
+escritura_main:
+  /* Vacio */
+    { fprintf(pf, ";R:\tescritura_main: \n");
+      escribir_inicio_main(fpasm);}
+;
 
 declaraciones:
   declaracion
@@ -86,7 +120,9 @@ declaraciones:
 
 declaracion:
   modificadores_acceso clase identificadores ';'
-    { fprintf(pf, ";R:\tdeclaracion: modificadores_acceso clase identificadores ';'\n");}
+    { fprintf(pf, ";R:\tdeclaracion: modificadores_acceso clase identificadores ';'\n");
+      declarar_variable(fpasm, $3.lexema, $2.tipo, 1);
+      }
 | modificadores_acceso declaracion_clase ';'
     { fprintf(pf, ";R:\tdeclaracion: modificadores_acceso declaracion_clase ';'\n");}
 ;
@@ -114,7 +150,8 @@ modificadores_acceso:
 
 clase:
   clase_escalar
-    { fprintf(pf, ";R:\tclase: clase_escalar\n");}
+    { fprintf(pf, ";R:\tclase: clase_escalar\n");
+      $$.tipo = $1.tipo;}
 | clase_vector
     { fprintf(pf, ";R:\tclase: clase_vector\n");}
 | clase_objeto
@@ -137,15 +174,18 @@ modificadores_clase:
 
 clase_escalar:
   tipo
-    { fprintf(pf, ";R:\tclase_escalar: tipo\n");}
+    { fprintf(pf, ";R:\tclase_escalar: tipo\n");
+      $$.tipo = $1.tipo;}
 ;
 
 
 tipo:
   TOK_INT
-    { fprintf(pf, ";R:\ttipo: TOK_INT\n");}
+    { fprintf(pf, ";R:\ttipo: TOK_INT\n");
+      $$.tipo = ENTERO;}
 | TOK_BOOLEAN
-    { fprintf(pf, ";R:\ttipo: TOK_BOOLEAN\n");}
+    { fprintf(pf, ";R:\ttipo: TOK_BOOLEAN\n");
+      $$.tipo = BOOLEANO;}
 ;
 
 
@@ -163,9 +203,11 @@ clase_vector:
 
 identificadores:
   TOK_IDENTIFICADOR
-    { fprintf(pf, ";R:\tidentificadores: TOK_IDENTIFICADOR\n");}
+    { fprintf(pf, ";R:\tidentificadores: TOK_IDENTIFICADOR\n");
+      $$.lexema = $1;}
 | TOK_IDENTIFICADOR ',' identificadores
-    { fprintf(pf, ";R:\tidentificadores: TOK_IDENTIFICADOR ',' identificadores\n");}
+    { fprintf(pf, ";R:\tidentificadores: TOK_IDENTIFICADOR ',' identificadores\n");
+      $$.lexema = $1;}
 ;
 
 
@@ -247,7 +289,9 @@ sentencia_simple:
 | lectura
     { fprintf(pf, ";R:\tsentencia_simple: lectura\n");}
 | escritura
-    { fprintf(pf, ";R:\tsentencia_simple: escritura\n");}
+    { fprintf(pf, ";R:\tsentencia_simple: escritura\n");
+      escribir_operando(fpasm, , $1.lexema, $1.es_direccion);
+      escribir(fpasm, $1.es_direccion, $1.tipo);}
 | retorno_funcion
     { fprintf(pf, ";R:\tsentencia_simple: retorno_funcion\n");}
 | identificador_clase '.' TOK_IDENTIFICADOR '(' lista_expresiones ')'
@@ -275,7 +319,10 @@ bloque:
 
 asignacion:
   TOK_IDENTIFICADOR '=' exp
-    { fprintf(pf, ";R:\tasignacion: TOK_IDENTIFICADOR '=' exp\n");}
+    { fprintf(pf, ";R:\tasignacion: TOK_IDENTIFICADOR '=' exp\n");
+      /* TODO :: VER SI EL IDENTIDICADOR ESTA EN TS */
+      asignar(fpasm, $1.lexema, 1);
+      /* TODO :: Si no esta error */}
 | elemento_vector '=' exp
     { fprintf(pf, ";R:\tasignacion: elemento_vector '=' exp\n");}
 | elemento_vector '=' TOK_INSTANCE_OF TOK_IDENTIFICADOR '(' lista_expresiones ')'
@@ -317,7 +364,10 @@ lectura:
 
 escritura:
   TOK_PRINTF exp
-    { fprintf(pf, ";R:\tescritura: TOK_PRINTF exp\n");}
+    { fprintf(pf, ";R:\tescritura: TOK_PRINTF exp\n");
+      $$.tipo = $2.tipo;
+      $$.es_direccion = $2.es_direccion;
+      $$.lexema = $2.lexema;}
 ;
 
 
@@ -347,7 +397,10 @@ exp:
 | '!' exp
     { fprintf(pf, ";R:\texp: '!' exp\n");}
 | TOK_IDENTIFICADOR
-    { fprintf(pf, ";R:\texp: TOK_IDENTIFICADOR\n");}
+    { fprintf(pf, ";R:\texp: TOK_IDENTIFICADOR\n");
+      /* TODO :: VER SI EL IDENTIDICADOR ESTA EN TS */
+      escribir_operando(fpasm, $1, 1);
+      /* TODO :: Si no esta error */}
 | constante
     { fprintf(pf, ";R:\texp: constante\n");}
 | '(' exp ')'
@@ -415,15 +468,18 @@ constante:
 
 constante_logica:
   TOK_TRUE
-    { fprintf(pf, ";R:\tconstante_logica:\tTOK_TRUE\n");}
+    { fprintf(pf, ";R:\tconstante_logica:\tTOK_TRUE\n");
+      escribir_operando(fpasm, $1, 0);}
 | TOK_FALSE
-    { fprintf(pf, ";R:\tconstante_logica:\tTOK_FALSE\n");}
+    { fprintf(pf, ";R:\tconstante_logica:\tTOK_FALSE\n");
+      escribir_operando(fpasm, $1, 0);}
 ;
 
 
 constante_entera:
   TOK_CONSTANTE_ENTERA
-    { fprintf(pf, ";R:\tconstante_entera:\tTOK_CONSTANTE_ENTERA\n");}
+    { fprintf(pf, ";R:\tconstante_entera:\tTOK_CONSTANTE_ENTERA\n");
+      escribir_operando(fpasm, $1.valor_entero, 0);}
 ;
 
 %%

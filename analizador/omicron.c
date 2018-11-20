@@ -1,6 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+#include "../omicron.h"
 extern FILE *pf;
 extern FILE *yyin;
 extern int yylex_destroy();

@@ -5,10 +5,10 @@ CFLAGS = -c -Wall -Wextra -Werror -g -O0
 
 all: pruebaSintactico
 
-pruebaSintactico: omicron.o bison/y.tab.o flex/lex.yy.o
+pruebaSintactico: omicron.o bison/y.tab.o flex/lex.yy.o ../generacion/generacion.o
 	$(CC) $^ -o $@
 
-flex/lex.yy.o: flex/lex.yy.c bison/y.tab.h
+flex/lex.yy.o: flex/lex.yy.c 
 	$(CC) $(CFLAGS) $< -o $@
 
 flex/lex.yy.c: flex/omicron.l
@@ -24,6 +24,9 @@ bison/y.tab.h: bison/omicron.y
 bison/y.tab.c: bison/omicron.y
 	bison -d -y -v $<
 	mv y.* bison/
+
+../generacion/generacion.o: ../generacion/generacion.c ../generacion/generacion.h
+	$(CC) $(CFLAGS) $< -o $@
 
 clean:
 	rm -f *.o flex/*.o bison/*.o pruebaSintactico flex/lex.yy.c misalida*.txt bison/y.*

@@ -3,12 +3,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#include "../include/generacion.h"
-
-/*  TIPOS  */
-
-#define ENTERO 1
-#define BOOLEANO 2
+#include "../generacion/generacion.h"
 
 /*  CONSTANTES  */
 #define MAX_LONG_ID 100

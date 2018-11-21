@@ -1,14 +1,18 @@
 CC = gcc
 CFLAGS = -c -Wall -Wextra -Werror -g -O0
+LDFLAGS = -m32 -g
+LDLIBS =
+AS = nasm
+ASFLAGS = -g -f elf32
 
 .PHONY: all clean
 
-all: pruebaSintactico
+all: compilador
 
-pruebaSintactico: omicron.o bison/y.tab.o flex/lex.yy.o ../generacion/generacion.o
+compilador: omicron.o bison/y.tab.o flex/lex.yy.o ../generacion/generacion.o
 	$(CC) $^ -o $@
 
-flex/lex.yy.o: flex/lex.yy.c 
+flex/lex.yy.o: flex/lex.yy.c
 	$(CC) $(CFLAGS) $< -o $@
 
 flex/lex.yy.c: flex/omicron.l
@@ -29,7 +33,7 @@ bison/y.tab.c: bison/omicron.y
 	$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	rm -f *.o flex/*.o bison/*.o pruebaSintactico flex/lex.yy.c misalida*.txt bison/y.*
+	rm -f *.o flex/*.o bison/*.o compilador flex/lex.yy.c misalida*.txt bison/y.* ../generacion/*.o testsCompilador/out_*
 
 test:
 	./pruebaSintactico test_analizador/entrada_sin_1.ol misalida1.txt

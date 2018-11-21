@@ -82,17 +82,19 @@
 %%
 
 programa:
-  TOK_MAIN '{' declaraciones escritura_TS funciones escritura_main sentencias '}' escritura_fin
+  inicioTabla TOK_MAIN '{' declaraciones escritura_TS funciones escritura_main sentencias '}' escritura_fin
     { fprintf(pf, ";R:\tprograma: TOK_MAIN '{' declaraciones funciones sentencias '}'\n");}
 | TOK_MAIN '{' funciones sentencias '}'
     { fprintf(pf, ";R:\tprograma: TOK_MAIN '{' funciones sentencias '}'\n");}
 ;
-/*    TODO
+/*    TODO :: PONER BIEN ESTA VAINA */
 inicioTabla:
-   Vacio
-    { fprintf(pf, ";R:\tinicioTabla: \n");}
+   /* Vacio */
+    { fprintf(pf, ";R:\tinicioTabla: \n");
+      TSA* tsa = NULL;
+      tsa = TSA_crear();}
 ;
-*/
+
 escritura_TS:
   /* Vacio */
     { fprintf(pf, ";R:\tescritura_TS: \n");
@@ -323,7 +325,7 @@ asignacion:
   TOK_IDENTIFICADOR '=' exp
     { fprintf(pf, ";R:\tasignacion: TOK_IDENTIFICADOR '=' exp\n");
       /* TODO :: VER SI EL IDENTIDICADOR ESTA EN TS Y VER ALSO LOS TIPOS */
-      asignar(pf, $1.lexema, 1);
+      asignar(pf, $1.lexema, $3.es_direccion);
       /* TODO :: Si no esta error */}
 | elemento_vector '=' exp
     { fprintf(pf, ";R:\tasignacion: elemento_vector '=' exp\n");}
@@ -405,10 +407,13 @@ exp:
     { fprintf(pf, ";R:\texp: TOK_IDENTIFICADOR\n");
       /* TODO :: VER SI EL IDENTIDICADOR ESTA EN TS */
       escribir_operando(pf, $1.lexema, 1);
+      $$.tipo = $1.tipo;
+      $$.es_direccion = 1;
       /* TODO :: Si no esta error */}
 | constante
     { fprintf(pf, ";R:\texp: constante\n");
-      $$.tipo = $1.tipo;}
+      $$.tipo = $1.tipo;
+      $$.es_direccion = 0;}
 | '(' exp ')'
     { fprintf(pf, ";R:\texp: '(' exp ')'\n");}
 | '(' comparacion ')'

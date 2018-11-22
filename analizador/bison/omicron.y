@@ -91,8 +91,9 @@ programa:
 inicioTabla:
    /* Vacio */
     { fprintf(pf, ";R:\tinicioTabla: \n");
-      TSA* tsa = NULL;
-      tsa = TSA_crear();}
+      TSA* tsaMain = NULL;
+      tsaMain = TSA_crear();
+      abrirAmbitoPpalMain(tsaMain);}
 ;
 
 escritura_TS:
@@ -100,7 +101,9 @@ escritura_TS:
     { fprintf(pf, ";R:\tescritura_TS: \n");
       escribir_subseccion_data(pf);
       escribir_cabecera_bss(pf);
-      /* Escribir lo que contenga la tabla de simbolos */
+      /* TODO :: For hasta que no hay elementos
+        declarar_variable(pf, nombre, tipo, es_variable=1);
+      */
       escribir_segmento_codigo(pf);
     }
 ;
@@ -128,7 +131,7 @@ declaraciones:
 declaracion:
   modificadores_acceso clase identificadores ';'
     { fprintf(pf, ";R:\tdeclaracion: modificadores_acceso clase identificadores ';'\n");
-      declarar_variable(pf, $3.lexema, $2.tipo, 1);
+      /*TSA_insertarSimbolo(tsaMain, $3.lexema, ...)*/
       }
 | modificadores_acceso declaracion_clase ';'
     { fprintf(pf, ";R:\tdeclaracion: modificadores_acceso declaracion_clase ';'\n");}
@@ -455,17 +458,29 @@ resto_lista_expresiones:
 
 comparacion:
   exp TOK_IGUAL exp
-    { fprintf(pf, ";R:\tcomparacion: exp TOK_IGUAL exp\n");}
+    { fprintf(pf, ";R:\tcomparacion: exp TOK_IGUAL exp\n");
+      /* TODO :: Si es id ver si esta en la tabla de simbolos */
+      igual(pf, $1.es_direccion, $2.es_direccion, /*TODO :: etiqueta ¿?*/ $$.etiqueta);}
 | exp TOK_DISTINTO exp
-    { fprintf(pf, ";R:\tcomparacion: exp TOK_DISTINTO exp\n");}
+    { fprintf(pf, ";R:\tcomparacion: exp TOK_DISTINTO exp\n");
+      /* TODO :: Si es id ver si esta en la tabla de simbolos */
+      distinto(pf, $1.es_direccion, $2.es_direccion, /*TODO :: etiqueta ¿?*/ $$.etiqueta);}
 | exp TOK_MENORIGUAL exp
-    { fprintf(pf, ";R:\tcomparacion: exp TOK_MENORIGUAL exp\n");}
+    { fprintf(pf, ";R:\tcomparacion: exp TOK_MENORIGUAL exp\n");
+      /* TODO :: Si es id ver si esta en la tabla de simbolos */
+      menor_igual(pf, $1.es_direccion, $2.es_direccion, /*TODO :: etiqueta ¿?*/ $$.etiqueta);}
 | exp TOK_MAYORIGUAL exp
-    { fprintf(pf, ";R:\tcomparacion: exp TOK_MAYORIGUAL exp\n");}
+    { fprintf(pf, ";R:\tcomparacion: exp TOK_MAYORIGUAL exp\n");
+      /* TODO :: Si es id ver si esta en la tabla de simbolos */
+      mayor_igual(pf, $1.es_direccion, $2.es_direccion, /*TODO :: etiqueta ¿?*/ $$.etiqueta);}
 | exp '<' exp
-    { fprintf(pf, ";R:\tcomparacion:\texp '<' exp\n");}
+    { fprintf(pf, ";R:\tcomparacion:\texp '<' exp\n");
+      /* TODO :: Si es id ver si esta en la tabla de simbolos */
+      menor(pf, $1.es_direccion, $2.es_direccion, /*TODO :: etiqueta ¿?*/ $$.etiqueta);}
 | exp '>' exp
-    { fprintf(pf, ";R:\tcomparacion: exp '>' exp\n");}
+    { fprintf(pf, ";R:\tcomparacion: exp '>' exp\n");
+      /* TODO :: Si es id ver si esta en la tabla de simbolos */
+      mayor(pf, $1.es_direccion, $2.es_direccion, /*TODO :: etiqueta ¿?*/ $$.etiqueta);}
 ;
 
 

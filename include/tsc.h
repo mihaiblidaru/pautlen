@@ -76,10 +76,10 @@ int tablaSimbolosClasesCerrarAmbitoEnClase(TSC* grafo, char* id_clase);
 
 int insertarTablaSimbolosClases(TSC* grafo,
                                 char* id_clase,
-                                char* id,
-                                int clase,
+                                char* clave,
+                                int categoria,
                                 int tipo,
-                                int estructura,
+                                int clase,
                                 int direcciones,
                                 int numero_parametros,
                                 int numero_variables_locales,
@@ -100,8 +100,6 @@ int insertarTablaSimbolosClases(TSC* grafo,
                                 int posicion_metodo_sobreescribible,
                                 int num_acumulado_atributos_instancia,
                                 int num_acumulado_metodos_sobreescritura,
-                                int posicion_acumulada_atributos_instancia,
-                                int posicion_acumulada_metodos_sobreescritura,
                                 int* tipo_args);
 
 int aplicarAccesos(TSC* t, char* nombre_clase_ambito_actual, char* clase_declaro, InfoSimbolo* pelem);
@@ -153,5 +151,7 @@ int buscarParaDeclararIdLocalEnMetodo(TSC* t,
                                       char* nombre_ambito_encontrado);
 
 void crearRepresentacionTSC(TSC* g, char* path);
+
+void imprimeTSAdeClase(FILE* out, TSC* g, char* id_clase);
 
 #endif

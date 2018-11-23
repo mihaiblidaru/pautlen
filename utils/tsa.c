@@ -231,6 +231,7 @@ void TSA_imprimir(FILE* out, TSA* ts, char* ambito) {
                     InfoSimbolo_imprimir(out, elem);
                     fprintf(out, "\n");
                 }
+                lista_free(posiciones, free);
             }
         }
     }

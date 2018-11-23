@@ -3,8 +3,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-char* categoria_to_str[] = {"VARIABLE", "PARAMETRO", "FUNCION", "CLASE"};
+char* categoria_to_str[] = {
+    "VARIABLE",       "PARAMETRO",         "FUNCION", "CLASE", "METODO_SOBREESCRIBIBLE", "METODO_NO_SOBREESCRIBIBLE",
+    "ATRIBUTO_CLASE", "ATRIBUTO_INSTANCIA"};
 char* clase_to_str[] = {"ESCALAR", "PUNTERO", "VECTOR", "CONJUNTO", "OBJETO"};
 char* tipo_to_str[] = {"INT", "FLOAT", "BOOLEAN"};
 
@@ -35,6 +36,7 @@ void InfoSimbolo_imprimir(FILE* out, InfoSimbolo* is) {
     if (out && is) {
         char* categoria = categoria_to_str[is->categoria - 1];
         fprintf(out, "%s %s ", is->clave, categoria);
+
         if (is->categoria == VARIABLE) {
             char* clase = clase_to_str[is->clase - 1];
             char* tipo = tipo_to_str[is->tipo - 1];
@@ -52,6 +54,25 @@ void InfoSimbolo_imprimir(FILE* out, InfoSimbolo* is) {
             fprintf(out, "%d MET. SOBR. %d MET. NO SOBR. %d ACUM ATR INS Y %d ACUM MET SOBR ",
                     is->numero_metodos_sobreescribibles, is->numero_metodos_no_sobreescribibles,
                     is->num_acumulado_atributos_instancia, is->num_acumulado_metodos_sobreescritura);
+        } else if (is->categoria == ATRIBUTO_INSTANCIA) {
+            char* clase = clase_to_str[is->clase - 1];
+            char* tipo = tipo_to_str[is->tipo - 1];
+            fprintf(out, "POS ATR. INSTANCIA %d Y ACUMULADA %d ", is->posicion_atributo_instancia,
+                    is->num_acumulado_atributos_instancia);
+            fprintf(out, "CLASE: %s ", clase);
+            fprintf(out, "TIPO: %s ", tipo);
+            fprintf(out, "DIR: %d ", is->direcciones);
+            fprintf(out, "ACCESO: %d ", is->tipo_acceso);
+            fprintf(out, "MIEMBRO: %d ", is->tipo_miembro);
+
+        } else if (is->categoria == ATRIBUTO_CLASE) {
+            char* clase = clase_to_str[is->clase - 1];
+            char* tipo = tipo_to_str[is->tipo - 1];
+            fprintf(out, "CLASE: %s ", clase);
+            fprintf(out, "TIPO: %s ", tipo);
+            fprintf(out, "DIR: %d ", is->direcciones);
+            fprintf(out, "ACCESO: %d ", is->tipo_acceso);
+            fprintf(out, "MIEMBRO: %d ", is->tipo_miembro);
         }
 
         fprintf(out, "\n");

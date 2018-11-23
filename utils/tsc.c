@@ -59,7 +59,7 @@ int abrirClase(TSC* t, char* id_clase, Lista* lista_padres) {
     nodoActual->descendientes = lista_crear();
     nodoActual->nombre = strdup(id_clase);
     TSA_abrirAmbitoGlobal(nodoActual->info, id_clase);
-    
+
     // si no tiene padres, lo añado al array de raices, y al array de nodos totales
     if (!lista_padres) {
         lista_addlast(t->raices, nodoActual);
@@ -110,10 +110,10 @@ int tablaSimbolosClasesCerrarAmbitoEnClase(TSC* grafo, char* id_clase);
 
 int insertarTablaSimbolosClases(TSC* grafo,
                                 char* id_clase,
-                                char* id,
-                                int clase,
+                                char* clave,
+                                int categoria,
                                 int tipo,
-                                int estructura,
+                                int clase,
                                 int direcciones,
                                 int numero_parametros,
                                 int numero_variables_locales,
@@ -134,9 +134,19 @@ int insertarTablaSimbolosClases(TSC* grafo,
                                 int posicion_metodo_sobreescribible,
                                 int num_acumulado_atributos_instancia,
                                 int num_acumulado_metodos_sobreescritura,
-                                int posicion_acumulada_atributos_instancia,
-                                int posicion_acumulada_metodos_sobreescritura,
-                                int* tipo_args);
+                                int* tipo_args) {
+    NodoGrafo* nodo = buscarNodoProfundidad(grafo, id_clase);
+
+    TSA* tsa_clase = nodo->info;
+
+    return TSA_insertarSimbolo(tsa_clase, clave, categoria, tipo, clase, direcciones, numero_parametros,
+                        numero_variables_locales, posicion_variable_local, posicion_parametro, dimension, tamanio,
+                        filas, columnas, capacidad, numero_atributos_clase, numero_atributos_instancia,
+                        numero_metodos_sobreescribibles, numero_metodos_no_sobreescribibles, tipo_acceso, tipo_miembro,
+                        posicion_atributo_instancia, posicion_metodo_sobreescribible, num_acumulado_atributos_instancia,
+                        num_acumulado_metodos_sobreescritura, tipo_args);
+    return OK;
+}
 
 int aplicarAccesos(TSC* t, char* nombre_clase_ambito_actual, char* clase_declaro, InfoSimbolo* pelem);
 int buscarIdEnJerarquiaDesdeClase(TSC* t,
@@ -178,12 +188,11 @@ int buscarParaDeclararMiembroInstancia(TSC* t,
                                        char* nombre_miembro,
                                        InfoSimbolo** e,
                                        char* nombre_ambito_encontrado) {
-
     NodoGrafo* nodo_clase = buscarNodoProfundidad(t, nombre_clase_desde);
 
-    if(nodo_clase != NULL){
+    if (nodo_clase != NULL) {
         TSA* tsa_clase = nodo_clase->info;
-        //buscarParaDeclararIdTablaSimbolosAmbitos(tsa_clase, nombre_miembro, e, );
+        // buscarParaDeclararIdTablaSimbolosAmbitos(tsa_clase, nombre_miembro, e, );
     }
 
     return ERR;
@@ -268,3 +277,16 @@ void crearRepresentacionTSC(TSC* g, char* path) {
     }
     fprintf(fp, "}\n");
 }
+
+
+
+void imprimeTSAdeClase(FILE* out, TSC* g, char* id_clase){
+    NodoGrafo* nodo = buscarNodoProfundidad(g, id_clase);
+    
+    if(nodo){
+        TSA* tsa_clase = nodo->info;
+        TSA_imprimir(out, tsa_clase, NULL);
+    }
+    
+}
+

@@ -45,7 +45,7 @@ int main(int argc, char const* argv[]) {
         OJO con esta variable: limita el numero de
         lineas que lee. Solo para depuración.
     */
-    int limite_lineas = 6;
+    int limite_lineas = 12;
 
     if (argc != 2) {
         fprintf(stderr, "Número de parametros incorrecto");
@@ -92,7 +92,8 @@ int main(int argc, char const* argv[]) {
             if (!strcmp(lista_get(words, 1), "declarar_main")) {
                 char nombre_ambito_encontrado[100];
                 InfoSimbolo* elem;
-                if (buscarParaDeclararIdTablaSimbolosAmbitos(tsa_main, lista_get(words, 2), &elem, nombre_ambito_encontrado) == ERR) {
+                if (buscarParaDeclararIdTablaSimbolosAmbitos(tsa_main, lista_get(words, 2), &elem,
+                                                             nombre_ambito_encontrado) == ERR) {
                     fprintf(out, "buscar declarar_main %s: No encontrado: se puede declarar\n",
                             (char*)lista_get(words, 2));
                 } else {
@@ -108,7 +109,6 @@ int main(int argc, char const* argv[]) {
                 int result = buscarParaDeclararMiembroInstancia(tabla_clases, nombre_clase, nombre_miembro, &elem,
                                                                 nombre_ambito_encontrado);
 
-                
                 if (result == ERR) {
                     fprintf(out, "buscar declarar_miembro_instancia %s: No encontrado: se puede declarar\n",
                             (char*)lista_get(words, 2));
@@ -124,8 +124,9 @@ int main(int argc, char const* argv[]) {
             int clase = atoi(lista_get(words, 4));
             int acceso = atoi(lista_get(words, 5));
             int tipo_miembro = atoi(lista_get(words, 6));
-            int result = TSA_insertarSimbolo(tsa_main, lista_get(words,1), categoria,tipo, clase,0,0,0,0,0,0,0,0,0,0,0,0,0,0,acceso,tipo_miembro,0,0,0,0,NULL);
-            
+            int result = TSA_insertarSimbolo(tsa_main, lista_get(words, 1), categoria, tipo, clase, 0, 0, 0, 0, 0, 0, 0,
+                                             0, 0, 0, 0, 0, 0, 0, acceso, tipo_miembro, 0, 0, 0, 0, NULL);
+
             if (result == ERR) {
                 fprintf(out, "insertar_tsa_main %s: ERROR\n", (char*)lista_get(words, 1));
             } else {
@@ -143,6 +144,17 @@ int main(int argc, char const* argv[]) {
             }
 
         } else if (!strcmp(lista_get(words, 0), "insertar_tsc")) {
+            fprintf(out, "insertar_tsc\n");
+            char* id_clase = lista_get(words, 1);
+            char* clave = lista_get(words, 2);
+            int categoria = atoi(lista_get(words, 3));
+            int tipo = atoi(lista_get(words, 4));
+            int clase = atoi(lista_get(words, 5));
+            int acceso = atoi(lista_get(words, 6));
+            int tipo_miembro = atoi(lista_get(words, 7));
+            insertarTablaSimbolosClases(tabla_clases, id_clase, clave, categoria, tipo, clase, 0, 0, 0, 0, 0, 0, 0, 0,
+                                        0, 0, 0, 0, 0, 0, acceso, tipo_miembro, 0, 0, 0, 0, NULL);
+            imprimeTSAdeClase(stderr, tabla_clases, id_clase);
         } else if (!strcmp(lista_get(words, 0), "abrir_ambito_tsc")) {
         } else if (!strcmp(lista_get(words, 0), "cerrar_ambito_tsc")) {
         } else if (!strcmp(lista_get(words, 0), "cerrar_clase")) {

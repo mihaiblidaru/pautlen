@@ -34,9 +34,17 @@ int TSA_eliminar(TSA* ts) {
 }
 
 TSA* TSA_abrirAmbitoGlobal(TSA* ts, const char* id_ambito_global) {
+    char nombre_simbolo_info_ambito[100];
     ts->global = hash_crear(DEF_TAM);
     ts->ambito = GLOBAL;
     ts->id_ambito_global = strdup(id_ambito_global);
+    sprintf(nombre_simbolo_info_ambito, "%s_%s", id_ambito_global, id_ambito_global);
+    InfoSimbolo* info_ambito = InfoSimbolo_crear();
+
+    info_ambito->clave = strdup(nombre_simbolo_info_ambito);
+    info_ambito->categoria = CLASE;
+    hash_insertar(ts->global, nombre_simbolo_info_ambito, info_ambito);
+
     return ts;
 }
 
@@ -63,11 +71,10 @@ TSA* TSA_cambiaAmbito(TSA* ts) {
 }
 
 int TSA_insertarSimbolo(TSA* ts,
-                        char* id,
+                        char* clave,
                         int categoria,
-                        int clase,
                         int tipo,
-                        int tamano,
+                        int clase,
                         int direcciones,
                         int numero_parametros,
                         int numero_variables_locales,
@@ -79,9 +86,9 @@ int TSA_insertarSimbolo(TSA* ts,
                         int columnas,
                         int capacidad,
                         int numero_atributos_clase,
-                        int num_atributos_instancia,
-                        int num_metodos_sobreescribibles,
-                        int nun_metodos_no_sobreescribibles,
+                        int numero_atributos_instancia,
+                        int numero_metodos_sobreescribibles,
+                        int numero_metodos_no_sobreescribibles,
                         int tipo_acceso,
                         int tipo_miembro,
                         int posicion_atributo_instancia,
@@ -93,11 +100,10 @@ int TSA_insertarSimbolo(TSA* ts,
         return ERR;
     InfoSimbolo* simbolo = InfoSimbolo_crear();
 
-    simbolo->identificador = strdup(id);
+    simbolo->clave = strdup(clave);
     simbolo->categoria = categoria;
-    simbolo->clase = clase;
     simbolo->tipo = tipo;
-    simbolo->tamano = tamano;
+    simbolo->clase = clase;
     simbolo->direcciones = direcciones;
     simbolo->numero_parametros = numero_parametros;
     simbolo->numero_variables_locales = numero_variables_locales;
@@ -109,9 +115,9 @@ int TSA_insertarSimbolo(TSA* ts,
     simbolo->columnas = columnas;
     simbolo->capacidad = capacidad;
     simbolo->numero_atributos_clase = numero_atributos_clase;
-    simbolo->num_atributos_instancia = num_atributos_instancia;
-    simbolo->num_metodos_sobreescribibles = num_metodos_sobreescribibles;
-    simbolo->nun_metodos_no_sobreescribibles = nun_metodos_no_sobreescribibles;
+    simbolo->numero_atributos_instancia = numero_atributos_instancia;
+    simbolo->numero_metodos_sobreescribibles = numero_metodos_sobreescribibles;
+    simbolo->numero_metodos_no_sobreescribibles = numero_metodos_no_sobreescribibles;
     simbolo->tipo_acceso = tipo_acceso;
     simbolo->tipo_miembro = tipo_miembro;
     simbolo->posicion_atributo_instancia = posicion_atributo_instancia;
@@ -119,25 +125,23 @@ int TSA_insertarSimbolo(TSA* ts,
     simbolo->num_acumulado_atributos_instancia = num_acumulado_atributos_instancia;
     simbolo->num_acumulado_metodos_sobreescritura = num_acumulado_metodos_sobreescritura;
     simbolo->tipo_args = tipo_args;
-    
 
-        if (ts->ambito == GLOBAL) {
-        if (hash_contiene(ts->global, simbolo->identificador) == true) {
+    if (ts->ambito == GLOBAL) {
+        if (hash_contiene(ts->global, simbolo->clave) == true) {
             return OK;
         } else {
-            if (hash_insertar(ts->global, simbolo->identificador, simbolo) == ERR) {
+            if (hash_insertar(ts->global, simbolo->clave, simbolo) == ERR) {
                 return ERR;
             }
         }
         // AMBITO LOCAL
-    }
-    else {
+    } else {
         if (simbolo->categoria == FUNCION) {
             printf("No se puede insertar Funcion en la tabla local");
-        } else if (hash_contiene(ts->local, simbolo->identificador) == true) {
+        } else if (hash_contiene(ts->local, simbolo->clave) == true) {
             return OK;
         } else {
-            if (hash_insertar(ts->local, simbolo->identificador, simbolo) == ERR) {
+            if (hash_insertar(ts->local, simbolo->clave, simbolo) == ERR) {
                 return ERR;
             }
             return OK;
@@ -161,25 +165,73 @@ int cerrarAmbitoMain(TSA* t) {
 }
 
 int buscarParaDeclararIdTablaSimbolosAmbitos(TSA* t, char* id, InfoSimbolo** e, char* id_ambito) {
-    TablaHash* tabla = NULL;
     int ret_value = ERR;
+    int ambito_encontrado = NO_DEFINIDO;
+    InfoSimbolo* elem = NULL;
 
-    // decido en que tabla voy a buscar. Creo que está bien
-    if (t->id_ambito_global && !strcmp(id_ambito, t->id_ambito_global))
-        tabla = t->global;
-    else if (t->id_ambito_local && !strcmp(id_ambito, t->id_ambito_local))
-        tabla = t->local;
+    if (t->local != NULL) {
+        elem = hash_buscar(t->local, id, NULL);
+        if (elem) {
+            ambito_encontrado = LOCAL;
+        }
+    }
 
-    InfoSimbolo* tmp = hash_buscar(tabla, id);
-    if (e != NULL)
-        *e = tmp;
+    if (elem == NULL) {
+        elem = hash_buscar(t->global, id, NULL);
+        if (elem) {
+            ambito_encontrado = GLOBAL;
+        }
+    }
 
-    if (tmp != NULL)
+    if (ambito_encontrado != NO_DEFINIDO) {
         ret_value = OK;
+        if (e) {
+            *e = elem;
+        }
+
+        if (id_ambito) {
+            if (ambito_encontrado == LOCAL) {
+                strcpy(id_ambito, t->id_ambito_local);
+            } else {
+                strcpy(id_ambito, t->id_ambito_global);
+            }
+        }
+    }
 
     return ret_value;
 }
 
 int buscarTablaSimbolosAmbitosConPrefijos(TSA* t, char* id, InfoSimbolo** e, char* id_ambito) {
     return ERR;
+}
+
+void TSA_imprimir(FILE* out, TSA* ts, char* ambito) {
+    if (out && ts) {
+        bool imprimir_global = true;
+        bool imprimir_local = true;
+        if (ambito) {
+            imprimir_global = !strcmp(ambito, ts->id_ambito_global);
+            imprimir_local = !strcmp(ambito, ts->id_ambito_local);
+        }
+
+        if (imprimir_global) {
+            if (ts->global == NULL) {
+                fprintf(out, "Ambito global no inicializado, no se puede imprimir\n");
+            } else {
+                Lista* elementos;
+                Lista* posiciones;
+                hash_as_list(ts->global, &elementos, &posiciones);
+                fprintf(out, "\n=================== %s =================\n", ts->id_ambito_global);
+
+                printf("Elementos encontrados en ambito %s: %d\n\n", ts->id_ambito_global, lista_length(elementos));
+                for (int i = 0; i < lista_length(elementos); i++) {
+                    InfoSimbolo* elem = lista_get(elementos, i);
+                    int* pos = lista_get(posiciones, i);
+                    fprintf(out, "**************** Posicion %d ******************\n", *pos);
+                    InfoSimbolo_imprimir(out, elem);
+                    fprintf(out, "\n");
+                }
+            }
+        }
+    }
 }

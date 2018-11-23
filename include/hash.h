@@ -15,6 +15,7 @@
 
 #include <stdio.h>
 #include <stdbool.h>
+#include "lista.h"
 #include "omicron.h"
 /**************** DECLARACIONES DE TIPOS ****************/
 typedef struct NodoHash {
@@ -43,10 +44,12 @@ int hash_eliminar(TablaHash *tabla);
 int hash_insertar(TablaHash *tabla, const char *clave, void *info);
 
 //Busca en la tabla hash el nodo identificado por su clave y lo devuelve. NULL en caso contrario.
-void* hash_buscar(TablaHash *tabla, const char *clave);
+void* hash_buscar(TablaHash *tabla, const char *clave, int* posicion);
 
 
 /** Devuelve si la tabla hash contiene una clave o no*/
 bool hash_contiene(TablaHash* tabla, const char *clave);
+
+int hash_as_list(TablaHash* tabla, Lista** elementos, Lista** posiciones);
 
 #endif

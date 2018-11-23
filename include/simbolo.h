@@ -19,6 +19,7 @@
 #define SIMBOLO_H
 
 #include "omicron.h"
+#include <stdio.h>
 
 /* Categoría de un símbolo: variable, parámetro de función o función */
 /*typedef enum { 
@@ -38,45 +39,34 @@ typedef enum { NINGUNO, ACCESO_CLASE, ACCESO_HERENCIA, ACCESO_TODOS }TIPO_ACCESO
 #define LONGITUD_MAXIMA_INDENTIFICADOR 256*/
 
 typedef struct {
-/****** campos comunes usados para todos los tipos de simbolos ******/
-    char *identificador;
+    char* clave;
     int categoria;
-/* categoria de simbolo funcion, variable global o local*/
-    
-/********************************************************************/
-    
-/******* Para todos los tipos de variables globales o locales *******/
-    
-    /*escalar o vector*/
-    int clase;
-
-    /* tipo de variable: Entero o Booleano */
     int tipo;
-    
-    /* Tamaño de la variable. Si es un vector será distindo de 1*/
-    int tamano;
-/********************************************************************/
-    int direcciones;        /* >=1  SI ES VARIABLE 1*/
-	int numero_parametros;  /* >=0 */
-	int numero_variables_locales;	/* >=0 */
-	int posicion_variable_local;	/* >=1 */
-	int posicion_parametro;		/* >=0 */
-	int dimension;		/* 1,2  */
-	int tamanio;		/* 1-64 */
-	int filas;			/* 1-64 */
-	int columnas;		/* 1-64 */
-	int capacidad;		/* 1-64 */
+    int clase;
+    int direcciones; /* >=1 SI ES VARIABLE 1*/
+    int numero_parametros; /* >=0 */
+    int numero_variables_locales; /* >=0 */
+    int posicion_variable_local; /* >=1 */
+    int posicion_parametro; /* >=0 */
+    int dimension; /* 1,2 (no este curso) */
+    int tamanio; /* 1-64 */
+    int filas; /* 1-64 (no este curso) */
+    int columnas; /* 1-64 (no este curso)*/
+    int capacidad; /* 1-64 (no este curso) */
     int numero_atributos_clase;
-    int num_atributos_instancia;
-    int num_metodos_sobreescribibles;
-    int nun_metodos_no_sobreescribibles;
+    int numero_atributos_instancia;
+    int numero_metodos_sobreescribibles;
+    int numero_metodos_no_sobreescribibles;
     int tipo_acceso;
+    /*NINGUNO (exposed) ACCESO_CLASE (hidden)
+    ACCESO_HERENCIA (secret) ACCESO_TODOS (exposed) */
     int tipo_miembro;
+    /*MIEMBRO_UNICO (unique) MIEMBRO_NO_UNICO*/
     int posicion_atributo_instancia;
     int posicion_metodo_sobreescribible;
     int num_acumulado_atributos_instancia;
     int num_acumulado_metodos_sobreescritura;
-    int* tipo_args;
+    int * tipo_args;
 }InfoSimbolo;
 
 
@@ -100,6 +90,8 @@ typedef struct {
 
 InfoSimbolo* InfoSimbolo_crear();
 int InfoSimbolo_eliminar(InfoSimbolo* is);
+
+void InfoSimbolo_imprimir(FILE* out, InfoSimbolo* is);
 
 
 #endif

@@ -25,12 +25,12 @@ typedef struct {
 TSA* TSA_crear();
 int TSA_eliminar(TSA* ts);
 TSA* TSA_cambiaAmbito(TSA* ts);
+void TSA_imprimir(FILE* out, TSA* ts, char* ambito);
 int TSA_insertarSimbolo(TSA* ts,
-                        char* id,
+                        char* clave,
                         int categoria,
-                        int clase,
                         int tipo,
-                        int tamano,
+                        int clase,
                         int direcciones,
                         int numero_parametros,
                         int numero_variables_locales,
@@ -42,9 +42,9 @@ int TSA_insertarSimbolo(TSA* ts,
                         int columnas,
                         int capacidad,
                         int numero_atributos_clase,
-                        int num_atributos_instancia,
-                        int num_metodos_sobreescribibles,
-                        int nun_metodos_no_sobreescribibles,
+                        int numero_atributos_instancia,
+                        int numero_metodos_sobreescribibles,
+                        int numero_metodos_no_sobreescribibles,
                         int tipo_acceso,
                         int tipo_miembro,
                         int posicion_atributo_instancia,

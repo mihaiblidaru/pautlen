@@ -90,7 +90,9 @@ int main(int argc, char const* argv[]) {
             }
         } else if (!strcmp(lista_get(words, 0), "buscar")) {
             if (!strcmp(lista_get(words, 1), "declarar_main")) {
-                if (buscarParaDeclararIdTablaSimbolosAmbitos(tsa_main, lista_get(words, 2), NULL, "main") == ERR) {
+                char nombre_ambito_encontrado[100];
+                InfoSimbolo* elem;
+                if (buscarParaDeclararIdTablaSimbolosAmbitos(tsa_main, lista_get(words, 2), &elem, nombre_ambito_encontrado) == ERR) {
                     fprintf(out, "buscar declarar_main %s: No encontrado: se puede declarar\n",
                             (char*)lista_get(words, 2));
                 } else {
@@ -100,7 +102,7 @@ int main(int argc, char const* argv[]) {
             } else if (!strcmp(lista_get(words, 1), "declarar_miembro_instancia")) {
                 char* nombre_clase = lista_get(words, 2);
                 char* nombre_miembro = lista_get(words, 3);
-                InfoSimbolo* elem = 0x01;
+                InfoSimbolo* elem = NULL;
                 char nombre_ambito_encontrado[50];
 
                 int result = buscarParaDeclararMiembroInstancia(tabla_clases, nombre_clase, nombre_miembro, &elem,
@@ -122,12 +124,13 @@ int main(int argc, char const* argv[]) {
             int clase = atoi(lista_get(words, 4));
             int acceso = atoi(lista_get(words, 5));
             int tipo_miembro = atoi(lista_get(words, 6));
-            int result = TSA_insertarSimbolo(tsa_main, lista_get(words, 1), categoria, tipo, clase, 0, 0, 0, 0, 0, 0, 0,
-                                             0, 0, 0, 0, 0, 0, 0, acceso, tipo_miembro, 0, 0, 0, 0, 0, NULL);
+            int result = TSA_insertarSimbolo(tsa_main, lista_get(words,1), categoria,tipo, clase,0,0,0,0,0,0,0,0,0,0,0,0,0,0,acceso,tipo_miembro,0,0,0,0,NULL);
+            
             if (result == ERR) {
                 fprintf(out, "insertar_tsa_main %s: ERROR\n", (char*)lista_get(words, 1));
             } else {
-                fprintf(out, "insertar_tsa_main\n");
+                fprintf(out, "insertar_tsa_main %d %d %d %d %d\n", categoria, tipo, clase, acceso, tipo_miembro);
+                TSA_imprimir(stderr, tsa_main, NULL);
             }
 
         } else if (!strcmp(lista_get(words, 0), "abrir_clase")) {

@@ -18,6 +18,7 @@
 #include <tsa.h>
 #include <tsc.h>
 
+NodoGrafo* buscarNodoProfundidad(TSC* grafo, char* nombre);
 NodoGrafo* recBuscarNodoProfundidad(NodoGrafo* actual, char* nombre);
 
 /**************************************************************************
@@ -57,7 +58,8 @@ int abrirClase(TSC* t, char* id_clase, Lista* lista_padres) {
     nodoActual->predecesores = lista_crear();
     nodoActual->descendientes = lista_crear();
     nodoActual->nombre = strdup(id_clase);
-
+    TSA_abrirAmbitoGlobal(nodoActual->info, id_clase);
+    
     // si no tiene padres, lo añado al array de raices, y al array de nodos totales
     if (!lista_padres) {
         lista_addlast(t->raices, nodoActual);

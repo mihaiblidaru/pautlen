@@ -49,7 +49,7 @@ TablaHash* hash_crear(int tam){
 		return NULL;
 	}else{
 		nueva->tam = tam;
-		nueva->nodo = calloc(tam,sizeof(NodoHash*));
+		nueva->nodo = calloc(tam, sizeof(NodoHash*));
 		if(nueva->nodo == NULL){
 			free(nueva);
 			return NULL;
@@ -126,11 +126,10 @@ int hash_insertar(TablaHash *tabla, const char *clave, void *info){
 
 
 //Busca en la tabla hash el nodo identificado por su clave y lo devuelve. NULL en caso contrario.
-void* hash_buscar(TablaHash *tabla, const char *clave){
+void* hash_buscar(TablaHash *tabla, const char *clave, int* posicion){
 	int modulo;
 	NodoHash * aux;
 	modulo = mod(funcionHash(clave), tabla->tam);
-	
 	aux = tabla->nodo[modulo];
 	while(aux != NULL){
 		if(strcmp(aux->clave,clave) == 0){
@@ -139,12 +138,40 @@ void* hash_buscar(TablaHash *tabla, const char *clave){
 			aux = aux->siguiente;
 		}
 	}
+	
+	if(posicion){
+		*posicion = modulo;
+	}
 	return NULL;
 }
 
 /** Devuelve si la tabla hash contiene una clave o no*/
 bool hash_contiene(TablaHash* tabla, const char *clave){
 	if(tabla != NULL && clave != NULL)
-		return hash_buscar(tabla, clave) != NULL;
+		return hash_buscar(tabla, clave, NULL) != NULL;
 	return false;
+}
+
+int hash_as_list(TablaHash* tabla, Lista** elementos, Lista** posiciones){
+	if(tabla){
+		*elementos = lista_crear();
+		*posiciones = lista_crear();
+		
+		for(int i = 0; i < tabla->tam; i++){
+			if(tabla->nodo[i]){
+				NodoHash *aux = tabla->nodo[i];
+				while(aux != NULL){
+					lista_addlast(*elementos, aux->info);
+					if(posiciones){
+						int* pos = calloc(1, sizeof(int));
+						*pos = i;
+						lista_addlast(*posiciones, pos);
+					}
+					aux = aux->siguiente;
+				}
+			}
+		}
+		return OK;
+	}
+	return ERR;
 }

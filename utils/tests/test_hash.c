@@ -36,43 +36,43 @@ int main(){
     hash_insertar(tabla_hash, "clave 6", info6);
     hash_insertar(tabla_hash, "clave 7", info7);
     
-    if(strcmp(hash_buscar(tabla_hash, "clave 1"), info1)){
+    if(strcmp(hash_buscar(tabla_hash, "clave 1", NULL), info1)){
         printf("Fail buscando info con clave 1\n");
     } else {
         printf("Clave 1: OK\n");
     }   
     
-    if(strcmp(hash_buscar(tabla_hash, "clave 2"), info2)){
+    if(strcmp(hash_buscar(tabla_hash, "clave 2", NULL), info2)){
         printf("Fail buscando info con clave 2\n");
     } else {
         printf("Clave 2: OK\n");
     }   
     
-    if(strcmp(hash_buscar(tabla_hash, "clave 3"), info3)){
+    if(strcmp(hash_buscar(tabla_hash, "clave 3", NULL), info3)){
         printf("Fail buscando info con clave 3\n");        
     } else {
         printf("Clave 3: OK\n");
     }   
     
-    if(strcmp(hash_buscar(tabla_hash, "clave 4"), info4)){
+    if(strcmp(hash_buscar(tabla_hash, "clave 4", NULL), info4)){
         printf("Fail buscando info con clave 4\n");
     } else {
         printf("Clave 4: OK\n");
     }   
     
-    if(strcmp(hash_buscar(tabla_hash, "clave 5"), info5)){
+    if(strcmp(hash_buscar(tabla_hash, "clave 5", NULL), info5)){
         printf("Fail buscando info con clave 5\n");
     } else {
         printf("Clave 5: OK\n");
     }   
     
-    if(strcmp(hash_buscar(tabla_hash, "clave 6"), info6)){
+    if(strcmp(hash_buscar(tabla_hash, "clave 6", NULL), info6)){
         printf("Fail buscando info con clave 6\n");
     } else {
         printf("Clave 6: OK\n");
     }   
     
-    if(strcmp(hash_buscar(tabla_hash, "clave 7"), info7)){
+    if(strcmp(hash_buscar(tabla_hash, "clave 7", NULL), info7)){
         printf("Fail buscando info con clave 7\n");
     } else {
         printf("Clave 7: OK\n");

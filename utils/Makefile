@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -g -O0 -std=gnu11 -I../include
+CFLAGS = -g -Wall -O0 -std=gnu11 -I../include
 
 TESTS = test_lista test_hash tsc.o
 

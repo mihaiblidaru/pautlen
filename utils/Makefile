@@ -3,10 +3,10 @@ CFLAGS = -g -Wall -O0 -std=gnu11 -I../include
 
 TESTS = test_lista test_hash tsc.o
 
-all: tablas
+all: test_tablas
 
-tablas:
-	gcc $(CFLAGS) tsc.c hash.c lista.c tests/test_tablas.c tsa.c simbolo.c -o test_tabla
+test_tablas: tests/test_tablas.c
+	gcc $(CFLAGS) tsc.c hash.c lista.c tests/test_tablas.c tsa.c simbolo.c -o test_tablas
 
 test_lista: tests/test_lista.o lista.o
 	$(CC) $^ -o $@
@@ -23,15 +23,15 @@ test_grafo2: tests/test_grafo2.o tsc.o lista.o
 test_simbolo:tests/test_tablasimbolos.o hash.o simbolo.o tablasimbolo.o
 	$(CC) $^ -o $@
 
-test_tabla_simbolos1: tests/test_tabla_simbolos1.o hash.o simbolo.o tablasimbolo.o 
+test_tabla_simbolos1: tests/test_tabla_simbolos1.o hash.o simbolo.o tablasimbolo.o
 	$(CC) $^ -o $@
 
-test_tabla_simbolos2: tests/test_tabla_simbolos2.o hash.o simbolo.o tablasimbolo.o 
+test_tabla_simbolos2: tests/test_tabla_simbolos2.o hash.o simbolo.o tablasimbolo.o
 	$(CC) $^ -o $@
 
-clean: 
-	rm -f tests/*.o lista.o $(TESTS) tsc.o hash.o prueba_simbolos.o hash.o simbolo.o tablasimbolo.o
+clean:
+	rm -f tests/*.o lista.o $(TESTS) tsc.o hash.o prueba_simbolos.o hash.o simbolo.o tablasimbolo.o test_tablas
 
-test: test_grafo2
-	./test_grafo2
-	dot -Tpdf grafo.dot -o grafo.pdf
+test: clean test_tablas
+	./test_tablas omi.ol 2> misalida.txt
+	meld salida.txt misalida.txt

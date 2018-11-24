@@ -110,8 +110,8 @@ int main(int argc, char const* argv[]) {
                                                                 nombre_ambito_encontrado);
 
                 if (result == ERR) {
-                    fprintf(out, "buscar declarar_miembro_instancia %s: No encontrado: se puede declarar\n",
-                            (char*)lista_get(words, 2));
+                    fprintf(out, "buscar declarar_miembro_instancia %s %s: No encontrado: se puede declarar\n",
+                                (char*)lista_get(words, 2), (char*)lista_get(words, 3));
                 } else {
                     fprintf(out, "buscar declarar_main %s: Encontrado: NO se puede declarar\n",
                             (char*)lista_get(words, 2));
@@ -130,7 +130,7 @@ int main(int argc, char const* argv[]) {
             if (result == ERR) {
                 fprintf(out, "insertar_tsa_main %s: ERROR\n", (char*)lista_get(words, 1));
             } else {
-                fprintf(out, "insertar_tsa_main %d %d %d %d %d\n", categoria, tipo, clase, acceso, tipo_miembro);
+                fprintf(out, "insertar_tsa_main %s %d %d %d %d %d\n",  (char*)lista_get(words, 1), categoria, tipo, clase, acceso, tipo_miembro);
                 TSA_imprimir(stderr, tsa_main, NULL);
             }
 
@@ -140,11 +140,10 @@ int main(int argc, char const* argv[]) {
             if (abrirClase(tabla_clases, id_clase, NULL) == ERR) {
                 fprintf(out, "ERROR: %s\n", line);
             } else {
-                fprintf(out, "%s\n", line);
+                fprintf(out, "abrir_clase %s\n", id_clase);
             }
 
         } else if (!strcmp(lista_get(words, 0), "insertar_tsc")) {
-            fprintf(out, "insertar_tsc\n");
             char* id_clase = lista_get(words, 1);
             char* clave = lista_get(words, 2);
             int categoria = atoi(lista_get(words, 3));
@@ -152,9 +151,16 @@ int main(int argc, char const* argv[]) {
             int clase = atoi(lista_get(words, 5));
             int acceso = atoi(lista_get(words, 6));
             int tipo_miembro = atoi(lista_get(words, 7));
-            insertarTablaSimbolosClases(tabla_clases, id_clase, clave, categoria, tipo, clase, 0, 0, 0, 0, 0, 0, 0, 0,
+            int res = insertarTablaSimbolosClases(tabla_clases, id_clase, clave, categoria, tipo, clase, 0, 0, 0, 0, 0, 0, 0, 0,
                                         0, 0, 0, 0, 0, 0, acceso, tipo_miembro, 0, 0, 0, 0, NULL);
-            imprimeTSAdeClase(stderr, tabla_clases, id_clase);
+
+            if(res == OK){
+                fprintf(out, "insertar_tsc %s %s %d %d %d %d %d\n", id_clase, clave, categoria, tipo, clase, acceso, tipo_miembro);
+                imprimeTSAdeClase(stderr, tabla_clases, id_clase);
+            }else{
+                fprintf(out, "insertar_tsc %s %s: ERROR\n", id_clase, clave);
+            }
+            
         } else if (!strcmp(lista_get(words, 0), "abrir_ambito_tsc")) {
         } else if (!strcmp(lista_get(words, 0), "cerrar_ambito_tsc")) {
         } else if (!strcmp(lista_get(words, 0), "cerrar_clase")) {

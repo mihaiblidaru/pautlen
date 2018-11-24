@@ -145,7 +145,6 @@ int insertarTablaSimbolosClases(TSC* grafo,
                         numero_metodos_sobreescribibles, numero_metodos_no_sobreescribibles, tipo_acceso, tipo_miembro,
                         posicion_atributo_instancia, posicion_metodo_sobreescribible, num_acumulado_atributos_instancia,
                         num_acumulado_metodos_sobreescritura, tipo_args);
-    return OK;
 }
 
 int aplicarAccesos(TSC* t, char* nombre_clase_ambito_actual, char* clase_declaro, InfoSimbolo* pelem);
@@ -192,7 +191,7 @@ int buscarParaDeclararMiembroInstancia(TSC* t,
 
     if (nodo_clase != NULL) {
         TSA* tsa_clase = nodo_clase->info;
-        // buscarParaDeclararIdTablaSimbolosAmbitos(tsa_clase, nombre_miembro, e, );
+        return buscarParaDeclararIdTablaSimbolosAmbitos(tsa_clase, nombre_miembro, e, nombre_ambito_encontrado);
     }
 
     return ERR;

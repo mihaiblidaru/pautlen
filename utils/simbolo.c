@@ -5,9 +5,9 @@
 #include <string.h>
 char* categoria_to_str[] = {
     "VARIABLE",       "PARAMETRO",         "FUNCION", "CLASE", "METODO_SOBREESCRIBIBLE", "METODO_NO_SOBREESCRIBIBLE",
-    "ATRIBUTO_CLASE", "ATRIBUTO_INSTANCIA"};
+    "ATRIBUTO CLASE", "ATRIBUTO INSTANCIA"};
 char* clase_to_str[] = {"ESCALAR", "PUNTERO", "VECTOR", "CONJUNTO", "OBJETO"};
-char* tipo_to_str[] = {"INT", "FLOAT", "BOOLEAN"};
+char* tipo_to_str[] = {"ENTERO", "FLOAT", "BOOLEAN"};
 
 InfoSimbolo* InfoSimbolo_crear() {
     InfoSimbolo* nuevo = calloc(1, sizeof(InfoSimbolo));

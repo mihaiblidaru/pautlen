@@ -227,11 +227,12 @@ void TSA_imprimir(FILE* out, TSA* ts, char* ambito) {
                 for (int i = 0; i < lista_length(elementos); i++) {
                     InfoSimbolo* elem = lista_get(elementos, i);
                     int* pos = lista_get(posiciones, i);
-                    fprintf(out, "**************** Posicion %d ******************\n", *pos);
+                    fprintf(out, "\n**************** Posicion %d ******************\n", *pos);
                     InfoSimbolo_imprimir(out, elem);
-                    fprintf(out, "\n");
+                
                 }
                 lista_free(posiciones, free);
+                fprintf(out, "\n");
             }
         }
     }

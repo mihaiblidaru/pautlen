@@ -20,7 +20,7 @@
 /**************** DECLARACIONES DE TIPOS ****************/
 typedef struct NodoGrafo {
 	char *nombre;   //Nombre del nodo, sera su identificador.
-	void *info;     //Datos que vayamos a poner en este nodo.
+	void *info;     //ES UNA TSA
 	Lista* predecesores;
 	Lista* descendientes;
 } NodoGrafo;

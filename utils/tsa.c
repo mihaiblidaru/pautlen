@@ -48,9 +48,34 @@ TSA* TSA_abrirAmbitoGlobal(TSA* ts, const char* id_ambito_global) {
     return ts;
 }
 
-TSA* TSA_abrirAmbitoLocal(TSA* ts, const char* id_ambito) {
+
+TSA* TSA_abrirAmbitoLocal(TSA* ts, const char* id_ambito, int categoria_ambito, int acceso_metodo, int tipo_metodo, int posicion_metodo_sobre, int tamanio) {
+    char nombre_simbolo_info_ambito[100];
     ts->local = hash_crear(DEF_TAM);
     ts->ambito = LOCAL;
+    ts->id_ambito_local = id_ambito;
+    sprintf(nombre_simbolo_info_ambito, "%s_%s", id_ambito, id_ambito);
+    InfoSimbolo* info_ambito = InfoSimbolo_crear();
+
+    info_ambito->clave = strdup(nombre_simbolo_info_ambito);
+    info_ambito->categoria = categoria_ambito;
+    info_ambito->tipo_acceso = acceso_metodo;
+    info_ambito->tipo = tipo_metodo;
+    info_ambito->posicion_metodo_sobreescribible = posicion_metodo_sobre;
+    info_ambito->tamanio = tamanio: 
+
+    hash_insertar(ts->global, nombre_simbolo_info_ambito, info_ambito);
+
+    return ts;
+
+}
+
+TSA* TSA_cerrarAmbitoLocal(TSA* ts){
+    int ret = 0;
+    ret = hash_eliminar(ts->local);
+    ts->local = NULL;
+    ts->ambito = GLOBAL;
+    return ret;
 }
 
 TSA* TSA_cambiaAmbito(TSA* ts) {
@@ -156,12 +181,17 @@ int abrirAmbitoPpalMain(TSA* t) {
     return ERR;
 }
 
+
 int abrirAmbitoMain(TSA* t, char* id_ambito, int categoria_ambito, int tipo_ambito, int tamanio) {
+    
+    if(TSA_abrirAmbitoLocal(t, id_ambito) != NULL){
+        return OK;
+    }
     return ERR;
 }
 
 int cerrarAmbitoMain(TSA* t) {
-    return ERR;
+    return TSA_eliminar(t);
 }
 
 int buscarParaDeclararIdTablaSimbolosAmbitos(TSA* t, char* id, InfoSimbolo** e, char* id_ambito) {
@@ -197,12 +227,43 @@ int buscarParaDeclararIdTablaSimbolosAmbitos(TSA* t, char* id, InfoSimbolo** e, 
             }
         }
     }
-
     return ret_value;
 }
 
+
+//esta copiada la anterior, porque no encuentro la diferencia de lo del prefijo 
 int buscarTablaSimbolosAmbitosConPrefijos(TSA* t, char* id, InfoSimbolo** e, char* id_ambito) {
-    return ERR;
+    
+    int ret_value = ERR;
+    int ambito_encontrado = NO_DEFINIDO;
+    InfoSimbolo* elem = NULL;
+    if (t->local != NULL) {
+        elem = hash_buscar(t->local, id, NULL);
+        if (elem) {
+            ambito_encontrado = LOCAL;
+        }
+    }
+    if (elem == NULL) {
+        elem = hash_buscar(t->global, id, NULL);
+        if (elem) {
+            ambito_encontrado = GLOBAL;
+        }
+    }
+    if (ambito_encontrado != NO_DEFINIDO) {
+        ret_value = OK;
+        if (e) {
+            *e = elem;
+        }
+
+        if (id_ambito) {
+            if (ambito_encontrado == LOCAL) {
+                strcpy(id_ambito, t->id_ambito_local);
+            } else {
+                strcpy(id_ambito, t->id_ambito_global);
+            }
+        }
+    }
+    return ret_value;
 }
 
 void TSA_imprimir(FILE* out, TSA* ts, char* ambito) {

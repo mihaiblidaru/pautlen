@@ -95,6 +95,7 @@ int cerrarClase(TSC* t,
  *                    Aqui ya empieza la diversion                     *
  ***********************************************************************/
 
+//ir a una clase y dentro del tsa de la clase abrir un ambito local
 int tablaSimbolosClasesAbrirAmbitoEnClase(TSC* grafo,
                                           char* id_clase,
                                           char* id_ambito,
@@ -103,10 +104,25 @@ int tablaSimbolosClasesAbrirAmbitoEnClase(TSC* grafo,
                                           int tipo_metodo,
                                           int posicion_metodo_sobre,
                                           int tamanio) {
-    return OK;
+    NodoGrafo* clase = NULL;                                        
+    clase = buscarNodoProfundidad(grafo, id_clase);
+    if(clase != NULL){
+        clase->info = TSA_abrirAmbitoLocal(clase->info, id_ambito, categoria_ambito, acceso_metodo, tipo_metodo, posicion_metodo_sobre, tamanio);
+        return OK; 
+    }
+
+    return ERR;
 }
 
-int tablaSimbolosClasesCerrarAmbitoEnClase(TSC* grafo, char* id_clase);
+//cierra el ambito local abierto ed una clase, idem, una funcion
+int tablaSimbolosClasesCerrarAmbitoEnClase(TSC* grafo, char* id_clase){
+    NodoGrafo* clase = NULL;
+    clase = buscarNodoProfundidad(grafo, id_clase);
+    if(clase != NULL){
+        return TSA_cerrarAmbitoLocal(clase->info);
+    }
+    return ERR;
+}
 
 int insertarTablaSimbolosClases(TSC* grafo,
                                 char* id_clase,
@@ -147,7 +163,34 @@ int insertarTablaSimbolosClases(TSC* grafo,
                         num_acumulado_metodos_sobreescritura, tipo_args);
 }
 
-int aplicarAccesos(TSC* t, char* nombre_clase_ambito_actual, char* clase_declaro, InfoSimbolo* pelem);
+//USANDO PSEUDOCODIGO DIAPOS
+int aplicarAccesos(TSC* t, char* nombre_clase_ambito_actual, char* clase_declaro, InfoSimbolo* pelem){
+    //caso se está intentando acceder a un simbolo desde main (nombre_clase_ambito_actual es main)
+    if(strcmp(nombre_clase_ambito_actual, "main")==0){
+       //hay que aplicar la politica de modificadores de acceso para simbolos acceedidos desde main:
+        //hidden no es accesible, exposed y secret si 
+    }else{ // se intenta acceder desde una clase
+        //si el cualificador es hidden
+        if(pelem->tipo_acceso == ACCESO_HIDDEN){
+            //si nombre_clase_ambito_actual != clase_declaró se retorna ERR, se impide el acceso
+            if(nombre_clase_ambito_actual != clase_declaro){
+                return ERR;
+            }
+        //si el cualificador es SECRET, se accede a la info de los padres de la clase desde donde se busca
+        //(nombre_clase_ambito_actual), llamemos a esa info los_padres_clase_ambito_actual
+        }else if(pelem->tipo_acceso == ACCESO_SECRET){
+            los_padres_clase_ambito_actual = 
+            //si clase_declaro esta en los_padres_clase_ambito_actual retornar ERR
+            //en otro caso retornar OK
+        //si el cualificador es EXPOSED o ninguno, se retorna OK
+        }else{
+            return OK;
+        }
+    }
+}
+
+
+
 int buscarIdEnJerarquiaDesdeClase(TSC* t,
                                   char* nombre_id,
                                   char* nombre_clase_desde,

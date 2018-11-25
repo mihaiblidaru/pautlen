@@ -154,4 +154,9 @@ void crearRepresentacionTSC(TSC* g, char* path);
 
 void imprimeTSAdeClase(FILE* out, TSC* g, char* id_clase);
 
+int recGetListaPadresCompleta(NodoGrafo* nodo, Lista* padres);
+
+Lista* getListaPadresCompleta(TSC* g, char* nombre_clase);
+
+
 #endif

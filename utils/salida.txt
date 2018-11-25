@@ -35,7 +35,6 @@ AA_sa1 ATRIBUTO CLASE CLASE: ESCALAR TIPO: ENTERO DIR: 0 ACCESO: 1 MIEMBRO: 1
 ****************Posicion 144 ******************
 AA_AA CLASE ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
 
-
 ****************Posicion 160 ******************
 AA_a1 ATRIBUTO INSTANCIA POS ATR. INSTANCIA 0 Y ACUMULADA 0 CLASE: ESCALAR TIPO: ENTERO DIR: 0 ACCESO: 3 MIEMBRO: 2 
 buscar declarar_miembro_clase A A_a2: No encontrado: se puede declarar

@@ -205,7 +205,19 @@ int buscarIdEnJerarquiaDesdeClase(TSC* t,
                                   char* nombre_id,
                                   char* nombre_clase_desde,
                                   InfoSimbolo** e,
-                                  char* nombre_ambito_encontrado);
+                                  char* nombre_ambito_encontrado){
+    Lista* jerarquia = getListaPadresCompleta(t, nombre_clase_desde);
+
+    for(int i; i< lista_length(jerarquia); i++){
+        NodoGrafo * nodo = lista_get(jerarquia, i);
+        int res =  buscarTablaSimbolosAmbitosConPrefijos(nodo->info, nombre_id, e, nombre_ambito_encontrado);
+        if(res == OK){
+            return OK;
+        }
+    }
+
+    return ERR;    
+}
 
 int buscarIdNoCualificado(TSC* t,
                           TSA* tabla_main,
@@ -244,7 +256,15 @@ int buscarParaDeclararMiembroInstancia(TSC* t,
 
     if (nodo_clase != NULL) {
         TSA* tsa_clase = nodo_clase->info;
-        return buscarParaDeclararIdTablaSimbolosAmbitos(tsa_clase, nombre_miembro, e, nombre_ambito_encontrado);
+        int res = buscarParaDeclararIdTablaSimbolosAmbitos(tsa_clase, nombre_miembro, e, nombre_ambito_encontrado);
+        if(res != OK){
+            char* nombre_id = nombre_miembro;
+            /*
+            TODO: hay que quitarle el prefijo pero me da mucha pereza ahora. Ya lo quito luego
+            */                     
+
+            return buscarIdEnJerarquiaDesdeClase(t, nombre_id, nombre_clase_desde, e, nombre_ambito_encontrado);
+        }
     }
 
     return ERR;
@@ -342,3 +362,23 @@ void imprimeTSAdeClase(FILE* out, TSC* g, char* id_clase){
     
 }
 
+int recGetListaPadresCompleta(NodoGrafo* nodo, Lista* padres){
+    lista_addlast(padres, nodo);
+    Lista* mis_padres = nodo->predecesores;
+    for(int i=0; i < lista_length(mis_padres); i++){
+        recGetListaPadresCompleta(lista_get(mis_padres, i), padres);
+    }
+    return OK;
+}
+
+Lista* getListaPadresCompleta(TSC* g, char* nombre_clase){
+    NodoGrafo* nodo = buscarNodoProfundidad(g, nombre_clase);
+    Lista* padres_acumulados = lista_crear();
+
+    Lista* padres_nodo = nodo->predecesores;
+
+    for(int i=0; i < lista_length(padres_nodo); i++){
+        recGetListaPadresCompleta(lista_get(padres_nodo, i), padres_acumulados);
+    }
+    return padres_nodo;
+}

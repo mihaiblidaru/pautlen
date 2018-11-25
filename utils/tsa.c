@@ -62,7 +62,7 @@ TSA* TSA_abrirAmbitoLocal(TSA* ts, const char* id_ambito, int categoria_ambito, 
     info_ambito->tipo_acceso = acceso_metodo;
     info_ambito->tipo = tipo_metodo;
     info_ambito->posicion_metodo_sobreescribible = posicion_metodo_sobre;
-    info_ambito->tamanio = tamanio: 
+    info_ambito->tamanio = tamanio;
 
     hash_insertar(ts->global, nombre_simbolo_info_ambito, info_ambito);
 

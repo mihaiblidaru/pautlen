@@ -165,15 +165,25 @@ int insertarTablaSimbolosClases(TSC* grafo,
 
 //USANDO PSEUDOCODIGO DIAPOS
 int aplicarAccesos(TSC* t, char* nombre_clase_ambito_actual, char* clase_declaro, InfoSimbolo* pelem){
+    
+    char* los_padres_clase_ambito_actual = NULL;
+    
+    
     //caso se está intentando acceder a un simbolo desde main (nombre_clase_ambito_actual es main)
     if(strcmp(nombre_clase_ambito_actual, "main")==0){
        //hay que aplicar la politica de modificadores de acceso para simbolos acceedidos desde main:
         //hidden no es accesible, exposed y secret si 
-    }else{ // se intenta acceder desde una clase
+        if(pelem->tipo_acceso == ACCESO_HIDDEN){
+            return ERR;
+        }else{
+            return OK;
+        }
+    // se intenta acceder desde una clase
+    }else{ 
         //si el cualificador es hidden
         if(pelem->tipo_acceso == ACCESO_HIDDEN){
             //si nombre_clase_ambito_actual != clase_declaró se retorna ERR, se impide el acceso
-            if(nombre_clase_ambito_actual != clase_declaro){
+            if(strcmp(nombre_clase_ambito_actual,clase_declaro)!=0){
                 return ERR;
             }
         //si el cualificador es SECRET, se accede a la info de los padres de la clase desde donde se busca

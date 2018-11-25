@@ -70,7 +70,7 @@ TSA* TSA_abrirAmbitoLocal(TSA* ts, const char* id_ambito, int categoria_ambito, 
 
 }
 
-TSA* TSA_cerrarAmbitoLocal(TSA* ts){
+int TSA_cerrarAmbitoLocal(TSA* ts){
     int ret = 0;
     ret = hash_eliminar(ts->local);
     ts->local = NULL;
@@ -172,6 +172,7 @@ int TSA_insertarSimbolo(TSA* ts,
             return OK;
         }
     }
+    return ERR;
 }
 
 int abrirAmbitoPpalMain(TSA* t) {
@@ -181,10 +182,10 @@ int abrirAmbitoPpalMain(TSA* t) {
     return ERR;
 }
 
-
+//EN FUNCION abrirAmbitoMain habra q incluir los parametros que tiene que recibir abrirAmbitoLocal
 int abrirAmbitoMain(TSA* t, char* id_ambito, int categoria_ambito, int tipo_ambito, int tamanio) {
-    
-    if(TSA_abrirAmbitoLocal(t, id_ambito) != NULL){
+
+    if(TSA_abrirAmbitoLocal(t, id_ambito, categoria_ambito, acceso_metodo, tipo_metodo, posicion_metodo_sobre, tamanio) != NULL){
         return OK;
     }
     return ERR;

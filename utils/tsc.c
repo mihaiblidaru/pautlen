@@ -166,8 +166,8 @@ int insertarTablaSimbolosClases(TSC* grafo,
 //USANDO PSEUDOCODIGO DIAPOS
 int aplicarAccesos(TSC* t, char* nombre_clase_ambito_actual, char* clase_declaro, InfoSimbolo* pelem){
     
-    char* los_padres_clase_ambito_actual = NULL;
-    
+    Lista* los_padres_clase_ambito_actual = NULL;
+    int i=0;
     
     //caso se está intentando acceder a un simbolo desde main (nombre_clase_ambito_actual es main)
     if(strcmp(nombre_clase_ambito_actual, "main")==0){
@@ -189,17 +189,24 @@ int aplicarAccesos(TSC* t, char* nombre_clase_ambito_actual, char* clase_declaro
         //si el cualificador es SECRET, se accede a la info de los padres de la clase desde donde se busca
         //(nombre_clase_ambito_actual), llamemos a esa info los_padres_clase_ambito_actual
         }else if(pelem->tipo_acceso == ACCESO_SECRET){
-            los_padres_clase_ambito_actual = 
+            los_padres_clase_ambito_actual = getListaPadresCompleta(t, nombre_clase_ambito_actual);
             //si clase_declaro esta en los_padres_clase_ambito_actual retornar ERR
+ 
+            for(i=0;i<lista_length(los_padres_clase_ambito_actual);i++){
+                NodoGrafo* nodo = lista_get(los_padres_clase_ambito_actual, i);
+                if(strcmp(nodo->nombre, clase_declaro)==0){
+                    return ERR;
+                }
+            }
             //en otro caso retornar OK
+            return OK;
         //si el cualificador es EXPOSED o ninguno, se retorna OK
         }else{
             return OK;
         }
     }
+    return ERR;
 }
-
-
 
 int buscarIdEnJerarquiaDesdeClase(TSC* t,
                                   char* nombre_id,
@@ -215,7 +222,6 @@ int buscarIdEnJerarquiaDesdeClase(TSC* t,
             return OK;
         }
     }
-
     return ERR;    
 }
 
@@ -275,6 +281,7 @@ int buscarParaDeclararIdLocalEnMetodo(TSC* t,
                                       char* nombre_id,
                                       InfoSimbolo** e,
                                       char* nombre_ambito_encontrado);
+
 
 // Busqueda en Profundidad de un nodo en el grafo identificado por su nombre (Si queréis podéis buscar en profundidad).
 // Devuelve el nodo en caso de que se encuentre y NULL en caso de que no.

@@ -27,6 +27,7 @@ int TSA_eliminar(TSA* ts);
 TSA* TSA_cambiaAmbito(TSA* ts);
 void TSA_imprimir(FILE* out, TSA* ts, char* ambito);
 TSA* TSA_abrirAmbitoGlobal(TSA* ts, const char* id_ambito_global);
+int TSA_cerrarAmbitoLocal(TSA* ts);
 TSA* TSA_abrirAmbitoLocal(TSA* ts, const char* id_ambito, int categoria_ambito, int acceso_metodo, int tipo_metodo, int posicion_metodo_sobre, int tamanio);
 int TSA_insertarSimbolo(TSA* ts,
                         char* clave,

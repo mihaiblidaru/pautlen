@@ -155,7 +155,9 @@ bool hash_contiene(TablaHash* tabla, const char *clave){
 int hash_as_list(TablaHash* tabla, Lista** elementos, Lista** posiciones){
 	if(tabla){
 		*elementos = lista_crear();
-		*posiciones = lista_crear();
+		if(posiciones != NULL){
+			*posiciones = lista_crear();
+		}
 		
 		for(int i = 0; i < tabla->tam; i++){
 			if(tabla->nodo[i]){

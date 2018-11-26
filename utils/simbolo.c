@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 char* categoria_to_str[] = {
-    "VARIABLE",       "PARAMETRO",         "FUNCION", "CLASE", "METODO_SOBREESCRIBIBLE", "METODO_NO_SOBREESCRIBIBLE",
+    "VARIABLE",       "PARAMETRO",         "FUNCION", "CLASE", "METODO SOBREESCRIBIBLE", "METODO_NO_SOBREESCRIBIBLE",
     "ATRIBUTO CLASE", "ATRIBUTO INSTANCIA"};
 char* clase_to_str[] = {"ESCALAR", "PUNTERO", "VECTOR", "CONJUNTO", "OBJETO"};
 char* tipo_to_str[] = {"ENTERO", "FLOAT", "BOOLEAN"};

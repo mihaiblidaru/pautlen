@@ -72,7 +72,7 @@ int abrirClase(TSC* t, char* id_clase, Lista* lista_padres) {
     for (i = 0; i < lista_length(t->nodos); i++) {
         nodoAux = lista_get(t->nodos, i);
         for (j = 0; j < lista_length(lista_padres); j++) {
-            if (strcmp(nodoAux->nombre, lista_get(lista_padres, i)) == 0) {
+            if (strcmp(nodoAux->nombre, lista_get(lista_padres, j)) == 0) {
                 lista_addlast(nodoActual->predecesores, nodoAux);
                 lista_addlast(nodoAux->descendientes, nodoActual);
                 break;
@@ -81,21 +81,50 @@ int abrirClase(TSC* t, char* id_clase, Lista* lista_padres) {
     }
     return OK;
 }
-
+// contar num de metodos locales, num instancia...
 int cerrarClase(TSC* t,
                 char* id_clase,
                 int num_atributos_clase,
                 int num_atributos_instancia,
                 int num_metodos_sobreescribibles,
                 int num_metodos_no_sobreescribibles) {
-    return ERR;
+
+    Lista* elems = NULL;
+    char nombre[50];
+    sprintf(nombre, "%s_%s", id_clase, id_clase);
+
+    NodoGrafo* nodo = buscarNodoProfundidad(t, id_clase);
+    TSA* tsa = nodo->info;
+    hash_as_list(tsa->global, &elems, NULL);
+    InfoSimbolo* aux = NULL;
+    for(int i=0; i<lista_length(elems);i++){
+        InfoSimbolo* simbolo = lista_get(elems, i);
+        if(simbolo->categoria == ATRIBUTO_CLASE){
+            num_atributos_clase++;
+        }else if(simbolo->categoria == ATRIBUTO_INSTANCIA){
+            num_atributos_instancia++;
+        }else if(simbolo->categoria == METODO_SOBREESCRIBIBLE){
+            num_metodos_sobreescribibles++;
+        }else if(simbolo->categoria == METODO_NO_SOBREESCRIBIBLE){
+            num_metodos_no_sobreescribibles++;
+        }
+        if(strcmp(nombre, simbolo->clave)==0){
+            aux = simbolo;
+        }
+    }
+    aux->num_acumulado_atributos_instancia = num_atributos_instancia;
+    aux->num_acumulado_metodos_sobreescritura = num_metodos_sobreescribibles;
+    aux->numero_metodos_no_sobreescribibles = num_metodos_no_sobreescribibles;
+    aux->numero_atributos_clase = num_atributos_clase;
+
+    return OK;
 }
 
 /***********************************************************************
  *                    Aqui ya empieza la diversion                     *
  ***********************************************************************/
 
-//ir a una clase y dentro del tsa de la clase abrir un ambito local
+// ir a una clase y dentro del tsa de la clase abrir un ambito local
 int tablaSimbolosClasesAbrirAmbitoEnClase(TSC* grafo,
                                           char* id_clase,
                                           char* id_ambito,
@@ -104,21 +133,22 @@ int tablaSimbolosClasesAbrirAmbitoEnClase(TSC* grafo,
                                           int tipo_metodo,
                                           int posicion_metodo_sobre,
                                           int tamanio) {
-    NodoGrafo* clase = NULL;                                        
+    NodoGrafo* clase = NULL;
     clase = buscarNodoProfundidad(grafo, id_clase);
-    if(clase != NULL){
-        clase->info = TSA_abrirAmbitoLocal(clase->info, id_ambito, categoria_ambito, acceso_metodo, tipo_metodo, posicion_metodo_sobre, tamanio);
-        return OK; 
+    if (clase != NULL) {
+        clase->info = TSA_abrirAmbitoLocal(clase->info, id_ambito, categoria_ambito, acceso_metodo, tipo_metodo,
+                                           posicion_metodo_sobre, tamanio);
+        return OK;
     }
 
     return ERR;
 }
 
-//cierra el ambito local abierto ed una clase, idem, una funcion
-int tablaSimbolosClasesCerrarAmbitoEnClase(TSC* grafo, char* id_clase){
+// cierra el ambito local abierto ed una clase, idem, una funcion
+int tablaSimbolosClasesCerrarAmbitoEnClase(TSC* grafo, char* id_clase) {
     NodoGrafo* clase = NULL;
     clase = buscarNodoProfundidad(grafo, id_clase);
-    if(clase != NULL){
+    if (clase != NULL) {
         return TSA_cerrarAmbitoLocal(clase->info);
     }
     return ERR;
@@ -156,52 +186,51 @@ int insertarTablaSimbolosClases(TSC* grafo,
     TSA* tsa_clase = nodo->info;
 
     return TSA_insertarSimbolo(tsa_clase, clave, categoria, tipo, clase, direcciones, numero_parametros,
-                        numero_variables_locales, posicion_variable_local, posicion_parametro, dimension, tamanio,
-                        filas, columnas, capacidad, numero_atributos_clase, numero_atributos_instancia,
-                        numero_metodos_sobreescribibles, numero_metodos_no_sobreescribibles, tipo_acceso, tipo_miembro,
-                        posicion_atributo_instancia, posicion_metodo_sobreescribible, num_acumulado_atributos_instancia,
-                        num_acumulado_metodos_sobreescritura, tipo_args);
+                               numero_variables_locales, posicion_variable_local, posicion_parametro, dimension,
+                               tamanio, filas, columnas, capacidad, numero_atributos_clase, numero_atributos_instancia,
+                               numero_metodos_sobreescribibles, numero_metodos_no_sobreescribibles, tipo_acceso,
+                               tipo_miembro, posicion_atributo_instancia, posicion_metodo_sobreescribible,
+                               num_acumulado_atributos_instancia, num_acumulado_metodos_sobreescritura, tipo_args);
 }
 
-//USANDO PSEUDOCODIGO DIAPOS
-int aplicarAccesos(TSC* t, char* nombre_clase_ambito_actual, char* clase_declaro, InfoSimbolo* pelem){
-    
+// USANDO PSEUDOCODIGO DIAPOS
+int aplicarAccesos(TSC* t, char* nombre_clase_ambito_actual, char* clase_declaro, InfoSimbolo* pelem) {
     Lista* los_padres_clase_ambito_actual = NULL;
-    int i=0;
-    
-    //caso se está intentando acceder a un simbolo desde main (nombre_clase_ambito_actual es main)
-    if(strcmp(nombre_clase_ambito_actual, "main")==0){
-       //hay que aplicar la politica de modificadores de acceso para simbolos acceedidos desde main:
-        //hidden no es accesible, exposed y secret si 
-        if(pelem->tipo_acceso == ACCESO_HIDDEN){
+    int i = 0;
+
+    // caso se está intentando acceder a un simbolo desde main (nombre_clase_ambito_actual es main)
+    if (strcmp(nombre_clase_ambito_actual, "main") == 0) {
+        // hay que aplicar la politica de modificadores de acceso para simbolos acceedidos desde main:
+        // hidden no es accesible, exposed y secret si
+        if (pelem->tipo_acceso == ACCESO_HIDDEN) {
             return ERR;
-        }else{
+        } else {
             return OK;
         }
-    // se intenta acceder desde una clase
-    }else{ 
-        //si el cualificador es hidden
-        if(pelem->tipo_acceso == ACCESO_HIDDEN){
-            //si nombre_clase_ambito_actual != clase_declaró se retorna ERR, se impide el acceso
-            if(strcmp(nombre_clase_ambito_actual,clase_declaro)!=0){
+        // se intenta acceder desde una clase
+    } else {
+        // si el cualificador es hidden
+        if (pelem->tipo_acceso == ACCESO_HIDDEN) {
+            // si nombre_clase_ambito_actual != clase_declaró se retorna ERR, se impide el acceso
+            if (strcmp(nombre_clase_ambito_actual, clase_declaro) != 0) {
                 return ERR;
             }
-        //si el cualificador es SECRET, se accede a la info de los padres de la clase desde donde se busca
-        //(nombre_clase_ambito_actual), llamemos a esa info los_padres_clase_ambito_actual
-        }else if(pelem->tipo_acceso == ACCESO_SECRET){
+            // si el cualificador es SECRET, se accede a la info de los padres de la clase desde donde se busca
+            //(nombre_clase_ambito_actual), llamemos a esa info los_padres_clase_ambito_actual
+        } else if (pelem->tipo_acceso == ACCESO_SECRET) {
             los_padres_clase_ambito_actual = getListaPadresCompleta(t, nombre_clase_ambito_actual);
-            //si clase_declaro esta en los_padres_clase_ambito_actual retornar ERR
- 
-            for(i=0;i<lista_length(los_padres_clase_ambito_actual);i++){
+            // si clase_declaro esta en los_padres_clase_ambito_actual retornar ERR
+
+            for (i = 0; i < lista_length(los_padres_clase_ambito_actual); i++) {
                 NodoGrafo* nodo = lista_get(los_padres_clase_ambito_actual, i);
-                if(strcmp(nodo->nombre, clase_declaro)==0){
+                if (strcmp(nodo->nombre, clase_declaro) == 0) {
                     return ERR;
                 }
             }
-            //en otro caso retornar OK
+            // en otro caso retornar OK
             return OK;
-        //si el cualificador es EXPOSED o ninguno, se retorna OK
-        }else{
+            // si el cualificador es EXPOSED o ninguno, se retorna OK
+        } else {
             return OK;
         }
     }
@@ -212,25 +241,47 @@ int buscarIdEnJerarquiaDesdeClase(TSC* t,
                                   char* nombre_id,
                                   char* nombre_clase_desde,
                                   InfoSimbolo** e,
-                                  char* nombre_ambito_encontrado){
-    Lista* jerarquia = getListaPadresCompleta(t, nombre_clase_desde);
+                                  char* nombre_ambito_encontrado) {
+    NodoGrafo* nodo = buscarNodoProfundidad(t, nombre_clase_desde);
+    if (buscarTablaSimbolosAmbitosConPrefijos(nodo->info, nombre_id, e, nombre_ambito_encontrado) == OK) {
+        return OK;
+    } else {
+        Lista* jerarquia = getListaPadresCompleta(t, nombre_clase_desde);
 
-    for(int i; i< lista_length(jerarquia); i++){
-        NodoGrafo * nodo = lista_get(jerarquia, i);
-        int res =  buscarTablaSimbolosAmbitosConPrefijos(nodo->info, nombre_id, e, nombre_ambito_encontrado);
-        if(res == OK){
-            return OK;
+        for (int i = 0; i < lista_length(jerarquia); i++) {
+            NodoGrafo* nodo = lista_get(jerarquia, i);
+            int res = buscarTablaSimbolosAmbitosConPrefijos(nodo->info, nombre_id, e, nombre_ambito_encontrado);
+            if (res == OK) {
+                return OK;
+            }
         }
+        return ERR;
     }
-    return ERR;    
 }
 
+// dado un id sin prefijo, devolver donde se ha encontrado partiendo de una clase
 int buscarIdNoCualificado(TSC* t,
                           TSA* tabla_main,
                           char* nombre_id,
                           char* nombre_clase_desde,
                           InfoSimbolo** e,
-                          char* nombre_ambito_encontrado);
+                          char* nombre_ambito_encontrado) {
+    if (strcmp(nombre_clase_desde, "main") == 0) {
+        if (buscarTablaSimbolosAmbitosConPrefijos(tabla_main, nombre_id, e, nombre_ambito_encontrado) == OK) {
+            return aplicarAccesos(t, nombre_clase_desde, nombre_ambito_encontrado, *e);
+        }
+        return ERR;
+    } else {
+        if (buscarIdEnJerarquiaDesdeClase(t, nombre_id, nombre_clase_desde, e, nombre_ambito_encontrado) == OK) {
+            return OK;
+        } else {
+            if (buscarTablaSimbolosAmbitosConPrefijos(tabla_main, nombre_id, e, nombre_ambito_encontrado) == OK) {
+                return aplicarAccesos(t, nombre_clase_desde, nombre_ambito_encontrado, *e);
+            }
+            return ERR;
+        }
+    }
+}
 
 int buscarIdIDCualificadoClase(TSC* t,
                                char* nombre_clase_cualifica,
@@ -251,19 +302,19 @@ int buscarParaDeclararMiembroClase(TSC* t,
                                    char* nombre_clase_desde,
                                    char* nombre_miembro,
                                    InfoSimbolo** e,
-                                   char* nombre_ambito_encontrado){
+                                   char* nombre_ambito_encontrado) {
     NodoGrafo* nodo_clase = buscarNodoProfundidad(t, nombre_clase_desde);
 
     if (nodo_clase != NULL) {
         TSA* tsa_clase = nodo_clase->info;
         int res = buscarParaDeclararIdTablaSimbolosAmbitos(tsa_clase, nombre_miembro, e, nombre_ambito_encontrado);
-        if(res != OK){
+        if (res != OK) {
             char* nombre_id = nombre_miembro;
             /*
             TODO: hay que quitarle el prefijo pero me da mucha pereza ahora. Ya lo quito luego
-            */                     
+            */
 
-            //return buscarIdEnJerarquiaDesdeClase(t, nombre_id, nombre_clase_desde, e, nombre_ambito_encontrado);
+            // return buscarIdEnJerarquiaDesdeClase(t, nombre_id, nombre_clase_desde, e, nombre_ambito_encontrado);
         }
     }
 
@@ -280,13 +331,13 @@ int buscarParaDeclararMiembroInstancia(TSC* t,
     if (nodo_clase != NULL) {
         TSA* tsa_clase = nodo_clase->info;
         int res = buscarParaDeclararIdTablaSimbolosAmbitos(tsa_clase, nombre_miembro, e, nombre_ambito_encontrado);
-        if(res != OK){
+        if (res != OK) {
             char* nombre_id = nombre_miembro;
             /*
             TODO: hay que quitarle el prefijo pero me da mucha pereza ahora. Ya lo quito luego
-            */                     
+            */
 
-            //return buscarIdEnJerarquiaDesdeClase(t, nombre_id, nombre_clase_desde, e, nombre_ambito_encontrado);
+            // return buscarIdEnJerarquiaDesdeClase(t, nombre_id, nombre_clase_desde, e, nombre_ambito_encontrado);
         }
     }
 
@@ -297,14 +348,12 @@ int buscarParaDeclararIdLocalEnMetodo(TSC* t,
                                       char* nombre_clase,
                                       char* nombre_id,
                                       InfoSimbolo** e,
-                                      char* nombre_ambito_encontrado){
-
+                                      char* nombre_ambito_encontrado) {
     NodoGrafo* nodo = buscarNodoProfundidad(t, nombre_clase);
 
     TSA* tsa_clase = nodo->info;
-    return buscarParaDeclararIdTablaSimbolosAmbitos(tsa_clase,nombre_id, e, nombre_ambito_encontrado);                                          
+    return buscarParaDeclararIdTablaSimbolosAmbitos(tsa_clase, nombre_id, e, nombre_ambito_encontrado);
 }
-
 
 // Busqueda en Profundidad de un nodo en el grafo identificado por su nombre (Si queréis podéis buscar en profundidad).
 // Devuelve el nodo en caso de que se encuentre y NULL en caso de que no.
@@ -380,34 +429,31 @@ void crearRepresentacionTSC(TSC* g, char* path) {
     fprintf(fp, "}\n");
 }
 
-
-
-void imprimeTSAdeClase(FILE* out, TSC* g, char* id_clase){
+void imprimeTSAdeClase(FILE* out, TSC* g, char* id_clase) {
     NodoGrafo* nodo = buscarNodoProfundidad(g, id_clase);
-    
-    if(nodo){
+
+    if (nodo) {
         TSA* tsa_clase = nodo->info;
         TSA_imprimir(out, tsa_clase, NULL);
     }
-    
 }
 
-int recGetListaPadresCompleta(NodoGrafo* nodo, Lista* padres){
+int recGetListaPadresCompleta(NodoGrafo* nodo, Lista* padres) {
     lista_addlast(padres, nodo);
     Lista* mis_padres = nodo->predecesores;
-    for(int i=0; i < lista_length(mis_padres); i++){
+    for (int i = 0; i < lista_length(mis_padres); i++) {
         recGetListaPadresCompleta(lista_get(mis_padres, i), padres);
     }
     return OK;
 }
 
-Lista* getListaPadresCompleta(TSC* g, char* nombre_clase){
+Lista* getListaPadresCompleta(TSC* g, char* nombre_clase) {
     NodoGrafo* nodo = buscarNodoProfundidad(g, nombre_clase);
     Lista* padres_acumulados = lista_crear();
 
     Lista* padres_nodo = nodo->predecesores;
 
-    for(int i=0; i < lista_length(padres_nodo); i++){
+    for (int i = 0; i < lista_length(padres_nodo); i++) {
         recGetListaPadresCompleta(lista_get(padres_nodo, i), padres_acumulados);
     }
     return padres_nodo;

@@ -58,11 +58,15 @@ TSA* TSA_abrirAmbitoLocal(TSA* ts,
     char nombre_simbolo_info_ambito[100];
     ts->local = hash_crear(DEF_TAM);
     ts->ambito = LOCAL;
-    ts->id_ambito_local = id_ambito;
+
+    // le quito el nombre del ambito global y el underscore
+    char * nombre_sin_prefijo = id_ambito + strlen(ts->id_ambito_global) + 1;
+
+    ts->id_ambito_local = strdup(nombre_sin_prefijo);
     sprintf(nombre_simbolo_info_ambito, "%s_%s", id_ambito, id_ambito);
     InfoSimbolo* info_ambito = InfoSimbolo_crear();
 
-    info_ambito->clave = strdup(nombre_simbolo_info_ambito);
+    info_ambito->clave = strdup(id_ambito);
     info_ambito->categoria = categoria_ambito;
     info_ambito->tipo_acceso = acceso_metodo;
     info_ambito->tipo = tipo_metodo;
@@ -245,36 +249,34 @@ int buscarParaDeclararIdTablaSimbolosAmbitos(TSA* t, char* id, InfoSimbolo** e, 
 
 // esta copiada la anterior, porque no encuentro la diferencia de lo del prefijo
 int buscarTablaSimbolosAmbitosConPrefijos(TSA* t, char* id, InfoSimbolo** e, char* id_ambito) {
-    int ret_value = ERR;
     int ambito_encontrado = NO_DEFINIDO;
     InfoSimbolo* elem = NULL;
-    if (t->local != NULL) {
-        elem = hash_buscar(t->local, id, NULL);
-        if (elem) {
-            ambito_encontrado = LOCAL;
-        }
-    }
-    if (elem == NULL) {
-        elem = hash_buscar(t->global, id, NULL);
-        if (elem) {
-            ambito_encontrado = GLOBAL;
-        }
-    }
-    if (ambito_encontrado != NO_DEFINIDO) {
-        ret_value = OK;
-        if (e) {
-            *e = elem;
-        }
+    
+    if(t->local != NULL){
+        char nombre_con_prefijo[50];
+        InfoSimbolo* aux = NULL;
+        sprintf(nombre_con_prefijo, "%s_%s", t->id_ambito_local, id);
 
-        if (id_ambito) {
-            if (ambito_encontrado == LOCAL) {
-                strcpy(id_ambito, t->id_ambito_local);
-            } else {
-                strcpy(id_ambito, t->id_ambito_global);
-            }
+        aux = hash_buscar(t->local, nombre_con_prefijo, NULL);
+        if(aux != NULL){
+            strcpy(id_ambito, t->id_ambito_local);
+            *e = aux;
+            return OK;
         }
     }
-    return ret_value;
+    if(t->global != NULL){
+        char nombre_con_prefijo[50];
+        InfoSimbolo* aux = NULL;
+        sprintf(nombre_con_prefijo, "%s_%s", t->id_ambito_global, id);
+
+        aux = hash_buscar(t->global, nombre_con_prefijo, NULL);
+        if(aux != NULL){
+            strcpy(id_ambito, t->id_ambito_global);
+            *e = aux;
+            return OK;
+        }
+        return ERR;
+    }
 }
 
 void TSA_imprimir(FILE* out, TSA* ts, char* ambito) {

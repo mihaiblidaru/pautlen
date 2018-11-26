@@ -45,7 +45,7 @@ int main(int argc, char const* argv[]) {
         OJO con esta variable: limita el numero de
         lineas que lee. Solo para depuración.
     */
-    int limite_lineas = 14;
+    int limite_lineas = 30;
 
     if (argc != 2) {
         fprintf(stderr, "Número de parametros incorrecto");
@@ -107,30 +107,62 @@ int main(int argc, char const* argv[]) {
                 char nombre_ambito_encontrado[50];
                 int result = ERR;
                 result = buscarParaDeclararMiembroInstancia(tabla_clases, nombre_clase, nombre_miembro, &elem,
-                                                                nombre_ambito_encontrado);
+                                                            nombre_ambito_encontrado);
 
                 if (result == ERR) {
                     fprintf(out, "buscar declarar_miembro_instancia %s %s: No encontrado: se puede declarar\n",
-                                (char*)lista_get(words, 2), (char*)lista_get(words, 3));
+                            (char*)lista_get(words, 2), (char*)lista_get(words, 3));
                 } else {
                     fprintf(out, "buscar declarar_miembro_instancia %s: Encontrado: NO se puede declarar\n",
                             (char*)lista_get(words, 2));
                 }
-            }else if (!strcmp(lista_get(words, 1), "declarar_miembro_clase")) {
+            } else if (!strcmp(lista_get(words, 1), "declarar_miembro_clase")) {
                 char* nombre_clase = lista_get(words, 2);
                 char* nombre_miembro = lista_get(words, 3);
                 InfoSimbolo* elem = NULL;
                 char nombre_ambito_encontrado[50];
 
                 int result = buscarParaDeclararMiembroClase(tabla_clases, nombre_clase, nombre_miembro, &elem,
-                                                                nombre_ambito_encontrado);
+                                                            nombre_ambito_encontrado);
 
                 if (result == ERR) {
                     fprintf(out, "buscar declarar_miembro_clase %s %s: No encontrado: se puede declarar\n",
-                                (char*)lista_get(words, 2), (char*)lista_get(words, 3));
+                            (char*)lista_get(words, 2), (char*)lista_get(words, 3));
                 } else {
                     fprintf(out, "buscar declarar_miembro_clase %s: Encontrado: NO se puede declarar\n",
                             (char*)lista_get(words, 2));
+                }
+            } else if (!strcmp(lista_get(words, 1), "declarar_id_local_metodo")) {
+                char* nombre_clase = lista_get(words, 2);
+                char* id_simbolo = lista_get(words, 3);
+                InfoSimbolo* elem = NULL;
+                char nombre_ambito_encontrado[50];
+
+                int result = buscarParaDeclararIdLocalEnMetodo(tabla_clases, nombre_clase, id_simbolo, &elem,
+                                                               nombre_ambito_encontrado);
+
+                if (result == ERR) {
+                    fprintf(out, "buscar declarar_id_local_metodo %s %s: No encontrado: se puede declarar\n",
+                            (char*)lista_get(words, 2), (char*)lista_get(words, 3));
+                } else {
+                    fprintf(out, "buscar declarar_id_local_metodo %s: Encontrado: NO se puede declarar\n",
+                            (char*)lista_get(words, 2));
+                }
+            } else if (!strcmp(lista_get(words, 1), "id_no_cualificado")) {
+                char* id_simbolo = lista_get(words, 2);
+                char* nombre_clase = lista_get(words, 3);
+                InfoSimbolo* elem = NULL;
+                char nombre_ambito_encontrado[50];
+
+                int result = buscarIdNoCualificado(tabla_clases, tsa_main, id_simbolo, nombre_clase, &elem,
+                                                   nombre_ambito_encontrado);
+
+                if (result == ERR) {
+                    fprintf(out, "buscar id_no_cualificado %s %s: No encontrado\n",
+                            nombre_clase, id_simbolo);
+                } else {
+                    fprintf(out, "buscar id_no_cualificado %s %s: Encontrado en %s\n",
+                            nombre_clase, id_simbolo, nombre_ambito_encontrado);
                 }
             }
 
@@ -146,7 +178,8 @@ int main(int argc, char const* argv[]) {
             if (result == ERR) {
                 fprintf(out, "insertar_tsa_main %s: ERROR\n", (char*)lista_get(words, 1));
             } else {
-                fprintf(out, "insertar_tsa_main %s %d %d %d %d %d\n",  (char*)lista_get(words, 1), categoria, tipo, clase, acceso, tipo_miembro);
+                fprintf(out, "insertar_tsa_main %s %d %d %d %d %d\n", (char*)lista_get(words, 1), categoria, tipo,
+                        clase, acceso, tipo_miembro);
                 TSA_imprimir(stderr, tsa_main, NULL);
             }
 
@@ -167,16 +200,17 @@ int main(int argc, char const* argv[]) {
             int clase = atoi(lista_get(words, 5));
             int acceso = atoi(lista_get(words, 6));
             int tipo_miembro = atoi(lista_get(words, 7));
-            int res = insertarTablaSimbolosClases(tabla_clases, id_clase, clave, categoria, tipo, clase, 0, 0, 0, 0, 0, 0, 0, 0,
-                                        0, 0, 0, 0, 0, 0, acceso, tipo_miembro, 0, 0, 0, 0, NULL);
+            int res = insertarTablaSimbolosClases(tabla_clases, id_clase, clave, categoria, tipo, clase, 0, 0, 0, 0, 0,
+                                                  0, 0, 0, 0, 0, 0, 0, 0, 0, acceso, tipo_miembro, 0, 0, 0, 0, NULL);
 
-            if(res == OK){
-                fprintf(out, "insertar_tsc %s %s %d %d %d %d %d\n", id_clase, clave, categoria, tipo, clase, acceso, tipo_miembro);
+            if (res == OK) {
+                fprintf(out, "insertar_tsc %s %s %d %d %d %d %d\n", id_clase, clave, categoria, tipo, clase, acceso,
+                        tipo_miembro);
                 imprimeTSAdeClase(stderr, tabla_clases, id_clase);
-            }else{
+            } else {
                 fprintf(out, "insertar_tsc %s %s: ERROR\n", id_clase, clave);
             }
-            
+
         } else if (!strcmp(lista_get(words, 0), "abrir_ambito_tsc")) {
             char* id_clase = lista_get(words, 1);
             char* id_ambito = lista_get(words, 2);
@@ -185,20 +219,36 @@ int main(int argc, char const* argv[]) {
             int acceso = atoi(lista_get(words, 5));
             int tipo_miembro = atoi(lista_get(words, 6));
 
-            int result = tablaSimbolosClasesAbrirAmbitoEnClase(tabla_clases, id_clase, id_ambito, categoria,acceso, tipo, 0, DEF_TAM);
-            
-             if (result == ERR) {
+            int result = tablaSimbolosClasesAbrirAmbitoEnClase(tabla_clases, id_clase, id_ambito, categoria, acceso,
+                                                               tipo, 0, DEF_TAM);
+
+            if (result == ERR) {
                 fprintf(out, "abrir_ambito_tsc: ERROR\n");
             } else {
-                fprintf(out, "abrir_ambito_tsc %s %s %d %d %d %d\n", id_clase, id_ambito, categoria, tipo, acceso, tipo_miembro);
+                fprintf(out, "abrir_ambito_tsc %s %s %d %d %d %d\n", id_clase, id_ambito, categoria, tipo, acceso,
+                        tipo_miembro);
                 imprimeTSAdeClase(out, tabla_clases, id_clase);
             }
-            
-        
-
 
         } else if (!strcmp(lista_get(words, 0), "cerrar_ambito_tsc")) {
+            char* id_clase = lista_get(words, 1);
+            int result = tablaSimbolosClasesCerrarAmbitoEnClase(tabla_clases, id_clase);
+
+            if (result == ERR) {
+                fprintf(out, "cerrar_ambito_tsc: ERROR\n");
+            } else {
+                fprintf(out, "cerrar_ambito_tsc %s \n", id_clase);
+            }
         } else if (!strcmp(lista_get(words, 0), "cerrar_clase")) {
+            char* id_clase = lista_get(words, 1);
+            int result = cerrarClase(tabla_clases, id_clase, 0, 0, 0, 0);
+
+            if (result == ERR) {
+                fprintf(out, "cerrar_clase: ERROR\n");
+            } else {
+                fprintf(out, "cerrar_clase %s \n", id_clase);
+            }
+
         } else if (!strcmp(lista_get(words, 0), "abrir_clase_hereda")) {
             // aqui faltan cosas obviamente
             char* id_clase = lista_get(words, 1);
@@ -207,6 +257,15 @@ int main(int argc, char const* argv[]) {
 
             for (i = 2; i < lista_length(words); i++) {
                 lista_addstr(clases_heredadas, lista_get(words, i));
+            }
+            if(abrirClase(tabla_clases, id_clase, clases_heredadas)==OK){
+                fprintf(out, "abrir_clase_hereda %s", id_clase);
+                for(int i=0;i<lista_length(clases_heredadas);i++){
+                    fprintf(out, " %s", (char*)lista_get(clases_heredadas, i));
+                }
+                fprintf(out, "\n");
+            }else{
+                fprintf(out, "abrir_clase_hereda: ERROR\n");
             }
             lista_free(clases_heredadas, free);
 

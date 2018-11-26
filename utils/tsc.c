@@ -297,7 +297,13 @@ int buscarParaDeclararIdLocalEnMetodo(TSC* t,
                                       char* nombre_clase,
                                       char* nombre_id,
                                       InfoSimbolo** e,
-                                      char* nombre_ambito_encontrado);
+                                      char* nombre_ambito_encontrado){
+
+    NodoGrafo* nodo = buscarNodoProfundidad(t, nombre_clase);
+
+    TSA* tsa_clase = nodo->info;
+    return buscarParaDeclararIdTablaSimbolosAmbitos(tsa_clase,nombre_id, e, nombre_ambito_encontrado);                                          
+}
 
 
 // Busqueda en Profundidad de un nodo en el grafo identificado por su nombre (Si queréis podéis buscar en profundidad).

@@ -5,23 +5,64 @@ LDLIBS =
 AS = nasm
 ASFLAGS = -g -f elf32
 
-EJECUTABLES = programa1 #programa2 programa3 programa4 programa5 programa6
+EJECUTABLES = programa1 programa2 programa3 programa4 programa5 programa6
 GENERADORES = test_generacion/ej1 test_generacion/ej2 test_generacion/ej3 \
               test_generacion/ej4 test_generacion/ej5 test_generacion/ej6
 
 all: $(EJECUTABLES)
 
-programa1: test_generacion/programa1.o olib.o
+programa1: test_generacion/programa1.o ../olib.o
+	$(CC) $(LDFLAGS) $^ -o $@
+
+programa2: test_generacion/programa2.o ../olib.o
+	$(CC) $(LDFLAGS) $^ -o $@
+
+programa3: test_generacion/programa3.o ../olib.o
+	$(CC) $(LDFLAGS) $^ -o $@
+
+programa4: test_generacion/programa4.o ../olib.o
+	$(CC) $(LDFLAGS) $^ -o $@
+
+programa5: test_generacion/programa5.o ../olib.o
+	$(CC) $(LDFLAGS) $^ -o $@
+
+programa6: test_generacion/programa6.o ../olib.o
+	$(CC) $(LDFLAGS) $^ -o $@
 
 test_generacion/programa1.o: test_generacion/programa1.asm
+	$(AS) $(ASFLAGS) -o $@ $<
+
+test_generacion/programa2.o: test_generacion/programa2.asm
+	$(AS) $(ASFLAGS) -o $@ $<
+
+test_generacion/programa3.o: test_generacion/programa3.asm
+	$(AS) $(ASFLAGS) -o $@ $<
+
+test_generacion/programa4.o: test_generacion/programa4.asm
+	$(AS) $(ASFLAGS) -o $@ $<
+
+test_generacion/programa5.o: test_generacion/programa5.asm
+	$(AS) $(ASFLAGS) -o $@ $<
+test_generacion/programa6.o: test_generacion/programa6.asm
+	$(AS) $(ASFLAGS) -o $@ $<
 
 test_generacion/ej1: test_generacion/ej1.o generacion.o
+test_generacion/ej2: test_generacion/ej2.o generacion.o
+test_generacion/ej3: test_generacion/ej3.o generacion.o
+test_generacion/ej4: test_generacion/ej4.o generacion.o
+test_generacion/ej5: test_generacion/ej5.o generacion.o
+test_generacion/ej6: test_generacion/ej6.o generacion.o
 
 test_generacion/ej1.o: test_generacion/ej1.c 
+test_generacion/ej2.o: test_generacion/ej2.c 
+test_generacion/ej3.o: test_generacion/ej3.c 
+test_generacion/ej4.o: test_generacion/ej4.c 
+test_generacion/ej5.o: test_generacion/ej5.c 
+test_generacion/ej6.o: test_generacion/ej6.c 
 
 
-test_generacion/programa1.asm: test_generacion/ej1
-
+test_generacion/programa%.asm: test_generacion/ej%
+	./$< $@
 
 
 #test_generacion/programa%.o: 
@@ -45,7 +86,7 @@ test_generacion/programa1.asm: test_generacion/ej1
 
 clean:
 	ls *.o | sed -e 's/olib.o//'| xargs rm -f
-	rm -f $(GENERADORES) $(EJECUTABLES) *.asm generacion.c.gcov test_generacion/*.asm *.gcda *.gcno test_generacion/*.gcda test_generacion/*.gcno
+	rm -f $(GENERADORES) $(EJECUTABLES) test_generacion/*.o *.asm generacion.c.gcov test_generacion/*.asm *.gcda *.gcno test_generacion/*.gcda test_generacion/*.gcno
 
 
 # Mide el porcentaje de lineas ejecutadas de generación.c una vez ejecutados todos los 

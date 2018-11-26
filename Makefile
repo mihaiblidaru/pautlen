@@ -35,38 +35,38 @@ bison/y.tab.c: bison/omicron.y
 test1: compilador
 	./compilador testsCompilador/in_testS1_V1.c testsCompilador/in_testS1_V1.asm
 	nasm -g -f elf32 testsCompilador/in_testS1_V1.asm -o testsCompilador/in_testS1_V1.o
-	gcc -m32 -g testsCompilador/in_testS1_V1.o ../olib.o -o in_testS1_V1
+	gcc -m32 -g testsCompilador/in_testS1_V1.o olib.o -o in_testS1_V1
 
 
 test2: compilador
 	./compilador testsCompilador/in_testS1_V2.c testsCompilador/in_testS1_V2.asm
 	nasm -g -f elf32 testsCompilador/in_testS1_V2.asm -o testsCompilador/in_testS1_V2.o
-	gcc -m32 -g testsCompilador/in_testS1_V2.o ../olib.o -o in_testS1_V2
+	gcc -m32 -g testsCompilador/in_testS1_V2.o olib.o -o in_testS1_V2
 
 test3: compilador
 	./compilador testsCompilador/in_testS1_V3.c testsCompilador/in_testS1_V3.asm
 	nasm -g -f elf32 testsCompilador/in_testS1_V3.asm -o testsCompilador/in_testS1_V3.o
-	gcc -m32 -g testsCompilador/in_testS1_V3.o ../olib.o -o in_testS1_V3
+	gcc -m32 -g testsCompilador/in_testS1_V3.o olib.o -o in_testS1_V3
 
 test4: compilador
 	./compilador testsCompilador/in_testS1_V4.c testsCompilador/in_testS1_V4.asm
 	nasm -g -f elf32 testsCompilador/in_testS1_V4.asm -o testsCompilador/in_testS1_V4.o
-	gcc -m32 -g testsCompilador/in_testS1_V4.o ../olib.o -o in_testS1_V4
+	gcc -m32 -g testsCompilador/in_testS1_V4.o olib.o -o in_testS1_V4
 
 test5: compilador
 	./compilador testsCompilador/in_testS1_V5.c testsCompilador/in_testS1_V5.asm
 	nasm -g -f elf32 testsCompilador/in_testS1_V5.asm -o testsCompilador/in_testS1_V5.o
-	gcc -m32 -g testsCompilador/in_testS1_V5.o ../olib.o -o in_testS1_V5
+	gcc -m32 -g testsCompilador/in_testS1_V5.o olib.o -o in_testS1_V5
 
 test6: compilador
 	./compilador testsCompilador/in_testS1_V6.c testsCompilador/in_testS1_V6.asm
 	nasm -g -f elf32 testsCompilador/in_testS1_V6.asm -o testsCompilador/in_testS1_V6.o
-	gcc -m32 -g testsCompilador/in_testS1_V6.o ../olib.o -o in_testS1_V6
+	gcc -m32 -g testsCompilador/in_testS1_V6.o olib.o -o in_testS1_V6
 
 test_declaracion_funciones: compilador testsCompilador/test_declaracion_funciones.ol
 	./compilador testsCompilador/test_declaracion_funciones.ol testsCompilador/test_declaracion_funciones.asm
 	nasm -g -f elf32 testsCompilador/test_declaracion_funciones.asm -o testsCompilador/test_declaracion_funciones.o
-	gcc -m32 -g testsCompilador/test_declaracion_funciones.o ../olib.o -o test_declaracion_funciones
+	gcc -m32 -g testsCompilador/test_declaracion_funciones.o olib.o -o test_declaracion_funciones
 
 clean:
 	ls *.o | sed -e 's/olib.o//'| xargs rm -f
@@ -74,4 +74,4 @@ clean:
 	rm -f generacion/*.o
 	rm -f bison/*.o flex/*.o flex/lex.yy.c bison/y.*
 	rm -f compilador
-	rm -f testsCompilador/*.asm in_testS1_V1 in_testS1_V2 in_testS1_V3 in_testS1_V4 in_testS1_V5 in_testS1_V6
+	rm -f testsCompilador/*.asm test_declaracion_funciones in_testS1_V1 in_testS1_V2 in_testS1_V3 in_testS1_V4 in_testS1_V5 in_testS1_V6

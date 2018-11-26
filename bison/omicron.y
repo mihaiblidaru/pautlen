@@ -20,11 +20,14 @@
   int globalTamanio = -1;
   TSA* tsaMain = NULL;
 
+/* Variables para la llamada a funciones */
+  int num_parametros_detectados = 0;
+  int tipos_parametros_actuales[50] = {0}; //dudo que tengamos alguna vez más de 50 parametros
+  
+
 
   char nombre_ambito_insertar[200] = "main";
-
   char nombre_simbolo_ts[200];
-
   InfoSimbolo* elem = NULL;
   char nombre_ambito_encontrado[1000];
 
@@ -394,7 +397,7 @@ fn_complete_name:
       TSA_insertarSimbolo(tsaMain, nombre_parametro_ts, PARAMETRO, *((int*)lista_get(atributos.lista_tipos, i)),
                           ESCALAR, 0, 0, 0, 0, i, 0, 0,
                                        0, 0, 0, 0, 0, 0, 0, ACCESO_EXPOSED, MIEMBRO_NO_UNICO, 0, 0, 0, 0, NULL);
-      printf("%s \n", nombre_parametro_ts);
+      //printf("%s \n", nombre_parametro_ts);
     }
 
 
@@ -825,9 +828,17 @@ exp:
 | id_llamada_funcion '(' lista_expresiones ')'
     { fprintf(pf, ";R:\texp: id_llamada_funcion '(' lista_expresiones ')'\n");
 
+    sprintf(nombre_funcion_aux,"%s", $1.lexema);
+   
+    
+    for(int i=num_parametros_detectados-1; i >= 0 ; i--){
+      sprintf(nombre_funcion_aux, "%s@%d", nombre_funcion_aux, tipos_parametros_actuales[i]);
+      printf(" %d", tipos_parametros_actuales[i]);
+    }
+     printf("numero de parametros: %s %d", nombre_funcion_aux, num_parametros_detectados);
 
-      if(buscarIdNoCualificado(NULL, tsaMain, $1.lexema, "main", &elem, "sdf")){
-        fprintf(stderr, "Funcion %s no encontrado\n", $1.lexema);
+      if(buscarIdNoCualificado(NULL, tsaMain, nombre_funcion_aux, "main", &elem, nombre_ambito_encontrado)){
+        fprintf(stderr, "Funcion %s no encontrada\n", $1.lexema);
         exit(-1);
       }
 
@@ -843,6 +854,7 @@ id_llamada_funcion:
   TOK_IDENTIFICADOR
   {
     fprintf(pf, ";R:\t id_llamada_funcion: TOK_IDENTIFICADOR\n");
+    num_parametros_detectados = 0;
     strcpy($$.lexema,$1.lexema);
   }
 ;
@@ -857,7 +869,11 @@ identificador_clase:
 
 lista_expresiones:
   exp resto_lista_expresiones
-    { fprintf(pf, ";R:\tlista_expresiones:\texp resto_lista_expresiones\n");}
+    { fprintf(pf, ";R:\tlista_expresiones:\texp resto_lista_expresiones\n");
+    tipos_parametros_actuales[num_parametros_detectados] = $1.tipo;
+    num_parametros_detectados++;
+
+    }
 | /* Vacio */
     { fprintf(pf, ";R:\tlista_expresiones:\t\n");}
 ;
@@ -865,7 +881,10 @@ lista_expresiones:
 
 resto_lista_expresiones:
   ',' exp resto_lista_expresiones
-    { fprintf(pf, ";R:\tresto_lista_expresiones: ',' exp resto_lista_expresiones\n");}
+    { fprintf(pf, ";R:\tresto_lista_expresiones: ',' exp resto_lista_expresiones\n");
+    tipos_parametros_actuales[num_parametros_detectados] = $2.tipo;
+    num_parametros_detectados++;
+    }
 | /* Vacio */
     { fprintf(pf, ";R:\tresto_lista_expresiones:\t\n");}
 ;

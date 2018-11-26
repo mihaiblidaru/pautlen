@@ -48,8 +48,13 @@ TSA* TSA_abrirAmbitoGlobal(TSA* ts, const char* id_ambito_global) {
     return ts;
 }
 
-
-TSA* TSA_abrirAmbitoLocal(TSA* ts, const char* id_ambito, int categoria_ambito, int acceso_metodo, int tipo_metodo, int posicion_metodo_sobre, int tamanio) {
+TSA* TSA_abrirAmbitoLocal(TSA* ts,
+                          const char* id_ambito,
+                          int categoria_ambito,
+                          int acceso_metodo,
+                          int tipo_metodo,
+                          int posicion_metodo_sobre,
+                          int tamanio) {
     char nombre_simbolo_info_ambito[100];
     ts->local = hash_crear(DEF_TAM);
     ts->ambito = LOCAL;
@@ -65,12 +70,12 @@ TSA* TSA_abrirAmbitoLocal(TSA* ts, const char* id_ambito, int categoria_ambito, 
     info_ambito->tamanio = tamanio;
 
     hash_insertar(ts->global, nombre_simbolo_info_ambito, info_ambito);
+    hash_insertar(ts->local, nombre_simbolo_info_ambito, info_ambito);
 
     return ts;
-
 }
 
-int TSA_cerrarAmbitoLocal(TSA* ts){
+int TSA_cerrarAmbitoLocal(TSA* ts) {
     int ret = 0;
     ret = hash_eliminar(ts->local);
     ts->local = NULL;
@@ -158,6 +163,7 @@ int TSA_insertarSimbolo(TSA* ts,
             if (hash_insertar(ts->global, simbolo->clave, simbolo) == ERR) {
                 return ERR;
             }
+            return OK;
         }
         // AMBITO LOCAL
     } else {
@@ -182,10 +188,16 @@ int abrirAmbitoPpalMain(TSA* t) {
     return ERR;
 }
 
-//EN FUNCION abrirAmbitoMain habra q incluir los parametros que tiene que recibir abrirAmbitoLocal
-int abrirAmbitoMain(TSA* t, char* id_ambito, int categoria_ambito, int tipo_ambito, int tamanio) {
-
-    if(TSA_abrirAmbitoLocal(t, id_ambito, categoria_ambito, acceso_metodo, tipo_metodo, posicion_metodo_sobre, tamanio) != NULL){
+// EN FUNCION abrirAmbitoMain habra q incluir los parametros que tiene que recibir abrirAmbitoLocal
+int abrirAmbitoMain(TSA* t,
+                    char* id_ambito,
+                    int categoria_ambito,
+                    int acceso_metodo,
+                    int tipo_metodo,
+                    int posicion_metodo_sobre,
+                    int tamanio) {
+    if (TSA_abrirAmbitoLocal(t, id_ambito, categoria_ambito, acceso_metodo, tipo_metodo, posicion_metodo_sobre,
+                             tamanio) != NULL) {
         return OK;
     }
     return ERR;
@@ -231,10 +243,8 @@ int buscarParaDeclararIdTablaSimbolosAmbitos(TSA* t, char* id, InfoSimbolo** e, 
     return ret_value;
 }
 
-
-//esta copiada la anterior, porque no encuentro la diferencia de lo del prefijo 
+// esta copiada la anterior, porque no encuentro la diferencia de lo del prefijo
 int buscarTablaSimbolosAmbitosConPrefijos(TSA* t, char* id, InfoSimbolo** e, char* id_ambito) {
-    
     int ret_value = ERR;
     int ambito_encontrado = NO_DEFINIDO;
     InfoSimbolo* elem = NULL;
@@ -276,6 +286,25 @@ void TSA_imprimir(FILE* out, TSA* ts, char* ambito) {
             imprimir_local = !strcmp(ambito, ts->id_ambito_local);
         }
 
+        if (imprimir_local) {
+            if (ts->local != NULL) {
+                Lista* elementos;
+                Lista* posiciones;
+                hash_as_list(ts->local, &elementos, &posiciones);
+                fprintf(out, "\n=================== %s =================\n", ts->id_ambito_local);
+
+                printf("Elementos encontrados en ambito %s: %d\n\n", ts->id_ambito_local, lista_length(elementos));
+                for (int i = 0; i < lista_length(elementos); i++) {
+                    InfoSimbolo* elem = lista_get(elementos, i);
+                    int* pos = lista_get(posiciones, i);
+                    fprintf(out, "\n**************** Posicion %d ******************\n", *pos);
+                    InfoSimbolo_imprimir(out, elem);
+                }
+                lista_free(posiciones, free);
+                fprintf(out, "\n");
+            }
+        }
+
         if (imprimir_global) {
             if (ts->global == NULL) {
                 fprintf(out, "Ambito global no inicializado, no se puede imprimir\n");
@@ -291,7 +320,6 @@ void TSA_imprimir(FILE* out, TSA* ts, char* ambito) {
                     int* pos = lista_get(posiciones, i);
                     fprintf(out, "\n**************** Posicion %d ******************\n", *pos);
                     InfoSimbolo_imprimir(out, elem);
-                
                 }
                 lista_free(posiciones, free);
                 fprintf(out, "\n");

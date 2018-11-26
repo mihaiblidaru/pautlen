@@ -8,7 +8,7 @@ buscar	declarar_miembro_instancia	AA	AA_a1
 insertar_tsc	AA	AA_a1	8	1	1	3	2		
 buscar	declarar_miembro_instancia	AA	AA_sa1
 insertar_tsc	AA	AA_sa1	7	1	1	1	1		
-buscar	declarar_miembro_clase	A	A_a2
+buscar	declarar_miembro_clase	AA	AA_a2
 insertar_tsc	AA	AA_a2	7	1	1	3	1		
 buscar	declarar_miembro_instancia	AA	AA_mA1@1
 abrir_ambito_tsc	AA	AA_mA1@1	5	3	3	2

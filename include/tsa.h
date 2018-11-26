@@ -1,25 +1,25 @@
 #ifndef TSA_H
 #define TSA_H
 
-#include "hash.h"
-#include "simbolo.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "hash.h"
+#include "simbolo.h"
 
 /**************** CONSTANTES ****************/
 #define DEF_TAM 1000
 #include "hash.h"
 #include "simbolo.h"
 
-typedef enum { GLOBAL, LOCAL, NO_DEFINIDO} Ambito;
+typedef enum { GLOBAL, LOCAL, NO_DEFINIDO } Ambito;
 
 typedef struct {
-  Ambito ambito;
-  TablaHash* global;
-  TablaHash* local;
-  char* id_ambito_local;
-  char* id_ambito_global;
+    Ambito ambito;
+    TablaHash* global;
+    TablaHash* local;
+    char* id_ambito_local;
+    char* id_ambito_global;
 } TSA;
 
 TSA* TSA_crear();
@@ -28,7 +28,13 @@ TSA* TSA_cambiaAmbito(TSA* ts);
 void TSA_imprimir(FILE* out, TSA* ts, char* ambito);
 TSA* TSA_abrirAmbitoGlobal(TSA* ts, const char* id_ambito_global);
 int TSA_cerrarAmbitoLocal(TSA* ts);
-TSA* TSA_abrirAmbitoLocal(TSA* ts, const char* id_ambito, int categoria_ambito, int acceso_metodo, int tipo_metodo, int posicion_metodo_sobre, int tamanio);
+TSA* TSA_abrirAmbitoLocal(TSA* ts,
+                          const char* id_ambito,
+                          int categoria_ambito,
+                          int acceso_metodo,
+                          int tipo_metodo,
+                          int posicion_metodo_sobre,
+                          int tamanio);
 int TSA_insertarSimbolo(TSA* ts,
                         char* clave,
                         int categoria,
@@ -57,20 +63,18 @@ int TSA_insertarSimbolo(TSA* ts,
                         int* tipo_args);
 int abrirAmbitoPpalMain(TSA* t);
 
-int abrirAmbitoMain(TSA * t, 
-                    char* id_ambito, 
+int abrirAmbitoMain(TSA* t,
+                    char* id_ambito,
                     int categoria_ambito,
-                    int tipo_ambito,
+                    int acceso_metodo,
+                    int tipo_metodo,
+                    int posicion_metodo_sobre,
                     int tamanio);
 
 int cerrarAmbitoMain(TSA* t);
 
-int buscarParaDeclararIdTablaSimbolosAmbitos(TSA* t, 
-                                    char* id, 
-                                    InfoSimbolo** e,  
-                                    char* id_ambito);
+int buscarParaDeclararIdTablaSimbolosAmbitos(TSA* t, char* id, InfoSimbolo** e, char* id_ambito);
 
 int buscarTablaSimbolosAmbitosConPrefijos(TSA* t, char* id, InfoSimbolo** e, char* id_ambito);
-
 
 #endif

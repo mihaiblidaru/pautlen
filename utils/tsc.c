@@ -251,7 +251,24 @@ int buscarParaDeclararMiembroClase(TSC* t,
                                    char* nombre_clase_desde,
                                    char* nombre_miembro,
                                    InfoSimbolo** e,
-                                   char* nombre_ambito_encontrado);
+                                   char* nombre_ambito_encontrado){
+    NodoGrafo* nodo_clase = buscarNodoProfundidad(t, nombre_clase_desde);
+
+    if (nodo_clase != NULL) {
+        TSA* tsa_clase = nodo_clase->info;
+        int res = buscarParaDeclararIdTablaSimbolosAmbitos(tsa_clase, nombre_miembro, e, nombre_ambito_encontrado);
+        if(res != OK){
+            char* nombre_id = nombre_miembro;
+            /*
+            TODO: hay que quitarle el prefijo pero me da mucha pereza ahora. Ya lo quito luego
+            */                     
+
+            //return buscarIdEnJerarquiaDesdeClase(t, nombre_id, nombre_clase_desde, e, nombre_ambito_encontrado);
+        }
+    }
+
+    return ERR;
+}
 
 int buscarParaDeclararMiembroInstancia(TSC* t,
                                        char* nombre_clase_desde,
@@ -269,7 +286,7 @@ int buscarParaDeclararMiembroInstancia(TSC* t,
             TODO: hay que quitarle el prefijo pero me da mucha pereza ahora. Ya lo quito luego
             */                     
 
-            return buscarIdEnJerarquiaDesdeClase(t, nombre_id, nombre_clase_desde, e, nombre_ambito_encontrado);
+            //return buscarIdEnJerarquiaDesdeClase(t, nombre_id, nombre_clase_desde, e, nombre_ambito_encontrado);
         }
     }
 

@@ -45,7 +45,7 @@ int main(int argc, char const* argv[]) {
         OJO con esta variable: limita el numero de
         lineas que lee. Solo para depuración.
     */
-    int limite_lineas = 12;
+    int limite_lineas = 14;
 
     if (argc != 2) {
         fprintf(stderr, "Número de parametros incorrecto");
@@ -105,15 +105,31 @@ int main(int argc, char const* argv[]) {
                 char* nombre_miembro = lista_get(words, 3);
                 InfoSimbolo* elem = NULL;
                 char nombre_ambito_encontrado[50];
-
-                int result = buscarParaDeclararMiembroInstancia(tabla_clases, nombre_clase, nombre_miembro, &elem,
+                int result = ERR;
+                result = buscarParaDeclararMiembroInstancia(tabla_clases, nombre_clase, nombre_miembro, &elem,
                                                                 nombre_ambito_encontrado);
 
                 if (result == ERR) {
                     fprintf(out, "buscar declarar_miembro_instancia %s %s: No encontrado: se puede declarar\n",
                                 (char*)lista_get(words, 2), (char*)lista_get(words, 3));
                 } else {
-                    fprintf(out, "buscar declarar_main %s: Encontrado: NO se puede declarar\n",
+                    fprintf(out, "buscar declarar_miembro_instancia %s: Encontrado: NO se puede declarar\n",
+                            (char*)lista_get(words, 2));
+                }
+            }else if (!strcmp(lista_get(words, 1), "declarar_miembro_clase")) {
+                char* nombre_clase = lista_get(words, 2);
+                char* nombre_miembro = lista_get(words, 3);
+                InfoSimbolo* elem = NULL;
+                char nombre_ambito_encontrado[50];
+
+                int result = buscarParaDeclararMiembroClase(tabla_clases, nombre_clase, nombre_miembro, &elem,
+                                                                nombre_ambito_encontrado);
+
+                if (result == ERR) {
+                    fprintf(out, "buscar declarar_miembro_clase %s %s: No encontrado: se puede declarar\n",
+                                (char*)lista_get(words, 2), (char*)lista_get(words, 3));
+                } else {
+                    fprintf(out, "buscar declarar_miembro_clase %s: Encontrado: NO se puede declarar\n",
                             (char*)lista_get(words, 2));
                 }
             }
@@ -162,6 +178,25 @@ int main(int argc, char const* argv[]) {
             }
             
         } else if (!strcmp(lista_get(words, 0), "abrir_ambito_tsc")) {
+            char* id_clase = lista_get(words, 1);
+            char* id_ambito = lista_get(words, 2);
+            int categoria = atoi(lista_get(words, 3));
+            int tipo = atoi(lista_get(words, 4));
+            int acceso = atoi(lista_get(words, 5));
+            int tipo_miembro = atoi(lista_get(words, 6));
+
+            int result = tablaSimbolosClasesAbrirAmbitoEnClase(tabla_clases, id_clase, id_ambito, categoria,acceso, tipo, 0, DEF_TAM);
+            
+             if (result == ERR) {
+                fprintf(out, "abrir_ambito_tsc: ERROR\n");
+            } else {
+                fprintf(out, "abrir_ambito_tsc %s %s %d %d %d %d\n", id_clase, id_ambito, categoria, tipo, acceso, tipo_miembro);
+                imprimeTSAdeClase(out, tabla_clases, id_clase);
+            }
+            
+        
+
+
         } else if (!strcmp(lista_get(words, 0), "cerrar_ambito_tsc")) {
         } else if (!strcmp(lista_get(words, 0), "cerrar_clase")) {
         } else if (!strcmp(lista_get(words, 0), "abrir_clase_hereda")) {

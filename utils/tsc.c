@@ -81,6 +81,7 @@ int abrirClase(TSC* t, char* id_clase, Lista* lista_padres) {
     }
     return OK;
 }
+//PREGUNTA
 // contar num de metodos locales, num instancia...
 int cerrarClase(TSC* t,
                 char* id_clase,
@@ -298,6 +299,7 @@ int buscarIdCualificadoInstancia(TSC* t,
                                  InfoSimbolo** e,
                                  char* nombre_ambito_encontrado);
 
+// PREGUNTA
 int buscarParaDeclararMiembroClase(TSC* t,
                                    char* nombre_clase_desde,
                                    char* nombre_miembro,
@@ -321,6 +323,7 @@ int buscarParaDeclararMiembroClase(TSC* t,
     return ERR;
 }
 
+//PREGUNTA
 int buscarParaDeclararMiembroInstancia(TSC* t,
                                        char* nombre_clase_desde,
                                        char* nombre_miembro,
@@ -394,13 +397,7 @@ void crearRepresentacionTSC(TSC* g, char* path) {
     FILE* fp = fopen(path, "w");
     const char* prefix = "CLASE";
     int i, j;
-
-    srand(64414);
-    /*esto es solo para probar como salen algunas cosas*/
-    char* nombres_funciones_aleatorios[] = {"test1",      "calculaSuma", "calculaResta",  "calculaMultiplicacion",
-                                            "dibujaMapa", "comer",       "hacer_la_cama", "limpiar_memoria",
-                                            "convertir",  "json2vector", "vector2json"};
-
+    
     fprintf(fp, "digraph clases { \n    rankdir=TB;\n");
     fprintf(fp, "    graph [pad=\"0.5\", nodesep=\"0.5\", ranksep=\"0.75\"];\n");
     fprintf(fp, "    edge [dir=back, arrowtail = onormal]\n");
@@ -410,8 +407,12 @@ void crearRepresentacionTSC(TSC* g, char* path) {
         NodoGrafo* nodo = lista_get(g->nodos, i);
         fprintf(fp, "    %s%s [label=\"{%s|", prefix, nodo->nombre, nodo->nombre);
         int num_funciones = rand() % 6 + 1;
-        for (int k = 0; k < num_funciones; k++) {
-            fprintf(fp, "%s\\l", nombres_funciones_aleatorios[rand() % 11]);
+        Lista* elementos_clase = NULL;
+        hash_as_list(nodo->info->global, &elementos_clase, NULL);
+
+        for (int k = 0; k < lista_length(elementos_clase); k++) {
+            InfoSimbolo* simbolo = lista_get(elementos_clase, k);
+            fprintf(fp, "%s\\l", simbolo->clave);
         }
         fprintf(fp, "}\"];\n");
     }

@@ -164,6 +164,25 @@ int main(int argc, char const* argv[]) {
                     fprintf(out, "buscar id_no_cualificado %s %s: Encontrado en %s\n",
                             nombre_clase, id_simbolo, nombre_ambito_encontrado);
                 }
+            } else if (!strcmp(lista_get(words, 1), "id_cualificado_instancia")) {
+                char* nombre_instancia_cualifica = lista_get(words, 2);
+                char* nombre_atributo_instancia = lista_get(words, 3);
+                char* nombre_clase_desde = lista_get(words, 4);
+                
+                InfoSimbolo* elem = NULL;
+                char nombre_ambito_encontrado[50];
+
+                int result = buscarIdCualificadoInstancia(t, tsa_main, nombre_instancia_cualifica, nombre_atributo_instancia, nombre_clase_desde,  nombre_ambito_encontrado);
+
+
+
+                if (result == ERR) {
+                    fprintf(out, "buscar id_cualificado_instancia %s %s %s: No encontrado\n",
+                            nombre_instancia_cualifica, nombre_atributo_instancia, nombre_clase_desde);
+                } else {
+                    fprintf(out, "buscar id_cualificado_instancia %s %s: Encontrado en %s\n",
+                            nombre_instancia_cualifica);
+                }
             }
 
         } else if (!strcmp(lista_get(words, 0), "insertar_tsa_main")) {

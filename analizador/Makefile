@@ -32,6 +32,9 @@ bison/y.tab.c: bison/omicron.y
 ../generacion/generacion.o: ../generacion/generacion.c ../generacion/generacion.h
 	$(CC) $(CFLAGS) $< -o $@
 
+../utils/tsa.o: ../utils/tsa.c ../utils/tsa.h
+	$(CC) $(CFLAGS) $< -o $@
+
 clean:
 	rm -f *.o flex/*.o bison/*.o compilador flex/lex.yy.c misalida*.txt bison/y.* ../generacion/*.o testsCompilador/out_* testsCompilador/*.o
 

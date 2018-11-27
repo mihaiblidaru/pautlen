@@ -32,7 +32,7 @@ bison/y.tab.c: bison/omicron.y
 ../generacion/generacion.o: ../generacion/generacion.c ../generacion/generacion.h
 	$(CC) $(CFLAGS) $< -o $@
 
-../utils/tsa.o: ../utils/tsa.c ../utils/tsa.h
+../utils/tsa.o: ../utils/tsa.c ../utils/tsa.h ../utils/hash.h ../utils/lista.h
 	$(CC) $(CFLAGS) $< -o $@
 
 clean:

@@ -2,7 +2,7 @@
 
 %{
   /*Delimitadores de Codigo C*/
-  #include "../omicron.h"
+  #include "../../include/omicron.h"
   extern int yylex();
   extern int nColumna;
   extern int yylineno;

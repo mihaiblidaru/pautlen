@@ -15,12 +15,13 @@
 
 #include <stdio.h>
 #include "lista.h"
+#include "tsa.h"
 
 
 /**************** DECLARACIONES DE TIPOS ****************/
 typedef struct NodoGrafo {
 	char *nombre;   //Nombre del nodo, sera su identificador.
-	void *info;     //ES UNA TSA
+	TSA *info;     //ES UNA TSA
 	Lista* predecesores;
 	Lista* descendientes;
 } NodoGrafo;

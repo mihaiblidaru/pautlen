@@ -278,6 +278,7 @@ int main(int argc, char const* argv[]) {
         // como se que es una lista de strings que han sido malloceados los libero con free
         lista_free(words, free);
     }
+    crearRepresentacionTSC(tabla_clases, "tsc.dot");
     fclose(fp);
 
     return 0;

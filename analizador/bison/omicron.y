@@ -2,13 +2,15 @@
 
 %{
   /*Delimitadores de Codigo C*/
-  #include "../omicron.h"
+  #include "../../include/omicron.h"
   extern int yylex();
   extern int nColumna;
   extern int yylineno;
   extern int yyleng;
   extern FILE *pf;
   void yyerror(const char* s);
+  int globalTipo = -1;
+  int globalClase = -1;
 %}
 
 /* PALABRAS RESERVADAS */
@@ -101,9 +103,20 @@ escritura_TS:
     { fprintf(pf, ";R:\tescritura_TS: \n");
       escribir_subseccion_data(pf);
       escribir_cabecera_bss(pf);
-      /* TODO :: For hasta que no hay elementos
-        declarar_variable(pf, nombre, tipo, es_variable=1);
-      */
+      Lista* variables = NULL;
+      hash_as_list(tsaMain->global, &variables, NULL);
+
+      for(int i=0; i < lista_length(variables); i++){
+          InfoSimbolo* simbolo = lista_get(variables, i);
+          if(simbolo->categoria == VARIABLE){
+              declarar_variable(pf, simbolo->clave, simbolo->tipo, 1);
+          }
+      }
+
+      lista_free(variables, NULL);
+
+
+        declarar_variable(pf, nombre, tipo, 1);
       escribir_segmento_codigo(pf);
     }
 ;
@@ -130,9 +143,7 @@ declaraciones:
 
 declaracion:
   modificadores_acceso clase identificadores ';'
-    { fprintf(pf, ";R:\tdeclaracion: modificadores_acceso clase identificadores ';'\n");
-      /*TSA_insertarSimbolo(tsaMain, $3.lexema, ...)*/
-      }
+    { fprintf(pf, ";R:\tdeclaracion: modificadores_acceso clase identificadores ';'\n");}
 | modificadores_acceso declaracion_clase ';'
     { fprintf(pf, ";R:\tdeclaracion: modificadores_acceso declaracion_clase ';'\n");}
 ;
@@ -161,11 +172,13 @@ modificadores_acceso:
 clase:
   clase_escalar
     { fprintf(pf, ";R:\tclase: clase_escalar\n");
-      $$.tipo = $1.tipo;}
+      globalClase = ESCALAR;}
 | clase_vector
-    { fprintf(pf, ";R:\tclase: clase_vector\n");}
+    { fprintf(pf, ";R:\tclase: clase_vector\n");
+      globalClase = VECTOR;}
 | clase_objeto
-    { fprintf(pf, ";R:\tclase: clase_objeto\n");}
+    { fprintf(pf, ";R:\tclase: clase_objeto\n");
+      globalClase = OBJETO;}
 ;
 
 declaracion_clase:
@@ -184,18 +197,17 @@ modificadores_clase:
 
 clase_escalar:
   tipo
-    { fprintf(pf, ";R:\tclase_escalar: tipo\n");
-      $$.tipo = $1.tipo;}
+    { fprintf(pf, ";R:\tclase_escalar: tipo\n");}
 ;
 
 
 tipo:
   TOK_INT
     { fprintf(pf, ";R:\ttipo: TOK_INT\n");
-      $$.tipo = ENTERO;}
+      globalTipo = ENTERO;}
 | TOK_BOOLEAN
     { fprintf(pf, ";R:\ttipo: TOK_BOOLEAN\n");
-      $$.tipo = BOOLEANO;}
+      globalTipo = BOOLEANO;}
 ;
 
 
@@ -212,12 +224,17 @@ clase_vector:
 
 
 identificadores:
-  TOK_IDENTIFICADOR
-    { fprintf(pf, ";R:\tidentificadores: TOK_IDENTIFICADOR\n");
-      strcpy($$.lexema, $1.lexema);}
-| TOK_IDENTIFICADOR ',' identificadores
-    { fprintf(pf, ";R:\tidentificadores: TOK_IDENTIFICADOR ',' identificadores\n");}
+  identificador
+    { fprintf(pf, ";R:\tidentificadores: identificador\n");}
+| identificador ',' identificadores
+    { fprintf(pf, ";R:\tidentificadores: identificador ',' identificadores\n");}
 ;
+
+identificador:
+  TOK_IDENTIFICADOR
+      { fprintf(pf, ";R:\tTOK_IDENTIFICADOR\n");
+        TSA_insertarSimbolo(tsaMain, $1.lexema, VARIABLE, globalTipo, globalClase, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, NULL);}
+  ;
 
 
 funciones:
@@ -424,7 +441,7 @@ exp:
       /* TODO :: Si no esta error, si son ids */}
 | '!' exp
     { fprintf(pf, ";R:\texp: '!' exp\n");
-      /* TODO :: ¿Seria mirar los tipos si coinciden?*/
+      /* TODO :: ¿Si esta en TS?*/
       no(pf, $2.es_direccion, /*TODO :: etiqueta ¿?*/ $$.etiqueta);
       /* TODO :: Si no esta error, si son ids */}
 | TOK_IDENTIFICADOR
@@ -481,27 +498,33 @@ comparacion:
   exp TOK_IGUAL exp
     { fprintf(pf, ";R:\tcomparacion: exp TOK_IGUAL exp\n");
       /* TODO :: Si es id ver si esta en la tabla de simbolos */
-      igual(pf, $1.es_direccion, $2.es_direccion, /*TODO :: etiqueta ¿?*/ $$.etiqueta);}
+      //igual(pf, $1.es_direccion, $3.es_direccion, /*TODO :: etiqueta ¿?*/ $$.etiqueta);
+    }
 | exp TOK_DISTINTO exp
     { fprintf(pf, ";R:\tcomparacion: exp TOK_DISTINTO exp\n");
       /* TODO :: Si es id ver si esta en la tabla de simbolos */
-      distinto(pf, $1.es_direccion, $2.es_direccion, /*TODO :: etiqueta ¿?*/ $$.etiqueta);}
+      //distinto(pf, $1.es_direccion, $3.es_direccion, /*TODO :: etiqueta ¿?*/ $$.etiqueta);
+    }
 | exp TOK_MENORIGUAL exp
     { fprintf(pf, ";R:\tcomparacion: exp TOK_MENORIGUAL exp\n");
       /* TODO :: Si es id ver si esta en la tabla de simbolos */
-      menor_igual(pf, $1.es_direccion, $2.es_direccion, /*TODO :: etiqueta ¿?*/ $$.etiqueta);}
+      //menor_igual(pf, $1.es_direccion, $3.es_direccion, /*TODO :: etiqueta ¿?*/ $$.etiqueta);
+    }
 | exp TOK_MAYORIGUAL exp
     { fprintf(pf, ";R:\tcomparacion: exp TOK_MAYORIGUAL exp\n");
       /* TODO :: Si es id ver si esta en la tabla de simbolos */
-      mayor_igual(pf, $1.es_direccion, $2.es_direccion, /*TODO :: etiqueta ¿?*/ $$.etiqueta);}
+      //mayor_igual(pf, $1.es_direccion, $3.es_direccion, /*TODO :: etiqueta ¿?*/ $$.etiqueta);
+    }
 | exp '<' exp
     { fprintf(pf, ";R:\tcomparacion:\texp '<' exp\n");
       /* TODO :: Si es id ver si esta en la tabla de simbolos */
-      menor(pf, $1.es_direccion, $2.es_direccion, /*TODO :: etiqueta ¿?*/ $$.etiqueta);}
+      //menor(pf, $1.es_direccion, $3.es_direccion, /*TODO :: etiqueta ¿?*/ $$.etiqueta);
+    }
 | exp '>' exp
     { fprintf(pf, ";R:\tcomparacion: exp '>' exp\n");
       /* TODO :: Si es id ver si esta en la tabla de simbolos */
-      mayor(pf, $1.es_direccion, $2.es_direccion, /*TODO :: etiqueta ¿?*/ $$.etiqueta);}
+      //mayor(pf, $1.es_direccion, $3.es_direccion, /*TODO :: etiqueta ¿?*/ $$.etiqueta);
+    }
 ;
 
 

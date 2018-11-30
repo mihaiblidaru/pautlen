@@ -93,5 +93,7 @@ void InfoSimbolo_eliminar(void* a);
 
 void InfoSimbolo_imprimir(FILE* out, InfoSimbolo* is);
 
+InfoSimbolo* InfoSimbolo_duplicar(InfoSimbolo* is);
+
 
 #endif

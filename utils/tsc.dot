@@ -1,9 +1,0 @@
-digraph clases { 
-    rankdir=TB;
-    graph [pad="0.5", nodesep="0.5", ranksep="0.75"];
-    edge [dir=back, arrowtail = onormal]
-    node[shape = record];
-
-    CLASEAA [label="{AA|AA_AA\l}"];
-
-}

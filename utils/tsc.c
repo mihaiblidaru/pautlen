@@ -244,11 +244,11 @@ int aplicarAccesos(TSC *t, char *nombre_clase_ambito_actual, char *clase_declaro
                 NodoGrafo *nodo = lista_get(los_padres_clase_ambito_actual, i);
                 if (strcmp(nodo->nombre, clase_declaro) == 0)
                 {
-                    //free(los_padres_clase_ambito_actual);
+                    lista_free(los_padres_clase_ambito_actual, NULL);
                     return OK;
                 }
             }
-            //free(los_padres_clase_ambito_actual);
+            lista_free(los_padres_clase_ambito_actual, NULL);
             // en otro caso retornar OK
             return ERR;
             // si el cualificador es EXPOSED o ninguno, se retorna OK
@@ -295,7 +295,7 @@ int buscarIdEnJerarquiaDesdeClase(TSC *t,
                     int res = buscarTablaSimbolosAmbitosConPrefijos(nodo->info, nombre_id, e, nombre_ambito_encontrado);
                     if (res == OK)
                     {
-                        //lista_free(jerarquia, NULL);
+                        lista_free(jerarquia, NULL);
                         return OK;
                     }
                 }
@@ -568,7 +568,7 @@ Lista *getListaPadresCompleta(TSC *g, char *nombre_clase)
     {
         recGetListaPadresCompleta(lista_get(padres_nodo, i), padres_acumulados);
     }
-    return padres_nodo;
+    return padres_acumulados;
 }
 
 void liberar_nodo(void* a){

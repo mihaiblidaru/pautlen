@@ -23,11 +23,23 @@ void InfoSimbolo_eliminar(void* a) {
     InfoSimbolo* is = (InfoSimbolo*)a;
     if (is != NULL){
         free(is->clave);
-        if(is->tipo_args != NULL)
-            free(is->tipo_args);
+        if(is->tipo_args != NULL){};
+           // free(is->tipo_args);
         free(is);
     }
 }
+
+
+InfoSimbolo* InfoSimbolo_duplicar(InfoSimbolo* is){
+    if(is != NULL){
+        InfoSimbolo* new = InfoSimbolo_crear();
+        memcpy(new, is, sizeof(InfoSimbolo));
+        new->clave = strdup(is->clave);
+        return new;
+    }
+    return NULL;
+}
+
 
 /*
  * Si os preguntais como se que campos hay que imprimir para cada categoria la verdad

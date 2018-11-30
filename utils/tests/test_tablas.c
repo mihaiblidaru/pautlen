@@ -329,7 +329,7 @@ int main(int argc, char const* argv[]) {
             }
            
         } else if (!strcmp(lista_get(words, 0), "cerrar_tsc")) {
-            crearRepresentacionTSC(tabla_clases, "tsc.dot");
+            //crearRepresentacionTSC(tabla_clases, "tsc.dot");
             int result = cerrarTablaSimbolosClases(tabla_clases);
 
             if (result == ERR) {

@@ -38,7 +38,7 @@ Lista *lista_crear(){
   Lista* l = malloc(1 * sizeof(Lista));
   l->tam_maximo = 1;
   l->tam_actual = 0;
-  l->data = malloc(l->tam_maximo * sizeof(void*));
+  l->data = calloc(l->tam_maximo, sizeof(void*));
   if(l->data == NULL){
       free(l);
       return NULL;

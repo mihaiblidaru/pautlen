@@ -219,4 +219,4 @@ buscar id_cualificado_clase AA a1 main: Encontrado en AA
 buscar id_cualificado_clase AA sa1 main: Encontrado en AA
 buscar id_no_cualificado main a: Encontrado en main
 cerrar_tsa_main
-Segmentation fault (core dumped)
+cerrar_tsc

@@ -27,6 +27,7 @@ int TSA_eliminar(TSA* ts) {
     if (ts->local != NULL && hash_eliminar(ts->local, InfoSimbolo_eliminar) == ERR) {
         return ERR;
     }
+    
     if (ts->global != NULL && hash_eliminar(ts->global, InfoSimbolo_eliminar) == ERR) {
         return ERR;
     }
@@ -36,6 +37,7 @@ int TSA_eliminar(TSA* ts) {
     if(ts->id_ambito_local != NULL) 
         free(ts->id_ambito_local);
     free(ts);
+    
     return OK;
 }
 
@@ -81,18 +83,20 @@ TSA* TSA_abrirAmbitoLocal(TSA* ts,
     info_ambito->posicion_metodo_sobreescribible = posicion_metodo_sobre;
     info_ambito->tamanio = tamanio;
 
+
     hash_insertar(ts->global, id_ambito, info_ambito);
-    hash_insertar(ts->local, id_ambito, info_ambito);
+    hash_insertar(ts->local, id_ambito, InfoSimbolo_duplicar(info_ambito));
 
     return ts;
 }
 
 int TSA_cerrarAmbitoLocal(TSA* ts) {
-    int ret = 0;
-    ret = hash_eliminar(ts->local, NULL);
+    hash_eliminar(ts->local, InfoSimbolo_eliminar);
     ts->local = NULL;
     ts->ambito = GLOBAL;
-    return ret;
+    free(ts->id_ambito_local);
+    ts->id_ambito_local = NULL;
+    return OK;
 }
 
 

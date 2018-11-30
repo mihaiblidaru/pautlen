@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -c -Wall -Wextra -Werror -g -O0
+CFLAGS = -c -Wall -Wextra -Werror -g -O0 -std=gnu11 -I../include
 LDFLAGS = -m32 -g
 LDLIBS =
 AS = nasm

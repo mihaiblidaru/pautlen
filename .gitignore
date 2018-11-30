@@ -71,3 +71,4 @@ analizador/bison/y.tab.c
 analizador/omicron
 
 analizador/misalida*.txt
+test_tablas

@@ -2,7 +2,12 @@
 
 %{
   /*Delimitadores de Codigo C*/
-  #include "../../include/omicron.h"
+  #include <stdio.h>
+  #include <omicron.h>
+  #include <simbolo.h>
+  #include <generacion.h>
+  #include <tsa.h>
+  #include <tsc.h>
   extern int yylex();
   extern int nColumna;
   extern int yylineno;
@@ -53,8 +58,6 @@
 %token <atributos> TOK_FALSE
 %token <atributos> TOK_TRUE
 
-/* ERROR */
-%token TOK_ERROR
 
 /* Esto quita los warnings */
 /* que lo he encontrado en este repositorio */

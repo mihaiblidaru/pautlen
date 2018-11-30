@@ -5,12 +5,20 @@ LDLIBS =
 AS = nasm
 ASFLAGS = -g -f elf32
 
-.PHONY: all clean
+
+OBJETOS_TABLA_SIMBOLOS = tsa.o tsc.o lista.o hash.o simbolo.o
+
+.PHONY: all clean compilar_tabla_simbolos
 
 all: compilador
 
-compilador: omicron.o bison/y.tab.o flex/lex.yy.o ../generacion/generacion.o
-	$(CC) $^ -o $@
+compilador: omicron.o bison/y.tab.o flex/lex.yy.o ../generacion/generacion.o 
+	make compilar_tabla_simbolos
+	$(CC) $^ $(OBJETOS_TABLA_SIMBOLOS) -o $@
+
+compilar_tabla_simbolos:
+	cd ../utils && $(MAKE)
+	cp ../utils/*.o ./
 
 flex/lex.yy.o: flex/lex.yy.c
 	$(CC) $(CFLAGS) $< -o $@

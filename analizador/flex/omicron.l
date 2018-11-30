@@ -1,5 +1,5 @@
 %{
-#include "../omicron.h"
+#include <omicron.h>
 #include "../bison/y.tab.h"
 int nColumna = 1;
 FILE *pf = NULL;

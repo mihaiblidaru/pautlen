@@ -16,6 +16,7 @@
   void yyerror(const char* s);
   int globalTipo = -1;
   int globalClase = -1;
+  TSA* tsaMain = NULL;
 %}
 
 /* PALABRAS RESERVADAS */
@@ -96,7 +97,6 @@ programa:
 inicioTabla:
    /* Vacio */
     { fprintf(pf, ";R:\tinicioTabla: \n");
-      TSA* tsaMain = NULL;
       tsaMain = TSA_crear();
       abrirAmbitoPpalMain(tsaMain);}
 ;
@@ -119,7 +119,7 @@ escritura_TS:
       lista_free(variables, NULL);
 
 
-        declarar_variable(pf, nombre, tipo, 1);
+      //declarar_variable(pf, nombre, tipo, 1);
       escribir_segmento_codigo(pf);
     }
 ;
@@ -207,10 +207,10 @@ clase_escalar:
 tipo:
   TOK_INT
     { fprintf(pf, ";R:\ttipo: TOK_INT\n");
-      globalTipo = ENTERO;}
+      globalTipo = INT;}
 | TOK_BOOLEAN
     { fprintf(pf, ";R:\ttipo: TOK_BOOLEAN\n");
-      globalTipo = BOOLEANO;}
+      globalTipo = BOOLEAN;}
 ;
 
 
@@ -545,11 +545,11 @@ constante_logica:
   TOK_TRUE
     { fprintf(pf, ";R:\tconstante_logica:\tTOK_TRUE\n");
       escribir_operando(pf, $1.lexema, 0);
-      $$.tipo = BOOLEANO;}
+      $$.tipo = BOOLEAN;}
 | TOK_FALSE
     { fprintf(pf, ";R:\tconstante_logica:\tTOK_FALSE\n");
       escribir_operando(pf, $1.lexema, 0);
-      $$.tipo = BOOLEANO;}
+      $$.tipo = BOOLEAN;}
 ;
 
 
@@ -557,7 +557,7 @@ constante_entera:
   TOK_CONSTANTE_ENTERA
     { fprintf(pf, ";R:\tconstante_entera:\tTOK_CONSTANTE_ENTERA\n");
       escribir_operando(pf, $1.lexema, 0);
-      $$.tipo = ENTERO;}
+      $$.tipo = INT;}
 ;
 
 %%

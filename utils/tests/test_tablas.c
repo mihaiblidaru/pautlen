@@ -329,6 +329,7 @@ int main(int argc, char const* argv[]) {
             }
            
         } else if (!strcmp(lista_get(words, 0), "cerrar_tsc")) {
+            crearRepresentacionTSC(tabla_clases, "tsc.dot");
             int result = cerrarTablaSimbolosClases(tabla_clases);
 
             if (result == ERR) {
@@ -342,7 +343,7 @@ int main(int argc, char const* argv[]) {
         // como se que es una lista de strings que han sido malloceados los libero con free
         lista_free(words, free);
     }
-    crearRepresentacionTSC(tabla_clases, "tsc.dot");
+    
     fclose(fp);
 
     return 0;

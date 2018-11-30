@@ -60,14 +60,11 @@ abrir_ambito_tsc AA AA_mA1@1 5 3 3 2
 
 =================== mA1@1 =================
 
-**************** Posicion 70 ******************
+**************** Posicion 966 ******************
 AA_mA1@1 METODO SOBREESCRIBIBLE 
 
 
 =================== AA =================
-
-**************** Posicion 70 ******************
-AA_mA1@1 METODO SOBREESCRIBIBLE 
 
 **************** Posicion 664 ******************
 AA_AA CLASE ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR 
@@ -80,23 +77,23 @@ AA_a2 ATRIBUTO CLASE CLASE: ESCALAR TIPO: ENTERO DIR: 0 ACCESO: 3 MIEMBRO: 1
 
 **************** Posicion 875 ******************
 AA_sa1 ATRIBUTO CLASE CLASE: ESCALAR TIPO: ENTERO DIR: 0 ACCESO: 1 MIEMBRO: 1 
+
+**************** Posicion 966 ******************
+AA_mA1@1 METODO SOBREESCRIBIBLE 
 
 buscar declarar_id_local_metodo AA mA1@1_pmA1: No encontrado: se puede declarar
 insertar_tsc AA mA1@1_pmA1 2 1 1 3 2
 
 =================== mA1@1 =================
 
-**************** Posicion 70 ******************
-AA_mA1@1 METODO SOBREESCRIBIBLE 
-
 **************** Posicion 139 ******************
 mA1@1_pmA1 PARAMETRO 
 
+**************** Posicion 966 ******************
+AA_mA1@1 METODO SOBREESCRIBIBLE 
+
 
 =================== AA =================
-
-**************** Posicion 70 ******************
-AA_mA1@1 METODO SOBREESCRIBIBLE 
 
 **************** Posicion 664 ******************
 AA_AA CLASE ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR 
@@ -109,6 +106,9 @@ AA_a2 ATRIBUTO CLASE CLASE: ESCALAR TIPO: ENTERO DIR: 0 ACCESO: 3 MIEMBRO: 1
 
 **************** Posicion 875 ******************
 AA_sa1 ATRIBUTO CLASE CLASE: ESCALAR TIPO: ENTERO DIR: 0 ACCESO: 1 MIEMBRO: 1 
+
+**************** Posicion 966 ******************
+AA_mA1@1 METODO SOBREESCRIBIBLE 
 
 buscar id_no_cualificado AA a1: Encontrado en AA
 buscar id_no_cualificado AA v1: Encontrado en main
@@ -128,7 +128,7 @@ BB_BB CLASE ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SO
 BB_b1 ATRIBUTO INSTANCIA POS ATR. INSTANCIA 0 Y ACUMULADA 0 CLASE: ESCALAR TIPO: ENTERO DIR: 0 ACCESO: 3 MIEMBRO: 2 
 
 buscar declarar_miembro_instancia BB BB_aa1: No encontrado: se puede declarar
-insertar_tsc BB BB_aa1 8 0 1 3 2
+insertar_tsc BB BB_aa1 8 0 5 3 2
 
 =================== BB =================
 
@@ -136,7 +136,7 @@ insertar_tsc BB BB_aa1 8 0 1 3 2
 BB_BB CLASE ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR 
 
 **************** Posicion 587 ******************
-BB_aa1 ATRIBUTO INSTANCIA POS ATR. INSTANCIA 0 Y ACUMULADA 0 CLASE: ESCALAR TIPO: (null) DIR: 0 ACCESO: 3 MIEMBRO: 2 
+BB_aa1 ATRIBUTO INSTANCIA POS ATR. INSTANCIA 0 Y ACUMULADA 0 CLASE: OBJETO TIPO: (null) DIR: 0 ACCESO: 3 MIEMBRO: 2 
 
 **************** Posicion 595 ******************
 BB_b1 ATRIBUTO INSTANCIA POS ATR. INSTANCIA 0 Y ACUMULADA 0 CLASE: ESCALAR TIPO: ENTERO DIR: 0 ACCESO: 3 MIEMBRO: 2 
@@ -146,23 +146,23 @@ abrir_ambito_tsc BB BB_mB1@1 5 1 3 2
 
 =================== mB1@1 =================
 
-**************** Posicion 516 ******************
+**************** Posicion 889 ******************
 BB_mB1@1 METODO SOBREESCRIBIBLE 
 
 
 =================== BB =================
 
-**************** Posicion 516 ******************
-BB_mB1@1 METODO SOBREESCRIBIBLE 
-
 **************** Posicion 556 ******************
 BB_BB CLASE ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR 
 
 **************** Posicion 587 ******************
-BB_aa1 ATRIBUTO INSTANCIA POS ATR. INSTANCIA 0 Y ACUMULADA 0 CLASE: ESCALAR TIPO: (null) DIR: 0 ACCESO: 3 MIEMBRO: 2 
+BB_aa1 ATRIBUTO INSTANCIA POS ATR. INSTANCIA 0 Y ACUMULADA 0 CLASE: OBJETO TIPO: (null) DIR: 0 ACCESO: 3 MIEMBRO: 2 
 
 **************** Posicion 595 ******************
 BB_b1 ATRIBUTO INSTANCIA POS ATR. INSTANCIA 0 Y ACUMULADA 0 CLASE: ESCALAR TIPO: ENTERO DIR: 0 ACCESO: 3 MIEMBRO: 2 
+
+**************** Posicion 889 ******************
+BB_mB1@1 METODO SOBREESCRIBIBLE 
 
 buscar declarar_id_local_metodo BB mB1@1_pmB1: No encontrado: se puede declarar
 insertar_tsc BB mB1@1_pmB1 2 1 1 3 2
@@ -172,21 +172,51 @@ insertar_tsc BB mB1@1_pmB1 2 1 1 3 2
 **************** Posicion 325 ******************
 mB1@1_pmB1 PARAMETRO 
 
-**************** Posicion 516 ******************
+**************** Posicion 889 ******************
 BB_mB1@1 METODO SOBREESCRIBIBLE 
 
 
 =================== BB =================
 
-**************** Posicion 516 ******************
-BB_mB1@1 METODO SOBREESCRIBIBLE 
-
 **************** Posicion 556 ******************
 BB_BB CLASE ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR 
 
 **************** Posicion 587 ******************
-BB_aa1 ATRIBUTO INSTANCIA POS ATR. INSTANCIA 0 Y ACUMULADA 0 CLASE: ESCALAR TIPO: (null) DIR: 0 ACCESO: 3 MIEMBRO: 2 
+BB_aa1 ATRIBUTO INSTANCIA POS ATR. INSTANCIA 0 Y ACUMULADA 0 CLASE: OBJETO TIPO: (null) DIR: 0 ACCESO: 3 MIEMBRO: 2 
 
 **************** Posicion 595 ******************
 BB_b1 ATRIBUTO INSTANCIA POS ATR. INSTANCIA 0 Y ACUMULADA 0 CLASE: ESCALAR TIPO: ENTERO DIR: 0 ACCESO: 3 MIEMBRO: 2 
 
+**************** Posicion 889 ******************
+BB_mB1@1 METODO SOBREESCRIBIBLE 
+
+buscar id_cualificado_instancia aa1 a1 BB: Encontrado en AA
+buscar id_cualificado_instancia aa1 sa1 BB: Encontrado en AA
+cerrar_ambito_tsc BB 
+cerrar_clase BB 
+buscar declarar_main main_a: No encontrado: se puede declarar
+insertar_tsa_main main_a 1 0 5 3 2
+
+=================== main =================
+
+**************** Posicion 168 ******************
+main_v1 VARIABLE POS_LOCAL: 0 POS ATR. INSTANCIA 0 Y ACUMULADA 0 CLASE: ESCALAR TIPO: ENTERO DIR: 0 ACCESO: 3 MIEMBRO: 2 
+
+**************** Posicion 546 ******************
+main_a VARIABLE POS_LOCAL: 0 POS ATR. INSTANCIA 0 Y ACUMULADA 0 CLASE: OBJETO TIPO: (null) DIR: 0 ACCESO: 3 MIEMBRO: 2 
+
+**************** Posicion 678 ******************
+main_main CLASE ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR 
+
+buscar id_no_cualificado main a: Encontrado en main
+buscar id_no_cualificado main v1: Encontrado en main
+buscar id_no_cualificado main v1: Encontrado en main
+buscar id_cualificado_instancia a mA1@1 main: Encontrado en AA
+buscar id_no_cualificado main v1: Encontrado en main
+buscar id_cualificado_instancia a a1 main: Encontrado en AA
+buscar id_no_cualificado main x: No encontrado
+buscar id_cualificado_clase AA a1 main: Encontrado en AA
+buscar id_cualificado_clase AA sa1 main: Encontrado en AA
+buscar id_no_cualificado main a: Encontrado en main
+cerrar_tsa_main
+Segmentation fault (core dumped)

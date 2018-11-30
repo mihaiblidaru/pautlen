@@ -23,13 +23,18 @@ TSA* TSA_crear() {
 int TSA_eliminar(TSA* ts) {
     if (ts == NULL)
         return ERR;
-
-    if (hash_eliminar(ts->local) == ERR) {
-        //return ERR;
+    
+    if (ts->local != NULL && hash_eliminar(ts->local, InfoSimbolo_eliminar) == ERR) {
+        return ERR;
     }
-    if (hash_eliminar(ts->global) == ERR) {
-        //return ERR;
+    if (ts->global != NULL && hash_eliminar(ts->global, InfoSimbolo_eliminar) == ERR) {
+        return ERR;
     }
+    if(ts->id_ambito_global != NULL) 
+        free(ts->id_ambito_global);
+    
+    if(ts->id_ambito_local != NULL) 
+        free(ts->id_ambito_local);
     free(ts);
     return OK;
 }
@@ -84,28 +89,13 @@ TSA* TSA_abrirAmbitoLocal(TSA* ts,
 
 int TSA_cerrarAmbitoLocal(TSA* ts) {
     int ret = 0;
-    ret = hash_eliminar(ts->local);
+    ret = hash_eliminar(ts->local, NULL);
     ts->local = NULL;
     ts->ambito = GLOBAL;
     return ret;
 }
 
-TSA* TSA_cambiaAmbito(TSA* ts) {
-    if (!ts) {
-        return NULL;
-    }
 
-    if (ts->ambito == GLOBAL) {
-        ts->ambito = LOCAL;
-        return ts;
-    } else {
-        ts->ambito = GLOBAL;
-        if (hash_eliminar(ts->local) == ERR) {
-            return NULL;
-        }
-        return ts;
-    }
-}
 
 int TSA_insertarSimbolo(TSA* ts,
                         char* clave,
@@ -304,6 +294,7 @@ void TSA_imprimir(FILE* out, TSA* ts, char* ambito) {
                     fprintf(out, "\n**************** Posicion %d ******************\n", *pos);
                     InfoSimbolo_imprimir(out, elem);
                 }
+                lista_free(elementos, NULL);
                 lista_free(posiciones, free);
                 fprintf(out, "\n");
             }
@@ -325,6 +316,7 @@ void TSA_imprimir(FILE* out, TSA* ts, char* ambito) {
                     fprintf(out, "\n**************** Posicion %d ******************\n", *pos);
                     InfoSimbolo_imprimir(out, elem);
                 }
+                lista_free(elementos, NULL);
                 lista_free(posiciones, free);
                 fprintf(out, "\n");
             }

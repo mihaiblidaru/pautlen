@@ -36,7 +36,7 @@ TablaHash* hash_crear(int tam);
 
 //Elimina la tabla Hash.
 //Devuelve OK en caso de que se borre correctamente y ERROR en caso de que no.
-int hash_eliminar(TablaHash *tabla);
+int hash_eliminar(TablaHash *tabla,void(*free_data_funct)(void*));
 
 //Inserta en la tabla hash un nodo en un indice calculado por funcionHash.
 //Utilizara la funcionHash para saber donde insertar el nuevo elemento y debera crear dentro el nuevo nodo (crearNodoHash).

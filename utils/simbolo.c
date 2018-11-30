@@ -19,12 +19,14 @@ InfoSimbolo* InfoSimbolo_crear() {
     }
 }
 
-int InfoSimbolo_eliminar(InfoSimbolo* is) {
-    if (is == NULL)
-        return ERR;
-
-    free(is);
-    return OK;
+void InfoSimbolo_eliminar(void* a) {
+    InfoSimbolo* is = (InfoSimbolo*)a;
+    if (is != NULL){
+        free(is->clave);
+        if(is->tipo_args != NULL)
+            free(is->tipo_args);
+        free(is);
+    }
 }
 
 /*

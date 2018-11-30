@@ -62,7 +62,7 @@ TablaHash* hash_crear(int tam){
 
 //Elimina la tabla Hash.
 //Devuelve OK en caso de que se borre correctamente y ERR en caso de que no.
-int hash_eliminar(TablaHash *tabla){
+int hash_eliminar(TablaHash *tabla, void(*free_data_funct)(void*)){
 	int i;
 	NodoHash *aux, *aux2;
 	if(tabla == NULL)
@@ -74,6 +74,9 @@ int hash_eliminar(TablaHash *tabla){
 			aux2 = aux;
 			aux = aux->siguiente;
 			free(aux2->clave);
+			if(free_data_funct != NULL)
+				free_data_funct(aux2->info);
+				
 			free(aux2);
 		}
 	}

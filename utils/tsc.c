@@ -17,7 +17,7 @@
 #include <string.h>
 #include <tsa.h>
 #include <tsc.h>
-
+void liberar_nodo(void* a);
 NodoGrafo *buscarNodoProfundidad(TSC *grafo, char *nombre);
 NodoGrafo *recBuscarNodoProfundidad(NodoGrafo *actual, char *nombre);
 
@@ -42,8 +42,12 @@ int cerrarTablaSimbolosClases(TSC *t)
 {
     if (t)
     {
-        // TODO cambiar el metodo que libera t->nodos
+        // TODO cambiar el metodo que libera t->nodos+
+
+        lista_free(t->nodos, liberar_nodo);
+        lista_free(t->raices, NULL);
         free(t->nombre);
+        free(t);
         return OK;
     }
     return ERR;
@@ -240,9 +244,11 @@ int aplicarAccesos(TSC *t, char *nombre_clase_ambito_actual, char *clase_declaro
                 NodoGrafo *nodo = lista_get(los_padres_clase_ambito_actual, i);
                 if (strcmp(nodo->nombre, clase_declaro) == 0)
                 {
+                    //free(los_padres_clase_ambito_actual);
                     return OK;
                 }
             }
+            //free(los_padres_clase_ambito_actual);
             // en otro caso retornar OK
             return ERR;
             // si el cualificador es EXPOSED o ninguno, se retorna OK
@@ -289,15 +295,16 @@ int buscarIdEnJerarquiaDesdeClase(TSC *t,
                     int res = buscarTablaSimbolosAmbitosConPrefijos(nodo->info, nombre_id, e, nombre_ambito_encontrado);
                     if (res == OK)
                     {
+                        //lista_free(jerarquia, NULL);
                         return OK;
                     }
                 }
+
+                lista_free(jerarquia, NULL);
                 return ERR;
+                
             }
-    }
-
-
-    
+    }    
 }
 
 // dado un id sin prefijo, devolver donde se ha encontrado partiendo de una clase
@@ -509,6 +516,7 @@ void crearRepresentacionTSC(TSC *g, char *path)
             fprintf(fp, "%s\\l", simbolo->clave);
         }
         fprintf(fp, "}\"];\n");
+        lista_free(elementos_clase, NULL);
     }
 
     fprintf(fp, "\n");
@@ -524,6 +532,7 @@ void crearRepresentacionTSC(TSC *g, char *path)
         }
     }
     fprintf(fp, "}\n");
+    fclose(fp);
 }
 
 void imprimeTSAdeClase(FILE *out, TSC *g, char *id_clase)
@@ -560,4 +569,17 @@ Lista *getListaPadresCompleta(TSC *g, char *nombre_clase)
         recGetListaPadresCompleta(lista_get(padres_nodo, i), padres_acumulados);
     }
     return padres_nodo;
+}
+
+void liberar_nodo(void* a){
+    NodoGrafo* nodo = (NodoGrafo*) a;
+    if(nodo->predecesores)
+        lista_free(nodo->predecesores, NULL);
+
+    if(nodo->descendientes)
+        lista_free(nodo->descendientes, NULL);
+
+    TSA_eliminar(nodo->info);
+    free(nodo->nombre);
+    free(nodo);
 }

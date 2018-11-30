@@ -89,7 +89,7 @@ typedef struct {
 
 
 InfoSimbolo* InfoSimbolo_crear();
-int InfoSimbolo_eliminar(InfoSimbolo* is);
+void InfoSimbolo_eliminar(void* a);
 
 void InfoSimbolo_imprimir(FILE* out, InfoSimbolo* is);
 

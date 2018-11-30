@@ -26,7 +26,7 @@ tsc.o: tsc.c
 	gcc -c $(CFLAGS) $< -o $@
 
 clean:
-	rm -f tests/*.o lista.o $(TESTS) tsc.o hash.o prueba_simbolos.o hash.o simbolo.o tablasimbolo.o test_tablas
+	rm -f tests/*.o *.o test_tablas
 
 test: clean test_tablas
 	./test_tablas omi.ol 2> misalida.txt

@@ -7,14 +7,39 @@
 
 #define TAM_MAXIMO_LINEA 500
 
-// Devuelve una lista de words de la linea
+// Hace lo que su nombre indica
+void cambiar_tabs_por_espacios(char *str){
+    for(; *str != '\0'; str++){
+        if(*str == '\t')
+            *str = ' ';
+    }
+}
+
+/*
+ * Cambia secuencias multiples de espacios por un solo espacio
+ * para que la cadena pueda ser "tokenizada"
+ */
+void replace_multi_space_with_single_space(char *str){
+    char *dest = str; 
+    while (*str != '\0') {
+        while (*str == ' ' && *(str + 1) == ' ')
+            str++;  
+       *dest++ = *str++;
+    }
+    *dest = '\0';
+}
+
+
+// Devuelve una lista de palabras de la linea
 Lista* tokenize(const char* s) {
     char* line = strdup(s);  // duplicamos para que strrok no modifique la cadena
-    char* tok = strtok(line, "\t");
+    cambiar_tabs_por_espacios(line);
+    replace_multi_space_with_single_space(line);
+    char* tok = strtok(line, " ");
     Lista* tokens = lista_crear();
     while (tok != NULL) {
         lista_addstr(tokens, tok);
-        tok = strtok(NULL, "\t");
+        tok = strtok(NULL, " ");
     }
     free(line);
     return tokens;

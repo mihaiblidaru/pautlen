@@ -87,6 +87,16 @@ void InfoSimbolo_imprimir(FILE* out, InfoSimbolo* is) {
             fprintf(out, "DIR: %d ", is->direcciones);
             fprintf(out, "ACCESO: %d ", is->tipo_acceso);
             fprintf(out, "MIEMBRO: %d ", is->tipo_miembro);
+        }else if (is->categoria == PARAMETRO) {
+            char* clase = clase_to_str[is->clase - 1];
+            char* tipo = tipo_to_str[is->tipo - 1];
+            fprintf(out, "POS_PAR: %d ", is->posicion_parametro);
+            fprintf(out, "POS_LOCAL: %d ", is->posicion_variable_local);
+            fprintf(out, "CLASE: %s ", clase);
+            fprintf(out, "TIPO: %s ", tipo);
+            fprintf(out, "DIR: %d ", is->direcciones);
+            fprintf(out, "ACCESO: %d ", is->tipo_acceso);
+            fprintf(out, "MIEMBRO: %d ", is->tipo_miembro);
         }
 
         fprintf(out, "\n");

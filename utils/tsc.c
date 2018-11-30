@@ -20,6 +20,7 @@
 void liberar_nodo(void* a);
 NodoGrafo *buscarNodoProfundidad(TSC *grafo, char *nombre);
 NodoGrafo *recBuscarNodoProfundidad(NodoGrafo *actual, char *nombre);
+int compara_nodos_por_sus_incides(const void *a, const void*b);
 
 /**************************************************************************
  *                           Funciones básicas                             *
@@ -66,7 +67,8 @@ int abrirClase(TSC *t, char *id_clase, Lista *lista_padres)
     nodoActual->descendientes = lista_crear();
     nodoActual->nombre = strdup(id_clase);
     TSA_abrirAmbitoGlobal(nodoActual->info, id_clase);
-
+    nodoActual->indice = lista_length(t->nodos);
+    
     // si no tiene padres, lo añado al array de raices, y al array de nodos totales
     if (!lista_padres)
     {
@@ -568,6 +570,7 @@ Lista *getListaPadresCompleta(TSC *g, char *nombre_clase)
     {
         recGetListaPadresCompleta(lista_get(padres_nodo, i), padres_acumulados);
     }
+    lista_sort(padres_acumulados, compara_nodos_por_sus_incides);
     return padres_acumulados;
 }
 
@@ -582,4 +585,10 @@ void liberar_nodo(void* a){
     TSA_eliminar(nodo->info);
     free(nodo->nombre);
     free(nodo);
+}
+
+int compara_nodos_por_sus_incides(const void *a, const void*b){
+    NodoGrafo *nA = (NodoGrafo*)a;
+    NodoGrafo *nB = (NodoGrafo*)b;
+    return nA->indice - nB->indice;
 }

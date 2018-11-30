@@ -27,5 +27,6 @@ void lista_free(Lista *list, void(*free_data_funct)(void*));
 
 int lista_length(Lista *lista);
 void lista_print(Lista* lista, void(*print_funct)(void*));
+void lista_sort(Lista* l, int (*compar)(const void *, const void*));
 
 #endif

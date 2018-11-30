@@ -99,3 +99,10 @@ void lista_print(Lista* l, void(*print_funct)(void*)){
         }
     }
 }
+
+
+void lista_sort(Lista* l, int (*compar)(const void *, const void*)){
+    if(l != NULL && compar != NULL){
+        qsort(l->data, l->tam_actual, sizeof(void*), compar);
+    }
+}

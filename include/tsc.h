@@ -24,6 +24,10 @@ typedef struct NodoGrafo {
 	TSA *info;     //ES UNA TSA
 	Lista* predecesores;
 	Lista* descendientes;
+
+    // esto lo necesito para poder pasar de una lista desordenada de 
+    // nodos a una ordernada
+    int indice;
 } NodoGrafo;
 
 typedef struct TSC {

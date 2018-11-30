@@ -104,7 +104,7 @@ NodoHash* crearNodoHash(const char *clave, void *info){
 //Devuelve OK en caso de que se inserte y ERR en caso de que no.
 int hash_insertar(TablaHash *tabla, const char *clave, void *info){
 	int modulo;
-	NodoHash *aux = NULL, *aux2 = NULL;
+	NodoHash *aux2 = NULL;
 	if(tabla == NULL){
 		return ERR;
 	}
@@ -117,8 +117,8 @@ int hash_insertar(TablaHash *tabla, const char *clave, void *info){
 	if(tabla->nodo[modulo] == NULL){
 		tabla->nodo[modulo] = aux2;
 	}else{
-		aux = tabla->nodo[modulo];
-		tabla->nodo[modulo]->siguiente = aux;
+		aux2->siguiente = tabla->nodo[modulo];
+		tabla->nodo[modulo] = aux2;
 	}
 	tabla->length++;
 	return OK;

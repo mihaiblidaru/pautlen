@@ -23,7 +23,7 @@ abrir_clase_hereda	BB	AA
 buscar	declarar_miembro_instancia	BB	BB_b1
 insertar_tsc	BB	BB_b1	8	1	1	3	2	
 buscar	declarar_miembro_instancia	BB	BB_aa1
-insertar_tsc	BB	BB_aa1	8	0	1	3	2
+insertar_tsc	BB	BB_aa1	8	0	5	3	2
 buscar	declarar_miembro_instancia	BB	BB_mB1@1
 abrir_ambito_tsc	BB	BB_mB1@1	5	1	3	2
 buscar	declarar_id_local_metodo	BB	mB1@1_pmB1
@@ -33,7 +33,7 @@ buscar	id_cualificado_instancia	aa1	sa1	BB
 cerrar_ambito_tsc	BB
 cerrar_clase	BB
 buscar	declarar_main	main_a
-insertar_tsa_main	main_a		1	0	1	3	2			
+insertar_tsa_main	main_a		1	0	5	3	2			
 buscar	id_no_cualificado	a	main
 buscar	id_no_cualificado	v1	main
 buscar	id_no_cualificado	v1	main

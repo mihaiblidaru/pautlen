@@ -45,7 +45,7 @@ int main(int argc, char const* argv[]) {
         OJO con esta variable: limita el numero de
         lineas que lee. Solo para depuración.
     */
-    int limite_lineas = 30;
+    int limite_lineas = 48;
 
     if (argc != 2) {
         fprintf(stderr, "Número de parametros incorrecto");
@@ -61,7 +61,6 @@ int main(int argc, char const* argv[]) {
 
         Lista* words = tokenize(line);
         limite_lineas--;
-        int i;
 
         // printf("\033[31;1;4m%s\033[0m\n", (char*)lista_get(words, 0));
 
@@ -172,7 +171,13 @@ int main(int argc, char const* argv[]) {
                 InfoSimbolo* elem = NULL;
                 char nombre_ambito_encontrado[50];
 
-                int result = buscarIdCualificadoInstancia(t, tsa_main, nombre_instancia_cualifica, nombre_atributo_instancia, nombre_clase_desde,  nombre_ambito_encontrado);
+
+                int result = buscarIdCualificadoInstancia(tabla_clases, 
+                                                          tsa_main, 
+                                                          nombre_instancia_cualifica, 
+                                                          nombre_atributo_instancia, 
+                                                          nombre_clase_desde, &elem,
+                                                          nombre_ambito_encontrado);
 
 
 
@@ -180,9 +185,32 @@ int main(int argc, char const* argv[]) {
                     fprintf(out, "buscar id_cualificado_instancia %s %s %s: No encontrado\n",
                             nombre_instancia_cualifica, nombre_atributo_instancia, nombre_clase_desde);
                 } else {
-                    fprintf(out, "buscar id_cualificado_instancia %s %s: Encontrado en %s\n",
-                            nombre_instancia_cualifica);
+                    fprintf(out, "buscar id_cualificado_instancia %s %s %s: Encontrado en %s\n",
+                            nombre_instancia_cualifica, nombre_atributo_instancia,nombre_clase_desde, nombre_ambito_encontrado);
                 }
+            }else if (!strcmp(lista_get(words, 1), "id_cualificado_clase")){
+
+                char* nombre_clase_cualifica = lista_get(words, 2);
+                char* nombre_id = lista_get(words, 3);
+                char* nombre_clase_desde = lista_get(words, 4);
+                
+                InfoSimbolo* elem = NULL;
+                char nombre_ambito_encontrado[50];
+
+
+
+
+                int result = buscarIdIDCualificadoClase(tabla_clases,nombre_clase_cualifica,nombre_id,nombre_clase_desde,&elem,nombre_ambito_encontrado);
+
+                if (result == ERR) {
+                    fprintf(out, "buscar id_cualificado_clase %s %s %s: No encontrado\n",
+                            nombre_clase_cualifica, nombre_id, nombre_clase_desde);
+                } else {
+                    fprintf(out, "buscar id_cualificado_clase %s %s %s: Encontrado en %s\n",
+                            nombre_clase_cualifica, nombre_id,nombre_clase_desde, nombre_ambito_encontrado);
+                }
+
+
             }
 
         } else if (!strcmp(lista_get(words, 0), "insertar_tsa_main")) {
@@ -289,8 +317,25 @@ int main(int argc, char const* argv[]) {
             lista_free(clases_heredadas, free);
 
         } else if (!strcmp(lista_get(words, 0), "insertar_tsa_main")) {
+
+            
         } else if (!strcmp(lista_get(words, 0), "cerrar_tsa_main")) {
+            int result = TSA_eliminar(tsa_main);
+
+            if (result == ERR) {
+                fprintf(out, "cerrar_tsa_main: ERROR\n");
+            } else {
+                fprintf(out, "cerrar_tsa_main\n");
+            }
+           
         } else if (!strcmp(lista_get(words, 0), "cerrar_tsc")) {
+            int result = cerrarTablaSimbolosClases(tabla_clases);
+
+            if (result == ERR) {
+                fprintf(out, "cerrar_tsc: ERROR\n");
+            } else {
+                fprintf(out, "cerrar_tsc\n");
+            }
         }
 
         // borro la lista de palabras actual

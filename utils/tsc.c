@@ -43,8 +43,6 @@ int cerrarTablaSimbolosClases(TSC *t)
     if (t)
     {
         // TODO cambiar el metodo que libera t->nodos
-        lista_free(t->nodos, free);
-        lista_free(t->raices, NULL);
         free(t->nombre);
         return OK;
     }
@@ -100,44 +98,24 @@ int cerrarClase(TSC *t,
                 int num_metodos_no_sobreescribibles)
 {
 
-    Lista *elems = NULL;
     char nombre[50];
     sprintf(nombre, "%s_%s", id_clase, id_clase);
 
     NodoGrafo *nodo = buscarNodoProfundidad(t, id_clase);
     TSA *tsa = nodo->info;
-    hash_as_list(tsa->global, &elems, NULL);
-    InfoSimbolo *aux = NULL;
-    for (int i = 0; i < lista_length(elems); i++)
-    {
-        InfoSimbolo *simbolo = lista_get(elems, i);
-        if (simbolo->categoria == ATRIBUTO_CLASE)
-        {
-            num_atributos_clase++;
-        }
-        else if (simbolo->categoria == ATRIBUTO_INSTANCIA)
-        {
-            num_atributos_instancia++;
-        }
-        else if (simbolo->categoria == METODO_SOBREESCRIBIBLE)
-        {
-            num_metodos_sobreescribibles++;
-        }
-        else if (simbolo->categoria == METODO_NO_SOBREESCRIBIBLE)
-        {
-            num_metodos_no_sobreescribibles++;
-        }
-        if (strcmp(nombre, simbolo->clave) == 0)
-        {
-            aux = simbolo;
-        }
-    }
-    aux->num_acumulado_atributos_instancia = num_atributos_instancia;
-    aux->num_acumulado_metodos_sobreescritura = num_metodos_sobreescribibles;
-    aux->numero_metodos_no_sobreescribibles = num_metodos_no_sobreescribibles;
-    aux->numero_atributos_clase = num_atributos_clase;
 
-    return OK;
+
+    InfoSimbolo* e;
+    char nombre_ambito_encontrado[100];
+    if(buscarParaDeclararIdTablaSimbolosAmbitos(tsa, nombre, &e, nombre_ambito_encontrado) == OK){
+        e->numero_atributos_clase = num_atributos_clase;
+        e->numero_atributos_instancia = num_atributos_instancia;
+        e->numero_metodos_sobreescribibles = num_metodos_sobreescribibles;
+        e->numero_metodos_no_sobreescribibles = num_metodos_no_sobreescribibles;
+        return OK;
+    }
+    return ERR;
+
 }
 
 /***********************************************************************
@@ -262,11 +240,11 @@ int aplicarAccesos(TSC *t, char *nombre_clase_ambito_actual, char *clase_declaro
                 NodoGrafo *nodo = lista_get(los_padres_clase_ambito_actual, i);
                 if (strcmp(nodo->nombre, clase_declaro) == 0)
                 {
-                    return ERR;
+                    return OK;
                 }
             }
             // en otro caso retornar OK
-            return OK;
+            return ERR;
             // si el cualificador es EXPOSED o ninguno, se retorna OK
         }
         else
@@ -283,18 +261,10 @@ int buscarIdEnJerarquiaDesdeClase(TSC *t,
                                   InfoSimbolo **e,
                                   char *nombre_ambito_encontrado)
 {
-    NodoGrafo *nodo = buscarNodoProfundidad(t, nombre_clase_desde);
-    if (buscarTablaSimbolosAmbitosConPrefijos(nodo->info, nombre_id, e, nombre_ambito_encontrado) == OK)
-    {
-        return OK;
-    }
-    else
-    {
-        Lista *jerarquia = getListaPadresCompleta(t, nombre_clase_desde);
-
-        for (int i = 0; i < lista_length(jerarquia); i++)
-        {
-            NodoGrafo *nodo = lista_get(jerarquia, i);
+    
+    if(strcmp(nombre_clase_desde, "main") == 0){
+        for(int i = lista_length(t->nodos) -1 ; i>=0;i--){
+            NodoGrafo *nodo = lista_get(t->nodos, i);
             int res = buscarTablaSimbolosAmbitosConPrefijos(nodo->info, nombre_id, e, nombre_ambito_encontrado);
             if (res == OK)
             {
@@ -302,7 +272,32 @@ int buscarIdEnJerarquiaDesdeClase(TSC *t,
             }
         }
         return ERR;
+    }else{
+        NodoGrafo *nodo = buscarNodoProfundidad(t, nombre_clase_desde);
+
+            if (buscarTablaSimbolosAmbitosConPrefijos(nodo->info, nombre_id, e, nombre_ambito_encontrado) == OK)
+            {
+                return OK;
+            }
+            else
+            {
+                Lista *jerarquia = getListaPadresCompleta(t, nombre_clase_desde);
+
+                for (int i = 0; i < lista_length(jerarquia); i++)
+                {
+                    NodoGrafo *nodo = lista_get(jerarquia, i);
+                    int res = buscarTablaSimbolosAmbitosConPrefijos(nodo->info, nombre_id, e, nombre_ambito_encontrado);
+                    if (res == OK)
+                    {
+                        return OK;
+                    }
+                }
+                return ERR;
+            }
     }
+
+
+    
 }
 
 // dado un id sin prefijo, devolver donde se ha encontrado partiendo de una clase
@@ -343,7 +338,27 @@ int buscarIdIDCualificadoClase(TSC *t,
                                char *nombre_id,
                                char *nombre_clase_desde,
                                InfoSimbolo **e,
-                               char *nombre_ambito_encontrado);
+                               char *nombre_ambito_encontrado){
+
+
+    NodoGrafo * nodo =buscarNodoProfundidad(t,nombre_clase_cualifica);
+
+    if(nodo==NULL){
+        return ERR;
+    }
+
+    if(buscarIdEnJerarquiaDesdeClase(t,nombre_id,nombre_clase_cualifica,e,nombre_ambito_encontrado)==ERR){
+        return ERR;
+    }else{
+        return aplicarAccesos(t,nombre_clase_desde,nombre_ambito_encontrado,*e);
+
+    }
+
+
+
+
+
+}
 
 int buscarIdCualificadoInstancia(TSC *t,
                                  TSA *tabla_main,
@@ -352,23 +367,22 @@ int buscarIdCualificadoInstancia(TSC *t,
                                  char *nombre_clase_desde,
                                  InfoSimbolo **e,
                                  char *nombre_ambito_encontrado){
-    if(buscarIdNoCualificado(t, tabla_main, nombre_instancia_cualifica, nombre_clase_desde, e, nombre_ambito_encontrado) == ERR){
+
+
+    InfoSimbolo* aux = NULL;
+    char nombre_ambito_parte_izq[100]; 
+    if(buscarIdNoCualificado(t, tabla_main, nombre_instancia_cualifica, nombre_clase_desde, &aux, nombre_ambito_parte_izq) == ERR){
         return ERR;
     }else{
-        if((*e)->categoria == ATRIBUTO_INSTANCIA){
-            if((*e)->clase == OBJETO){
-                NodoGrafo* clase = lista_get(t->nodos, (*e)->tipo);
-                strcpy(nombre_instancia_cualifica, clase->nombre);
-                if(aplicarAccesos(t,nombre_clase_desde,nombre_ambito_encontrado,*e)==ERR){
-                    return ERR;
-                }else{
-                    if(buscarIdEnJerarquiaDesdeClase(t, nombre_id, nombre_instancia_cualifica, e, nombre_ambito_encontrado)==OK){
-                        return aplicarAccesos(t,nombre_instancia_cualifica,nombre_ambito_encontrado,*e)
-                    }
+
+        if(aux->clase == OBJETO){
+            if(aplicarAccesos(t, nombre_clase_desde, nombre_ambito_parte_izq, aux) == ERR){
+                return ERR;
+            }else{
+                if(buscarIdEnJerarquiaDesdeClase(t, nombre_id, nombre_clase_desde, e, nombre_ambito_encontrado)==OK){
+                    return aplicarAccesos(t, nombre_clase_desde, nombre_ambito_encontrado, *e);
                 }
-
             }
-
         }
     }
     return ERR;
@@ -386,16 +400,7 @@ int buscarParaDeclararMiembroClase(TSC *t,
     if (nodo_clase != NULL)
     {
         TSA *tsa_clase = nodo_clase->info;
-        int res = buscarParaDeclararIdTablaSimbolosAmbitos(tsa_clase, nombre_miembro, e, nombre_ambito_encontrado);
-        if (res != OK)
-        {
-            char *nombre_id = nombre_miembro;
-            /*
-            TODO: hay que quitarle el prefijo pero me da mucha pereza ahora. Ya lo quito luego
-            */
-
-            // return buscarIdEnJerarquiaDesdeClase(t, nombre_id, nombre_clase_desde, e, nombre_ambito_encontrado);
-        }
+        return buscarParaDeclararIdTablaSimbolosAmbitos(tsa_clase, nombre_miembro, e, nombre_ambito_encontrado);
     }
 
     return ERR;
@@ -417,11 +422,8 @@ int buscarParaDeclararMiembroInstancia(TSC *t,
         if (res != OK)
         {
             char *nombre_id = nombre_miembro;
-            /*
-            TODO: hay que quitarle el prefijo pero me da mucha pereza ahora. Ya lo quito luego
-            */
-
-            // return buscarIdEnJerarquiaDesdeClase(t, nombre_id, nombre_clase_desde, e, nombre_ambito_encontrado);
+        
+            return buscarIdEnJerarquiaDesdeClase(t, nombre_id, nombre_clase_desde, e, nombre_ambito_encontrado);
         }
     }
 
@@ -480,7 +482,7 @@ NodoGrafo *recBuscarNodoProfundidad(NodoGrafo *actual, char *nombre)
             return aux;
         }
     }
-    return NULL;
+    return NULL; 
 }
 
 void crearRepresentacionTSC(TSC *g, char *path)
@@ -498,7 +500,6 @@ void crearRepresentacionTSC(TSC *g, char *path)
     {
         NodoGrafo *nodo = lista_get(g->nodos, i);
         fprintf(fp, "    %s%s [label=\"{%s|", prefix, nodo->nombre, nodo->nombre);
-        int num_funciones = rand() % 6 + 1;
         Lista *elementos_clase = NULL;
         hash_as_list(nodo->info->global, &elementos_clase, NULL);
 

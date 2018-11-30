@@ -15,6 +15,7 @@ TSA* TSA_crear() {
         nueva->local = NULL;
         nueva->id_ambito_local = NULL;
         nueva->id_ambito_global = NULL;
+        return nueva;
     }
 }
 // Como me gusta contradecirte elimino la info de las tablas
@@ -24,10 +25,10 @@ int TSA_eliminar(TSA* ts) {
         return ERR;
 
     if (hash_eliminar(ts->local) == ERR) {
-        return ERR;
+        //return ERR;
     }
     if (hash_eliminar(ts->global) == ERR) {
-        return ERR;
+        //return ERR;
     }
     free(ts);
     return OK;
@@ -60,10 +61,12 @@ TSA* TSA_abrirAmbitoLocal(TSA* ts,
     ts->ambito = LOCAL;
 
     // le quito el nombre del ambito global y el underscore
-    char * nombre_sin_prefijo = id_ambito + strlen(ts->id_ambito_global) + 1;
+    const char * nombre_sin_prefijo = id_ambito + strlen(ts->id_ambito_global) + 1;
+
 
     ts->id_ambito_local = strdup(nombre_sin_prefijo);
     sprintf(nombre_simbolo_info_ambito, "%s_%s", id_ambito, id_ambito);
+    
     InfoSimbolo* info_ambito = InfoSimbolo_crear();
 
     info_ambito->clave = strdup(id_ambito);
@@ -73,8 +76,8 @@ TSA* TSA_abrirAmbitoLocal(TSA* ts,
     info_ambito->posicion_metodo_sobreescribible = posicion_metodo_sobre;
     info_ambito->tamanio = tamanio;
 
-    hash_insertar(ts->global, nombre_simbolo_info_ambito, info_ambito);
-    hash_insertar(ts->local, nombre_simbolo_info_ambito, info_ambito);
+    hash_insertar(ts->global, id_ambito, info_ambito);
+    hash_insertar(ts->local, id_ambito, info_ambito);
 
     return ts;
 }
@@ -249,8 +252,6 @@ int buscarParaDeclararIdTablaSimbolosAmbitos(TSA* t, char* id, InfoSimbolo** e, 
 
 // esta copiada la anterior, porque no encuentro la diferencia de lo del prefijo
 int buscarTablaSimbolosAmbitosConPrefijos(TSA* t, char* id, InfoSimbolo** e, char* id_ambito) {
-    int ambito_encontrado = NO_DEFINIDO;
-    InfoSimbolo* elem = NULL;
     
     if(t->local != NULL){
         char nombre_con_prefijo[50];
@@ -277,6 +278,7 @@ int buscarTablaSimbolosAmbitosConPrefijos(TSA* t, char* id, InfoSimbolo** e, cha
         }
         return ERR;
     }
+    return ERR;
 }
 
 void TSA_imprimir(FILE* out, TSA* ts, char* ambito) {

@@ -61,3 +61,14 @@ test:
 	meld misalida7.txt test_analizador/salida_sin_7.txt
 	./pruebaSintactico test_analizador/entrada_sin_8.ol misalida8.txt
 	meld misalida8.txt test_analizador/salida_sin_8.txt
+
+test1: compilador
+	./compilador testsCompilador/in_testS1_V1.c testsCompilador/in_testS1_V1.asm
+	nasm -g -f elf32 testsCompilador/in_testS1_V1.asm -o testsCompilador/in_testS1_V1.o
+	gcc -m32 -g testsCompilador/in_testS1_V1.o ../olib.o -o in_testS1_V1
+
+
+test2: compilador
+	./compilador testsCompilador/in_testS1_V2.c testsCompilador/in_testS1_V2.asm
+	nasm -g -f elf32 testsCompilador/in_testS1_V2.asm -o testsCompilador/in_testS1_V2.o
+	gcc -m32 -g testsCompilador/in_testS1_V2.o ../olib.o -o in_testS1_V2

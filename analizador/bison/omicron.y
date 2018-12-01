@@ -88,7 +88,7 @@
 %%
 
 programa:
-  inicioTabla TOK_MAIN '{' declaraciones escritura_TS funciones escritura_main sentencias '}' escritura_fin
+   TOK_MAIN '{' inicioTabla declaraciones escritura_TS funciones escritura_main sentencias '}' escritura_fin
     { fprintf(pf, ";R:\tprograma: TOK_MAIN '{' declaraciones funciones sentencias '}'\n");}
 | TOK_MAIN '{' funciones sentencias '}'
     { fprintf(pf, ";R:\tprograma: TOK_MAIN '{' funciones sentencias '}'\n");}
@@ -411,41 +411,49 @@ exp:
     { fprintf(pf, ";R:\texp: exp '+' exp\n");
       /* TODO :: ¿Seria mirar los tipos si coinciden?*/
       sumar(pf, $1.es_direccion, $3.es_direccion);
+      $$.es_direccion = 0;
       /* TODO :: Si no esta error, si son ids */}
 | exp '-' exp
     { fprintf(pf, ";R:\texp: exp '-' exp\n");
       /* TODO :: ¿Seria mirar los tipos si coinciden?*/
       restar(pf, $1.es_direccion, $3.es_direccion);
+      $$.es_direccion = 0;
       /* TODO :: Si no esta error, si son ids */}
 | exp '/' exp
     { fprintf(pf, ";R:\texp: exp '/' exp\n");
       /* TODO :: ¿Seria mirar los tipos si coinciden?*/
       dividir(pf, $1.es_direccion, $3.es_direccion);
+      $$.es_direccion = 0;
       /* TODO :: Si no esta error, si son ids */}
 | exp '*' exp
     { fprintf(pf, ";R:\texp: exp '*' exp\n");
       /* TODO :: ¿Seria mirar los tipos si coinciden?*/
       multiplicar(pf, $1.es_direccion, $3.es_direccion);
+      $$.es_direccion = 0;
       /* TODO :: Si no esta error, si son ids */}
 | '-' exp %prec NEG
     { fprintf(pf, ";R:\texp: '-' exp\n");
       /* TODO :: ¿Seria mirar los tipos si coinciden?*/
       cambiar_signo(pf, $2.es_direccion);
+      $$.es_direccion = 0;
       /* TODO :: Si no esta error, si son ids */}
 | exp TOK_AND exp
     { fprintf(pf, ";R:\texp: exp TOK_AND exp\n");
       /* TODO :: ¿Seria mirar los tipos si coinciden?*/
       y(pf, $1.es_direccion, $3.es_direccion);
+      $$.es_direccion = 0;
       /* TODO :: Si no esta error, si son ids */}
 | exp TOK_OR exp
     { fprintf(pf, ";R:\texp: exp TOK_OR exp\n");
       /* TODO :: ¿Seria mirar los tipos si coinciden?*/
       o(pf, $1.es_direccion, $3.es_direccion);
+      $$.es_direccion = 0;
       /* TODO :: Si no esta error, si son ids */}
 | '!' exp
     { fprintf(pf, ";R:\texp: '!' exp\n");
       /* TODO :: ¿Si esta en TS?*/
       no(pf, $2.es_direccion, /*TODO :: etiqueta ¿?*/ $$.etiqueta);
+      $$.es_direccion = 0;
       /* TODO :: Si no esta error, si son ids */}
 | TOK_IDENTIFICADOR
     { fprintf(pf, ";R:\texp: TOK_IDENTIFICADOR\n");

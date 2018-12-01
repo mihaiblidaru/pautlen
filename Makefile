@@ -23,7 +23,7 @@ test_generacion/programa%.asm: test_generacion/ej%
 test_generacion/ej%.o: test_generacion/ej%.c generacion.h
 	$(CC) $(CFLAGS) -c $< -o $@ 
 
-test_generacion/ej%: test_generacion/ej%.o generacion.o
+test_generacion/ej%: test_generacion/ej%.o generacion/generacion.o
 	$(CC) $(LDFLAGS) $^ -o $@ $(LDLIBS)
 
 

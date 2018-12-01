@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <generacion.h>
+#include <omicron.h>
 
 int main(int argc, char** argv) {
   FILE* salida;
@@ -14,8 +15,8 @@ int main(int argc, char** argv) {
 
   escribir_subseccion_data(salida);
   escribir_cabecera_bss(salida);
-  declarar_variable(salida, "x", ENTERO, 1);
-  declarar_variable(salida, "y", ENTERO, 1);
+  declarar_variable(salida, "x", INT, 1);
+  declarar_variable(salida, "y", INT, 1);
 
   escribir_segmento_codigo(salida);
   escribir_inicio_main(salida);
@@ -32,7 +33,7 @@ int main(int argc, char** argv) {
 
   dividir(salida, 1, 1);
 
-  escribir(salida, 0, ENTERO);
+  escribir(salida, 0, INT);
 
   /* o */
   escribir_operando(salida, "1", 0);
@@ -46,7 +47,7 @@ int main(int argc, char** argv) {
 
   o(salida, 1, 1);
 
-  escribir(salida, 0, ENTERO);
+  escribir(salida, 0, INT);
 
   /* y */
   escribir_operando(salida, "15", 0);
@@ -59,7 +60,7 @@ int main(int argc, char** argv) {
   escribir_operando(salida, "y", 1);
 
   y(salida, 1, 1);
-  escribir(salida, 0, ENTERO);
+  escribir(salida, 0, INT);
 
   /*igual*/
   escribir_operando(salida, "x", 1);
@@ -67,7 +68,7 @@ int main(int argc, char** argv) {
 
   igual(salida, 1, 1, etiqueta++);
 
-  escribir(salida, 0, BOOLEANO);
+  escribir(salida, 0, BOOLEAN);
 
   escribir_operando(salida, "10", 0);
   asignar(salida, "x", 0);
@@ -76,7 +77,7 @@ int main(int argc, char** argv) {
   escribir_operando(salida, "y", 1);
 
   igual(salida, 1, 1, etiqueta++);
-  escribir(salida, 0, BOOLEANO);
+  escribir(salida, 0, BOOLEAN);
 
   /*distinto*/
   escribir_operando(salida, "x", 1);
@@ -84,7 +85,7 @@ int main(int argc, char** argv) {
 
   distinto(salida, 1, 1, etiqueta++);
 
-  escribir(salida, 0, BOOLEANO);
+  escribir(salida, 0, BOOLEAN);
 
   escribir_operando(salida, "15", 0);
   asignar(salida, "x", 0);
@@ -93,7 +94,7 @@ int main(int argc, char** argv) {
   escribir_operando(salida, "y", 1);
 
   distinto(salida, 1, 1, etiqueta++);
-  escribir(salida, 0, BOOLEANO);
+  escribir(salida, 0, BOOLEAN);
 
   /*menor igual*/
   escribir_operando(salida, "x", 1);
@@ -101,7 +102,7 @@ int main(int argc, char** argv) {
 
   menor_igual(salida, 1, 1, etiqueta++);
 
-  escribir(salida, 0, BOOLEANO);
+  escribir(salida, 0, BOOLEAN);
 
   escribir_operando(salida, "333", 0);
   asignar(salida, "y", 0);
@@ -110,7 +111,7 @@ int main(int argc, char** argv) {
   escribir_operando(salida, "y", 1);
 
   menor_igual(salida, 1, 1, etiqueta++);
-  escribir(salida, 0, BOOLEANO);
+  escribir(salida, 0, BOOLEAN);
 
 
   /*mayor igual*/
@@ -119,7 +120,7 @@ int main(int argc, char** argv) {
 
   mayor_igual(salida, 1, 1, etiqueta++);
 
-  escribir(salida, 0, BOOLEANO);
+  escribir(salida, 0, BOOLEAN);
 
   escribir_operando(salida, "2", 0);
   asignar(salida, "y", 0);
@@ -128,7 +129,7 @@ int main(int argc, char** argv) {
   escribir_operando(salida, "y", 1);
 
   mayor_igual(salida, 1, 1, etiqueta++);
-  escribir(salida, 0, BOOLEANO);
+  escribir(salida, 0, BOOLEAN);
 
 
   /*menor*/
@@ -137,7 +138,7 @@ int main(int argc, char** argv) {
 
   menor(salida, 1, 1, etiqueta++);
 
-  escribir(salida, 0, BOOLEANO);
+  escribir(salida, 0, BOOLEAN);
 
   escribir_operando(salida, "333", 0);
   asignar(salida, "y", 0);
@@ -146,7 +147,7 @@ int main(int argc, char** argv) {
   escribir_operando(salida, "y", 1);
 
   menor(salida, 1, 1, etiqueta++);
-  escribir(salida, 0, BOOLEANO);
+  escribir(salida, 0, BOOLEAN);
 
 
   /*mayor*/
@@ -155,7 +156,7 @@ int main(int argc, char** argv) {
 
   mayor(salida, 1, 1, etiqueta++);
 
-  escribir(salida, 0, BOOLEANO);
+  escribir(salida, 0, BOOLEAN);
 
   escribir_operando(salida, "2", 0);
   asignar(salida, "y", 0);
@@ -164,7 +165,7 @@ int main(int argc, char** argv) {
   escribir_operando(salida, "y", 1);
 
   mayor(salida, 1, 1, etiqueta++);
-  escribir(salida, 0, BOOLEANO);
+  escribir(salida, 0, BOOLEAN);
 
   escribir_fin(salida);
 

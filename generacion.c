@@ -14,7 +14,8 @@
  */
 
 #include <stdio.h>
-#include "generacion.h"
+#include <omicron.h>
+#include <generacion.h>
 
 /*
  *  Expresion regular para borrar todas las lineas de comentarios
@@ -585,7 +586,7 @@ void leer(FILE* fpasm, char* nombre, int tipo){
   fprintf(fpasm, "\n;-> Empieza leer\n");
 
   fprintf(fpasm, "\tpush dword _%s\n", nombre);
-  if(tipo == BOOLEANO){
+  if(tipo == BOOLEAN){
     fprintf(fpasm, "\tcall scan_boolean\n");
   }else{
     fprintf(fpasm, "\tcall scan_int\n");
@@ -610,7 +611,7 @@ void escribir(FILE* fpasm, int es_variable, int tipo){
     fprintf(fpasm, "\tpush dword eax\n");
   }
 
-  if(tipo == BOOLEANO){
+  if(tipo == BOOLEAN){
     fprintf(fpasm, "\tcall print_boolean\n");
   } else {
     fprintf(fpasm, "\tcall print_int\n");

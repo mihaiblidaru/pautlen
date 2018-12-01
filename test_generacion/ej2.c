@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <generacion.h>
+#include <omicron.h>
 
 int main (int argc, char** argv)
 {
@@ -12,24 +13,24 @@ int main (int argc, char** argv)
 
 	escribir_subseccion_data(salida);
 	escribir_cabecera_bss(salida);
-	declarar_variable(salida, "b1", BOOLEANO, 1);
+	declarar_variable(salida, "b1", BOOLEAN, 1);
 
 	escribir_segmento_codigo(salida);
 	escribir_inicio_main(salida);
 
 	/* scanf b1; */
-	leer(salida,"b1",BOOLEANO);
+	leer(salida,"b1",BOOLEAN);
 
 	/* printf !b1; */
 	escribir_operando(salida,"b1",1);
 	no(salida,1,cuantos_no++);
-	escribir(salida,0,BOOLEANO);
+	escribir(salida,0,BOOLEAN);
 
 	/* printf !!b1; */
 	escribir_operando(salida,"b1",1);
 	no(salida,1,cuantos_no++);
 	no(salida,0,cuantos_no++);
-	escribir(salida,0,BOOLEANO);
+	escribir(salida,0,BOOLEAN);
 
 	escribir_fin(salida);
 

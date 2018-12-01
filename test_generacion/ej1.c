@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <generacion.h>
+#include <omicron.h>
 
 int main (int argc, char** argv)
 {
@@ -11,9 +12,9 @@ int main (int argc, char** argv)
 
 	escribir_subseccion_data(salida);
 	escribir_cabecera_bss(salida);
-	declarar_variable(salida, "x", ENTERO, 1);
-	declarar_variable(salida, "y", ENTERO, 1);
-	declarar_variable(salida, "z", ENTERO, 1);
+	declarar_variable(salida, "x", INT, 1);
+	declarar_variable(salida, "y", INT, 1);
+	declarar_variable(salida, "z", INT, 1);
 
 	escribir_segmento_codigo(salida);
 	escribir_inicio_main(salida);
@@ -23,7 +24,7 @@ int main (int argc, char** argv)
 	asignar(salida,"x",0);
 
 	/* scanf(&y); */
-	leer(salida,"y",ENTERO);
+	leer(salida,"y",INT);
 
 	/* z = x + y */
 	escribir_operando(salida,"x",1);
@@ -33,7 +34,7 @@ int main (int argc, char** argv)
 
 	/* printf(z); */
 	escribir_operando(salida,"z",1);
-	escribir(salida,1,ENTERO);
+	escribir(salida,1,INT);
 
 	/* z = 7 + y */
 	escribir_operando(salida,"7",0);
@@ -43,7 +44,7 @@ int main (int argc, char** argv)
 
 	/* printf(z); */
 	escribir_operando(salida,"z",1);
-	escribir(salida,1,ENTERO);
+	escribir(salida,1,INT);
 
 	escribir_fin(salida);
 

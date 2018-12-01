@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <generacion.h>
+#include <omicron.h>
 
 int main (int argc, char** argv)
 {
@@ -11,19 +12,19 @@ int main (int argc, char** argv)
 
 	escribir_subseccion_data(salida);
 	escribir_cabecera_bss(salida);
-	declarar_variable(salida, "x", ENTERO, 1);
-	declarar_variable(salida,"y",ENTERO,1);
-	declarar_variable(salida,"z",ENTERO,1);
-	declarar_variable(salida,"j",ENTERO,1);
+	declarar_variable(salida, "x", INT, 1);
+	declarar_variable(salida,"y",INT,1);
+	declarar_variable(salida,"z",INT,1);
+	declarar_variable(salida,"j",INT,1);
 
 	escribir_segmento_codigo(salida);
 	escribir_inicio_main(salida);
 
 	/* scanf x; */
-	leer(salida,"x",ENTERO);
+	leer(salida,"x",INT);
 
 	/* scanf z; */
-	leer(salida,"z",ENTERO);
+	leer(salida,"z",INT);
 
 	/* j = - x; */
 	escribir_operando(salida,"x",1);
@@ -32,13 +33,13 @@ int main (int argc, char** argv)
 
 	/* printf j; */
 	escribir_operando(salida,"j",1);
-	escribir(salida,1,ENTERO);
+	escribir(salida,1,INT);
 
 	/* printf x-z; */
 	escribir_operando(salida,"x",1);
 	escribir_operando(salida,"z",1);
 	restar(salida,1,1);
-	escribir(salida,0,ENTERO);
+	escribir(salida,0,INT);
 
 	/* y=x/2;*/
 	escribir_operando(salida,"x",1);
@@ -48,13 +49,13 @@ int main (int argc, char** argv)
 
 	/* printf y; */
 	escribir_operando(salida,"y",1);
-	escribir(salida,1,ENTERO);
+	escribir(salida,1,INT);
 
 	/*printf x*y;*/
 	escribir_operando(salida,"x",1);
 	escribir_operando(salida,"y",1);
 	multiplicar(salida,1,1);
-	escribir(salida,0,ENTERO);
+	escribir(salida,0,INT);
 
 	escribir_fin(salida);
 

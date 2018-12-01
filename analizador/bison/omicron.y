@@ -88,24 +88,24 @@
 %%
 
 programa:
-  inicioTabla TOK_MAIN '{' declaraciones escritura_TS funciones escritura_main sentencias '}' escritura_fin
+  TOK_MAIN '{' inicioTabla declaraciones escritura_TS funciones sentencias '}' escritura_fin
     { fprintf(pf, ";R:\tprograma: TOK_MAIN '{' declaraciones funciones sentencias '}'\n");}
 | TOK_MAIN '{' funciones sentencias '}'
     { fprintf(pf, ";R:\tprograma: TOK_MAIN '{' funciones sentencias '}'\n");}
 ;
 /*    TODO :: PONER BIEN ESTA VAINA */
-inicioTabla:
+inicioTabla: 
    /* Vacio */
     { fprintf(pf, ";R:\tinicioTabla: \n");
       tsaMain = TSA_crear();
-      abrirAmbitoPpalMain(tsaMain);}
+      abrirAmbitoPpalMain(tsaMain);
+      escribir_subseccion_data(pf);
+      escribir_cabecera_bss(pf);}
 ;
 
 escritura_TS:
   /* Vacio */
     { fprintf(pf, ";R:\tescritura_TS: \n");
-      escribir_subseccion_data(pf);
-      escribir_cabecera_bss(pf);
       Lista* variables = NULL;
       hash_as_list(tsaMain->global, &variables, NULL);
 
@@ -118,9 +118,9 @@ escritura_TS:
 
       lista_free(variables, NULL);
 
-
       //declarar_variable(pf, nombre, tipo, 1);
       escribir_segmento_codigo(pf);
+      escribir_inicio_main(pf);
     }
 ;
 
@@ -411,6 +411,7 @@ exp:
     { fprintf(pf, ";R:\texp: exp '+' exp\n");
       /* TODO :: ¿Seria mirar los tipos si coinciden?*/
       sumar(pf, $1.es_direccion, $3.es_direccion);
+      $$.es_direccion = 0;
       /* TODO :: Si no esta error, si son ids */}
 | exp '-' exp
     { fprintf(pf, ";R:\texp: exp '-' exp\n");
@@ -426,6 +427,7 @@ exp:
     { fprintf(pf, ";R:\texp: exp '*' exp\n");
       /* TODO :: ¿Seria mirar los tipos si coinciden?*/
       multiplicar(pf, $1.es_direccion, $3.es_direccion);
+      $$.es_direccion = 0;
       /* TODO :: Si no esta error, si son ids */}
 | '-' exp %prec NEG
     { fprintf(pf, ";R:\texp: '-' exp\n");

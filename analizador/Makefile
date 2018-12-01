@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -c -Wall -Wextra -Werror -g -O0 -std=gnu11 -I../include
-LDFLAGS = -m32 -g
+LDFLAGS = -g
 LDLIBS =
 AS = nasm
 ASFLAGS = -g -f elf32
@@ -37,7 +37,7 @@ bison/y.tab.c: bison/omicron.y
 	bison -d -y -v $<
 	mv y.* bison/
 
-../generacion/generacion.o: ../generacion/generacion.c ../generacion/generacion.h
+../generacion/generacion.o: ../generacion/generacion.c
 	$(CC) $(CFLAGS) $< -o $@
 
 ../utils/tsa.o: ../utils/tsa.c ../utils/tsa.h ../utils/hash.h ../utils/lista.h

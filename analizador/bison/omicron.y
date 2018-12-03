@@ -17,6 +17,13 @@
   int globalTipo = -1;
   int globalClase = -1;
   TSA* tsaMain = NULL;
+
+  char nombre_ambito_insertar[200] = "main";
+
+  char nombre_simbolo_ts[200];
+
+  InfoSimbolo* elem = NULL;
+  char nombre_ambito_encontrado[1000];
 %}
 
 /* PALABRAS RESERVADAS */
@@ -98,7 +105,8 @@ inicioTabla:
    /* Vacio */
     { fprintf(pf, ";R:\tinicioTabla: \n");
       tsaMain = TSA_crear();
-      abrirAmbitoPpalMain(tsaMain);}
+      abrirAmbitoPpalMain(tsaMain);
+    }
 ;
 
 escritura_TS:
@@ -236,9 +244,18 @@ identificadores:
 identificador:
   TOK_IDENTIFICADOR
       { fprintf(pf, ";R:\tTOK_IDENTIFICADOR\n");
-        TSA_insertarSimbolo(tsaMain, $1.lexema, VARIABLE, globalTipo, globalClase, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, NULL);}
-  ;
+        sprintf(nombre_simbolo_ts, "%s_%s", nombre_ambito_insertar, $1.lexema);
 
+        if (buscarParaDeclararIdTablaSimbolosAmbitos(tsaMain, nombre_simbolo_ts, &elem, nombre_ambito_encontrado) == ERR) {
+            TSA_insertarSimbolo(tsaMain, nombre_simbolo_ts, VARIABLE, globalTipo, globalClase, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, NULL);
+        }else{
+            fprintf(stderr, "No se puede declarar la variable: %s (variable ya declarada)\n", $1.lexema);
+            exit(-1);
+        }
+
+    }
+   
+;
 
 funciones:
   funcion funciones
@@ -347,9 +364,15 @@ bloque:
 asignacion:
   TOK_IDENTIFICADOR '=' exp
     { fprintf(pf, ";R:\tasignacion: TOK_IDENTIFICADOR '=' exp\n");
-      /* TODO :: VER SI EL IDENTIDICADOR ESTA EN TS Y VER ALSO LOS TIPOS */
-      asignar(pf, $1.lexema, $3.es_direccion);
-      /* TODO :: Si no esta error */}
+
+        int resultado = buscarIdNoCualificado(NULL, tsaMain, $1.lexema, "main", &elem, nombre_ambito_encontrado);
+        if(resultado == OK){
+            asignar(pf, elem->clave, $3.es_direccion);
+        }else{
+            fprintf(stderr, "Identificador %s no encontrado\n", $1.lexema);
+            exit(-1);
+        }
+    }
 | elemento_vector '=' exp
     { fprintf(pf, ";R:\tasignacion: elemento_vector '=' exp\n");}
 | elemento_vector '=' TOK_INSTANCE_OF TOK_IDENTIFICADOR '(' lista_expresiones ')'
@@ -383,7 +406,18 @@ bucle:
 
 lectura:
   TOK_SCANF TOK_IDENTIFICADOR
-    { fprintf(pf, ";R:\tlectura: TOK_SCANF TOK_IDENTIFICADOR\n");}
+        
+    { 
+        fprintf(pf, ";R:\tlectura: TOK_SCANF TOK_IDENTIFICADOR\n");
+        int resultado = buscarIdNoCualificado(NULL, tsaMain, $2.lexema, "main", &elem, nombre_ambito_encontrado);
+        if(resultado == OK){
+            leer(pf, elem->clave, elem->tipo);
+        }else{
+            fprintf(stderr, "Identificador %s no encontrado\n", $2.lexema);
+            exit(-1);
+        }  
+    
+    }
 | TOK_SCANF elemento_vector
     { fprintf(pf, ";R:\tlectura: TOK_SCANF elemento_vector\n");}
 ;
@@ -392,9 +426,9 @@ lectura:
 escritura:
   TOK_PRINTF exp
     { fprintf(pf, ";R:\tescritura: TOK_PRINTF exp\n");
-      /* TODO :: VER SI EL IDENTIDICADOR ESTA EN TS */
+      /* Aqui no hay que comprobar nada. El tipo se comprueba en exp:TOK_IDENTIFICADOR*/
       escribir(pf, $2.es_direccion, $2.tipo);
-      /* TODO :: Si no esta error */}
+    }
 ;
 
 
@@ -456,12 +490,18 @@ exp:
       $$.es_direccion = 0;
       /* TODO :: Si no esta error, si son ids */}
 | TOK_IDENTIFICADOR
-    { fprintf(pf, ";R:\texp: TOK_IDENTIFICADOR\n");
-      /* TODO :: VER SI EL IDENTIDICADOR ESTA EN TS */
-      escribir_operando(pf, $1.lexema, 1);
-      $$.tipo = $1.tipo;
-      $$.es_direccion = 1;
-      /* TODO :: Si no esta error */}
+    {   
+        fprintf(pf, ";R:\texp: TOK_IDENTIFICADOR\n");
+        int resultado = buscarIdNoCualificado(NULL, tsaMain, $1.lexema, "main", &elem, nombre_ambito_encontrado);
+        if(resultado == OK){
+            escribir_operando(pf, elem->clave, 1);
+            $$.tipo = elem->tipo;
+            $$.es_direccion = 1;
+        }else{
+            fprintf(stderr, "Identificador %s no encontrado\n", $1.lexema);
+            exit(-1);
+        }
+    }
 | constante
     { fprintf(pf, ";R:\texp: constante\n");
       $$.tipo = $1.tipo;

@@ -73,3 +73,6 @@ analizador/omicron
 analizador/misalida*.txt
 test_tablas
 compilador
+analizador/in_testS1_V3
+analizador/in_testS1_V2
+analizador/in_testS1_V1

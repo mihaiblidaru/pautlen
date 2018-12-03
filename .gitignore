@@ -4,3 +4,4 @@ test_hash
 *.o
 pruebaTablaSimbolos
 ts/*.o
+prueba_TS

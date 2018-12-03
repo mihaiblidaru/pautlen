@@ -6,13 +6,13 @@
 CC = gcc
 CFLAGS = -g -Wall -Wextra -Werror -O0 -std=gnu11 -I./include
 LDFLAGS = -g
-all: pruebaTablaSimbolos
+all: prueba_TS
 
-pruebaTablaSimbolos: pruebaTablaSimbolos.o ts/hash.o ts/tsa.o ts/tsc.o ts/lista.o ts/simbolo.o
+prueba_TS: prueba_TS.o ts/hash.o ts/tsa.o ts/tsc.o ts/lista.o ts/simbolo.o
 
 clean:
-	rm -f ts/*.o *.o pruebaTablaSimbolos
+	rm -f ts/*.o *.o prueba_TS
 
-test: pruebaTablaSimbolos
+test: prueba_TS
 	./$< entradaEnunciado.txt misalida.txt
 	meld misalida.txt salidaEnunciado.txt

@@ -109,6 +109,7 @@ inicioTabla:
     }
 ;
 
+
 escritura_TS:
   /* Vacio */
     { fprintf(pf, ";R:\tescritura_TS: \n");
@@ -141,7 +142,9 @@ escritura_main:
 escritura_fin:
   /* Vacio */
     { fprintf(pf, ";R:\tescritura_fin: \n");
-      escribir_fin(pf);}
+      escribir_fin(pf);
+        TSA_eliminar(tsaMain);
+      }
 ;
 
 declaraciones:
@@ -254,7 +257,7 @@ identificador:
         }
 
     }
-   
+
 ;
 
 funciones:
@@ -391,11 +394,12 @@ elemento_vector:
 
 
 condicional:
-  TOK_IF '(' exp ')' '{' sentencias '}'
+   TOK_IF '(' exp ')' '{' sentencias '}'
     { fprintf(pf, ";R:\tcondicional: TOK_IF '(' exp ')' '{' sentencias '}'\n");}
 | TOK_IF '(' exp ')' '{' sentencias '}' TOK_ELSE '{' sentencias '}'
     { fprintf(pf, ";R:\tcondicional:  TOK_IF '(' exp ')' '{' sentencias '}' TOK_ELSE '{' sentencias '}'\n");}
 ;
+
 
 
 bucle:
@@ -406,8 +410,8 @@ bucle:
 
 lectura:
   TOK_SCANF TOK_IDENTIFICADOR
-        
-    { 
+
+    {
         fprintf(pf, ";R:\tlectura: TOK_SCANF TOK_IDENTIFICADOR\n");
         int resultado = buscarIdNoCualificado(NULL, tsaMain, $2.lexema, "main", &elem, nombre_ambito_encontrado);
         if(resultado == OK){
@@ -415,8 +419,8 @@ lectura:
         }else{
             fprintf(stderr, "Identificador %s no encontrado\n", $2.lexema);
             exit(-1);
-        }  
-    
+        }
+
     }
 | TOK_SCANF elemento_vector
     { fprintf(pf, ";R:\tlectura: TOK_SCANF elemento_vector\n");}
@@ -490,7 +494,7 @@ exp:
       $$.es_direccion = 0;
       /* TODO :: Si no esta error, si son ids */}
 | TOK_IDENTIFICADOR
-    {   
+    {
         fprintf(pf, ";R:\texp: TOK_IDENTIFICADOR\n");
         int resultado = buscarIdNoCualificado(NULL, tsaMain, $1.lexema, "main", &elem, nombre_ambito_encontrado);
         if(resultado == OK){

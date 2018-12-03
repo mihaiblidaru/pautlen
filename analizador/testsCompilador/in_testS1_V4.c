@@ -1,0 +1,10 @@
+main {
+  int x;
+  x=8;
+
+  if((x == 8)){
+    printf x + 1;
+  }
+
+
+}

@@ -12,3 +12,7 @@ pruebaTablaSimbolos: pruebaTablaSimbolos.o ts/hash.o ts/tsa.o ts/tsc.o ts/lista.
 
 clean:
 	rm -f ts/*.o *.o pruebaTablaSimbolos
+
+test: pruebaTablaSimbolos
+	./$< entradaEnunciado.txt misalida.txt
+	meld misalida.txt salidaEnunciado.txt

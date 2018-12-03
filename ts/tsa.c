@@ -80,6 +80,7 @@ TSA* TSA_abrirAmbitoLocal(TSA* ts,
     info_ambito->categoria = categoria_ambito;
     info_ambito->tipo_acceso = acceso_metodo;
     info_ambito->tipo = tipo_metodo;
+    info_ambito->tipo_miembro = MIEMBRO_NO_UNICO;
     info_ambito->posicion_metodo_sobreescribible = posicion_metodo_sobre;
     info_ambito->tamanio = tamanio;
 

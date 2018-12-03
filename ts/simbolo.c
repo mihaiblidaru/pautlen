@@ -97,6 +97,15 @@ void InfoSimbolo_imprimir(FILE* out, InfoSimbolo* is) {
             fprintf(out, "DIR: %d ", is->direcciones);
             fprintf(out, "ACCESO: %d ", is->tipo_acceso);
             fprintf(out, "MIEMBRO: %d ", is->tipo_miembro);
+        }else if (is->categoria == METODO_SOBREESCRIBIBLE) {
+            char* tipo = tipo_to_str[is->tipo - 1];
+            fprintf(out, "POS METODO: %d ", is->posicion_metodo_sobreescribible);
+            fprintf(out, "Y ACUMULADA %d ", is->num_acumulado_metodos_sobreescritura);
+            fprintf(out, "TIPO: %s ", tipo);
+            fprintf(out, "CLASE: (null) ");
+            fprintf(out, "#PAR: %d #LOCAL: %d ", is->numero_parametros, is->numero_variables_locales);
+            fprintf(out, "ACCESO: %d ", is->tipo_acceso);
+            fprintf(out, "MIEMBRO: %d ", is->tipo_miembro);
         }
 
         fprintf(out, "\n");

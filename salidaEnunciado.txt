@@ -79,7 +79,7 @@ AA_a2	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 1
 AA_sa1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 1	
 
 ****************Posicion 139 ******************
-AA_mA1@1 METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 3	MIEMBRO: 2	
+AA_mA1@1 METODO SOBREESCRIBIBLE POS METODO: 0 Y ACUMULADA 0 TIPO: ENTERO CLASE: (null) #PAR: 0 #LOCAL: 0 ACCESO: 3 MIEMBRO: 2
 
 buscar declarar_id_local_metodo AA mA1@1_pmA1: No encontrado: se puede declarar
 insertar_tsc AA mA1@1_pmA1 2 1 1 3 2
@@ -87,10 +87,10 @@ insertar_tsc AA mA1@1_pmA1 2 1 1 3 2
 =================== mA1@1 =================
 
 ****************Posicion 133 ******************
-mA1@1_pmA1 PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+mA1@1_pmA1	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
 
 ****************Posicion 139 ******************
-AA_mA1@1 METODO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 3	MIEMBRO: 2	
+AA_mA1@1	METODO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 3	MIEMBRO: 2	
 
 
 =================== AA =================
@@ -174,7 +174,6 @@ mB1@1_pmB1	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	
 
 ****************Posicion 142 ******************
 BB_mB1@1	METODO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 3	MIEMBRO: 2	
-
 
 =================== BB =================
 

@@ -51,41 +51,27 @@ int main(int argc, char const* argv[]) {
     TSA* tsa_main = NULL;
     TSC* tabla_clases = NULL;
 
-    /*
-               _ . - = - . _
-           . "  \  \   /  /  " .
-         ,  \                 /  .
-       . \   _,.--~=~"~=~--.._   / .
-      ;  _.-"  / \ !   ! / \  "-._  .
-     / ,"     / ,` .---. `, \     ". \
-    /.'   `~  |   /:::::\   |  ~`   '.\
-    \`.  `~   |   \:::::/   | ~`  ~ .'/
-     \ `.  `~ \ `, `~~~' ,` /   ~`.' /
-      .  "-._  \ / !   ! \ /  _.-"  .
-       ./    "=~~.._  _..~~=`"    \.
-         ,/         ""          \,
-           . _/             \_ .
-              " - ./. .\. - "
 
-        OJO con esta variable: limita el numero de
-        lineas que lee. Solo para depuración.
-    */
-    int limite_lineas = 48;
-
-    if (argc != 2) {
-        fprintf(stderr, "Número de parametros incorrecto");
+    if (argc != 3) {
+        fprintf(stderr, "Número de parametros incorrecto\n\n");
+        fprintf(stderr, "\t%s <fichero_entrada> <fichero_salida>\n\n", argv[0]);
         return EXIT_FAILURE;
+    }
+
+    // Por defecto sacamos la salida por stderr
+    // si el segundo argumento es diferente abrimos otro fichero para la escritura
+    if(strcmp(argv[2], "stderr")){
+        out = fopen(argv[2], "w");
     }
 
     FILE* fp = fopen(argv[1], "r");
 
-    while (fgets(line, TAM_MAXIMO_LINEA, fp) && limite_lineas) {
+    while (fgets(line, TAM_MAXIMO_LINEA, fp)) {
         // elimina el caracter \n de la linea leida
         if (line[strlen(line) - 1] == '\n')
             line[strlen(line) - 1] = 0;
 
         Lista* words = tokenize(line);
-        limite_lineas--;
 
         // printf("\033[31;1;4m%s\033[0m\n", (char*)lista_get(words, 0));
 
@@ -252,7 +238,7 @@ int main(int argc, char const* argv[]) {
             } else {
                 fprintf(out, "insertar_tsa_main %s %d %d %d %d %d\n", (char*)lista_get(words, 1), categoria, tipo,
                         clase, acceso, tipo_miembro);
-                TSA_imprimir(stderr, tsa_main, NULL);
+                TSA_imprimir(out, tsa_main, NULL);
             }
 
         } else if (!strcmp(lista_get(words, 0), "abrir_clase")) {
@@ -278,7 +264,7 @@ int main(int argc, char const* argv[]) {
             if (res == OK) {
                 fprintf(out, "insertar_tsc %s %s %d %d %d %d %d\n", id_clase, clave, categoria, tipo, clase, acceso,
                         tipo_miembro);
-                imprimeTSAdeClase(stderr, tabla_clases, id_clase);
+                imprimeTSAdeClase(out, tabla_clases, id_clase);
             } else {
                 fprintf(out, "insertar_tsc %s %s: ERROR\n", id_clase, clave);
             }
@@ -370,6 +356,9 @@ int main(int argc, char const* argv[]) {
     }
     
     fclose(fp);
+
+    if(out != stderr)
+        fclose(out);
 
     return 0;
 }

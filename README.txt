@@ -14,3 +14,8 @@ terminal mediante stderr. La salida puede ser redirigida manualmente:
 
 El formato del fichero de entrada deberia ser parecido al del fichero entradaEnunciado.txt.
 
+También incluimos en esta entrega los ficheros:
+    entradaEnunciado.txt -> fichero de entrada de moodle
+    salidaEnunciado.txt -> fichero de salida de moodle
+    misalida.txt -> fichero que genera nuestro programa de prueba al   
+                     analizar el fichero de entrada entradaEnunciado.txt

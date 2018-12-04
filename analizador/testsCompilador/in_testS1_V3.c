@@ -1,12 +1,17 @@
 main {
-  int x;
-  boolean y;
+  boolean t,f;
+  int x, y, r;
 
-  scanf x;
+  x = 30;
+  y = 0;
 
-  printf x;
+  scanf t;
 
-  scanf y;
-  printf y;
+  f = false;
+  printf f;
+
+  if (y) {
+    printf x;
+  }
 
 }

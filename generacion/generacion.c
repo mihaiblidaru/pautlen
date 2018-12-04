@@ -624,44 +624,46 @@ void escribir(FILE* fpasm, int es_variable, int tipo){
   fprintf(fpasm, "\tadd esp, 4\n");
 }
 
-/******************* NUEVAS FIN GENERACION PROC ***************************
+/******************* NUEVAS FIN GENERACION PROC ***************************/
 
 void ifthenelse_inicio(FILE * fpasm, int exp_es_variable, int etiqueta){
 
   fprintf(fpasm, "\n;-> Empieza if_thenelse\n");
 
+  fprintf(fpasm, "\tpop dword eax\n");
+
   if(exp_es_variable){
-    fprintf(fpasm, "\tpop dword eax\n");
     fprintf(fpasm, "\tmov eax, [eax]\n");
   }
 
-  fprintf(fpasm, "\t cmp eax, 1");
-  fprintf(fpasm, "\t jne ife_fin_%d", etiqueta);
+  fprintf(fpasm, "\tcmp eax, 1\n");
+  fprintf(fpasm, "\tjne ife_fin_%d\n", etiqueta);
 
 }
 void ifthen_inicio(FILE * fpasm, int exp_es_variable, int etiqueta){
   fprintf(fpasm, "\n;-> Empieza if then\n");
 
-  if(es_variable){
-    fprintf(fpasm, "\tpop dword eax\n");
+  fprintf(fpasm, "\tpop dword eax\n");
+  
+  if(exp_es_variable){
     fprintf(fpasm, "\tmov eax, [eax]\n");
   }
 
-  fprintf(fpasm, "\t cmp eax, 1");
-  fprintf(fpasm, "\t jne it_fin_%d", etiqueta);
+  fprintf(fpasm, "\tcmp eax, 1\n");
+  fprintf(fpasm, "\tjne it_fin_%d\n", etiqueta);
 
 }
 void ifthen_fin(FILE * fpasm, int etiqueta){
   fprintf(fpasm, "\n;-> Final if then\n");
-  fprintf(fpasm, "\tit_fin_%d:", etiqueta);
+  fprintf(fpasm, "it_fin_%d:", etiqueta);
 }
-
+/*
 void if_exp_pila (FILE * fpasm, int exp_es_variable, int etiqueta){
 
 
 }
-
- Salta la parte de codigo del else
+*/
+ //Salta la parte de codigo del else
 void ifthenelse_fin_then( FILE * fpasm, int etiqueta){
   fprintf(fpasm, "\n;-> Final if_thenelse then\n");
   fprintf(fpasm, "\t jmp ite_fin_%d", etiqueta);
@@ -670,10 +672,10 @@ void ifthenelse_fin_then( FILE * fpasm, int etiqueta){
 
 void ifthenelse_fin( FILE * fpasm, int etiqueta){
   fprintf(fpasm, "\n;-> Final if_thenelse\n");
-  fprintf(fpasm, "\tite_fin_%d:", etiqueta);
+  fprintf(fpasm, "ite_fin_%d:", etiqueta);
 }
 
-
+/*
 void while_inicio(FILE * fpasm, int etiqueta){
 
 }

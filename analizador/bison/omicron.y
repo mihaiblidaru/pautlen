@@ -394,12 +394,31 @@ elemento_vector:
 
 
 condicional:
-   TOK_IF '(' exp ')' '{' sentencias '}'
-    { fprintf(pf, ";R:\tcondicional: TOK_IF '(' exp ')' '{' sentencias '}'\n");}
-| TOK_IF '(' exp ')' '{' sentencias '}' TOK_ELSE '{' sentencias '}'
-    { fprintf(pf, ";R:\tcondicional:  TOK_IF '(' exp ')' '{' sentencias '}' TOK_ELSE '{' sentencias '}'\n");}
+  if_exp ')' '{' sentencias '}'
+    { fprintf(pf, ";R:\tcondicional: TOK_IF '(' exp ')' '{' sentencias '}'\n");
+      ifthen_fin(pf, 1);}
+| if_exp ')' '{' sentencias '}' if_else_cierre_if TOK_ELSE '{' sentencias '}'
+    { fprintf(pf, ";R:\tcondicional:  TOK_IF '(' exp ')' '{' sentencias '}' TOK_ELSE '{' sentencias '}'\n");
+      ifthenelse_fin(pf, 1);}
 ;
 
+
+if_exp:
+  TOK_IF '(' exp
+    { ifthen_inicio(pf, $3.es_direccion, 1);}
+;
+
+/*
+if_else_exp:
+  TOK_IF '(' exp
+    { ifthenelse_inicio(pf, $3.es_direccion, 1);}
+;*/
+
+
+if_else_cierre_if:
+  /* Vacio */
+    { ifthenelse_fin_then(pf, 1);}
+;
 
 
 bucle:
@@ -450,23 +469,27 @@ exp:
       /* TODO :: ¿Seria mirar los tipos si coinciden?*/
       sumar(pf, $1.es_direccion, $3.es_direccion);
       $$.es_direccion = 0;
+      $$.valor_entero = $1.valor_entero + $3.valor_entero;
       /* TODO :: Si no esta error, si son ids */}
 | exp '-' exp
     { fprintf(pf, ";R:\texp: exp '-' exp\n");
       /* TODO :: ¿Seria mirar los tipos si coinciden?*/
       restar(pf, $1.es_direccion, $3.es_direccion);
+      $$.valor_entero = $1.valor_entero - $3.valor_entero;
       $$.es_direccion = 0;
       /* TODO :: Si no esta error, si son ids */}
 | exp '/' exp
     { fprintf(pf, ";R:\texp: exp '/' exp\n");
       /* TODO :: ¿Seria mirar los tipos si coinciden?*/
       dividir(pf, $1.es_direccion, $3.es_direccion);
+      $$.valor_entero = (int) $1.valor_entero / $3.valor_entero;
       $$.es_direccion = 0;
       /* TODO :: Si no esta error, si son ids */}
 | exp '*' exp
     { fprintf(pf, ";R:\texp: exp '*' exp\n");
       /* TODO :: ¿Seria mirar los tipos si coinciden?*/
       multiplicar(pf, $1.es_direccion, $3.es_direccion);
+      $$.valor_entero = $1.valor_entero * $3.valor_entero;
       $$.es_direccion = 0;
       /* TODO :: Si no esta error, si son ids */}
 | '-' exp %prec NEG
@@ -474,24 +497,28 @@ exp:
       /* TODO :: ¿Seria mirar los tipos si coinciden?*/
       cambiar_signo(pf, $2.es_direccion);
       $$.es_direccion = 0;
+      $$.valor_entero = $2.valor_entero * -1;
       /* TODO :: Si no esta error, si son ids */}
 | exp TOK_AND exp
     { fprintf(pf, ";R:\texp: exp TOK_AND exp\n");
       /* TODO :: ¿Seria mirar los tipos si coinciden?*/
       y(pf, $1.es_direccion, $3.es_direccion);
       $$.es_direccion = 0;
+      $$.valor_entero = $1.valor_entero && $3.valor_entero;
       /* TODO :: Si no esta error, si son ids */}
 | exp TOK_OR exp
     { fprintf(pf, ";R:\texp: exp TOK_OR exp\n");
       /* TODO :: ¿Seria mirar los tipos si coinciden?*/
       o(pf, $1.es_direccion, $3.es_direccion);
       $$.es_direccion = 0;
+      $$.valor_entero = $1.valor_entero || $3.valor_entero;
       /* TODO :: Si no esta error, si son ids */}
 | '!' exp
     { fprintf(pf, ";R:\texp: '!' exp\n");
       /* TODO :: ¿Si esta en TS?*/
       no(pf, $2.es_direccion, /*TODO :: etiqueta ¿?*/ $$.etiqueta);
       $$.es_direccion = 0;
+      $$.valor_entero = !($2.valor_entero);
       /* TODO :: Si no esta error, si son ids */}
 | TOK_IDENTIFICADOR
     {
@@ -509,11 +536,16 @@ exp:
 | constante
     { fprintf(pf, ";R:\texp: constante\n");
       $$.tipo = $1.tipo;
-      $$.es_direccion = 0;}
+      $$.es_direccion = 0;
+      $$.valor_entero = $1.valor_entero;}
 | '(' exp ')'
     { fprintf(pf, ";R:\texp: '(' exp ')'\n");}
-| '(' comparacion ')'
-    { fprintf(pf, ";R:\texp: '(' comparacion ')'\n");}
+|  '(' comparacion ')'
+    { fprintf(pf, ";R:\texp: '(' comparacion ')'\n");
+      $$.es_direccion = 0;}
+|  comparacion
+    { fprintf(pf, ";R:\texp: comparacion \n");
+      $$.es_direccion = 0;}
 | elemento_vector
     { fprintf(pf, ";R:\texp: elemento_vector\n");}
 | TOK_IDENTIFICADOR '(' lista_expresiones ')'
@@ -553,12 +585,12 @@ comparacion:
   exp TOK_IGUAL exp
     { fprintf(pf, ";R:\tcomparacion: exp TOK_IGUAL exp\n");
       /* TODO :: Si es id ver si esta en la tabla de simbolos */
-      //igual(pf, $1.es_direccion, $3.es_direccion, /*TODO :: etiqueta ¿?*/ $$.etiqueta);
+      igual(pf, $1.es_direccion, $3.es_direccion, /*TODO :: etiqueta ¿?  $$.etiqueta*/ 1);
     }
 | exp TOK_DISTINTO exp
     { fprintf(pf, ";R:\tcomparacion: exp TOK_DISTINTO exp\n");
       /* TODO :: Si es id ver si esta en la tabla de simbolos */
-      //distinto(pf, $1.es_direccion, $3.es_direccion, /*TODO :: etiqueta ¿?*/ $$.etiqueta);
+      distinto(pf, $1.es_direccion, $3.es_direccion, /*TODO :: etiqueta ¿? $$.etiqueta*/ 1);
     }
 | exp TOK_MENORIGUAL exp
     { fprintf(pf, ";R:\tcomparacion: exp TOK_MENORIGUAL exp\n");
@@ -596,12 +628,14 @@ constante:
 constante_logica:
   TOK_TRUE
     { fprintf(pf, ";R:\tconstante_logica:\tTOK_TRUE\n");
-      escribir_operando(pf, $1.lexema, 0);
-      $$.tipo = BOOLEAN;}
+      escribir_operando(pf, "1", 0);
+      $$.tipo = BOOLEAN;
+      $$.valor_entero = 1;}
 | TOK_FALSE
     { fprintf(pf, ";R:\tconstante_logica:\tTOK_FALSE\n");
-      escribir_operando(pf, $1.lexema, 0);
-      $$.tipo = BOOLEAN;}
+      escribir_operando(pf, "0", 0);
+      $$.tipo = BOOLEAN;
+      $$.valor_entero = 0;}
 ;
 
 
@@ -609,7 +643,8 @@ constante_entera:
   TOK_CONSTANTE_ENTERA
     { fprintf(pf, ";R:\tconstante_entera:\tTOK_CONSTANTE_ENTERA\n");
       escribir_operando(pf, $1.lexema, 0);
-      $$.tipo = INT;}
+      $$.tipo = INT;
+      $$.valor_entero = $1.valor_entero;}
 ;
 
 %%

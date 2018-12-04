@@ -10,7 +10,7 @@ main {
   f = false;
   printf f;
 
-  if (y) {
+  if ((x==y)) {
     printf x;
   }
 

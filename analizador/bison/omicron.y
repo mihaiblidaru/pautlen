@@ -543,9 +543,6 @@ exp:
 |  '(' comparacion ')'
     { fprintf(pf, ";R:\texp: '(' comparacion ')'\n");
       $$.es_direccion = 0;}
-|  comparacion
-    { fprintf(pf, ";R:\texp: comparacion \n");
-      $$.es_direccion = 0;}
 | elemento_vector
     { fprintf(pf, ";R:\texp: elemento_vector\n");}
 | TOK_IDENTIFICADOR '(' lista_expresiones ')'

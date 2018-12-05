@@ -408,7 +408,7 @@ condicional:
 
 
 if_exp_sentencias:
-   if_exp sentencias '}' 
+   if_exp sentencias '}'
      { fprintf(pf, ";R:\tif_exp_sentencias: if_exp sentencias\n");
        ifelse_exp_pila_finIf(pf, $1.etiqueta);
        if_ifElse_exp_pila_finIf_iniElse(pf, $1.etiqueta);}
@@ -585,32 +585,38 @@ comparacion:
   exp TOK_IGUAL exp
     { fprintf(pf, ";R:\tcomparacion: exp TOK_IGUAL exp\n");
       /* TODO :: Si es id ver si esta en la tabla de simbolos */
-      igual(pf, $1.es_direccion, $3.es_direccion, /*TODO :: etiqueta ¿?  $$.etiqueta*/ 1);
+      igual(pf, $1.es_direccion, $3.es_direccion, globalEtiqueta);
+      globalEtiqueta++;
     }
 | exp TOK_DISTINTO exp
     { fprintf(pf, ";R:\tcomparacion: exp TOK_DISTINTO exp\n");
       /* TODO :: Si es id ver si esta en la tabla de simbolos */
-      distinto(pf, $1.es_direccion, $3.es_direccion, /*TODO :: etiqueta ¿? $$.etiqueta*/ 1);
+      distinto(pf, $1.es_direccion, $3.es_direccion, globalEtiqueta);
+      globalEtiqueta++;
     }
 | exp TOK_MENORIGUAL exp
     { fprintf(pf, ";R:\tcomparacion: exp TOK_MENORIGUAL exp\n");
       /* TODO :: Si es id ver si esta en la tabla de simbolos */
-      //menor_igual(pf, $1.es_direccion, $3.es_direccion, /*TODO :: etiqueta ¿?*/ $$.etiqueta);
+      menor_igual(pf, $1.es_direccion, $3.es_direccion, globalEtiqueta);
+      globalEtiqueta++;
     }
 | exp TOK_MAYORIGUAL exp
     { fprintf(pf, ";R:\tcomparacion: exp TOK_MAYORIGUAL exp\n");
       /* TODO :: Si es id ver si esta en la tabla de simbolos */
-      //mayor_igual(pf, $1.es_direccion, $3.es_direccion, /*TODO :: etiqueta ¿?*/ $$.etiqueta);
+      mayor_igual(pf, $1.es_direccion, $3.es_direccion, globalEtiqueta);
+      globalEtiqueta++;
     }
 | exp '<' exp
     { fprintf(pf, ";R:\tcomparacion:\texp '<' exp\n");
       /* TODO :: Si es id ver si esta en la tabla de simbolos */
-      //menor(pf, $1.es_direccion, $3.es_direccion, /*TODO :: etiqueta ¿?*/ $$.etiqueta);
+      menor(pf, $1.es_direccion, $3.es_direccion, globalEtiqueta);
+      globalEtiqueta++;
     }
 | exp '>' exp
     { fprintf(pf, ";R:\tcomparacion: exp '>' exp\n");
       /* TODO :: Si es id ver si esta en la tabla de simbolos */
-      //mayor(pf, $1.es_direccion, $3.es_direccion, /*TODO :: etiqueta ¿?*/ $$.etiqueta);
+      mayor(pf, $1.es_direccion, $3.es_direccion, globalEtiqueta);
+      globalEtiqueta++;
     }
 ;
 

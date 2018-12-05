@@ -12,9 +12,9 @@ main {
   f = false;
   printf f;
 
-  if (t) {
+  if ((x==y)) {
     scanf t;
-    if (!t) {
+    if ((x==x)) {
       printf o;
     }
     else {

@@ -90,9 +90,9 @@
 %type <atributos> constante
 %type <atributos> constante_entera
 %type <atributos> constante_logica
-%type <atributos> if_exp
-%type <atributos> if_else_cierre_if
 %type <atributos> condicional
+%type <atributos> if_exp_sentencias
+%type <atributos> if_exp
 
 %start programa
 
@@ -398,29 +398,29 @@ elemento_vector:
 
 
 condicional:
-  if_exp ')' '{' sentencias '}'
-    { fprintf(pf, ";R:\tif_exp ')' '{' sentencias '}'\n");
+  if_exp sentencias '}'
+    { fprintf(pf, ";R:\tcondicional: if_exp sentencias '}'\n");
       if_ifElse_exp_pila_finIf_iniElse(pf, $1.etiqueta);}
-| if_exp ')' '{' sentencias '}' TOK_ELSE if_else_cierre_if '{' sentencias '}'
-    { fprintf(pf, ";R:\tif_exp ')' '{' sentencias '}' TOK_ELSE if_else_cierre_if '{' sentencias '}'\n");
-      ifelse_exp_pila_finElse(pf, $7.etiqueta);}
+| if_exp_sentencias TOK_ELSE '{' sentencias '}'
+    { fprintf(pf, ";R:\tcondicional: if_exp_sentencias '}' TOK_ELSE '{' sentencias '}'\n");
+      ifelse_exp_pila_finElse(pf, $1.etiqueta);}
 ;
+
+
+if_exp_sentencias:
+   if_exp sentencias '}' 
+     { fprintf(pf, ";R:\tif_exp_sentencias: if_exp sentencias\n");
+       ifelse_exp_pila_finIf(pf, $1.etiqueta);
+       if_ifElse_exp_pila_finIf_iniElse(pf, $1.etiqueta);}
+ ;
 
 
 if_exp:
-  TOK_IF '(' exp
-    { fprintf(pf, ";R:\tcondicional: TOK_IF '(' exp \n");
+  TOK_IF '(' exp ')' '{'
+    { fprintf(pf, ";R:\tif_exp: TOK_IF '(' exp ')' '{'\n");
       if_ifElse_exp_pila_iniIf(pf, $3.es_direccion, globalEtiqueta);
       $$.etiqueta = globalEtiqueta;
       globalEtiqueta++;}
-;
-
-if_else_cierre_if:
-  /* Vacio */
-    { fprintf(pf, ";R:\t \n");
-      ifelse_exp_pila_finIf(pf, globalEtiqueta);
-      $$.etiqueta = globalEtiqueta;
-      if_ifElse_exp_pila_finIf_iniElse(pf, 1);}
 ;
 
 

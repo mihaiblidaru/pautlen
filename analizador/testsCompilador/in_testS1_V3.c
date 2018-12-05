@@ -1,9 +1,11 @@
 main {
   boolean t,f;
-  int x, y, r;
+  int x, y, r, o, u;
 
   x = 30;
   y = 0;
+  o = 1;
+  u = 2;
 
   scanf t;
 
@@ -11,7 +13,13 @@ main {
   printf f;
 
   if (t) {
-    printf x;
+    scanf t;
+    if (!t) {
+      printf o;
+    }
+    else {
+      printf u;
+    }
   }
   else {
     printf y;

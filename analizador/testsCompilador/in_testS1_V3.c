@@ -10,8 +10,11 @@ main {
   f = false;
   printf f;
 
-  if ((x==y)) {
+  if (t) {
     printf x;
+  }
+  else {
+    printf y;
   }
 
 }

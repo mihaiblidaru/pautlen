@@ -16,6 +16,7 @@
   void yyerror(const char* s);
   int globalTipo = -1;
   int globalClase = -1;
+  int globalEtiqueta = 1;
   TSA* tsaMain = NULL;
 
   char nombre_ambito_insertar[200] = "main";
@@ -89,6 +90,9 @@
 %type <atributos> constante
 %type <atributos> constante_entera
 %type <atributos> constante_logica
+%type <atributos> if_exp
+%type <atributos> if_else_cierre_if
+%type <atributos> condicional
 
 %start programa
 
@@ -395,29 +399,28 @@ elemento_vector:
 
 condicional:
   if_exp ')' '{' sentencias '}'
-    { fprintf(pf, ";R:\tcondicional: TOK_IF '(' exp ')' '{' sentencias '}'\n");
-      ifthen_fin(pf, 1);}
-| if_exp ')' '{' sentencias '}' if_else_cierre_if TOK_ELSE '{' sentencias '}'
-    { fprintf(pf, ";R:\tcondicional:  TOK_IF '(' exp ')' '{' sentencias '}' TOK_ELSE '{' sentencias '}'\n");
-      ifthenelse_fin(pf, 1);}
+    { fprintf(pf, ";R:\tif_exp ')' '{' sentencias '}'\n");
+      if_ifElse_exp_pila_finIf_iniElse(pf, $1.etiqueta);}
+| if_exp ')' '{' sentencias '}' TOK_ELSE if_else_cierre_if '{' sentencias '}'
+    { fprintf(pf, ";R:\tif_exp ')' '{' sentencias '}' TOK_ELSE if_else_cierre_if '{' sentencias '}'\n");
+      ifelse_exp_pila_finElse(pf, $7.etiqueta);}
 ;
 
 
 if_exp:
   TOK_IF '(' exp
-    { ifthen_inicio(pf, $3.es_direccion, 1);}
+    { fprintf(pf, ";R:\tcondicional: TOK_IF '(' exp \n");
+      if_ifElse_exp_pila_iniIf(pf, $3.es_direccion, globalEtiqueta);
+      $$.etiqueta = globalEtiqueta;
+      globalEtiqueta++;}
 ;
-
-/*
-if_else_exp:
-  TOK_IF '(' exp
-    { ifthenelse_inicio(pf, $3.es_direccion, 1);}
-;*/
-
 
 if_else_cierre_if:
   /* Vacio */
-    { ifthenelse_fin_then(pf, 1);}
+    { fprintf(pf, ";R:\t \n");
+      ifelse_exp_pila_finIf(pf, globalEtiqueta);
+      $$.etiqueta = globalEtiqueta;
+      if_ifElse_exp_pila_finIf_iniElse(pf, 1);}
 ;
 
 

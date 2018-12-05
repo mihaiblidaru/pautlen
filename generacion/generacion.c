@@ -624,7 +624,7 @@ void escribir(FILE* fpasm, int es_variable, int tipo){
   fprintf(fpasm, "\tadd esp, 4\n");
 }
 
-/******************* NUEVAS FIN GENERACION PROC ***************************/
+/******************* NUEVAS FIN GENERACION OBJETOS ***************************/
 
 void ifthenelse_inicio(FILE * fpasm, int exp_es_variable, int etiqueta){
 
@@ -644,7 +644,7 @@ void ifthen_inicio(FILE * fpasm, int exp_es_variable, int etiqueta){
   fprintf(fpasm, "\n;-> Empieza if then\n");
 
   fprintf(fpasm, "\tpop dword eax\n");
-  
+
   if(exp_es_variable){
     fprintf(fpasm, "\tmov eax, [eax]\n");
   }
@@ -657,12 +657,7 @@ void ifthen_fin(FILE * fpasm, int etiqueta){
   fprintf(fpasm, "\n;-> Final if then\n");
   fprintf(fpasm, "it_fin_%d:", etiqueta);
 }
-/*
-void if_exp_pila (FILE * fpasm, int exp_es_variable, int etiqueta){
 
-
-}
-*/
  //Salta la parte de codigo del else
 void ifthenelse_fin_then( FILE * fpasm, int etiqueta){
   fprintf(fpasm, "\n;-> Final if_thenelse then\n");
@@ -673,6 +668,42 @@ void ifthenelse_fin_then( FILE * fpasm, int etiqueta){
 void ifthenelse_fin( FILE * fpasm, int etiqueta){
   fprintf(fpasm, "\n;-> Final if_thenelse\n");
   fprintf(fpasm, "ite_fin_%d:", etiqueta);
+}
+
+/********** Generacion de Condicionales para PROCEDURAL *****************/
+
+/* Empiece de condicional IF o IF_ELSE */
+void if_ifElse_exp_pila_iniIf (FILE * fpasm, int exp_es_variable, int etiqueta){
+
+  fprintf(fpasm, "\n;-> Empieza if_exp\n");
+
+  fprintf(fpasm, "\tpop dword eax\n");
+
+  if(exp_es_variable){
+    fprintf(fpasm, "\tmov eax, [eax]\n");
+  }
+
+  fprintf(fpasm, "\tcmp eax, 1\n");
+  fprintf(fpasm, "\tjne if_exp_fin_%d\n", etiqueta);
+}
+
+/* Escribe el fin del IF dentro de un IF_ELSE */
+void ifelse_exp_pila_finIf (FILE * fpasm, int etiqueta){
+  fprintf(fpasm, "\n;-> Final del if en If_Else\n");
+  fprintf(fpasm, "\t jmp ifelse_fin_if_%d\n", etiqueta);
+}
+
+/* Escribe el target final del if y el inicio del Else del If_Else */
+void if_ifElse_exp_pila_finIf_iniElse (FILE * fpasm, int etiqueta){
+
+  fprintf(fpasm, "\n;-> Final if then\n");
+  fprintf(fpasm, "if_exp_fin_%d:\n", etiqueta);
+}
+
+/* Escribe el fin del Else */
+void ifelse_exp_pila_finElse (FILE * fpasm, int etiqueta){
+  fprintf(fpasm, "\n;-> Final del else en If_Else\n");
+  fprintf(fpasm, "ifelse_fin_if_%d:\n", etiqueta);
 }
 
 /*

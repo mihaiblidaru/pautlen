@@ -565,7 +565,8 @@ exp:
 | '!' exp
     { fprintf(pf, ";R:\texp: '!' exp\n");
       if ($2.tipo == BOOLEAN){
-      no(pf, $2.es_direccion, /*TODO :: etiqueta ¿?*/ $$.etiqueta);
+      no(pf, $2.es_direccion, globalEtiqueta);
+      globalEtiqueta++;
       $$.es_direccion = 0;
       $$.valor_entero = !($2.valor_entero);
       } else  {
@@ -575,16 +576,17 @@ exp:
     }
 | TOK_IDENTIFICADOR
     {
-        fprintf(pf, ";R:\texp: TOK_IDENTIFICADOR\n");
-        int resultado = buscarIdNoCualificado(NULL, tsaMain, $1.lexema, "main", &elem, nombre_ambito_encontrado);
-        if(resultado == OK){
-            escribir_operando(pf, elem->clave, 1);
-            $$.tipo = elem->tipo;
-            $$.es_direccion = 1;
-        }else {
-            fprintf(stderr, "Identificador %s no encontrado\n", $1.lexema);
-            exit(-1);
-        }
+      fprintf(pf, ";R:\texp: TOK_IDENTIFICADOR\n");
+      /*  UNICO SITIO DONDE ES NECESARIO MIRAR SI EL ID ESTA EN LA TS  */
+      int resultado = buscarIdNoCualificado(NULL, tsaMain, $1.lexema, "main", &elem, nombre_ambito_encontrado);
+      if(resultado == OK){
+          escribir_operando(pf, elem->clave, 1);
+          $$.tipo = elem->tipo;
+          $$.es_direccion = 1;
+      } else {
+          fprintf(stderr, "Identificador %s no encontrado\n", $1.lexema);
+          exit(-1);
+      }
     }
 | constante
     { fprintf(pf, ";R:\texp: constante\n");
@@ -634,38 +636,81 @@ resto_lista_expresiones:
 comparacion:
   exp TOK_IGUAL exp
     { fprintf(pf, ";R:\tcomparacion: exp TOK_IGUAL exp\n");
-      igual(pf, $1.es_direccion, $3.es_direccion, globalEtiqueta);
-      globalEtiqueta++;
+      if ($1.tipo == $3.tipo){
+        igual(pf, $1.es_direccion, $3.es_direccion, globalEtiqueta);
+        globalEtiqueta++;
+        $$.tipo = BOOLEAN;
+      } else  {
+          fprintf(stderr, "Identificadores '%s' y '%s' NO son de tipos iguales.\n", $1.lexema, $3.lexema);
+          exit(-1);
+      }
     }
 | exp TOK_DISTINTO exp
     { fprintf(pf, ";R:\tcomparacion: exp TOK_DISTINTO exp\n");
-      /* TODO :: Si es id ver si esta en la tabla de simbolos */
-      distinto(pf, $1.es_direccion, $3.es_direccion, globalEtiqueta);
-      globalEtiqueta++;
+      if ($1.tipo == $3.tipo){
+        distinto(pf, $1.es_direccion, $3.es_direccion, globalEtiqueta);
+        globalEtiqueta++;
+        $$.tipo = BOOLEAN;
+      } else  {
+          fprintf(stderr, "Identificadores '%s' y '%s' NO son de tipos iguales.\n", $1.lexema, $3.lexema);
+          exit(-1);
+      }
     }
 | exp TOK_MENORIGUAL exp
     { fprintf(pf, ";R:\tcomparacion: exp TOK_MENORIGUAL exp\n");
-      /* TODO :: Si es id ver si esta en la tabla de simbolos */
-      menor_igual(pf, $1.es_direccion, $3.es_direccion, globalEtiqueta);
-      globalEtiqueta++;
+      if ($1.tipo == INT && $3.tipo == INT){
+        menor_igual(pf, $1.es_direccion, $3.es_direccion, globalEtiqueta);
+        globalEtiqueta++;
+        $$.tipo = BOOLEAN;
+      } else  {
+          if ($1.tipo != INT)
+            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $1.lexema);
+          else
+            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $3.lexema);
+          exit(-1);
+      }
     }
 | exp TOK_MAYORIGUAL exp
     { fprintf(pf, ";R:\tcomparacion: exp TOK_MAYORIGUAL exp\n");
-      /* TODO :: Si es id ver si esta en la tabla de simbolos */
-      mayor_igual(pf, $1.es_direccion, $3.es_direccion, globalEtiqueta);
-      globalEtiqueta++;
+      if ($1.tipo == INT && $3.tipo == INT){
+        mayor_igual(pf, $1.es_direccion, $3.es_direccion, globalEtiqueta);
+        globalEtiqueta++;
+        $$.tipo = BOOLEAN;
+      } else  {
+          if ($1.tipo != INT)
+            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $1.lexema);
+          else
+            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $3.lexema);
+          exit(-1);
+      }
     }
 | exp '<' exp
     { fprintf(pf, ";R:\tcomparacion:\texp '<' exp\n");
-      /* TODO :: Si es id ver si esta en la tabla de simbolos */
-      menor(pf, $1.es_direccion, $3.es_direccion, globalEtiqueta);
-      globalEtiqueta++;
+      if ($1.tipo == INT && $3.tipo == INT){
+        menor(pf, $1.es_direccion, $3.es_direccion, globalEtiqueta);
+        globalEtiqueta++;
+        $$.tipo = BOOLEAN;
+      } else  {
+          if ($1.tipo != INT)
+            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $1.lexema);
+          else
+            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $3.lexema);
+          exit(-1);
+      }
     }
 | exp '>' exp
     { fprintf(pf, ";R:\tcomparacion: exp '>' exp\n");
-      /* TODO :: Si es id ver si esta en la tabla de simbolos */
-      mayor(pf, $1.es_direccion, $3.es_direccion, globalEtiqueta);
-      globalEtiqueta++;
+      if ($1.tipo == INT && $3.tipo == INT){
+        mayor(pf, $1.es_direccion, $3.es_direccion, globalEtiqueta);
+        globalEtiqueta++;
+        $$.tipo = BOOLEAN;
+      } else  {
+          if ($1.tipo != INT)
+            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $1.lexema);
+          else
+            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $3.lexema);
+          exit(-1);
+      }
     }
 ;
 

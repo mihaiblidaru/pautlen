@@ -469,60 +469,110 @@ retorno_funcion:
 exp:
   exp '+' exp
     { fprintf(pf, ";R:\texp: exp '+' exp\n");
-      /* TODO :: ¿Seria mirar los tipos si coinciden?*/
-      sumar(pf, $1.es_direccion, $3.es_direccion);
-      $$.es_direccion = 0;
-      $$.valor_entero = $1.valor_entero + $3.valor_entero;
-      /* TODO :: Si no esta error, si son ids */}
+      if ($1.tipo == INT && $3.tipo == INT){
+        sumar(pf, $1.es_direccion, $3.es_direccion);
+        $$.es_direccion = 0;
+        $$.valor_entero = $1.valor_entero + $3.valor_entero;
+      } else  {
+          if ($1.tipo != INT)
+            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $1.lexema);
+          else
+            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $3.lexema);
+          exit(-1);
+      }
+    }
 | exp '-' exp
     { fprintf(pf, ";R:\texp: exp '-' exp\n");
-      /* TODO :: ¿Seria mirar los tipos si coinciden?*/
-      restar(pf, $1.es_direccion, $3.es_direccion);
-      $$.valor_entero = $1.valor_entero - $3.valor_entero;
-      $$.es_direccion = 0;
-      /* TODO :: Si no esta error, si son ids */}
+      if ($1.tipo == INT && $3.tipo == INT){
+        restar(pf, $1.es_direccion, $3.es_direccion);
+        $$.es_direccion = 0;
+        $$.valor_entero = $1.valor_entero - $3.valor_entero;
+      } else  {
+          if ($1.tipo != INT)
+            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $1.lexema);
+          else
+            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $3.lexema);
+          exit(-1);
+      }
+    }
 | exp '/' exp
     { fprintf(pf, ";R:\texp: exp '/' exp\n");
-      /* TODO :: ¿Seria mirar los tipos si coinciden?*/
-      dividir(pf, $1.es_direccion, $3.es_direccion);
-      $$.valor_entero = (int) $1.valor_entero / $3.valor_entero;
-      $$.es_direccion = 0;
-      /* TODO :: Si no esta error, si son ids */}
+      if ($1.tipo == INT && $3.tipo == INT){
+        dividir(pf, $1.es_direccion, $3.es_direccion);
+        $$.es_direccion = 0;
+        $$.valor_entero = (int) $1.valor_entero / $3.valor_entero;
+      } else  {
+          if ($1.tipo != INT)
+            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $1.lexema);
+          else
+            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $3.lexema);
+          exit(-1);
+      }
+    }
 | exp '*' exp
     { fprintf(pf, ";R:\texp: exp '*' exp\n");
-      /* TODO :: ¿Seria mirar los tipos si coinciden?*/
-      multiplicar(pf, $1.es_direccion, $3.es_direccion);
-      $$.valor_entero = $1.valor_entero * $3.valor_entero;
-      $$.es_direccion = 0;
-      /* TODO :: Si no esta error, si son ids */}
+      if ($1.tipo == INT && $3.tipo == INT){
+        multiplicar(pf, $1.es_direccion, $3.es_direccion);
+        $$.es_direccion = 0;
+        $$.valor_entero = $1.valor_entero * $3.valor_entero;
+      } else  {
+          if ($1.tipo != INT)
+            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $1.lexema);
+          else
+            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $3.lexema);
+          exit(-1);
+      }
+    }
 | '-' exp %prec NEG
     { fprintf(pf, ";R:\texp: '-' exp\n");
-      /* TODO :: ¿Seria mirar los tipos si coinciden?*/
-      cambiar_signo(pf, $2.es_direccion);
-      $$.es_direccion = 0;
-      $$.valor_entero = $2.valor_entero * -1;
-      /* TODO :: Si no esta error, si son ids */}
+      if ($2.tipo == INT){
+        cambiar_signo(pf, $2.es_direccion);
+        $$.es_direccion = 0;
+        $$.valor_entero = $2.valor_entero * -1;
+      } else  {
+          fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $2.lexema);
+          exit(-1);
+      }
+    }
 | exp TOK_AND exp
     { fprintf(pf, ";R:\texp: exp TOK_AND exp\n");
-      /* TODO :: ¿Seria mirar los tipos si coinciden?*/
-      y(pf, $1.es_direccion, $3.es_direccion);
-      $$.es_direccion = 0;
-      $$.valor_entero = $1.valor_entero && $3.valor_entero;
-      /* TODO :: Si no esta error, si son ids */}
+      if ($1.tipo == BOOLEAN && $3.tipo == BOOLEAN){
+        y(pf, $1.es_direccion, $3.es_direccion);
+        $$.es_direccion = 0;
+        $$.valor_entero = $1.valor_entero && $3.valor_entero;
+      } else  {
+          if ($1.tipo != BOOLEAN)
+            fprintf(stderr, "Identificador '%s' NO es de tipo booleano.\n", $1.lexema);
+          else
+            fprintf(stderr, "Identificador '%s' NO es de tipo booleano.\n", $3.lexema);
+          exit(-1);
+      }
+    }
 | exp TOK_OR exp
     { fprintf(pf, ";R:\texp: exp TOK_OR exp\n");
-      /* TODO :: ¿Seria mirar los tipos si coinciden?*/
+      if ($1.tipo == BOOLEAN && $3.tipo == BOOLEAN){
       o(pf, $1.es_direccion, $3.es_direccion);
       $$.es_direccion = 0;
       $$.valor_entero = $1.valor_entero || $3.valor_entero;
-      /* TODO :: Si no esta error, si son ids */}
+      } else  {
+        if ($1.tipo != BOOLEAN)
+          fprintf(stderr, "Identificador '%s' NO es de tipo booleano.\n", $1.lexema);
+        else
+          fprintf(stderr, "Identificador '%s' NO es de tipo booleano.\n", $3.lexema);
+        exit(-1);
+      }
+    }
 | '!' exp
     { fprintf(pf, ";R:\texp: '!' exp\n");
-      /* TODO :: ¿Si esta en TS?*/
+      if ($2.tipo == BOOLEAN){
       no(pf, $2.es_direccion, /*TODO :: etiqueta ¿?*/ $$.etiqueta);
       $$.es_direccion = 0;
       $$.valor_entero = !($2.valor_entero);
-      /* TODO :: Si no esta error, si son ids */}
+      } else  {
+          fprintf(stderr, "Identificador '%s' NO es de tipo booleano.\n", $3.lexema);
+          exit(-1);
+      }
+    }
 | TOK_IDENTIFICADOR
     {
         fprintf(pf, ";R:\texp: TOK_IDENTIFICADOR\n");
@@ -531,7 +581,7 @@ exp:
             escribir_operando(pf, elem->clave, 1);
             $$.tipo = elem->tipo;
             $$.es_direccion = 1;
-        }else{
+        }else {
             fprintf(stderr, "Identificador %s no encontrado\n", $1.lexema);
             exit(-1);
         }
@@ -584,7 +634,6 @@ resto_lista_expresiones:
 comparacion:
   exp TOK_IGUAL exp
     { fprintf(pf, ";R:\tcomparacion: exp TOK_IGUAL exp\n");
-      /* TODO :: Si es id ver si esta en la tabla de simbolos */
       igual(pf, $1.es_direccion, $3.es_direccion, globalEtiqueta);
       globalEtiqueta++;
     }

@@ -6,6 +6,9 @@ main {
   y = 0;
   o = 1;
   u = 2;
+  r = o + o;
+  
+  printf r;
 
   scanf t;
 

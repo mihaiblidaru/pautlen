@@ -45,7 +45,7 @@ bison/y.tab.c: bison/omicron.y
 
 clean:
 	rm -f *.o flex/*.o bison/*.o compilador flex/lex.yy.c misalida*.txt bison/y.* ../generacion/*.o testsCompilador/out_* testsCompilador/*.o \
-	in_testS1_V1 in_testS1_V2 in_testS1_V3 in_testS1_V4
+	testsCompilador/*.asm in_testS1_V1 in_testS1_V2 in_testS1_V3 in_testS1_V4
 
 test:
 	./pruebaSintactico test_analizador/entrada_sin_1.ol misalida1.txt

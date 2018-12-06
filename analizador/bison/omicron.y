@@ -93,6 +93,10 @@
 %type <atributos> condicional
 %type <atributos> if_exp_sentencias
 %type <atributos> if_exp
+%type <atributos> while
+%type <atributos> while_exp
+%type <atributos> bucle
+%type <atributos> comparacion
 
 %start programa
 
@@ -411,7 +415,8 @@ if_exp_sentencias:
    if_exp sentencias '}'
      { fprintf(pf, ";R:\tif_exp_sentencias: if_exp sentencias\n");
        ifelse_exp_pila_finIf(pf, $1.etiqueta);
-       if_ifElse_exp_pila_finIf_iniElse(pf, $1.etiqueta);}
+       if_ifElse_exp_pila_finIf_iniElse(pf, $1.etiqueta);
+       $$.etiqueta = $1.etiqueta;}
  ;
 
 
@@ -424,9 +429,27 @@ if_exp:
 ;
 
 
+while:
+  TOK_WHILE '('
+    { fprintf(pf, ";R:\twhile: TOK_WHILE '('\n");
+      while_inicio(pf, globalEtiqueta);
+      $$.etiqueta = globalEtiqueta;
+      globalEtiqueta++;}
+;
+
+
+while_exp:
+  while exp ')' '{'
+    { fprintf(pf, ";R:\twhile_exp: while_exp ')' '{'\n");
+      while_exp_pila(pf, $2.es_direccion, $1.etiqueta);
+      $$.etiqueta = $1.etiqueta;}
+;
+
+
 bucle:
-  TOK_WHILE '(' exp ')' '{' sentencias '}'
-    { fprintf(pf, ";R:\tbucle: TOK_WHILE '(' exp ')' '{' sentencias '}'\n");}
+   while_exp sentencias '}'
+    { fprintf(pf, ";R:\tbucle: while_exp sentencias '}'\n");
+      while_fin(pf, $1.etiqueta);}
 ;
 
 
@@ -570,7 +593,7 @@ exp:
       $$.es_direccion = 0;
       $$.valor_entero = !($2.valor_entero);
       } else  {
-          fprintf(stderr, "Identificador '%s' NO es de tipo booleano.\n", $3.lexema);
+          fprintf(stderr, "Identificador '%s' NO es de tipo booleano.\n", $2.lexema);
           exit(-1);
       }
     }
@@ -724,7 +747,7 @@ constante:
     $$.tipo = $1.tipo;}
 ;
 
-/* TODO :: Subir los valores para arriba para la TS */
+
 constante_logica:
   TOK_TRUE
     { fprintf(pf, ";R:\tconstante_logica:\tTOK_TRUE\n");

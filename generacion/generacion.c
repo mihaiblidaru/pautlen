@@ -673,7 +673,7 @@ void ifthenelse_fin( FILE * fpasm, int etiqueta){
 /********** Generacion de Condicionales para PROCEDURAL *****************/
 
 /* Empiece de condicional IF o IF_ELSE */
-void if_ifElse_exp_pila_iniIf (FILE * fpasm, int exp_es_variable, int etiqueta){
+void if_ifElse_exp_pila_iniIf(FILE * fpasm, int exp_es_variable, int etiqueta){
 
   fprintf(fpasm, "\n;-> Empieza if_exp\n");
 
@@ -688,36 +688,56 @@ void if_ifElse_exp_pila_iniIf (FILE * fpasm, int exp_es_variable, int etiqueta){
 }
 
 /* Escribe el fin del IF dentro de un IF_ELSE */
-void ifelse_exp_pila_finIf (FILE * fpasm, int etiqueta){
+void ifelse_exp_pila_finIf(FILE * fpasm, int etiqueta){
   fprintf(fpasm, "\n;-> Final del if en If_Else\n");
   fprintf(fpasm, "\t jmp ifelse_fin_if_%d\n", etiqueta);
 }
 
 /* Escribe el target final del if y el inicio del Else del If_Else */
-void if_ifElse_exp_pila_finIf_iniElse (FILE * fpasm, int etiqueta){
+void if_ifElse_exp_pila_finIf_iniElse(FILE * fpasm, int etiqueta){
 
   fprintf(fpasm, "\n;-> Final if then\n");
   fprintf(fpasm, "if_exp_fin_%d:\n", etiqueta);
 }
 
 /* Escribe el fin del Else */
-void ifelse_exp_pila_finElse (FILE * fpasm, int etiqueta){
+void ifelse_exp_pila_finElse(FILE * fpasm, int etiqueta){
   fprintf(fpasm, "\n;-> Final del else en If_Else\n");
   fprintf(fpasm, "ifelse_fin_if_%d:\n", etiqueta);
 }
 
-/*
+
 void while_inicio(FILE * fpasm, int etiqueta){
 
+  fprintf(fpasm, "\n;-> Empieza la comprobacion del While\n");
+  fprintf(fpasm, "while_exp_comp_%d:\n", etiqueta);
 }
-void while_exp_pila (FILE * fpasm, int exp_es_variable, int etiqueta){
 
 
+void while_exp_pila(FILE * fpasm, int exp_es_variable, int etiqueta){
+
+  fprintf(fpasm, "\n;-> Empieza while_exp\n");
+
+  fprintf(fpasm, "\tpop dword eax\n");
+
+  if(exp_es_variable){
+    fprintf(fpasm, "\tmov eax, [eax]\n");
+  }
+
+  fprintf(fpasm, "\tcmp eax, 1\n");
+  fprintf(fpasm, "\tjne while_exp_fin_%d\n", etiqueta);
 }
-void while_fin( FILE * fpasm, int etiqueta){
 
+void while_fin(FILE * fpasm, int etiqueta){
 
+  fprintf(fpasm, "\n;-> Vuelta a la comprobacion del While\n");
+  fprintf(fpasm, "\tjmp while_exp_comp_%d\n", etiqueta);
+
+  fprintf(fpasm, "\n;-> Final while\n");
+  fprintf(fpasm, "while_exp_fin_%d:\n", etiqueta);
 }
+
+/*
 void escribir_elemento_vector(FILE * fpasm,char * nombre_vector, int tam_max, int exp_es_direccion, char * eax, char * edx){
 
 

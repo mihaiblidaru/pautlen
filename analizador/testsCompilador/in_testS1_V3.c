@@ -7,25 +7,10 @@ main {
   o = 1;
   u = 2;
   r = o + o;
-  
-  printf r;
 
-  scanf t;
-
-  f = false;
-  printf f;
-
-  if ((x==y)) {
-    scanf t;
-    if ((x==x)) {
-      printf o;
-    }
-    else {
-      printf u;
-    }
-  }
-  else {
+  while((y<=3)){
     printf y;
+    y = y + 1;
   }
 
 }

@@ -277,10 +277,26 @@ funciones:
 
 
 funcion:
-  TOK_FUNCTION modificadores_acceso tipo_retorno TOK_IDENTIFICADOR '(' parametros_funcion ')' '{' declaraciones_funcion sentencias '}'
-    { fprintf(pf, ";R:\tfuncion: TOK_FUNCTION modificadores_acceso tipo_retorno TOK_IDENTIFICADOR '(' parametros_funcion ')' '{' declaraciones_funcion sentencias '}'\n");}
+	fn_declaration sentencias '}'
+  /*TOK_FUNCTION modificadores_acceso tipo_retorno TOK_IDENTIFICADOR '(' parametros_funcion ')' '{' declaraciones_funcion sentencias '}'
+    { fprintf(pf, ";R:\tfuncion: TOK_FUNCTION modificadores_acceso tipo_retorno TOK_IDENTIFICADOR '(' parametros_funcion ')' '{' declaraciones_funcion sentencias '}'\n");}*/
 ;
 
+fn_declaration:
+	fn_complete_name '{' declaraciones_funcion
+;
+
+fn_complete_name: 
+	fn_name '(' parametros_funcion ')'
+;
+
+fn_name:
+	TOK_FUNCTION modificadores_acceso tipo_retorno TOK_IDENTIFICADOR
+;
+
+idpf:
+	TOK_IDENTIFICADOR
+;
 
 tipo_retorno:
   TOK_NONE
@@ -309,8 +325,8 @@ resto_parametros_funcion:
 
 
 parametro_funcion:
-  tipo TOK_IDENTIFICADOR
-    { fprintf(pf, ";R:\tparametro_funcion: tipo TOK_IDENTIFICADOR\n"); }
+  tipo idpf
+    { fprintf(pf, ";R:\tparametro_funcion: tipo idpf\n"); }
 | clase_objeto TOK_IDENTIFICADOR
     { fprintf(pf, ";R:\tparametro_funcion: clase_objeto TOK_IDENTIFICADOR\n"); }
 ;

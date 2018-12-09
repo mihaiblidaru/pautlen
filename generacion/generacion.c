@@ -741,21 +741,70 @@ void while_fin(FILE * fpasm, int etiqueta){
 void escribir_elemento_vector(FILE * fpasm,char * nombre_vector, int tam_max, int exp_es_direccion, char * eax, char * edx){
 
 
-}
+}*/
 void declararFuncion(FILE * fd_s, char * nombre_funcion, int num_var_loc){
 
+	fprintf(fd_s, "\n; Declaramos la funcion\n");
+	fprintf(fd_s, "\t_%s:\n");
+
+	fprintf(fd_s, "\tpush ebp \n");
+	fprintf(fd_s, "\tmov ebp, esp \n");
+
+	if(num_var_loc){
+		fprintf(fd_s, "\tsub esp, %d\n" 4*num_var_loc);
+	}
+	
 
 }
 void retornarFuncion(FILE * fd_s, int es_variable){
 
+	fprintf(fd_s, "\n; Retornamos la funcion\n");
+
+	if(es_variable){
+		fprintf(fd_s, "\tpop dword eax \n");
+	/*fprintf(fd_s, "\t mov eax, [eax]\n");*/
+	}
+
+	fprintf(fd_s, "\tmov esp, ebp \n");
+	fprintf(fd_s, "\tpop ebp \n");
+	fprintf(fd_s, "\tret\n");
+
 
 }
+/*Función para dejar en la cima de la pila la dirección efectiva del parámetro que ocupa la posición pos_parametro 
+	(recuerda que los parámetros se ordenan con origen 0) de un total de num_total_parametros*/
 void escribirParametro(FILE* fpasm, int pos_parametro, int num_total_parametros){
 
+	fprintf(fpasm, "\n; Escribimos parametros\n");
 
+
+	fprintf(fpasm, "\tlea ebx, [ebp + %d] \n" , 4 + 4*(num_total_parametros - pos_parametro));
+	fprintf(fpasm, "\tpush dword ebx \n");
 }
+/* Función para dejar en la cima de la pila la dirección efectiva de la variable local que ocupa la posición posicion_variable_local 
+(recuerda que ordenadas con origen 1) */
 void escribirVariableLocal(FILE* fpasm, int posicion_variable_local){
 
+	fprintf(fpasm, "\n; Escribimos variable local \n");
 
+	fprintf(fpasm, "\lea ebx, [ebp - %d] \n" , 4*posicion_variable_local);
+	fprintf(fpasm, "\tpush dword ebx \n");
+}
 
-}*/
+void limpiarPila(FILE * fd_asm, int num_argumentos){
+	
+	fprintf(fd_asm, "\n; Limpiamos la pila previo a retornar la funcion\n");
+
+	fprintf(fd_asm, "\tadd esp, %d \n", 4 * num_argumentos);
+	
+}
+
+/*Esta función genera código para llamar a la función nombre_funcion asumiendo que los argumentos están en la pila en el orden fijado en el material de la asignatura.*/
+void llamarFuncion(FILE * fd_asm, char * nombre_funcion, int num_argumentos){
+	
+	fprintf(fd_asm, "\n; Llamamos a la funcion\n");
+
+	fprintf(fd_asm, "\tcall _%s \n", nombre_funcion);
+	fprintf(fd_asm, "\tadd esp, %d" 4*num_argumentos);
+	fprintf(fd_asm, "\tpush dword eax\n");
+}

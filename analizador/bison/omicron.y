@@ -25,6 +25,19 @@
 
   InfoSimbolo* elem = NULL;
   char nombre_ambito_encontrado[1000];
+
+  char nombre_funcion_aux[1000];
+  struct _fn_atributes{
+    int pos_parametro_actual = -1;
+    int num_parametros_actual = 0;
+    int num_variables_locales_actual = 0;
+    int pos_variable_local_actual = 1;
+    int fn_return = 0;
+    int en_explist = 0;
+    int tamanio_vector_actual = 0;
+    Lista* lista_nombres = NULL;
+    Lista* lista_tipos = NULL;
+  }fn_atributes;
 %}
 
 /* PALABRAS RESERVADAS */
@@ -173,19 +186,39 @@ declaracion:
 
 modificadores_acceso:
   TOK_HIDDEN TOK_UNIQUE
-    { fprintf(pf, ";R:\tmodificadores_acceso: TOK_HIDDEN TOK_UNIQUE\n");}
+    { fprintf(pf, ";R:\tmodificadores_acceso: TOK_HIDDEN TOK_UNIQUE\n");
+    $$.tipo_miembro = MIEMBRO_UNICO;
+    $$.tipo_acceso = ACCESO_HIDDEN;
+    }
 | TOK_SECRET TOK_UNIQUE
-    { fprintf(pf, ";R:\tmodificadores_acceso: TOK_SECRET TOK_UNIQUE\n");}
+    { fprintf(pf, ";R:\tmodificadores_acceso: TOK_SECRET TOK_UNIQUE\n");
+      $$.tipo_miembro = MIEMBRO_UNICO;
+      $$.tipo_acceso = ACCESO_SECRET;
+
+    }
 | TOK_EXPOSED TOK_UNIQUE
-    { fprintf(pf, ";R:\tmodificadores_acceso: TOK_EXPOSED TOK_UNIQUE\n");}
+    { fprintf(pf, ";R:\tmodificadores_acceso: TOK_EXPOSED TOK_UNIQUE\n");
+      $$.tipo_miembro = MIEMBRO_UNICO;
+      $$.tipo_acceso = ACCESO_EXPOSED;
+    }
 | TOK_HIDDEN
-    { fprintf(pf, ";R:\tmodificadores_acceso: TOK_HIDDEN\n");}
+    { fprintf(pf, ";R:\tmodificadores_acceso: TOK_HIDDEN\n");
+      $$.tipo_acceso = ACCESO_EXPOSED;;
+    }
 | TOK_SECRET
-    { fprintf(pf, ";R:\tmodificadores_acceso: TOK_SECRET\n");}
+    { fprintf(pf, ";R:\tmodificadores_acceso: TOK_SECRET\n");
+      $$.tipo_acceso = ACCESO_SECRET;
+    }
 | TOK_EXPOSED
-    { fprintf(pf, ";R:\tmodificadores_acceso: TOK_EXPOSED\n");}
+    { fprintf(pf, ";R:\tmodificadores_acceso: TOK_EXPOSED\n");
+    $$.tipo_acceso = ACCESO_EXPOSED;
+
+    }
 | TOK_UNIQUE
-    { fprintf(pf, ";R:\tmodificadores_acceso: TOK_UNIQUE\n");}
+    { fprintf(pf, ";R:\tmodificadores_acceso: TOK_UNIQUE\n");
+    $$.tipo_miembro = MIEMBRO_UNICO;
+    $$.tipo_acceso = ACCESO_EXPOSED;;
+    }
 | /* Vacio */
     { fprintf(pf, ";R:\tmodificadores_acceso:\n");}
 ;
@@ -279,23 +312,79 @@ funciones:
 funcion:
 	fn_declaration sentencias '}'
   /*TOK_FUNCTION modificadores_acceso tipo_retorno TOK_IDENTIFICADOR '(' parametros_funcion ')' '{' declaraciones_funcion sentencias '}'
-    { fprintf(pf, ";R:\tfuncion: TOK_FUNCTION modificadores_acceso tipo_retorno TOK_IDENTIFICADOR '(' parametros_funcion ')' '{' declaraciones_funcion sentencias '}'\n");}*/
+    { fprintf(pf, ";R:\tfuncion: TOK_FUNCTION modificadores_acceso tipo_retorno TOK_IDENTIFICADOR '(' parametros_funcion ')' '{' declaraciones_funcion sentencias '}'\n");
+
+
+
+
+    }*/
 ;
 
 fn_declaration:
-	fn_complete_name '{' declaraciones_funcion
+	fn_complete_name '{' declaraciones_funcion{
+    fprintf(pf, ";R:\t fn_declaration: fn_complete_name { declaraciones_funcion\n");
+  }
 ;
 
-fn_complete_name: 
-	fn_name '(' parametros_funcion ')'
+fn_complete_name:
+	fn_name '(' parametros_funcion ')'{
+    fprintf(pf, ";R:\t fn_complete_name: fn_name ( parametros_funcion ) \n");
+    sprintf(nombre_funcion_aux, "main_%s", $1.lexema);
+
+    for(int i; i < fn_atributes.num_parametros_actual; i++){
+      sprintf(nombre_funcion_aux, "%s@%d", nombre_funcion_aux, *((int*)lista_get(fn_atributes.lista_tipos, i)));
+    }
+
+    if(buscarParaDeclararIdTablaSimbolosAmbitos(tsaMain, nombre_funcion_aux, &elem, nombre_ambito_encontrado) == ERR){
+      abrirAmbitoMain(tsaMain, nombre_funcion_aux, FUNCION, $1.tipo_acceso, 5, 0, DEF_TAM);
+      void declararFuncion(pf , $1.lexema,  fn_atributes.num_parametros_actual);
+    }else{
+      fprintf(stderr, "Funcion ya declaradab \n", $1.lexema);
+      exit(-1);
+    }
+  }
 ;
 
 fn_name:
-	TOK_FUNCTION modificadores_acceso tipo_retorno TOK_IDENTIFICADOR
+	TOK_FUNCTION modificadores_acceso tipo_retorno TOK_IDENTIFICADOR{
+  fprintf(pf, ";R:\t fn_name: TOK_FUNCTION modificadores_acceso tipo_retorno TOK_IDENTIFICADOR \n");
+
+  $$.tipo_acceso = $2.tipo_acceso;
+  $$.tipo_miembro = $2.tipo_miembro;
+  $$.lexema = $4;
+
+  fn_atributes.pos_parametro_actual = 0;
+  fn_atributes.num_parametros_actual = 0;
+  fn_atributes.num_variables_locales_actual = 0;
+  fn_atributes.pos_variable_local_actual = 1;
+  fn_atributes.fn_return = 0;
+  fn_atributes.en_explist = 0;
+  fn_atributes.tamanio_vector_actual = 0;
+  if(fn_atributes.lista_nombres == NULL){
+    fn_atributes.lista_nombres = lista_crear();
+  }else{
+    lista_free(fn_atributes.lista_nombres, free);
+    fn_atributes.lista_nombres = lista_crear();
+  }
+
+  if(fn_atributes.lista_tipos == NULL){
+    fn_atributes.lista_tipos = lista_crear();
+  }else{
+    lista_free(fn_atributes.lista_tipos, free);
+    fn_atributes.lista_tipos = lista_crear();
+  }
+
+  }
 ;
 
 idpf:
-	TOK_IDENTIFICADOR
+	TOK_IDENTIFICADOR{
+  fprintf(pf, ";R:\t idpf: TOK_IDENTIFICADOR \n");
+  lista_addstr(fn_atributes.lista_nombres, $1);
+  lista_addint(fn_atributes.lista_tipos, globalTipo);
+  fn_atributes.num_parametros_actual +=1;
+  fn_atributes.pos_parametro_actual +=1;
+  }
 ;
 
 tipo_retorno:
@@ -499,7 +588,9 @@ escritura:
 
 retorno_funcion:
   TOK_RETURN exp
-    { fprintf(pf, ";R:\tretorno_funcion: TOK_RETURN exp\n");}
+    { fprintf(pf, ";R:\tretorno_funcion: TOK_RETURN exp\n");
+      retornarFuncion(pf, int es_variable);
+    }
 | TOK_RETURN TOK_NONE
     { fprintf(pf, ";R:\tretorno_funcion: TOK_RETURN TOK_NONE\n");}
 ;
@@ -639,14 +730,22 @@ exp:
       $$.es_direccion = 0;}
 | elemento_vector
     { fprintf(pf, ";R:\texp: elemento_vector\n");}
-| TOK_IDENTIFICADOR '(' lista_expresiones ')'
-    { fprintf(pf, ";R:\texp: TOK_IDENTIFICADOR '(' lista_expresiones ')'\n");}
+| id_llamada_funcion '(' lista_expresiones ')'
+    { fprintf(pf, ";R:\texp: id_llamada_funcion '(' lista_expresiones ')'\n");
+      llamarFuncion(pf, char * nombre_funcion, int num_argumentos);
+    }
 | identificador_clase '.' TOK_IDENTIFICADOR '(' lista_expresiones ')'
     { fprintf(pf, ";R:\texp: identificador_clase '.' TOK_IDENTIFICADOR   '(' lista_expresiones ')'\n");}
 | identificador_clase '.' TOK_IDENTIFICADOR
     { fprintf(pf, ";R:\texp: identificador_clase '.' TOK_IDENTIFICADOR\n");}
 ;
 
+id_llamada_funcion:
+  TOK_IDENTIFICADOR
+  {
+    fprintf(pf, ";R:\t id_llamada_funcion: TOK_IDENTIFICADOR\n");
+  }
+;
 
 identificador_clase:
   TOK_IDENTIFICADOR

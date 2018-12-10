@@ -1,0 +1,466 @@
+inicia_tsc
+inicia_tsa_main
+abrir_ambito_ppal_main
+buscar declarar_main main_varGlob: No encontrado: se puede declarar
+insertar_tsa_main main_varGlob 1 1 1 3 2
+
+=================== main =================
+
+****************Posicion 93 ******************
+main_main	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+
+****************Posicion 178 ******************
+main_varGlob	VARIABLE	POS_LOCAL: 0	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+abrir_clase AA.
+buscar declarar_miembro_instancia AA AA_inspub: No encontrado: se puede declarar
+insertar_tsc AA AA_inspub 8 0 5 3 2
+
+=================== AA =================
+
+****************Posicion 38 ******************
+AA_inspub	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_miembro_instancia AA AA_inspriv: No encontrado: se puede declarar
+insertar_tsc AA AA_inspriv 8 0 5 2 2
+
+=================== AA =================
+
+****************Posicion 38 ******************
+AA_inspub	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+
+****************Posicion 160 ******************
+AA_inspriv	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+buscar declarar_miembro_instancia AA AA_insprot: No encontrado: se puede declarar
+insertar_tsc AA AA_insprot 8 0 5 1 2
+
+=================== AA =================
+
+****************Posicion 38 ******************
+AA_inspub	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+
+****************Posicion 160 ******************
+AA_inspriv	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 164 ******************
+AA_insprot	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 1	MIEMBRO: 2	
+buscar declarar_miembro_clase AA AA_clasepub: No encontrado: se puede declarar
+insertar_tsc AA AA_clasepub 7 0 5 3 1
+
+=================== AA =================
+
+****************Posicion 17 ******************
+AA_clasepub	ATRIBUTO CLASE	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 38 ******************
+AA_inspub	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+
+****************Posicion 160 ******************
+AA_inspriv	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 164 ******************
+AA_insprot	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 1	MIEMBRO: 2	
+buscar declarar_miembro_clase AA AA_clasepriv: No encontrado: se puede declarar
+insertar_tsc AA AA_clasepriv 7 0 5 2 1
+
+=================== AA =================
+
+****************Posicion 17 ******************
+AA_clasepub	ATRIBUTO CLASE	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 38 ******************
+AA_inspub	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 139 ******************
+AA_clasepriv	ATRIBUTO CLASE	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+
+****************Posicion 160 ******************
+AA_inspriv	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 164 ******************
+AA_insprot	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 1	MIEMBRO: 2	
+buscar declarar_miembro_clase AA AA_claseprot: No encontrado: se puede declarar
+insertar_tsc AA AA_claseprot 7 0 5 1 1
+
+=================== AA =================
+
+****************Posicion 17 ******************
+AA_clasepub	ATRIBUTO CLASE	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 38 ******************
+AA_inspub	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 139 ******************
+AA_clasepriv	ATRIBUTO CLASE	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 143 ******************
+AA_claseprot	ATRIBUTO CLASE	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+
+****************Posicion 160 ******************
+AA_inspriv	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 164 ******************
+AA_insprot	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 1	MIEMBRO: 2	
+buscar declarar_miembro_instancia AA AA_miaa: No encontrado: se puede declarar
+insertar_tsc AA AA_miaa 8 0 5 3 2
+
+=================== AA =================
+
+****************Posicion 0 ******************
+AA_miaa	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 17 ******************
+AA_clasepub	ATRIBUTO CLASE	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 38 ******************
+AA_inspub	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 139 ******************
+AA_clasepriv	ATRIBUTO CLASE	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 143 ******************
+AA_claseprot	ATRIBUTO CLASE	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+
+****************Posicion 160 ******************
+AA_inspriv	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 164 ******************
+AA_insprot	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 1	MIEMBRO: 2	
+buscar declarar_miembro_instancia AA AA_prueba: No encontrado: se puede declarar
+abrir_ambito_tsc AA AA_prueba 5 3 2 2
+
+=================== prueba =================
+
+****************Posicion 20 ******************
+AA_prueba	METODO SOBREESCRIBIBLE	TIPO: BOOLEAN	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 2	MIEMBRO: 2	
+
+=================== AA =================
+
+****************Posicion 0 ******************
+AA_miaa	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 17 ******************
+AA_clasepub	ATRIBUTO CLASE	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 20 ******************
+AA_prueba	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: BOOLEAN	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 38 ******************
+AA_inspub	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 139 ******************
+AA_clasepriv	ATRIBUTO CLASE	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 143 ******************
+AA_claseprot	ATRIBUTO CLASE	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+
+****************Posicion 160 ******************
+AA_inspriv	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 164 ******************
+AA_insprot	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 1	MIEMBRO: 2	
+buscar id_cualificado_instancia miaa inspriv AA: Encontrado en AA
+buscar id_cualificado_instancia miaa insprot AA: Encontrado en AA
+buscar id_cualificado_instancia miaa inspub AA: Encontrado en AA
+buscar id_cualificado_instancia miaa inspubnoexiste AA: No encontrado
+buscar id_cualificado_clase AA claseprot AA: Encontrado en AA
+buscar id_cualificado_clase AA clasepub AA: Encontrado en AA
+buscar id_cualificado_clase AA clasepriv AA: Encontrado en AA
+cerrar_ambito_tsc AA.
+cerrar_clase AA.
+abrir_clase_hereda BB	AA	
+buscar declarar_miembro_instancia BB BB_mibb: No encontrado: se puede declarar
+insertar_tsc BB BB_mibb 8 -1 5 3 2
+
+=================== BB =================
+
+****************Posicion 4 ******************
+BB_mibb	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 148 ******************
+BB_BB	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+cerrar_clase BB.
+buscar declarar_main main_MainMiBB: No encontrado: se puede declarar
+insertar_tsa_main main_MainMiBB 8 -1 5 3 2
+
+=================== main =================
+
+****************Posicion 93 ******************
+main_main	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+
+****************Posicion 164 ******************
+main_MainMiBB	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 178 ******************
+main_varGlob	VARIABLE	POS_LOCAL: 0	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+buscar declarar_main main_MainMiBB2: No encontrado: se puede declarar
+insertar_tsa_main main_MainMiBB2 8 -1 5 3 2
+
+=================== main =================
+
+****************Posicion 3 ******************
+main_MainMiBB2	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 93 ******************
+main_main	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+
+****************Posicion 164 ******************
+main_MainMiBB	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 178 ******************
+main_varGlob	VARIABLE	POS_LOCAL: 0	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+buscar id_cualificado_instancia MainMiBB insnoexiste main: No encontrado
+abrir_clase CC.
+buscar declarar_miembro_instancia CC CC_micc: No encontrado: se puede declarar
+insertar_tsc CC CC_micc 8 -2 5 3 2
+
+=================== CC =================
+
+****************Posicion 8 ******************
+CC_micc	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 152 ******************
+CC_CC	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+cerrar_clase CC.
+abrir_clase_hereda DD	AA	CC	
+buscar declarar_miembro_instancia DD DD_midd: No encontrado: se puede declarar
+insertar_tsc DD DD_midd 8 -3 5 3 2
+
+=================== DD =================
+
+****************Posicion 12 ******************
+DD_midd	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 156 ******************
+DD_DD	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+cerrar_clase DD.
+abrir_clase_hereda EE	BB	DD	
+buscar declarar_miembro_instancia EE EE_miee: No encontrado: se puede declarar
+insertar_tsc EE EE_miee 8 -4 5 3 2
+
+=================== EE =================
+
+****************Posicion 16 ******************
+EE_miee	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 160 ******************
+EE_EE	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_miembro_instancia EE EE_mE: No encontrado: se puede declarar
+abrir_ambito_tsc EE EE_mE 5 1 3 2
+
+=================== mE =================
+
+****************Posicion 200 ******************
+EE_mE	METODO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 3	MIEMBRO: 2	
+
+=================== EE =================
+
+****************Posicion 16 ******************
+EE_miee	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 160 ******************
+EE_EE	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+
+****************Posicion 200 ******************
+EE_mE	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 3	MIEMBRO: 2	
+buscar declarar_id_local_metodo EE mE_varLoc: No encontrado: se puede declarar
+insertar_tsc EE mE_varLoc 4 -4 5 3 2
+
+=================== mE =================
+
+****************Posicion 44 ******************
+mE_varLoc	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+
+****************Posicion 200 ******************
+EE_mE	METODO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 3	MIEMBRO: 2	
+
+=================== EE =================
+
+****************Posicion 16 ******************
+EE_miee	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 160 ******************
+EE_EE	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+
+****************Posicion 200 ******************
+EE_mE	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 3	MIEMBRO: 2	
+buscar id_cualificado_clase EE claseprot EE: Encontrado en AA
+buscar id_cualificado_clase EE clasepriv EE: No encontrado
+buscar id_cualificado_clase EE clasepub EE: Encontrado en AA
+buscar id_cualificado_clase EE clasenoexiste EE: No encontrado
+buscar id_cualificado_clase noExiste claseNoExiste EE: No encontrado
+buscar id_cualificado_instancia MainMiBB2 inspubnoexiste EE: No encontrado
+buscar id_cualificado_instancia MainMiBB2 inspriv EE: No encontrado
+buscar id_cualificado_instancia varLoc inspubnoexiste EE: No encontrado
+buscar id_cualificado_instancia varLoc inspriv EE: No encontrado
+buscar id_cualificado_instancia varLoc inspub EE: Encontrado en AA
+buscar id_cualificado_instancia miee inspub EE: Encontrado en AA
+buscar id_cualificado_instancia miee insprot EE: Encontrado en AA
+cerrar_ambito_tsc EE.
+cerrar_clase EE.
+abrir_clase_hereda FF	CC	EE	
+buscar declarar_miembro_instancia FF FF_miff: No encontrado: se puede declarar
+insertar_tsc FF FF_miff 8 -5 5 3 2
+
+=================== FF =================
+
+****************Posicion 20 ******************
+FF_miff	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 164 ******************
+FF_FF	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+cerrar_clase FF.
+buscar declarar_main prueba: No encontrado: se puede declarar
+abrir_ambito_tsa_main main_prueba 1.
+
+=================== prueba =================
+
+****************Posicion 100 ******************
+main_prueba	FUNCION	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 0	MIEMBRO: 0	
+
+=================== main =================
+
+****************Posicion 3 ******************
+main_MainMiBB2	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 93 ******************
+main_main	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+
+****************Posicion 100 ******************
+main_prueba	FUNCION	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 0	MIEMBRO: 0	
+
+****************Posicion 164 ******************
+main_MainMiBB	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 178 ******************
+main_varGlob	VARIABLE	POS_LOCAL: 0	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+buscar id_cualificado_clase AA clasepriv main: No encontrado
+buscar id_cualificado_clase AA clasepub main: Encontrado en AA
+buscar id_cualificado_clase AA claseNoExiste main: No encontrado
+buscar id_cualificado_clase noExiste claseNoExiste main: No encontrado
+buscar id_cualificado_instancia MainMiBBC2 inspriv main: No encontrado
+buscar id_cualificado_instancia MainMiBBD2 insNoExiste main: No encontrado
+cerrar_ambito_tsa_main.
+abrir_ambito_tsa_main main_f2 1.
+
+=================== f2 =================
+
+****************Posicion 35 ******************
+main_f2	FUNCION	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 0	MIEMBRO: 0	
+
+=================== main =================
+
+****************Posicion 3 ******************
+main_MainMiBB2	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 35 ******************
+main_f2	FUNCION	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 0	MIEMBRO: 0	
+
+****************Posicion 93 ******************
+main_main	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+
+****************Posicion 100 ******************
+main_prueba	FUNCION	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 0	MIEMBRO: 0	
+
+****************Posicion 164 ******************
+main_MainMiBB	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 178 ******************
+main_varGlob	VARIABLE	POS_LOCAL: 0	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+buscar declarar_id_local_metodo main f2_varLoc: No encontrado: se puede declarar
+insertar_tsa_main f2_varLoc 4 -1 5 3 2
+
+=================== f2 =================
+
+****************Posicion 18 ******************
+f2_varLoc	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+
+****************Posicion 35 ******************
+main_f2	FUNCION	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 0	MIEMBRO: 0	
+
+=================== main =================
+
+****************Posicion 3 ******************
+main_MainMiBB2	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 35 ******************
+main_f2	FUNCION	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 0	MIEMBRO: 0	
+
+****************Posicion 93 ******************
+main_main	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+
+****************Posicion 100 ******************
+main_prueba	FUNCION	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 0	MIEMBRO: 0	
+
+****************Posicion 164 ******************
+main_MainMiBB	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: OBJETO	TIPO: (null)	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 178 ******************
+main_varGlob	VARIABLE	POS_LOCAL: 0	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+buscar id_cualificado_instancia varGlob2 inspubnoexiste main: No encontrado
+buscar id_cualificado_instancia MainMiBB2 insprot main: Encontrado en AA
+buscar id_cualificado_instancia MainMiBB2 inspub main: Encontrado en AA
+buscar id_cualificado_instancia MainMiBB2 inspriv main: No encontrado
+buscar id_cualificado_clase BB clasepub main: Encontrado en AA
+buscar id_cualificado_clase BB inspub main: No encontrado
+buscar id_cualificado_clase BB clasepriv main: No encontrado
+buscar id_cualificado_instancia MainMiBB2 inspubnoexiste main: No encontrado
+buscar id_cualificado_instancia varLoc insprot main: Encontrado en AA
+buscar id_cualificado_instancia MainMiBB2 inspub main: Encontrado en AA
+cerrar_ambito_tsa_main.
+buscar id_cualificado_clase JJ noExiste main: No encontrado
+buscar id_cualificado_instancia MainMiBB2 inspub main: Encontrado en AA
+buscar id_cualificado_instancia MainMiBB2 inspubnoexiste main: No encontrado
+buscar id_cualificado_instancia MainMiBB2 inspriv main: No encontrado
+buscar id_cualificado_clase AA clasepub main: Encontrado en AA
+buscar id_cualificado_clase AA inspub main: No encontrado
+buscar id_cualificado_clase AA clasepriv main: No encontrado
+buscar id_cualificado_clase AA noExiste main: No encontrado
+buscar id_cualificado_clase noExiste noExiste main: No encontrado
+cerrar_tsa_main.
+cerrar_tsc.

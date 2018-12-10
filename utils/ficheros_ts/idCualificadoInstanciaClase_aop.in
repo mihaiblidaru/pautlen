@@ -1,0 +1,107 @@
+inicia_tsc      entrada_test_tabla_simbolos
+inicia_tsa_main
+abrir_ambito_ppal_main
+buscar  declarar_main   main_varGlob
+insertar_tsa_main       		main_varGlob 	1         	1       	1       	3       	2
+abrir_clase     AA
+buscar  declarar_miembro_instancia      AA      AA_inspub
+insertar_tsc    		AA      		AA_inspub   	8       	0       	5       	3       	2
+buscar  declarar_miembro_instancia      AA      AA_inspriv
+insertar_tsc    		AA      		AA_inspriv   	8       	0       	5       	2       	2
+buscar  declarar_miembro_instancia      AA      AA_insprot
+insertar_tsc    		AA      		AA_insprot   	8       	0       	5       	1       	2
+buscar  declarar_miembro_clase  AA       AA_clasepub
+insertar_tsc AA AA_clasepub 7 0 5 3 1
+buscar  declarar_miembro_clase  AA       AA_clasepriv
+insertar_tsc AA AA_clasepriv 7 0 5 2 1
+buscar  declarar_miembro_clase  AA       AA_claseprot
+insertar_tsc AA AA_claseprot 7 0 5 1 1
+buscar  declarar_miembro_instancia	AA	AA_miaa
+insertar_tsc AA	AA_miaa 8 0 5 3 2
+buscar  declarar_miembro_instancia AA AA_prueba
+abrir_ambito_tsc AA AA_prueba 5 3 2 2
+buscar  id_cualificado_instancia miaa inspriv AA
+buscar  id_cualificado_instancia miaa insprot AA
+buscar  id_cualificado_instancia miaa     inspub      AA
+buscar  id_cualificado_instancia miaa     inspubnoexiste      AA
+buscar  id_cualificado_clase    AA      claseprot      AA
+buscar  id_cualificado_clase    AA      clasepub      AA
+buscar  id_cualificado_clase    AA     clasepriv      AA
+cerrar_ambito_tsc       AA
+cerrar_clase    AA
+abrir_clase_hereda      BB      AA
+buscar  declarar_miembro_instancia      BB      BB_mibb
+insertar_tsc BB BB_mibb 8 -1 5 3 2
+cerrar_clase    BB
+buscar  declarar_main   main_MainMiBB
+insertar_tsa_main main_MainMiBB 8 -1 5 3 2
+buscar  declarar_main   main_MainMiBB2
+insertar_tsa_main       main_MainMiBB2 8 -1 5 3 2
+buscar  id_cualificado_instancia        MainMiBB     insnoexiste      main
+abrir_clase     CC
+buscar  declarar_miembro_instancia      CC      CC_micc
+insertar_tsc CC CC_micc 8 -2 5 3 2
+cerrar_clase    CC
+abrir_clase_hereda      DD      AA	CC
+buscar  declarar_miembro_instancia      DD      DD_midd
+insertar_tsc DD DD_midd 8 -3 5 3 2
+cerrar_clase    DD
+abrir_clase_hereda      EE      BB        DD
+buscar  declarar_miembro_instancia      EE      EE_miee
+insertar_tsc EE EE_miee 8 -4 5 3 2
+buscar  declarar_miembro_instancia      EE      EE_mE
+abrir_ambito_tsc EE EE_mE 5 1 3 2
+buscar declarar_id_local_metodo EE mE_varLoc
+insertar_tsc EE mE_varLoc 4 -4 5 3 2
+buscar  id_cualificado_clase    EE      claseprot      EE
+buscar  id_cualificado_clase    EE      clasepriv      EE
+buscar  id_cualificado_clase    EE      clasepub      EE
+buscar  id_cualificado_clase    EE     clasenoexiste      EE
+buscar  id_cualificado_clase    noExiste      claseNoExiste      EE
+buscar  id_cualificado_instancia        MainMiBB2     inspubnoexiste      EE
+buscar  id_cualificado_instancia        MainMiBB2     inspriv      EE
+buscar  id_cualificado_instancia        varLoc     inspubnoexiste      EE
+buscar  id_cualificado_instancia        varLoc     inspriv      EE
+buscar  id_cualificado_instancia        varLoc     inspub      EE
+buscar  id_cualificado_instancia        miee     inspub      EE
+buscar  id_cualificado_instancia        miee     insprot      EE
+cerrar_ambito_tsc       EE
+cerrar_clase    EE
+abrir_clase_hereda      FF      CC        EE
+buscar  declarar_miembro_instancia      FF      FF_miff
+insertar_tsc FF FF_miff 8 -5 5 3 2
+cerrar_clase    FF
+buscar declarar_main prueba
+abrir_ambito_tsa_main main_prueba 1
+buscar  id_cualificado_clase    AA      clasepriv      main
+buscar  id_cualificado_clase    AA      clasepub      main
+buscar  id_cualificado_clase    AA      claseNoExiste      main
+buscar  id_cualificado_clase    noExiste      claseNoExiste      main
+buscar  id_cualificado_instancia        MainMiBBC2     inspriv      main
+buscar  id_cualificado_instancia        MainMiBBD2     insNoExiste      main
+cerrar_ambito_tsa_main
+abrir_ambito_tsa_main main_f2 1
+buscar declarar_id_local_metodo main f2_varLoc
+insertar_tsa_main       f2_varLoc          4       -1       5       3       2
+buscar  id_cualificado_instancia        varGlob2     inspubnoexiste      main
+buscar  id_cualificado_instancia        MainMiBB2     insprot      main
+buscar  id_cualificado_instancia        MainMiBB2     inspub      main
+buscar  id_cualificado_instancia        MainMiBB2     inspriv      main
+buscar  id_cualificado_clase    BB      clasepub      main
+buscar  id_cualificado_clase    BB      inspub      main
+buscar  id_cualificado_clase    BB      clasepriv      main
+buscar  id_cualificado_instancia        MainMiBB2     inspubnoexiste      main
+buscar  id_cualificado_instancia        varLoc     insprot      main
+buscar  id_cualificado_instancia        MainMiBB2     inspub      main
+cerrar_ambito_tsa_main
+buscar  id_cualificado_clase    JJ      noExiste      main
+buscar  id_cualificado_instancia        MainMiBB2     inspub      main
+buscar  id_cualificado_instancia        MainMiBB2     inspubnoexiste      main
+buscar  id_cualificado_instancia        MainMiBB2     inspriv      main
+buscar  id_cualificado_clase    AA      clasepub      main
+buscar  id_cualificado_clase    AA      inspub      main
+buscar  id_cualificado_clase    AA      clasepriv      main
+buscar  id_cualificado_clase    AA      noExiste      main
+buscar  id_cualificado_clase    noExiste      noExiste      main
+cerrar_tsa_main
+cerrar_tsc

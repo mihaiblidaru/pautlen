@@ -1,0 +1,85 @@
+inicia_tsc    grafo_enunciado
+inicia_tsa_main
+abrir_ambito_ppal_main
+abrir_clase    AA
+buscar    declarar_miembro_clase    AA    AA_a1
+insertar_tsc    AA    AA_a1    7    1    1    3    1
+buscar    declarar_miembro_instancia    AA    AA_sa1
+insertar_tsc    AA    AA_sa1    8    1    1    1    2
+buscar    declarar_miembro_instancia    AA    AA_sa2
+insertar_tsc    AA    AA_sa2    8    1    1    2    2
+buscar    declarar_miembro_instancia    AA    AA_mA0
+abrir_ambito_tsc    AA    AA_mA0    5    1    3    2
+cerrar_ambito_tsc    AA
+buscar    declarar_miembro_instancia    AA    AA_mA1@1
+abrir_ambito_tsc    AA    AA_mA1@1    5    1    3    2
+buscar    declarar_id_local_metodo    AA    mA1@1_pmA1
+insertar_tsc    AA    mA1@1_pmA1    2    1    1    3    2
+buscar    declarar_id_local_metodo    AA    mA1@1_vlmA1
+insertar_tsc    AA    mA1@1_vlmA1    1    1    1    3    2
+buscar    id_no_cualificado    pmA1    AA
+buscar    id_no_cualificado    mA1@1    AA
+buscar    id_no_cualificado    vlmA1    AA
+buscar    id_no_cualificado    mA0    AA
+buscar    id_no_cualificado    sa2    AA
+buscar    id_no_cualificado    sa1    AA
+buscar    id_no_cualificado    a1    AA
+cerrar_ambito_tsc    AA
+cerrar_clase    AA
+abrir_clase_hereda    BB    AA
+buscar    declarar_miembro_instancia    BB    BB_mibb
+insertar_tsc    BB    BB_mibb    8    1    1    2    2
+cerrar_clase    BB
+abrir_clase    CC
+buscar    declarar_miembro_clase    CC    CC_c1
+insertar_tsc    CC    CC_c1    7    1    1    2    1
+buscar    declarar_miembro_instancia    CC    CC_sc1
+insertar_tsc    CC    CC_sc1    8    1    1    1    2
+buscar    declarar_miembro_instancia    CC    CC_mC0
+abrir_ambito_tsc    CC    CC_mC0    5    1    2    2
+cerrar_ambito_tsc    CC
+buscar    declarar_miembro_instancia    CC    CC_mC1@1
+abrir_ambito_tsc    CC    CC_mC1@1    5    1    2    2
+buscar    declarar_id_local_metodo    CC    mC1@1_pmC1
+insertar_tsc    CC    mC1@1_pmC1    2    1    1    3    2
+buscar    declarar_id_local_metodo    CC    mC1@1_vlmC1
+insertar_tsc    CC    mC1@1_vlmC1    1    1    1    3    2
+buscar    id_no_cualificado    mC1@1    CC
+buscar    id_no_cualificado    mC0    CC
+buscar    id_no_cualificado    mA1@1    CC
+buscar    id_no_cualificado    a1    CC
+cerrar_ambito_tsc    CC
+cerrar_clase    CC
+abrir_clase_hereda    DD    AA  CC
+buscar    declarar_miembro_instancia    DD    DD_mD1
+abrir_ambito_tsc    DD    DD_mD1    5    1    1    2
+cerrar_ambito_tsc    DD
+buscar    declarar_miembro_instancia    DD    DD_mD2@1
+abrir_ambito_tsc    DD    DD_mD2@1    5    1    1    2
+buscar    declarar_id_local_metodo    DD    mD2@1_pmD2
+insertar_tsc    DD    mD2@1_pmD2    2    1    1    3    2
+buscar    declarar_id_local_metodo    DD    mD2@1_vlmD2
+insertar_tsc    DD    mD2@1_vlmD2    1    1    1    3    2
+buscar    id_no_cualificado    mD2@1    DD
+buscar    id_no_cualificado    sa2    DD
+buscar    id_no_cualificado    sa1    DD
+buscar    id_no_cualificado    mD1    DD
+buscar    id_no_cualificado    a1    DD
+cerrar_ambito_tsc    DD
+cerrar_clase    DD
+abrir_clase_hereda    EE    BB  DD
+buscar    declarar_miembro_instancia    EE    EE_miee
+insertar_tsc    EE    EE_miee    8    1    1    2    2
+cerrar_clase    EE
+abrir_clase_hereda    FF    EE  CC
+buscar    declarar_miembro_instancia    FF    FF_miff
+insertar_tsc    FF    FF_miff    8    1    1    2    2
+buscar    declarar_miembro_instancia    FF    FF_mF1
+abrir_ambito_tsc    FF    FF_mF1    5    1    1    2
+buscar    id_no_cualificado    mC1@1    FF
+buscar    id_no_cualificado    mD1    FF
+buscar    id_no_cualificado    mA1@1    FF
+cerrar_ambito_tsc   FF
+cerrar_clase    FF
+cerrar_tsa_main
+cerrar_tsc

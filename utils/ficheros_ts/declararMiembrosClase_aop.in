@@ -1,0 +1,67 @@
+inicia_tsc    grafo_enunciado
+inicia_tsa_main
+abrir_ambito_ppal_main
+abrir_clase    AA
+buscar    declarar_miembro_clase    AA    AA_hA1
+insertar_tsc    AA    AA_hA1    7    1    1    2    1
+buscar    declarar_miembro_clase    AA    AA_sA1
+insertar_tsc    AA    AA_sA1    7    1    1    1    1
+buscar    declarar_miembro_clase    AA    AA_sA1
+buscar    declarar_miembro_clase    AA    AA_xA1
+insertar_tsc    AA    AA_xA1    7    1    1    3    1
+buscar    declarar_miembro_clase    AA    AA_MA1@1
+abrir_ambito_tsc    AA    AA_MA1@1    6    1    2    1
+buscar    declarar_id_local_metodo    AA    MA1@1_p1
+insertar_tsc    AA    MA1@1_p1    2    1    1    3    2
+buscar    declarar_id_local_metodo    AA    MA1@1_v1
+insertar_tsc    AA    MA1@1_v1    1    1    1    3    2
+buscar    id_no_cualificado    p1    AA
+cerrar_ambito_tsc    AA
+buscar    declarar_miembro_clase    AA    AA_MA1@1
+buscar    declarar_miembro_clase    AA    AA_MA1@1@1
+abrir_ambito_tsc    AA    AA_MA1@1@1    6    1    2    1
+buscar    declarar_id_local_metodo    AA    MA1@1@1_p1
+insertar_tsc    AA    MA1@1@1_p1    2    1    1    3    2
+buscar    declarar_id_local_metodo    AA    MA1@1@1_p2
+insertar_tsc    AA    MA1@1@1_p2    2    1    1    3    2
+buscar    declarar_id_local_metodo    AA    MA1@1@1_v1
+insertar_tsc    AA    MA1@1@1_v1    1    1    1    3    2
+buscar    id_no_cualificado    p1    AA
+cerrar_ambito_tsc    AA
+cerrar_clase    AA
+abrir_clase_hereda    BB    AA
+buscar    declarar_miembro_clase    BB    BB_hA1
+insertar_tsc    BB    BB_hA1    7    1    1    2    1
+buscar    declarar_miembro_clase    BB    BB_sA1
+insertar_tsc    BB    BB_sA1    7    1    1    1    1
+buscar    declarar_miembro_clase    BB    BB_xA1
+insertar_tsc    BB    BB_xA1    7    1    1    3    1
+buscar    declarar_miembro_clase    BB    BB_MB1@1
+abrir_ambito_tsc    BB    BB_MB1@1    6    1    1    1
+buscar    declarar_id_local_metodo    BB    MB1@1_p1
+insertar_tsc    BB    MB1@1_p1    2    1    1    3    2
+buscar    declarar_id_local_metodo    BB    MB1@1_v1
+insertar_tsc    BB    MB1@1_v1    1    1    1    3    2
+buscar    id_no_cualificado    p1    BB
+cerrar_ambito_tsc    BB
+buscar    declarar_miembro_clase    BB    BB_MA1@1
+abrir_ambito_tsc    BB    BB_MA1@1    6    1    1    1
+buscar    declarar_id_local_metodo    BB    MA1@1_p1
+insertar_tsc    BB    MA1@1_p1    2    1    1    3    2
+buscar    declarar_id_local_metodo    BB    MA1@1_v1
+insertar_tsc    BB    MA1@1_v1    1    1    1    3    2
+buscar    id_no_cualificado    p1    BB
+cerrar_ambito_tsc    BB
+buscar    declarar_miembro_clase    BB    BB_MA2@1@1
+abrir_ambito_tsc    BB    BB_MA2@1@1    6    1    3    1
+buscar    declarar_id_local_metodo    BB    MA1@1_p1
+insertar_tsc    BB    MA2@1@1_p1    2    1    1    3    2
+buscar    declarar_id_local_metodo    BB    MA1@1_p2
+insertar_tsc    BB    MA2@1@1_p2    2    1    1    3    2
+buscar    declarar_id_local_metodo    BB    MA1@1_v1
+insertar_tsc    BB    MA2@1@1_v1    1    1    1    3    2
+buscar    id_no_cualificado    p1    BB
+cerrar_ambito_tsc    BB
+cerrar_clase    BB
+cerrar_tsa_main
+cerrar_tsc

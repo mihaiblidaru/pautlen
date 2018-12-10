@@ -1,0 +1,61 @@
+inicia_tsc    grafo_enunciado
+inicia_tsa_main
+abrir_ambito_ppal_main
+abrir_clase    AA
+buscar    declarar_miembro_instancia    AA    AA_mA1@1
+abrir_ambito_tsc    AA    AA_mA1@1    5    1    3    2
+buscar    declarar_id_local_metodo    AA    mA1@1_p1
+insertar_tsc    AA    mA1@1_p1    2    1    1    3    2
+cerrar_ambito_tsc    AA
+buscar    declarar_miembro_instancia    AA    AA_mA2@1@1
+abrir_ambito_tsc    AA    AA_mA2@1@1    5    1    3    2
+buscar    declarar_id_local_metodo    AA    mA2@1@1_p1
+insertar_tsc    AA    mA2@1@1_p1    2    1    1    3    2
+buscar    declarar_id_local_metodo    AA    mA2@1@1_p1
+insertar_tsc    AA    mA2@1@1_p1    2    1    1    3    2
+buscar    id_no_cualificado    p1    AA
+cerrar_ambito_tsc    AA
+abrir_ambito_tsc    AA    AA_mA3@1@3    5    1    3    2
+buscar    declarar_id_local_metodo    AA    mA3@1@3_p1
+insertar_tsc    AA    mA3@1@3_p1    2    1    1    3    2
+buscar    declarar_id_local_metodo    AA    mA3@1@3_mA3
+insertar_tsc    AA    mA3@1@3_mA3    2    3    1    3    2
+buscar    id_no_cualificado    p1    AA
+cerrar_ambito_tsc    AA
+buscar    declarar_miembro_instancia    AA    AA_mA4
+abrir_ambito_tsc    AA    AA_mA4    5    1    3    2
+buscar    declarar_id_local_metodo    AA    mA4_v2
+insertar_tsc    AA    mA4_v2    1    1    1    3    2
+buscar    id_no_cualificado    v2    AA
+cerrar_ambito_tsc    AA
+buscar    declarar_miembro_instancia    AA    AA_mA5
+abrir_ambito_tsc    AA    AA_mA5    5    1    3    2
+buscar    declarar_id_local_metodo    AA    mA5_v1
+insertar_tsc    AA    mA5_v1    2    1    1    3    2
+buscar    declarar_id_local_metodo    AA    mA5_v1
+insertar_tsc    AA    mA5_v1    1    1    1    3    2
+buscar    id_no_cualificado    v1    AA
+cerrar_ambito_tsc    AA
+buscar    declarar_miembro_instancia    AA    AA_mA6
+abrir_ambito_tsc    AA    AA_mA6    5    1    3    2
+buscar    declarar_id_local_metodo    AA    mA6_v1
+insertar_tsc    AA    mA6_v1    1    1    1    3    2
+buscar    declarar_id_local_metodo    AA    mA6_v1
+insertar_tsc    AA    mA6_v1    1    3    1    3    2
+buscar    id_no_cualificado    v1    AA
+cerrar_ambito_tsc    AA
+buscar    declarar_miembro_instancia    AA    AA_mA7@1
+abrir_ambito_tsc    AA    AA_mA7@1    5    1    3    2
+buscar    declarar_id_local_metodo    AA    mA7@1_p1
+insertar_tsc    AA    mA1@1_p1    2    1    1    3    2
+buscar    declarar_id_local_metodo    AA    mA7@1_mA7
+insertar_tsc    AA    mA1@1_mA7    1    1    1    3    2
+cerrar_ambito_tsc    AA
+buscar    declarar_miembro_instancia    AA    AA_mA8@1
+abrir_ambito_tsc    AA    AA_mA8@1    5    1    3    2
+buscar    declarar_id_local_metodo    AA    mA8_mA8
+insertar_tsc    AA    mA1@1_mA8    1    1    1    3    2
+cerrar_ambito_tsc    AA
+cerrar_clase    AA
+cerrar_tsa_main
+cerrar_tsc

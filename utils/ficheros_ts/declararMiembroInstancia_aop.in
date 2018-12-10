@@ -1,0 +1,87 @@
+inicia_tsc    grafo_enunciado
+inicia_tsa_main
+abrir_ambito_ppal_main
+abrir_clase    AA
+buscar    declarar_miembro_instancia    AA    AA_hA1
+insertar_tsc    AA    AA_hA1    8    1    1    2    2
+buscar    declarar_miembro_instancia    AA    AA_sA1
+insertar_tsc    AA    AA_sA1    8    1    1    1    2
+buscar    declarar_miembro_instancia    AA    AA_sA1
+buscar    declarar_miembro_instancia    AA    AA_xA1
+insertar_tsc    AA    AA_xA1    8    3    1    3    2
+buscar    declarar_miembro_instancia    AA    AA_mA1@1
+abrir_ambito_tsc    AA    AA_mA1@1    5    1    1    2
+buscar    declarar_id_local_metodo    AA    mA1@1_p1
+insertar_tsc    AA    mA1@1_p1    2    1    1    3    2
+buscar    declarar_id_local_metodo    AA    mA1@1_v1
+insertar_tsc    AA    mA1@1_v1    1    1    1    3    2
+buscar    id_no_cualificado    p1    AA
+cerrar_ambito_tsc    AA
+buscar    declarar_miembro_instancia    AA    AA_mA1@1
+buscar    declarar_miembro_instancia    AA    AA_mA1@1@3
+abrir_ambito_tsc    AA    AA_mA1@1@3    5    1    1    2
+buscar    declarar_id_local_metodo    AA    mA1@1@3_p1
+insertar_tsc    AA    mA1@1@3_p1    2    1    1    3    2
+buscar    declarar_id_local_metodo    AA    mA1@1@3_p2
+insertar_tsc    AA    mA1@1@3_p2    2    3    1    3    2
+buscar    id_no_cualificado    p2    AA
+cerrar_ambito_tsc    AA
+buscar    declarar_miembro_instancia    AA    AA_mA2
+abrir_ambito_tsc    AA    AA_mA2    5    1    1    2
+buscar    declarar_id_local_metodo    AA    mA2_v1
+insertar_tsc    AA    mA2_v1    1    1    1    3    2
+buscar    id_no_cualificado    v1    AA
+cerrar_ambito_tsc    AA
+buscar    declarar_id_local_metodo    AA    AA_mA3@1@3
+abrir_ambito_tsc    AA    AA_mA3@1@3    5    1    1    2
+buscar    declarar_id_local_metodo    AA    mA3@1@3_p1
+insertar_tsc    AA    mA3@1@3_p1    2    1    1    3    2
+buscar    declarar_id_local_metodo    AA    mA3@1@3_p2
+insertar_tsc    AA    mA3@1@3_p2    2    3    1    3    2
+buscar    declarar_id_local_metodo    AA    mA3@1@3_v1
+insertar_tsc    AA    mA3@1@3_v1    1    1    1    3    2
+buscar    declarar_id_local_metodo    AA    mA3@1@3_v2
+insertar_tsc    AA    mA3@1@3_v2    1    1    1    3    2
+buscar    id_no_cualificado    v1    AA
+buscar    id_no_cualificado    v2    AA
+cerrar_ambito_tsc    AA
+cerrar_clase    AA
+abrir_clase_hereda    BB    AA
+buscar    declarar_miembro_instancia    BB    BB_hA1
+insertar_tsc    BB    BB_hA1    8    1    1    2    2
+buscar    declarar_miembro_instancia    BB    BB_hB1
+insertar_tsc    BB    BB_hB1    8    1    1    2    2
+buscar    declarar_miembro_instancia    BB    BB_sA1
+buscar    declarar_miembro_instancia    BB    BB_xA1
+buscar    declarar_miembro_instancia    BB    BB_mA1@1
+abrir_ambito_tsc    BB    BB_mA1@1    5    1    1    2
+buscar    declarar_id_local_metodo    BB    mA1@1_p1
+insertar_tsc    BB    mA1@1_p1    2    1    1    3    2
+buscar    declarar_id_local_metodo    BB    mA1@1_v1
+insertar_tsc    BB    mA1@1_v1    1    1    1    3    2
+buscar    id_no_cualificado    p1    BB
+cerrar_ambito_tsc    BB
+buscar    declarar_miembro_instancia    BB    BB_mB1
+abrir_ambito_tsc    BB    BB_mB1    5    1    1    2
+buscar    declarar_id_local_metodo    BB    mB1_v1
+insertar_tsc    BB    mB1_v1    1    1    1    3    2
+buscar    id_no_cualificado    v1    BB
+buscar    id_no_cualificado    v1    BB
+cerrar_ambito_tsc    BB
+buscar    declarar_miembro_instancia    BB    BB_mA2
+abrir_ambito_tsc    BB    BB_mA2    5    1    1    2
+buscar    declarar_id_local_metodo    BB    mA2_v1
+insertar_tsc    BB    mA2_v1    1    3    1    3    2
+buscar    id_no_cualificado    v1    BB
+cerrar_ambito_tsc    BB
+buscar    declarar_id_local_metodo    BB    BB_mA3@3@1
+abrir_ambito_tsc    BB    BB_mA3@3@1    5    1    1    2
+buscar    declarar_id_local_metodo    BB    mA3@3@1_p1
+insertar_tsc    BB    mA3@3@1_p1    2    3    1    3    2
+buscar    declarar_id_local_metodo    BB    mA3@3@1_p2
+insertar_tsc    BB    mA3@3@1_p2    2    1    1    3    2
+buscar    id_no_cualificado    p2    BB
+cerrar_ambito_tsc    BB
+cerrar_clase    BB
+cerrar_tsa_main
+cerrar_tsc

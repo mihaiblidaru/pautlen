@@ -1,0 +1,819 @@
+inicia_tsc
+inicia_tsa_main
+abrir_ambito_ppal_main
+abrir_clase AA.
+buscar declarar_miembro_instancia AA AA_hA1: No encontrado: se puede declarar
+insertar_tsc AA AA_hA1 8 1 1 2 2
+
+=================== AA =================
+
+****************Posicion 21 ******************
+AA_hA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_miembro_instancia AA AA_sA1: No encontrado: se puede declarar
+insertar_tsc AA AA_sA1 8 1 1 1 2
+
+=================== AA =================
+
+****************Posicion 21 ******************
+AA_hA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 32 ******************
+AA_sA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_miembro_instancia AA AA_sA1: Encontrado en AA y accesible: no se puede declarar excepto que se esté sobreescribiendo un método
+buscar declarar_miembro_instancia AA AA_xA1: No encontrado: se puede declarar
+insertar_tsc AA AA_xA1 8 3 1 3 2
+
+=================== AA =================
+
+****************Posicion 21 ******************
+AA_hA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 32 ******************
+AA_sA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 37 ******************
+AA_xA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: BOOLEAN	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_miembro_instancia AA AA_mA1@1: No encontrado: se puede declarar
+abrir_ambito_tsc AA AA_mA1@1 5 1 1 2
+
+=================== mA1@1 =================
+
+****************Posicion 139 ******************
+AA_mA1@1	METODO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+=================== AA =================
+
+****************Posicion 21 ******************
+AA_hA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 32 ******************
+AA_sA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 37 ******************
+AA_xA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: BOOLEAN	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 139 ******************
+AA_mA1@1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_id_local_metodo AA mA1@1_p1: No encontrado: se puede declarar
+insertar_tsc AA mA1@1_p1 2 1 1 3 2
+
+=================== mA1@1 =================
+
+****************Posicion 139 ******************
+AA_mA1@1	METODO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 170 ******************
+mA1@1_p1	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+=================== AA =================
+
+****************Posicion 21 ******************
+AA_hA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 32 ******************
+AA_sA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 37 ******************
+AA_xA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: BOOLEAN	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 139 ******************
+AA_mA1@1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_id_local_metodo AA mA1@1_v1: No encontrado: se puede declarar
+insertar_tsc AA mA1@1_v1 1 1 1 3 2
+
+=================== mA1@1 =================
+
+****************Posicion 139 ******************
+AA_mA1@1	METODO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 170 ******************
+mA1@1_p1	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 176 ******************
+mA1@1_v1	VARIABLE	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+=================== AA =================
+
+****************Posicion 21 ******************
+AA_hA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 32 ******************
+AA_sA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 37 ******************
+AA_xA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: BOOLEAN	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 139 ******************
+AA_mA1@1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar id_no_cualificado AA p1: Encontrado en mA1@1
+cerrar_ambito_tsc AA.
+buscar declarar_miembro_instancia AA AA_mA1@1: Encontrado en AA y accesible: no se puede declarar excepto que se esté sobreescribiendo un método
+buscar declarar_miembro_instancia AA AA_mA1@1@3: No encontrado: se puede declarar
+abrir_ambito_tsc AA AA_mA1@1@3 5 1 1 2
+
+=================== mA1@1@3 =================
+
+****************Posicion 43 ******************
+AA_mA1@1@3	METODO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+=================== AA =================
+
+****************Posicion 21 ******************
+AA_hA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 32 ******************
+AA_sA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 37 ******************
+AA_xA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: BOOLEAN	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 43 ******************
+AA_mA1@1@3	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 139 ******************
+AA_mA1@1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_id_local_metodo AA mA1@1@3_p1: No encontrado: se puede declarar
+insertar_tsc AA mA1@1@3_p1 2 1 1 3 2
+
+=================== mA1@1@3 =================
+
+****************Posicion 43 ******************
+AA_mA1@1@3	METODO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 74 ******************
+mA1@1@3_p1	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+=================== AA =================
+
+****************Posicion 21 ******************
+AA_hA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 32 ******************
+AA_sA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 37 ******************
+AA_xA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: BOOLEAN	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 43 ******************
+AA_mA1@1@3	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 139 ******************
+AA_mA1@1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_id_local_metodo AA mA1@1@3_p2: No encontrado: se puede declarar
+insertar_tsc AA mA1@1@3_p2 2 3 1 3 2
+
+=================== mA1@1@3 =================
+
+****************Posicion 43 ******************
+AA_mA1@1@3	METODO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 74 ******************
+mA1@1@3_p1	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 75 ******************
+mA1@1@3_p2	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: BOOLEAN	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+=================== AA =================
+
+****************Posicion 21 ******************
+AA_hA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 32 ******************
+AA_sA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 37 ******************
+AA_xA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: BOOLEAN	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 43 ******************
+AA_mA1@1@3	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 139 ******************
+AA_mA1@1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar id_no_cualificado AA p2: Encontrado en mA1@1@3
+cerrar_ambito_tsc AA.
+buscar declarar_miembro_instancia AA AA_mA2: No encontrado: se puede declarar
+abrir_ambito_tsc AA AA_mA2 5 1 1 2
+
+=================== mA2 =================
+
+****************Posicion 27 ******************
+AA_mA2	METODO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+=================== AA =================
+
+****************Posicion 21 ******************
+AA_hA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 27 ******************
+AA_mA2	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 32 ******************
+AA_sA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 37 ******************
+AA_xA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: BOOLEAN	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 43 ******************
+AA_mA1@1@3	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 139 ******************
+AA_mA1@1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_id_local_metodo AA mA2_v1: No encontrado: se puede declarar
+insertar_tsc AA mA2_v1 1 1 1 3 2
+
+=================== mA2 =================
+
+****************Posicion 27 ******************
+AA_mA2	METODO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 64 ******************
+mA2_v1	VARIABLE	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+=================== AA =================
+
+****************Posicion 21 ******************
+AA_hA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 27 ******************
+AA_mA2	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 32 ******************
+AA_sA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 37 ******************
+AA_xA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: BOOLEAN	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 43 ******************
+AA_mA1@1@3	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 139 ******************
+AA_mA1@1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar id_no_cualificado AA v1: Encontrado en mA2
+cerrar_ambito_tsc AA.
+buscar declarar_id_local_metodo AA AA_mA3@1@3: No encontrado: se puede declarar
+abrir_ambito_tsc AA AA_mA3@1@3 5 1 1 2
+
+=================== mA3@1@3 =================
+
+****************Posicion 45 ******************
+AA_mA3@1@3	METODO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+=================== AA =================
+
+****************Posicion 21 ******************
+AA_hA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 27 ******************
+AA_mA2	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 32 ******************
+AA_sA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 37 ******************
+AA_xA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: BOOLEAN	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 43 ******************
+AA_mA1@1@3	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 45 ******************
+AA_mA3@1@3	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 139 ******************
+AA_mA1@1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_id_local_metodo AA mA3@1@3_p1: No encontrado: se puede declarar
+insertar_tsc AA mA3@1@3_p1 2 1 1 3 2
+
+=================== mA3@1@3 =================
+
+****************Posicion 45 ******************
+AA_mA3@1@3	METODO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 76 ******************
+mA3@1@3_p1	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+=================== AA =================
+
+****************Posicion 21 ******************
+AA_hA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 27 ******************
+AA_mA2	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 32 ******************
+AA_sA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 37 ******************
+AA_xA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: BOOLEAN	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 43 ******************
+AA_mA1@1@3	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 45 ******************
+AA_mA3@1@3	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 139 ******************
+AA_mA1@1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_id_local_metodo AA mA3@1@3_p2: No encontrado: se puede declarar
+insertar_tsc AA mA3@1@3_p2 2 3 1 3 2
+
+=================== mA3@1@3 =================
+
+****************Posicion 45 ******************
+AA_mA3@1@3	METODO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 76 ******************
+mA3@1@3_p1	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 77 ******************
+mA3@1@3_p2	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: BOOLEAN	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+=================== AA =================
+
+****************Posicion 21 ******************
+AA_hA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 27 ******************
+AA_mA2	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 32 ******************
+AA_sA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 37 ******************
+AA_xA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: BOOLEAN	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 43 ******************
+AA_mA1@1@3	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 45 ******************
+AA_mA3@1@3	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 139 ******************
+AA_mA1@1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_id_local_metodo AA mA3@1@3_v1: No encontrado: se puede declarar
+insertar_tsc AA mA3@1@3_v1 1 1 1 3 2
+
+=================== mA3@1@3 =================
+
+****************Posicion 45 ******************
+AA_mA3@1@3	METODO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 76 ******************
+mA3@1@3_p1	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 77 ******************
+mA3@1@3_p2	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: BOOLEAN	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 82 ******************
+mA3@1@3_v1	VARIABLE	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+=================== AA =================
+
+****************Posicion 21 ******************
+AA_hA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 27 ******************
+AA_mA2	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 32 ******************
+AA_sA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 37 ******************
+AA_xA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: BOOLEAN	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 43 ******************
+AA_mA1@1@3	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 45 ******************
+AA_mA3@1@3	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 139 ******************
+AA_mA1@1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_id_local_metodo AA mA3@1@3_v2: No encontrado: se puede declarar
+insertar_tsc AA mA3@1@3_v2 1 1 1 3 2
+
+=================== mA3@1@3 =================
+
+****************Posicion 45 ******************
+AA_mA3@1@3	METODO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 76 ******************
+mA3@1@3_p1	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 77 ******************
+mA3@1@3_p2	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: BOOLEAN	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 82 ******************
+mA3@1@3_v1	VARIABLE	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 83 ******************
+mA3@1@3_v2	VARIABLE	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+=================== AA =================
+
+****************Posicion 21 ******************
+AA_hA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 27 ******************
+AA_mA2	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 32 ******************
+AA_sA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 37 ******************
+AA_xA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: BOOLEAN	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 43 ******************
+AA_mA1@1@3	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 45 ******************
+AA_mA3@1@3	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 139 ******************
+AA_mA1@1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar id_no_cualificado AA v1: Encontrado en mA3@1@3
+buscar id_no_cualificado AA v2: Encontrado en mA3@1@3
+cerrar_ambito_tsc AA.
+cerrar_clase AA.
+abrir_clase_hereda BB	AA	
+buscar declarar_miembro_instancia BB BB_hA1: No encontrado: se puede declarar
+insertar_tsc BB BB_hA1 8 1 1 2 2
+
+=================== BB =================
+
+****************Posicion 23 ******************
+BB_hA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 148 ******************
+BB_BB	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_miembro_instancia BB BB_hB1: No encontrado: se puede declarar
+insertar_tsc BB BB_hB1 8 1 1 2 2
+
+=================== BB =================
+
+****************Posicion 23 ******************
+BB_hA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 24 ******************
+BB_hB1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 148 ******************
+BB_BB	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_miembro_instancia BB BB_sA1: Encontrado en AA y accesible: no se puede declarar excepto que se esté sobreescribiendo un método
+buscar declarar_miembro_instancia BB BB_xA1: Encontrado en AA y accesible: no se puede declarar excepto que se esté sobreescribiendo un método
+buscar declarar_miembro_instancia BB BB_mA1@1: Encontrado en AA y accesible: no se puede declarar excepto que se esté sobreescribiendo un método
+abrir_ambito_tsc BB BB_mA1@1 5 1 1 2
+
+=================== mA1@1 =================
+
+****************Posicion 141 ******************
+BB_mA1@1	METODO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+=================== BB =================
+
+****************Posicion 23 ******************
+BB_hA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 24 ******************
+BB_hB1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 141 ******************
+BB_mA1@1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 148 ******************
+BB_BB	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_id_local_metodo BB mA1@1_p1: No encontrado: se puede declarar
+insertar_tsc BB mA1@1_p1 2 1 1 3 2
+
+=================== mA1@1 =================
+
+****************Posicion 141 ******************
+BB_mA1@1	METODO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 170 ******************
+mA1@1_p1	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+=================== BB =================
+
+****************Posicion 23 ******************
+BB_hA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 24 ******************
+BB_hB1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 141 ******************
+BB_mA1@1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 148 ******************
+BB_BB	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_id_local_metodo BB mA1@1_v1: No encontrado: se puede declarar
+insertar_tsc BB mA1@1_v1 1 1 1 3 2
+
+=================== mA1@1 =================
+
+****************Posicion 141 ******************
+BB_mA1@1	METODO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 170 ******************
+mA1@1_p1	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 176 ******************
+mA1@1_v1	VARIABLE	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+=================== BB =================
+
+****************Posicion 23 ******************
+BB_hA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 24 ******************
+BB_hB1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 141 ******************
+BB_mA1@1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 148 ******************
+BB_BB	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar id_no_cualificado BB p1: Encontrado en mA1@1
+cerrar_ambito_tsc BB.
+buscar declarar_miembro_instancia BB BB_mB1: No encontrado: se puede declarar
+abrir_ambito_tsc BB BB_mB1 5 1 1 2
+
+=================== mB1 =================
+
+****************Posicion 29 ******************
+BB_mB1	METODO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+=================== BB =================
+
+****************Posicion 23 ******************
+BB_hA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 24 ******************
+BB_hB1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 29 ******************
+BB_mB1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 141 ******************
+BB_mA1@1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 148 ******************
+BB_BB	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_id_local_metodo BB mB1_v1: No encontrado: se puede declarar
+insertar_tsc BB mB1_v1 1 1 1 3 2
+
+=================== mB1 =================
+
+****************Posicion 29 ******************
+BB_mB1	METODO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 64 ******************
+mB1_v1	VARIABLE	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+=================== BB =================
+
+****************Posicion 23 ******************
+BB_hA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 24 ******************
+BB_hB1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 29 ******************
+BB_mB1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 141 ******************
+BB_mA1@1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 148 ******************
+BB_BB	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar id_no_cualificado BB v1: Encontrado en mB1
+buscar id_no_cualificado BB v1: Encontrado en mB1
+cerrar_ambito_tsc BB.
+buscar declarar_miembro_instancia BB BB_mA2: Encontrado en AA y accesible: no se puede declarar excepto que se esté sobreescribiendo un método
+abrir_ambito_tsc BB BB_mA2 5 1 1 2
+
+=================== mA2 =================
+
+****************Posicion 29 ******************
+BB_mA2	METODO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+=================== BB =================
+
+****************Posicion 23 ******************
+BB_hA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 24 ******************
+BB_hB1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 29 ******************
+BB_mB1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+BB_mA2	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 141 ******************
+BB_mA1@1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 148 ******************
+BB_BB	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_id_local_metodo BB mA2_v1: No encontrado: se puede declarar
+insertar_tsc BB mA2_v1 1 3 1 3 2
+
+=================== mA2 =================
+
+****************Posicion 29 ******************
+BB_mA2	METODO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 64 ******************
+mA2_v1	VARIABLE	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: BOOLEAN	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+=================== BB =================
+
+****************Posicion 23 ******************
+BB_hA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 24 ******************
+BB_hB1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 29 ******************
+BB_mB1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+BB_mA2	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 141 ******************
+BB_mA1@1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 148 ******************
+BB_BB	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar id_no_cualificado BB v1: Encontrado en mA2
+cerrar_ambito_tsc BB.
+buscar declarar_id_local_metodo BB BB_mA3@3@1: No encontrado: se puede declarar
+abrir_ambito_tsc BB BB_mA3@3@1 5 1 1 2
+
+=================== mA3@3@1 =================
+
+****************Posicion 47 ******************
+BB_mA3@3@1	METODO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+=================== BB =================
+
+****************Posicion 23 ******************
+BB_hA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 24 ******************
+BB_hB1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 29 ******************
+BB_mB1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+BB_mA2	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 47 ******************
+BB_mA3@3@1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 141 ******************
+BB_mA1@1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 148 ******************
+BB_BB	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_id_local_metodo BB mA3@3@1_p1: No encontrado: se puede declarar
+insertar_tsc BB mA3@3@1_p1 2 3 1 3 2
+
+=================== mA3@3@1 =================
+
+****************Posicion 47 ******************
+BB_mA3@3@1	METODO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 76 ******************
+mA3@3@1_p1	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: BOOLEAN	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+=================== BB =================
+
+****************Posicion 23 ******************
+BB_hA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 24 ******************
+BB_hB1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 29 ******************
+BB_mB1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+BB_mA2	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 47 ******************
+BB_mA3@3@1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 141 ******************
+BB_mA1@1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 148 ******************
+BB_BB	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_id_local_metodo BB mA3@3@1_p2: No encontrado: se puede declarar
+insertar_tsc BB mA3@3@1_p2 2 1 1 3 2
+
+=================== mA3@3@1 =================
+
+****************Posicion 47 ******************
+BB_mA3@3@1	METODO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 76 ******************
+mA3@3@1_p1	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: BOOLEAN	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 77 ******************
+mA3@3@1_p2	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+=================== BB =================
+
+****************Posicion 23 ******************
+BB_hA1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 24 ******************
+BB_hB1	ATRIBUTO INSTANCIA	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 2	
+
+****************Posicion 29 ******************
+BB_mB1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+BB_mA2	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 47 ******************
+BB_mA3@3@1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 141 ******************
+BB_mA1@1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 2	
+
+****************Posicion 148 ******************
+BB_BB	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar id_no_cualificado BB p2: Encontrado en mA3@3@1
+cerrar_ambito_tsc BB.
+cerrar_clase BB.
+cerrar_tsa_main.
+cerrar_tsc.

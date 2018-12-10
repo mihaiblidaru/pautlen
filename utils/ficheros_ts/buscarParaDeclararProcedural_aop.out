@@ -1,0 +1,112 @@
+inicia_tsc
+inicia_tsa_main
+abrir_ambito_ppal_main
+buscar declarar_main main_v1: No encontrado: se puede declarar
+insertar_tsa_main main_v1 1 1 1 3 2
+
+=================== main =================
+
+****************Posicion 50 ******************
+main_v1	VARIABLE	POS_LOCAL: 0	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 93 ******************
+main_main	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_main main_v1: Encontrado en main: no se puede declarar
+buscar declarar_main main_f1@1: No encontrado: se puede declarar
+abrir_ambito_tsa_main main_f1@1 3.
+
+=================== f1@1 =================
+
+****************Posicion 147 ******************
+main_f1@1	FUNCION	TIPO: BOOLEAN	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 0	MIEMBRO: 0	
+
+=================== main =================
+
+****************Posicion 50 ******************
+main_v1	VARIABLE	POS_LOCAL: 0	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 93 ******************
+main_main	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+
+****************Posicion 147 ******************
+main_f1@1	FUNCION	POS METODO: 0 Y ACUMULADA 0	TIPO: BOOLEAN	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 0	MIEMBRO: 0	
+buscar declarar_main f1@1_p1: No encontrado: se puede declarar
+insertar_tsa_main f1@1_p1 2 1 1 3 2
+
+=================== f1@1 =================
+
+****************Posicion 98 ******************
+f1@1_p1	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 147 ******************
+main_f1@1	FUNCION	TIPO: BOOLEAN	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 0	MIEMBRO: 0	
+
+=================== main =================
+
+****************Posicion 50 ******************
+main_v1	VARIABLE	POS_LOCAL: 0	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 93 ******************
+main_main	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+
+****************Posicion 147 ******************
+main_f1@1	FUNCION	POS METODO: 0 Y ACUMULADA 0	TIPO: BOOLEAN	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 0	MIEMBRO: 0	
+buscar id_no_cualificado main p1: Encontrado en f1@1
+buscar id_no_cualificado main p1: Encontrado en f1@1
+cerrar_ambito_tsa_main.
+buscar declarar_main main_f1@1: Encontrado en main: no se puede declarar
+buscar declarar_main main_f2@1@1: No encontrado: se puede declarar
+abrir_ambito_tsa_main main_f2@1@1 3.
+
+=================== f2@1@1 =================
+
+****************Posicion 50 ******************
+main_f2@1@1	FUNCION	TIPO: BOOLEAN	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 0	MIEMBRO: 0	
+
+=================== main =================
+
+****************Posicion 50 ******************
+main_v1	VARIABLE	POS_LOCAL: 0	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+main_f2@1@1	FUNCION	POS METODO: 0 Y ACUMULADA 0	TIPO: BOOLEAN	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 0	MIEMBRO: 0	
+
+****************Posicion 93 ******************
+main_main	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+
+****************Posicion 147 ******************
+main_f1@1	FUNCION	POS METODO: 0 Y ACUMULADA 0	TIPO: BOOLEAN	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 0	MIEMBRO: 0	
+buscar declarar_main f2@1@1_p1: No encontrado: se puede declarar
+insertar_tsa_main f2@1@1_p1 2 1 1 3 2
+
+=================== f2@1@1 =================
+
+****************Posicion 1 ******************
+f2@1@1_p1	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 50 ******************
+main_f2@1@1	FUNCION	TIPO: BOOLEAN	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 0	MIEMBRO: 0	
+
+=================== main =================
+
+****************Posicion 50 ******************
+main_v1	VARIABLE	POS_LOCAL: 0	POS ATR. INSTANCIA 0 Y ACUMULADA 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+main_f2@1@1	FUNCION	POS METODO: 0 Y ACUMULADA 0	TIPO: BOOLEAN	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 0	MIEMBRO: 0	
+
+****************Posicion 93 ******************
+main_main	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+
+****************Posicion 147 ******************
+main_f1@1	FUNCION	POS METODO: 0 Y ACUMULADA 0	TIPO: BOOLEAN	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 0	MIEMBRO: 0	
+buscar declarar_main f2@1@1_p1: Encontrado en f2@1@1: no se puede declarar
+cerrar_ambito_tsa_main.
+buscar id_no_cualificado main v1: Encontrado en main
+buscar id_no_cualificado main v1: Encontrado en main
+buscar id_no_cualificado main f1@1: Encontrado en main
+buscar id_no_cualificado main v1: Encontrado en main
+buscar id_no_cualificado main f2@1@1: Encontrado en main
+cerrar_tsa_main.
+cerrar_tsc.

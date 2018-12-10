@@ -1,0 +1,638 @@
+inicia_tsc
+inicia_tsa_main
+abrir_ambito_ppal_main
+abrir_clase AA.
+buscar declarar_miembro_clase AA AA_hA1: No encontrado: se puede declarar
+insertar_tsc AA AA_hA1 7 1 1 2 1
+
+=================== AA =================
+
+****************Posicion 21 ******************
+AA_hA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_miembro_clase AA AA_sA1: No encontrado: se puede declarar
+insertar_tsc AA AA_sA1 7 1 1 1 1
+
+=================== AA =================
+
+****************Posicion 21 ******************
+AA_hA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 32 ******************
+AA_sA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_miembro_clase AA AA_sA1: Encontrado en AA: no se puede declarar
+buscar declarar_miembro_clase AA AA_xA1: No encontrado: se puede declarar
+insertar_tsc AA AA_xA1 7 1 1 3 1
+
+=================== AA =================
+
+****************Posicion 21 ******************
+AA_hA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 32 ******************
+AA_sA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 37 ******************
+AA_xA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_miembro_clase AA AA_MA1@1: No encontrado: se puede declarar
+abrir_ambito_tsc AA AA_MA1@1 6 1 2 1
+
+=================== MA1@1 =================
+
+****************Posicion 107 ******************
+AA_MA1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 2	MIEMBRO: 1	
+
+=================== AA =================
+
+****************Posicion 21 ******************
+AA_hA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 32 ******************
+AA_sA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 37 ******************
+AA_xA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 107 ******************
+AA_MA1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_id_local_metodo AA MA1@1_p1: No encontrado: se puede declarar
+insertar_tsc AA MA1@1_p1 2 1 1 3 2
+
+=================== MA1@1 =================
+
+****************Posicion 107 ******************
+AA_MA1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 138 ******************
+MA1@1_p1	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+=================== AA =================
+
+****************Posicion 21 ******************
+AA_hA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 32 ******************
+AA_sA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 37 ******************
+AA_xA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 107 ******************
+AA_MA1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_id_local_metodo AA MA1@1_v1: No encontrado: se puede declarar
+insertar_tsc AA MA1@1_v1 1 1 1 3 2
+
+=================== MA1@1 =================
+
+****************Posicion 107 ******************
+AA_MA1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 138 ******************
+MA1@1_p1	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 144 ******************
+MA1@1_v1	VARIABLE	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+=================== AA =================
+
+****************Posicion 21 ******************
+AA_hA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 32 ******************
+AA_sA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 37 ******************
+AA_xA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 107 ******************
+AA_MA1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar id_no_cualificado AA p1: Encontrado en MA1@1
+cerrar_ambito_tsc AA.
+buscar declarar_miembro_clase AA AA_MA1@1: Encontrado en AA: no se puede declarar
+buscar declarar_miembro_clase AA AA_MA1@1@1: No encontrado: se puede declarar
+abrir_ambito_tsc AA AA_MA1@1@1 6 1 2 1
+
+=================== MA1@1@1 =================
+
+****************Posicion 9 ******************
+AA_MA1@1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 2	MIEMBRO: 1	
+
+=================== AA =================
+
+****************Posicion 9 ******************
+AA_MA1@1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 21 ******************
+AA_hA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 32 ******************
+AA_sA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 37 ******************
+AA_xA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 107 ******************
+AA_MA1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_id_local_metodo AA MA1@1@1_p1: No encontrado: se puede declarar
+insertar_tsc AA MA1@1@1_p1 2 1 1 3 2
+
+=================== MA1@1@1 =================
+
+****************Posicion 9 ******************
+AA_MA1@1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 40 ******************
+MA1@1@1_p1	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+=================== AA =================
+
+****************Posicion 9 ******************
+AA_MA1@1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 21 ******************
+AA_hA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 32 ******************
+AA_sA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 37 ******************
+AA_xA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 107 ******************
+AA_MA1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_id_local_metodo AA MA1@1@1_p2: No encontrado: se puede declarar
+insertar_tsc AA MA1@1@1_p2 2 1 1 3 2
+
+=================== MA1@1@1 =================
+
+****************Posicion 9 ******************
+AA_MA1@1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 40 ******************
+MA1@1@1_p1	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 41 ******************
+MA1@1@1_p2	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+=================== AA =================
+
+****************Posicion 9 ******************
+AA_MA1@1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 21 ******************
+AA_hA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 32 ******************
+AA_sA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 37 ******************
+AA_xA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 107 ******************
+AA_MA1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_id_local_metodo AA MA1@1@1_v1: No encontrado: se puede declarar
+insertar_tsc AA MA1@1@1_v1 1 1 1 3 2
+
+=================== MA1@1@1 =================
+
+****************Posicion 9 ******************
+AA_MA1@1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 40 ******************
+MA1@1@1_p1	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 41 ******************
+MA1@1@1_p2	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 46 ******************
+MA1@1@1_v1	VARIABLE	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+=================== AA =================
+
+****************Posicion 9 ******************
+AA_MA1@1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 21 ******************
+AA_hA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 32 ******************
+AA_sA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 37 ******************
+AA_xA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 107 ******************
+AA_MA1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 144 ******************
+AA_AA	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar id_no_cualificado AA p1: Encontrado en MA1@1@1
+cerrar_ambito_tsc AA.
+cerrar_clase AA.
+abrir_clase_hereda BB	AA	
+buscar declarar_miembro_clase BB BB_hA1: No encontrado: se puede declarar
+insertar_tsc BB BB_hA1 7 1 1 2 1
+
+=================== BB =================
+
+****************Posicion 23 ******************
+BB_hA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 148 ******************
+BB_BB	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_miembro_clase BB BB_sA1: No encontrado: se puede declarar
+insertar_tsc BB BB_sA1 7 1 1 1 1
+
+=================== BB =================
+
+****************Posicion 23 ******************
+BB_hA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 34 ******************
+BB_sA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 148 ******************
+BB_BB	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_miembro_clase BB BB_xA1: No encontrado: se puede declarar
+insertar_tsc BB BB_xA1 7 1 1 3 1
+
+=================== BB =================
+
+****************Posicion 23 ******************
+BB_hA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 34 ******************
+BB_sA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 39 ******************
+BB_xA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 148 ******************
+BB_BB	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_miembro_clase BB BB_MB1@1: No encontrado: se puede declarar
+abrir_ambito_tsc BB BB_MB1@1 6 1 1 1
+
+=================== MB1@1 =================
+
+****************Posicion 110 ******************
+BB_MB1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 1	
+
+=================== BB =================
+
+****************Posicion 23 ******************
+BB_hA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 34 ******************
+BB_sA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 39 ******************
+BB_xA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 110 ******************
+BB_MB1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 148 ******************
+BB_BB	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_id_local_metodo BB MB1@1_p1: No encontrado: se puede declarar
+insertar_tsc BB MB1@1_p1 2 1 1 3 2
+
+=================== MB1@1 =================
+
+****************Posicion 110 ******************
+BB_MB1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 139 ******************
+MB1@1_p1	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+=================== BB =================
+
+****************Posicion 23 ******************
+BB_hA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 34 ******************
+BB_sA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 39 ******************
+BB_xA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 110 ******************
+BB_MB1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 148 ******************
+BB_BB	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_id_local_metodo BB MB1@1_v1: No encontrado: se puede declarar
+insertar_tsc BB MB1@1_v1 1 1 1 3 2
+
+=================== MB1@1 =================
+
+****************Posicion 110 ******************
+BB_MB1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 139 ******************
+MB1@1_p1	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 145 ******************
+MB1@1_v1	VARIABLE	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+=================== BB =================
+
+****************Posicion 23 ******************
+BB_hA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 34 ******************
+BB_sA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 39 ******************
+BB_xA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 110 ******************
+BB_MB1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 148 ******************
+BB_BB	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar id_no_cualificado BB p1: Encontrado en MB1@1
+cerrar_ambito_tsc BB.
+buscar declarar_miembro_clase BB BB_MA1@1: No encontrado: se puede declarar
+abrir_ambito_tsc BB BB_MA1@1 6 1 1 1
+
+=================== MA1@1 =================
+
+****************Posicion 109 ******************
+BB_MA1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 1	
+
+=================== BB =================
+
+****************Posicion 23 ******************
+BB_hA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 34 ******************
+BB_sA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 39 ******************
+BB_xA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 109 ******************
+BB_MA1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 110 ******************
+BB_MB1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 148 ******************
+BB_BB	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_id_local_metodo BB MA1@1_p1: No encontrado: se puede declarar
+insertar_tsc BB MA1@1_p1 2 1 1 3 2
+
+=================== MA1@1 =================
+
+****************Posicion 109 ******************
+BB_MA1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 138 ******************
+MA1@1_p1	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+=================== BB =================
+
+****************Posicion 23 ******************
+BB_hA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 34 ******************
+BB_sA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 39 ******************
+BB_xA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 109 ******************
+BB_MA1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 110 ******************
+BB_MB1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 148 ******************
+BB_BB	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_id_local_metodo BB MA1@1_v1: No encontrado: se puede declarar
+insertar_tsc BB MA1@1_v1 1 1 1 3 2
+
+=================== MA1@1 =================
+
+****************Posicion 109 ******************
+BB_MA1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 138 ******************
+MA1@1_p1	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 144 ******************
+MA1@1_v1	VARIABLE	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+=================== BB =================
+
+****************Posicion 23 ******************
+BB_hA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 34 ******************
+BB_sA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 39 ******************
+BB_xA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 109 ******************
+BB_MA1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 110 ******************
+BB_MB1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 148 ******************
+BB_BB	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar id_no_cualificado BB p1: Encontrado en MA1@1
+cerrar_ambito_tsc BB.
+buscar declarar_miembro_clase BB BB_MA2@1@1: No encontrado: se puede declarar
+abrir_ambito_tsc BB BB_MA2@1@1 6 1 3 1
+
+=================== MA2@1@1 =================
+
+****************Posicion 12 ******************
+BB_MA2@1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 3	MIEMBRO: 1	
+
+=================== BB =================
+
+****************Posicion 12 ******************
+BB_MA2@1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 23 ******************
+BB_hA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 34 ******************
+BB_sA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 39 ******************
+BB_xA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 109 ******************
+BB_MA1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 110 ******************
+BB_MB1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 148 ******************
+BB_BB	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_id_local_metodo BB MA1@1_p1: No encontrado: se puede declarar
+insertar_tsc BB MA2@1@1_p1 2 1 1 3 2
+
+=================== MA2@1@1 =================
+
+****************Posicion 12 ******************
+BB_MA2@1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 41 ******************
+MA2@1@1_p1	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+=================== BB =================
+
+****************Posicion 12 ******************
+BB_MA2@1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 23 ******************
+BB_hA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 34 ******************
+BB_sA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 39 ******************
+BB_xA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 109 ******************
+BB_MA1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 110 ******************
+BB_MB1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 148 ******************
+BB_BB	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_id_local_metodo BB MA1@1_p2: No encontrado: se puede declarar
+insertar_tsc BB MA2@1@1_p2 2 1 1 3 2
+
+=================== MA2@1@1 =================
+
+****************Posicion 12 ******************
+BB_MA2@1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 41 ******************
+MA2@1@1_p1	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 42 ******************
+MA2@1@1_p2	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+=================== BB =================
+
+****************Posicion 12 ******************
+BB_MA2@1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 23 ******************
+BB_hA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 34 ******************
+BB_sA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 39 ******************
+BB_xA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 109 ******************
+BB_MA1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 110 ******************
+BB_MB1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 148 ******************
+BB_BB	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar declarar_id_local_metodo BB MA1@1_v1: No encontrado: se puede declarar
+insertar_tsc BB MA2@1@1_v1 1 1 1 3 2
+
+=================== MA2@1@1 =================
+
+****************Posicion 12 ******************
+BB_MA2@1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 41 ******************
+MA2@1@1_p1	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 42 ******************
+MA2@1@1_p2	PARAMETRO	POS_PAR: 0	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+****************Posicion 47 ******************
+MA2@1@1_v1	VARIABLE	POS_LOCAL: 0	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 2	
+
+=================== BB =================
+
+****************Posicion 12 ******************
+BB_MA2@1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 23 ******************
+BB_hA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 2	MIEMBRO: 1	
+
+****************Posicion 34 ******************
+BB_sA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 39 ******************
+BB_xA1	ATRIBUTO CLASE	CLASE: ESCALAR	TIPO: ENTERO	DIR: 0	ACCESO: 3	MIEMBRO: 1	
+
+****************Posicion 109 ******************
+BB_MA1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 110 ******************
+BB_MB1@1	METODO NO SOBREESCRIBIBLE	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 1	MIEMBRO: 1	
+
+****************Posicion 148 ******************
+BB_BB	CLASE	ES CLASE CON 0 ATR CLASE, 0 ATR INSTANCIA, 0 MET. SOBR. 0 MET. NO SOBR. 0 ACUM ATR INS Y 0 ACUM MET SOBR.
+
+buscar id_no_cualificado BB p1: Encontrado en MA2@1@1
+cerrar_ambito_tsc BB.
+cerrar_clase BB.
+cerrar_tsa_main.
+cerrar_tsc.

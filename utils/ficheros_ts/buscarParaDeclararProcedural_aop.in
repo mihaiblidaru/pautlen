@@ -1,0 +1,27 @@
+inicia_tsc    grafo_enunciado
+inicia_tsa_main
+abrir_ambito_ppal_main
+buscar    declarar_main    main_v1
+insertar_tsa_main main_v1    1    1    1    3    2
+buscar    declarar_main    main_v1
+buscar    declarar_main    main_f1@1
+abrir_ambito_tsa_main    main_f1@1    3    1    3    2
+buscar    declarar_main    f1@1_p1
+insertar_tsa_main    f1@1_p1    2    1    1    3    2
+buscar    id_no_cualificado    p1	main
+buscar    id_no_cualificado    p1	main
+cerrar_ambito_tsa_main
+buscar    declarar_main    main_f1@1
+buscar    declarar_main    main_f2@1@1
+abrir_ambito_tsa_main    main_f2@1@1    3    1    3    2
+buscar    declarar_main		f2@1@1_p1
+insertar_tsa_main    f2@1@1_p1    2    1    1    3    2
+buscar    declarar_main    f2@1@1_p1
+cerrar_ambito_tsa_main
+buscar    id_no_cualificado    v1	main
+buscar    id_no_cualificado    v1	main
+buscar    id_no_cualificado    f1@1	main
+buscar    id_no_cualificado    v1	main
+buscar    id_no_cualificado    f2@1@1	main
+cerrar_tsa_main
+cerrar_tsc

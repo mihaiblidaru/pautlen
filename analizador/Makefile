@@ -12,7 +12,7 @@ OBJETOS_TABLA_SIMBOLOS = tsa.o tsc.o lista.o hash.o simbolo.o
 
 all: compilador
 
-compilador: omicron.o bison/y.tab.o flex/lex.yy.o ../generacion/generacion.o 
+compilador: omicron.o bison/y.tab.o flex/lex.yy.o ../generacion/generacion.o
 	make compilar_tabla_simbolos
 	$(CC) $^ $(OBJETOS_TABLA_SIMBOLOS) -o $@
 
@@ -45,7 +45,7 @@ bison/y.tab.c: bison/omicron.y
 
 clean:
 	rm -f *.o flex/*.o bison/*.o compilador flex/lex.yy.c misalida*.txt bison/y.* ../generacion/*.o testsCompilador/out_* testsCompilador/*.o \
-	in_testS1_V1 in_testS1_V2 in_testS1_V3
+	testsCompilador/*.asm in_testS1_V1 in_testS1_V2 in_testS1_V3 in_testS1_V4
 
 test:
 	./pruebaSintactico test_analizador/entrada_sin_1.ol misalida1.txt
@@ -78,3 +78,8 @@ test3: compilador
 	./compilador testsCompilador/in_testS1_V3.c testsCompilador/in_testS1_V3.asm
 	nasm -g -f elf32 testsCompilador/in_testS1_V3.asm -o testsCompilador/in_testS1_V3.o
 	gcc -m32 -g testsCompilador/in_testS1_V3.o ../olib.o -o in_testS1_V3
+
+test4: compilador
+		./compilador testsCompilador/in_testS1_V4.c testsCompilador/in_testS1_V4.asm
+		nasm -g -f elf32 testsCompilador/in_testS1_V4.asm -o testsCompilador/in_testS1_V4.o
+		gcc -m32 -g testsCompilador/in_testS1_V4.o ../olib.o -o in_testS1_V4

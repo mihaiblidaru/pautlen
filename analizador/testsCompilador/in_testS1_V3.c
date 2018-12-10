@@ -1,12 +1,16 @@
 main {
-  int x;
-  boolean y;
+  boolean t,f;
+  int x, y, r, o, u;
 
-  scanf x;
+  x = 30;
+  y = 0;
+  o = 1;
+  u = 2;
+  r = o + o;
 
-  printf x;
-
-  scanf y;
-  printf y;
+  while((y<=3)){
+    printf y;
+    y = y + 1;
+  }
 
 }

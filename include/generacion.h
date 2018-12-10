@@ -294,4 +294,30 @@ void leer(FILE* fpasm, char* nombre, int tipo);
  */
 void escribir(FILE* fpasm, int es_variable, int tipo);
 
+/******************* NUEVAS FIN GENERACION PROC ***************************/
+
+/********** Generacion de Condicionales para OBJETOS *****************/
+void ifthenelse_inicio(FILE * fpasm, int exp_es_variable, int etiqueta);
+void ifthen_inicio(FILE * fpasm, int exp_es_variable, int etiqueta);
+void ifthen_fin(FILE * fpasm, int etiqueta);
+void ifthenelse_fin_then( FILE * fpasm, int etiqueta);
+void ifthenelse_fin( FILE * fpasm, int etiqueta);
+
+/********** Generacion de Condicionales para PROCEDURAL *****************/
+void if_ifElse_exp_pila_iniIf (FILE * fpasm, int exp_es_variable, int etiqueta);
+void ifelse_exp_pila_finIf (FILE * fpasm, int etiqueta);
+void if_ifElse_exp_pila_finIf_iniElse (FILE * fpasm, int etiqueta);
+void ifelse_exp_pila_finElse (FILE * fpasm, int etiqueta);
+
+void while_inicio(FILE * fpasm, int etiqueta);
+void while_exp_pila (FILE * fpasm, int exp_es_variable, int etiqueta);
+void while_fin( FILE * fpasm, int etiqueta);
+
+void escribir_elemento_vector(FILE * fpasm,char * nombre_vector, int tam_max, int exp_es_direccion, char * eax, char * edx);
+void declararFuncion(FILE * fd_s, char * nombre_funcion, int num_var_loc);
+void llamarFuncion(FILE * fd_asm, char * nombre_funcion, int num_argumentos)
+void retornarFuncion(FILE * fd_s, int es_variable);
+void escribirParametro(FILE* fpasm, int pos_parametro, int num_total_parametros);
+void escribirVariableLocal(FILE* fpasm, int posicion_variable_local);
+
 #endif

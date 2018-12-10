@@ -63,6 +63,12 @@ bool lista_addstr(Lista *list, const char* str){
     return lista_addlast(list, strdup(str));
 }
 
+bool lista_addint(Lista *list, int num){
+    int* duplicado = calloc(1, sizeof(int));
+    *duplicado = num;
+    return lista_addlast(list, duplicado);
+}
+
 
 bool lista_addlast(Lista *l, void *data){
     if(l != NULL && data != NULL){

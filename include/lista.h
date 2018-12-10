@@ -22,6 +22,7 @@ Lista* lista_crear();
 bool lista_addlast(Lista *list, void *data);
 void* lista_pop(Lista *list);
 bool lista_addstr(Lista *list, const char* str);
+bool lista_addint(Lista *list, int num);
 void *lista_get(Lista *list, int index);
 void lista_free(Lista *list, void(*free_data_funct)(void*));
 

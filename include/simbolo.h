@@ -91,7 +91,7 @@ typedef struct {
 InfoSimbolo* InfoSimbolo_crear();
 void InfoSimbolo_eliminar(void* a);
 
-void InfoSimbolo_imprimir(FILE* out, InfoSimbolo* is);
+void InfoSimbolo_imprimir(FILE* out, InfoSimbolo* is, int ambito_global);
 
 InfoSimbolo* InfoSimbolo_duplicar(InfoSimbolo* is);
 

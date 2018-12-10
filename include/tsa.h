@@ -34,7 +34,7 @@ TSA* TSA_abrirAmbitoLocal(TSA* ts,
                           int acceso_metodo,
                           int tipo_metodo,
                           int posicion_metodo_sobre,
-                          int tamanio);
+                          int tipo_miembro);
 int TSA_insertarSimbolo(TSA* ts,
                         char* clave,
                         int categoria,

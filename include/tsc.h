@@ -75,7 +75,7 @@ int tablaSimbolosClasesAbrirAmbitoEnClase(TSC* grafo,
                                           int acceso_metodo,
                                           int tipo_metodo,
                                           int posicion_metodo_sobre,
-                                          int tamanio);
+                                          int tipo_miembro);
 
 int tablaSimbolosClasesCerrarAmbitoEnClase(TSC* grafo, char* id_clase);
 

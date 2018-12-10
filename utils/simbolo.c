@@ -46,7 +46,7 @@ InfoSimbolo* InfoSimbolo_duplicar(InfoSimbolo* is){
  * es que no lo se. Lo hago siguiendo la salida de aqui
  * https://docs.google.com/document/d/1mXxbyxSaXM5EPEFeIQftI-qm4G_9vxvaNS_XOatDxQI/edit
  */
-void InfoSimbolo_imprimir(FILE* out, InfoSimbolo* is) {
+void InfoSimbolo_imprimir(FILE* out, InfoSimbolo* is, int ambito_global){
     if (out && is) {
         char* categoria = categoria_to_str[is->categoria - 1];
         fprintf(out, "%s %s ", is->clave, categoria);
@@ -97,6 +97,19 @@ void InfoSimbolo_imprimir(FILE* out, InfoSimbolo* is) {
             fprintf(out, "DIR: %d ", is->direcciones);
             fprintf(out, "ACCESO: %d ", is->tipo_acceso);
             fprintf(out, "MIEMBRO: %d ", is->tipo_miembro);
+        }else if (is->categoria == METODO_SOBREESCRIBIBLE){
+            char* tipo = tipo_to_str[is->tipo - 1];
+            if(ambito_global){
+                fprintf(out, "POS METODO: %d Y ACUMULADA %d ", is->posicion_metodo_sobreescribible,
+                    is->numero_metodos_sobreescribibles);
+            }
+            fprintf(out, "TIPO: %s ", tipo);
+            fprintf(out, "CLASE: (null) ");
+            fprintf(out, "#PAR: %d ", is->numero_parametros);
+            fprintf(out, "#LOCAL: %d ", is->numero_variables_locales);
+            fprintf(out, "ACCESO: %d ", is->tipo_acceso);
+            fprintf(out, "MIEMBRO: %d ", is->tipo_miembro);
+            
         }
 
         fprintf(out, "\n");

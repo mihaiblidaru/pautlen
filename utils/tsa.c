@@ -62,7 +62,7 @@ TSA* TSA_abrirAmbitoLocal(TSA* ts,
                           int acceso_metodo,
                           int tipo_metodo,
                           int posicion_metodo_sobre,
-                          int tamanio) {
+                          int tipo_miembro) {
     char nombre_simbolo_info_ambito[100];
     ts->local = hash_crear(DEF_TAM);
     ts->ambito = LOCAL;
@@ -81,8 +81,7 @@ TSA* TSA_abrirAmbitoLocal(TSA* ts,
     info_ambito->tipo_acceso = acceso_metodo;
     info_ambito->tipo = tipo_metodo;
     info_ambito->posicion_metodo_sobreescribible = posicion_metodo_sobre;
-    info_ambito->tamanio = tamanio;
-
+    info_ambito->tipo_miembro = tipo_miembro;
 
     hash_insertar(ts->global, id_ambito, info_ambito);
     hash_insertar(ts->local, id_ambito, InfoSimbolo_duplicar(info_ambito));
@@ -296,7 +295,7 @@ void TSA_imprimir(FILE* out, TSA* ts, char* ambito) {
                     InfoSimbolo* elem = lista_get(elementos, i);
                     int* pos = lista_get(posiciones, i);
                     fprintf(out, "\n**************** Posicion %d ******************\n", *pos);
-                    InfoSimbolo_imprimir(out, elem);
+                    InfoSimbolo_imprimir(out, elem, 0);
                 }
                 lista_free(elementos, NULL);
                 lista_free(posiciones, free);
@@ -318,7 +317,7 @@ void TSA_imprimir(FILE* out, TSA* ts, char* ambito) {
                     InfoSimbolo* elem = lista_get(elementos, i);
                     int* pos = lista_get(posiciones, i);
                     fprintf(out, "\n**************** Posicion %d ******************\n", *pos);
-                    InfoSimbolo_imprimir(out, elem);
+                    InfoSimbolo_imprimir(out, elem, 1);
                 }
                 lista_free(elementos, NULL);
                 lista_free(posiciones, free);

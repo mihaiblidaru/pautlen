@@ -136,14 +136,14 @@ int tablaSimbolosClasesAbrirAmbitoEnClase(TSC *grafo,
                                           int acceso_metodo,
                                           int tipo_metodo,
                                           int posicion_metodo_sobre,
-                                          int tamanio)
+                                          int tipo_miembro)
 {
     NodoGrafo *clase = NULL;
     clase = buscarNodoProfundidad(grafo, id_clase);
     if (clase != NULL)
     {
         clase->info = TSA_abrirAmbitoLocal(clase->info, id_ambito, categoria_ambito, acceso_metodo, tipo_metodo,
-                                           posicion_metodo_sobre, tamanio);
+                                           posicion_metodo_sobre, tipo_miembro);
         return OK;
     }
 

@@ -29,5 +29,33 @@ clean:
 	rm -f tests/*.o *.o test_tablas
 
 test: clean test_tablas
-	./test_tablas omi.ol 2> misalida.txt
+	./test_tablas omi.ol misalida.txt
 	meld salida.txt misalida.txt
+
+test1: clean test_tablas
+	./test_tablas ficheros_ts/buscarIdEnJerarquiaDesdeClase_aop.in test1.out
+	meld ficheros_ts/buscarIdEnJerarquiaDesdeClase_aop.out test1.out
+
+test2: clean test_tablas
+	./test_tablas ficheros_ts/buscarIdNoCualificado_aop.in test2.out
+	meld ficheros_ts/buscarIdNoCualificado_aop.out test2.out
+
+test3: clean test_tablas
+	./test_tablas ficheros_ts/buscarParaDeclararProcedural_aop.in test3.out
+	meld ficheros_ts/buscarParaDeclararProcedural_aop.out test3.out
+
+test4: clean test_tablas
+	./test_tablas ficheros_ts/declararIdLocalMetodo_aop.in test4.out
+	meld ficheros_ts/declararIdLocalMetodo_aop.out test4.out
+
+test5: clean test_tablas
+	./test_tablas ficheros_ts/declararMiembroInstancia_aop.in test5.out
+	meld ficheros_ts/declararMiembroInstancia_aop.out test5.out
+
+test6: clean test_tablas
+	./test_tablas ficheros_ts/declararMiembrosClase_aop.in test6.out
+	meld ficheros_ts/declararMiembrosClase_aop.out test6.out
+
+test7: clean test_tablas
+	./test_tablas ficheros_ts/idCualificadoInstanciaClase_aop.in test7.out
+	meld ficheros_ts/idCualificadoInstanciaClase_aop.out test7.out

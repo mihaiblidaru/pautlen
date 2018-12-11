@@ -249,7 +249,7 @@ int main(int argc, char const* argv[]) {
             } else {
                 fprintf(out, "abrir_clase %s\n", id_clase);
             }
-
+        
         } else if (!strcmp(lista_get(words, 0), "insertar_tsc")) {
             char* id_clase = lista_get(words, 1);
             char* clave = lista_get(words, 2);
@@ -287,7 +287,16 @@ int main(int argc, char const* argv[]) {
                         tipo_miembro);
                 imprimeTSAdeClase(out, tabla_clases, id_clase);
             }
+        } else if (!strcmp(lista_get(words, 0), "abrir_ambito_tsa_main")) {
+            int tipo = atoi(lista_get(words, 3));
 
+            if (abrirAmbitoMain(tsa_main, lista_get(words, 2), FUNCION, tipo, NINGUNO, NINGUNO, 0) == ERR) {
+                fprintf(out, "abrir_ambito_tsa_main %s: No encontrado: se puede declarar\n",
+                        (char*)lista_get(words, 2));
+            } else {
+                fprintf(out, "abrir_ambito_tsa_main %s: Encontrado: NO se puede declarar\n",
+                        (char*)lista_get(words, 2));
+            }
         } else if (!strcmp(lista_get(words, 0), "cerrar_ambito_tsc")) {
             char* id_clase = lista_get(words, 1);
             int result = tablaSimbolosClasesCerrarAmbitoEnClase(tabla_clases, id_clase);

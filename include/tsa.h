@@ -69,7 +69,7 @@ int abrirAmbitoMain(TSA* t,
                     int acceso_metodo,
                     int tipo_metodo,
                     int posicion_metodo_sobre,
-                    int tamanio);
+                    int tipo_miembro);
 
 int cerrarAmbitoMain(TSA* t);
 

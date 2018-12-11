@@ -56,13 +56,12 @@ TSA* TSA_abrirAmbitoGlobal(TSA* ts, const char* id_ambito_global) {
     return ts;
 }
 
-TSA* TSA_abrirAmbitoLocal(TSA* ts,
-                          const char* id_ambito,
-                          int categoria_ambito,
-                          int acceso_metodo,
-                          int tipo_metodo,
-                          int posicion_metodo_sobre,
-                          int tipo_miembro) {
+TSA* TSA_abrirAmbitoLocal(TSA* ts, const char* id_ambito,
+                        int categoria_ambito,
+                        int acceso_metodo,
+                        int tipo_metodo,
+                        int posicion_metodo_sobre,
+                        int tipo_miembro) {
     char nombre_simbolo_info_ambito[100];
     ts->local = hash_crear(DEF_TAM);
     ts->ambito = LOCAL;
@@ -195,9 +194,9 @@ int abrirAmbitoMain(TSA* t,
                     int acceso_metodo,
                     int tipo_metodo,
                     int posicion_metodo_sobre,
-                    int tamanio) {
-    if (TSA_abrirAmbitoLocal(t, id_ambito, categoria_ambito, acceso_metodo, tipo_metodo, posicion_metodo_sobre,
-                             tamanio) != NULL) {
+                    int tipo_miembro
+                    ) {
+    if (TSA_abrirAmbitoLocal(t, id_ambito, categoria_ambito, acceso_metodo, tipo_metodo, posicion_metodo_sobre, tipo_miembro) != NULL) {
         return OK;
     }
     return ERR;

@@ -17,6 +17,7 @@
   int globalTipo = -1;
   int globalClase = -1;
   int globalEtiqueta = 1;
+  int globalTamanioVectorActual = -1;
   TSA* tsaMain = NULL;
 
   char nombre_ambito_insertar[200] = "main";
@@ -110,6 +111,7 @@
 %type <atributos> while_exp
 %type <atributos> bucle
 %type <atributos> comparacion
+%type <atributos> clase_vector
 
 %start programa
 
@@ -273,8 +275,13 @@ clase_objeto:
 
 
 clase_vector:
-  TOK_ARRAY tipo '[' constante_entera ']'
-    { fprintf(pf, ";R:\tclase_vector: TOK_ARRAY tipo '[' constante_entera ']'\n");}
+  TOK_ARRAY tipo '[' TOK_CONSTANTE_ENTERA ']'
+    { fprintf(pf, ";R:\tclase_vector: TOK_ARRAY tipo '[' TOK_CONSTANTE_ENTERA ']'\n");
+      globalTamanioVectorActual = $4.valor_entero;
+      if (globalTamanioVectorActual < 1 || globalTamanioVectorActual > MAX_TAMANIO_VECTOR){
+        fprintf(stderr, "ERROR SEMANTICO: %d (Valor no permitido)\n", globalTamanioVectorActual);
+        exit(-1);
+      }}
 ;
 
 
@@ -490,7 +497,13 @@ asignacion:
         }
     }
 | elemento_vector '=' exp
-    { fprintf(pf, ";R:\tasignacion: elemento_vector '=' exp\n");}
+    { fprintf(pf, ";R:\tasignacion: elemento_vector '=' exp\n");
+      if ($1.tipo == $3.tipo){
+        asignar(FILE* fpasm, $1.lexema, $3.es_direccion);
+      } else {
+          fprintf(stderr, "ERROR: Expresión de tipo distinto al vector\n");
+          exit(-1);
+      }}
 | elemento_vector '=' TOK_INSTANCE_OF TOK_IDENTIFICADOR '(' lista_expresiones ')'
     { fprintf(pf, ";R:\tasignacion: elemento_vector '=' TOK_INSTANCE_OF TOK_IDENTIFICADOR '(' lista_expresiones ')'\n");}
 | TOK_IDENTIFICADOR '=' TOK_INSTANCE_OF TOK_IDENTIFICADOR '(' lista_expresiones ')'
@@ -499,10 +512,20 @@ asignacion:
     { fprintf(pf, ";R:\tasignacion: identificador_clase '.' TOK_IDENTIFICADOR '=' exp\n");}
 ;
 
-
+/* TODO :: ESTO PUEDE FALLAR PORQUE NO TENGO NI IDEA SI LA CLASE SE MIRA ASI */
 elemento_vector:
   TOK_IDENTIFICADOR '[' exp ']'
-    { fprintf(pf, ";R:\telemento_vector: TOK_IDENTIFICADOR '[' exp ']'\n");}
+    { fprintf(pf, ";R:\telemento_vector: TOK_IDENTIFICADOR '[' exp ']'\n");
+    int resultado = buscarIdNoCualificado(NULL, tsaMain, $1.lexema, "main", &elem, nombre_ambito_encontrado);
+    if(resultado == OK && elem->clase == VECTOR && $3.tipo == INT){
+        escribir_elemento_vector(pf, $1.lexema, elem->tamanio, $3.es_direccion);
+        $$.tipo = elem->tipo;
+        $$.lexema = $1.lexema;
+        $$.es_direccion = 1;
+    } else {
+        fprintf(stderr, "Identificador %s no encontrado o no es de tipo VECTOR o la expresion dentro de [] no es de tipo entero\n", $1.lexema);
+        exit(-1);
+    }}
 ;
 
 
@@ -603,6 +626,7 @@ exp:
         sumar(pf, $1.es_direccion, $3.es_direccion);
         $$.es_direccion = 0;
         $$.valor_entero = $1.valor_entero + $3.valor_entero;
+        $$.tipo = INT;
       } else  {
           if ($1.tipo != INT)
             fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $1.lexema);
@@ -617,6 +641,7 @@ exp:
         restar(pf, $1.es_direccion, $3.es_direccion);
         $$.es_direccion = 0;
         $$.valor_entero = $1.valor_entero - $3.valor_entero;
+        $$.tipo = INT;
       } else  {
           if ($1.tipo != INT)
             fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $1.lexema);
@@ -631,6 +656,7 @@ exp:
         dividir(pf, $1.es_direccion, $3.es_direccion);
         $$.es_direccion = 0;
         $$.valor_entero = (int) $1.valor_entero / $3.valor_entero;
+        $$.tipo = INT;
       } else  {
           if ($1.tipo != INT)
             fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $1.lexema);
@@ -645,6 +671,7 @@ exp:
         multiplicar(pf, $1.es_direccion, $3.es_direccion);
         $$.es_direccion = 0;
         $$.valor_entero = $1.valor_entero * $3.valor_entero;
+        $$.tipo = INT;
       } else  {
           if ($1.tipo != INT)
             fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $1.lexema);
@@ -659,6 +686,7 @@ exp:
         cambiar_signo(pf, $2.es_direccion);
         $$.es_direccion = 0;
         $$.valor_entero = $2.valor_entero * -1;
+        $$.tipo = INT;
       } else  {
           fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $2.lexema);
           exit(-1);
@@ -670,6 +698,7 @@ exp:
         y(pf, $1.es_direccion, $3.es_direccion);
         $$.es_direccion = 0;
         $$.valor_entero = $1.valor_entero && $3.valor_entero;
+        $$.tipo = BOOLEAN;
       } else  {
           if ($1.tipo != BOOLEAN)
             fprintf(stderr, "Identificador '%s' NO es de tipo booleano.\n", $1.lexema);
@@ -684,6 +713,7 @@ exp:
       o(pf, $1.es_direccion, $3.es_direccion);
       $$.es_direccion = 0;
       $$.valor_entero = $1.valor_entero || $3.valor_entero;
+      $$.tipo = BOOLEAN;
       } else  {
         if ($1.tipo != BOOLEAN)
           fprintf(stderr, "Identificador '%s' NO es de tipo booleano.\n", $1.lexema);
@@ -699,6 +729,7 @@ exp:
       globalEtiqueta++;
       $$.es_direccion = 0;
       $$.valor_entero = !($2.valor_entero);
+      $$.tipo = BOOLEAN;
       } else  {
           fprintf(stderr, "Identificador '%s' NO es de tipo booleano.\n", $2.lexema);
           exit(-1);
@@ -724,10 +755,13 @@ exp:
       $$.es_direccion = 0;
       $$.valor_entero = $1.valor_entero;}
 | '(' exp ')'
-    { fprintf(pf, ";R:\texp: '(' exp ')'\n");}
+    { fprintf(pf, ";R:\texp: '(' exp ')'\n");
+      $$.es_direccion = 0;
+      $$.tipo = $2.tipo;}
 |  '(' comparacion ')'
     { fprintf(pf, ";R:\texp: '(' comparacion ')'\n");
-      $$.es_direccion = 0;}
+      $$.es_direccion = 0;
+      $$.tipo = $2.tipo;}
 | elemento_vector
     { fprintf(pf, ";R:\texp: elemento_vector\n");}
 | id_llamada_funcion '(' lista_expresiones ')'

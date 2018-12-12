@@ -116,6 +116,13 @@ void escribir_fin(FILE* fpasm){
   fprintf(fpasm, "err_div_0: ");
   fprintf(fpasm, "\tpush dword msg_error_div_0\n");
   fprintf(fpasm, "\tcall print_string\n");
+  fprintf(fpasm, "\tadd esp, 4\n");
+  fprintf(fpasm, "\tcall print_endofline\n");
+  fprintf(fpasm, "\tjmp near fin\n");
+  fprintf(fpasm, "mensaje_1: ");
+  fprintf(fpasm, "\tpush dword msg_error_ind_rng\n");
+  fprintf(fpasm, "\tcall print_string\n");
+  fprintf(fpasm, "\tadd esp, 4\n");
   fprintf(fpasm, "\tcall print_endofline\n");
   fprintf(fpasm, "\tjmp near fin\n");
   fprintf(fpasm, "fin:\n");
@@ -737,11 +744,26 @@ void while_fin(FILE * fpasm, int etiqueta){
   fprintf(fpasm, "while_exp_fin_%d:\n", etiqueta);
 }
 
-/*
-void escribir_elemento_vector(FILE * fpasm,char * nombre_vector, int tam_max, int exp_es_direccion, char * eax, char * edx){
 
+void escribir_elemento_vector(FILE * fpasm, char * nombre_vector, int tam_max, int exp_es_direccion){
 
-}*/
+  fprintf(fpasm, "\n;-> Empiece de la escritura de un elemento de un vector en pila\n");
+  fprintf(fpasm, "\tpop dword eax\n");
+
+  if(exp_es_direccion)
+    fprintf(fpasm, "\tmov eax, [eax]\n");
+
+  fprintf(fpasm, "\tcmp eax, 0\n");
+  fprintf(fpasm, "\tjl near mensaje_1\n");
+
+  fprintf(fpasm, "\tcmp eax, %d\n", tam_max - 1);
+  fprintf(fpasm, "\tjl near mensaje_1\n");
+
+  fprintf(fpasm, "\tmov dword edx, _%s\n", nombre_vector);
+  fprintf(fpasm, "\tlea eax, [edx + eax * 4]\n");
+  fprintf(fpasm, "\tpush dword eax\n");
+
+}
 void declararFuncion(FILE * fd_s, char * nombre_funcion, int num_var_loc){
 
 	fprintf(fd_s, "\n; Declaramos la funcion\n");
@@ -787,7 +809,7 @@ void escribirVariableLocal(FILE* fpasm, int posicion_variable_local){
 
 	fprintf(fpasm, "\n; Escribimos variable local \n");
 
-	fprintf(fpasm, "\lea ebx, [ebp - %d] \n" , 4*posicion_variable_local);
+	fprintf(fpasm, "\tlea ebx, [ebp - %d] \n" , 4*posicion_variable_local);
 	fprintf(fpasm, "\tpush dword ebx \n");
 }
 

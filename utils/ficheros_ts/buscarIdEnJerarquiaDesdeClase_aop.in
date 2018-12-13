@@ -1,4 +1,4 @@
-inicia_tsc    grafo_enunciado
+inicia_tsc    buscarIdEnJerarquiaDesdeClase
 inicia_tsa_main
 abrir_ambito_ppal_main
 abrir_clase    AA
@@ -44,6 +44,8 @@ buscar    declarar_id_local_metodo    CC    mC1@1_pmC1
 insertar_tsc    CC    mC1@1_pmC1    2    1    1    3    2
 buscar    declarar_id_local_metodo    CC    mC1@1_vlmC1
 insertar_tsc    CC    mC1@1_vlmC1    1    1    1    3    2
+buscar    id_no_cualificado    pmC1    CC
+buscar    id_no_cualificado    vlmC1    CC
 buscar    id_no_cualificado    mC1@1    CC
 buscar    id_no_cualificado    mC0    CC
 buscar    id_no_cualificado    mA1@1    CC

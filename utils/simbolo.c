@@ -55,13 +55,17 @@ void InfoSimbolo_imprimir(FILE* out, InfoSimbolo* is, int ambito_global){
             char* clase = clase_to_str[is->clase - 1];
             char* tipo = tipo_to_str[is->tipo - 1];
             fprintf(out, "POS_LOCAL: %d ", is->posicion_variable_local);
-            fprintf(out, "POS ATR. INSTANCIA %d Y ACUMULADA %d ", is->posicion_atributo_instancia,
-                    is->num_acumulado_atributos_instancia);
+            if(ambito_global){   
+                fprintf(out, "POS ATR. INSTANCIA %d Y ACUMULADA %d ", is->posicion_atributo_instancia,
+                        is->num_acumulado_atributos_instancia);
+                
+            }
             fprintf(out, "CLASE: %s ", clase);
             fprintf(out, "TIPO: %s ", tipo);
             fprintf(out, "DIR: %d ", is->direcciones);
             fprintf(out, "ACCESO: %d ", is->tipo_acceso);
             fprintf(out, "MIEMBRO: %d ", is->tipo_miembro);
+
         } else if (is->categoria == CLASE) {
             fprintf(out, "ES CLASE CON %d ATR CLASE, %d ATR INSTANCIA, ", is->numero_atributos_clase,
                     is->numero_atributos_instancia);
@@ -110,6 +114,18 @@ void InfoSimbolo_imprimir(FILE* out, InfoSimbolo* is, int ambito_global){
             fprintf(out, "ACCESO: %d ", is->tipo_acceso);
             fprintf(out, "MIEMBRO: %d ", is->tipo_miembro);
             
+        }else if (is->categoria == FUNCION){
+            char* tipo = tipo_to_str[is->tipo - 1];
+            if(ambito_global){
+                fprintf(out, "POS METODO: %d Y ACUMULADA %d ", is->posicion_metodo_sobreescribible,
+                    is->numero_metodos_sobreescribibles);
+            }
+            fprintf(out, "TIPO: %s ", tipo);
+            fprintf(out, "CLASE: (null) ");
+            fprintf(out, "#PAR: %d ", is->numero_parametros);
+            fprintf(out, "#LOCAL: %d ", is->numero_variables_locales);
+            fprintf(out, "ACCESO: %d ", is->tipo_acceso);
+            fprintf(out, "MIEMBRO: %d ", is->tipo_miembro);
         }
 
         fprintf(out, "\n");

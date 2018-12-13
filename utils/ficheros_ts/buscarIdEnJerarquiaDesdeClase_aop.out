@@ -326,6 +326,8 @@ CC_mC1@1	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: 
 ****************Posicion 31 ******************
 CC_mC0	METODO SOBREESCRIBIBLE	POS METODO: 0 Y ACUMULADA 0	TIPO: ENTERO	CLASE: (null)	#PAR: 0	#LOCAL: 0	ACCESO: 2	MIEMBRO: 2	
 
+buscar id_no_cualificado CC pmC1: Encontrado en mC1@1
+buscar id_no_cualificado CC vlmC1: Encontrado en mC1@1
 buscar id_no_cualificado CC mC1@1: Encontrado en CC
 buscar id_no_cualificado CC mC0: Encontrado en CC
 buscar id_no_cualificado CC mA1@1: No encontrado

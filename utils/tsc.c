@@ -232,12 +232,18 @@ int aplicarAccesos(TSC *t, char *nombre_clase_ambito_actual, char *clase_declaro
             if (strcmp(nombre_clase_ambito_actual, clase_declaro) != 0)
             {
                 return ERR;
+            }else{
+                return OK;
             }
             // si el cualificador es SECRET, se accede a la info de los padres de la clase desde donde se busca
             //(nombre_clase_ambito_actual), llamemos a esa info los_padres_clase_ambito_actual
         }
         else if (pelem->tipo_acceso == ACCESO_SECRET)
         {
+            if (strcmp(nombre_clase_ambito_actual, clase_declaro) == 0){
+                return OK;
+            }
+
             los_padres_clase_ambito_actual = getListaPadresCompleta(t, nombre_clase_ambito_actual);
             // si clase_declaro esta en los_padres_clase_ambito_actual retornar ERR
 
@@ -329,7 +335,7 @@ int buscarIdNoCualificado(TSC *t,
     {
         if (buscarIdEnJerarquiaDesdeClase(t, nombre_id, nombre_clase_desde, e, nombre_ambito_encontrado) == OK)
         {
-            return OK;
+            return aplicarAccesos(t, nombre_clase_desde, nombre_ambito_encontrado, *e);
         }
         else
         {
@@ -430,10 +436,16 @@ int buscarParaDeclararMiembroInstancia(TSC *t,
         int res = buscarParaDeclararIdTablaSimbolosAmbitos(tsa_clase, nombre_miembro, e, nombre_ambito_encontrado);
         if (res != OK)
         {
-            char *nombre_id = nombre_miembro;
+            char *nombre_id = nombre_miembro + strlen(nombre_clase_desde) + 1;
         
-            return buscarIdEnJerarquiaDesdeClase(t, nombre_id, nombre_clase_desde, e, nombre_ambito_encontrado);
+            int resJerarquia = buscarIdEnJerarquiaDesdeClase(t, nombre_id, nombre_clase_desde, e, nombre_ambito_encontrado);
+            if(resJerarquia == OK){
+                return aplicarAccesos(t,nombre_clase_desde, nombre_ambito_encontrado, *e);
+            }else{
+                return ERR;
+            }
         }
+        return OK;
     }
 
     return ERR;

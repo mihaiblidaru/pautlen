@@ -107,8 +107,8 @@ int main(int argc, char const* argv[]) {
                     fprintf(out, "buscar declarar_main %s: No encontrado: se puede declarar\n",
                             (char*)lista_get(words, 2));
                 } else {
-                    fprintf(out, "buscar declarar_main %s: Encontrado: NO se puede declarar\n",
-                            (char*)lista_get(words, 2));
+                    fprintf(out, "buscar declarar_main %s: Encontrado en %s: no se puede declarar\n",
+                            (char*)lista_get(words, 2),nombre_ambito_encontrado);
                 }
             } else if (!strcmp(lista_get(words, 1), "declarar_miembro_instancia")) {
                 char* nombre_clase = lista_get(words, 2);
@@ -123,8 +123,8 @@ int main(int argc, char const* argv[]) {
                     fprintf(out, "buscar declarar_miembro_instancia %s %s: No encontrado: se puede declarar\n",
                             (char*)lista_get(words, 2), (char*)lista_get(words, 3));
                 } else {
-                    fprintf(out, "buscar declarar_miembro_instancia %s: Encontrado: NO se puede declarar\n",
-                            (char*)lista_get(words, 2));
+                    fprintf(out, "buscar declarar_miembro_instancia %s %s: Encontrado en %s y accesible: no se puede declarar excepto que se esté sobreescribiendo un método\n",
+                            (char*)lista_get(words, 2),nombre_miembro,nombre_ambito_encontrado);
                 }
             } else if (!strcmp(lista_get(words, 1), "declarar_miembro_clase")) {
                 char* nombre_clase = lista_get(words, 2);
@@ -153,10 +153,10 @@ int main(int argc, char const* argv[]) {
 
                 if (result == ERR) {
                     fprintf(out, "buscar declarar_id_local_metodo %s %s: No encontrado: se puede declarar\n",
-                            (char*)lista_get(words, 2), (char*)lista_get(words, 3));
+                            nombre_clase,id_simbolo);
                 } else {
-                    fprintf(out, "buscar declarar_id_local_metodo %s: Encontrado: NO se puede declarar\n",
-                            (char*)lista_get(words, 2));
+                    fprintf(out, "buscar declarar_id_local_metodo %s %s: Encontrado en %s: no se puede declarar\n",
+                            nombre_clase,id_simbolo,nombre_ambito_encontrado);
                 }
             } else if (!strcmp(lista_get(words, 1), "id_no_cualificado")) {
                 char* id_simbolo = lista_get(words, 2);
@@ -290,12 +290,12 @@ int main(int argc, char const* argv[]) {
         } else if (!strcmp(lista_get(words, 0), "abrir_ambito_tsa_main")) {
             int tipo = atoi(lista_get(words, 2));
 
-            if (abrirAmbitoMain(tsa_main, lista_get(words, 1), FUNCION, tipo, NINGUNO, NINGUNO, 0) == ERR) {
-                fprintf(out, "abrir_ambito_tsa_main %s: No encontrado: se puede declarar\n",
-                        (char*)lista_get(words, 1));
+            if (abrirAmbitoMain(tsa_main, lista_get(words, 1),FUNCION, NINGUNO, tipo, 0, NINGUNO) == ERR) {
+                fprintf(out, "abrir_ambito_tsa_main %s %d: ERROR\n",
+                        (char*)lista_get(words, 1), tipo);
             } else {
-                fprintf(out, "abrir_ambito_tsa_main %s: Encontrado: NO se puede declarar\n",
-                        (char*)lista_get(words, 1));
+                fprintf(out, "abrir_ambito_tsa_main %s %d\n", (char*)lista_get(words, 1), tipo);
+                TSA_imprimir(out, tsa_main, NULL);
             }
         } else if (!strcmp(lista_get(words, 0), "cerrar_ambito_tsc")) {
             char* id_clase = lista_get(words, 1);
@@ -306,6 +306,16 @@ int main(int argc, char const* argv[]) {
             } else {
                 fprintf(out, "cerrar_ambito_tsc %s \n", id_clase);
             }
+        
+        } else if (!strcmp(lista_get(words, 0), "cerrar_ambito_tsa_main")) {
+            int result = TSA_cerrarAmbitoLocal(tsa_main);
+
+            if (result == ERR) {
+                fprintf(out, "cerrar_ambito_tsa_main: ERROR\n");
+            } else {
+                fprintf(out, "cerrar_ambito_tsa_main  \n");
+            }    
+        
         } else if (!strcmp(lista_get(words, 0), "cerrar_clase")) {
             char* id_clase = lista_get(words, 1);
             int result = cerrarClase(tabla_clases, id_clase, 0, 0, 0, 0);

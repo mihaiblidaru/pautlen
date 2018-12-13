@@ -1,4 +1,4 @@
-inicia_tsc      entrada_test_tabla_simbolos
+inicia_tsc      idCulificadoInstanciaClase
 inicia_tsa_main
 abrir_ambito_ppal_main
 buscar  declarar_main   main_varGlob

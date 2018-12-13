@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 char* categoria_to_str[] = {
-    "VARIABLE",       "PARAMETRO",         "FUNCION", "CLASE", "METODO SOBREESCRIBIBLE", "METODO_NO_SOBREESCRIBIBLE",
+    "VARIABLE",       "PARAMETRO",         "FUNCION", "CLASE", "METODO SOBREESCRIBIBLE", "METODO NO SOBREESCRIBIBLE",
     "ATRIBUTO CLASE", "ATRIBUTO INSTANCIA"};
 char* clase_to_str[] = {"ESCALAR", "PUNTERO", "VECTOR", "CONJUNTO", "OBJETO"};
 char* tipo_to_str[] = {"ENTERO", "FLOAT", "BOOLEAN"};
@@ -120,6 +120,15 @@ void InfoSimbolo_imprimir(FILE* out, InfoSimbolo* is, int ambito_global){
                 fprintf(out, "POS METODO: %d Y ACUMULADA %d ", is->posicion_metodo_sobreescribible,
                     is->numero_metodos_sobreescribibles);
             }
+            fprintf(out, "TIPO: %s ", tipo);
+            fprintf(out, "CLASE: (null) ");
+            fprintf(out, "#PAR: %d ", is->numero_parametros);
+            fprintf(out, "#LOCAL: %d ", is->numero_variables_locales);
+            fprintf(out, "ACCESO: %d ", is->tipo_acceso);
+            fprintf(out, "MIEMBRO: %d ", is->tipo_miembro);
+
+        }else if (is->categoria == METODO_NO_SOBREESCRIBIBLE){
+            char* tipo = tipo_to_str[is->tipo - 1];
             fprintf(out, "TIPO: %s ", tipo);
             fprintf(out, "CLASE: (null) ");
             fprintf(out, "#PAR: %d ", is->numero_parametros);

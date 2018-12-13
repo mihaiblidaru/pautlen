@@ -139,8 +139,8 @@ int main(int argc, char const* argv[]) {
                     fprintf(out, "buscar declarar_miembro_clase %s %s: No encontrado: se puede declarar\n",
                             (char*)lista_get(words, 2), (char*)lista_get(words, 3));
                 } else {
-                    fprintf(out, "buscar declarar_miembro_clase %s: Encontrado: NO se puede declarar\n",
-                            (char*)lista_get(words, 2));
+                    fprintf(out, "buscar declarar_miembro_clase %s %s: Encontrado en %s: no se puede declarar\n",
+                            (char*)lista_get(words, 2),nombre_miembro,nombre_ambito_encontrado);
                 }
             } else if (!strcmp(lista_get(words, 1), "declarar_id_local_metodo")) {
                 char* nombre_clase = lista_get(words, 2);

@@ -149,7 +149,7 @@ int buscarParaDeclararMiembroInstancia(TSC* t,
                                        char* nombre_ambito_encontrado);
 
 
-int buscarParaDeclararIdLocalEnMetodo(TSC* t,
+int buscarParaDeclararIdLocalEnMetodo(TSC* t, TSA* tsa_main,
                                       char* nombre_clase,
                                       char* nombre_id,
                                       InfoSimbolo** e,

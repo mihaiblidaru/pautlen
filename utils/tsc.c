@@ -451,16 +451,22 @@ int buscarParaDeclararMiembroInstancia(TSC *t,
     return ERR;
 }
 
-int buscarParaDeclararIdLocalEnMetodo(TSC *t,
+int buscarParaDeclararIdLocalEnMetodo(TSC *t, TSA *tsa_main,
                                       char *nombre_clase,
                                       char *nombre_id,
                                       InfoSimbolo **e,
                                       char *nombre_ambito_encontrado)
 {
+    if(strcmp(nombre_clase, "main")==0){
+        return buscarParaDeclararIdTablaSimbolosAmbitos(tsa_main, nombre_id, e, nombre_ambito_encontrado);
+    }
     NodoGrafo *nodo = buscarNodoProfundidad(t, nombre_clase);
-
-    TSA *tsa_clase = nodo->info;
-    return buscarParaDeclararIdTablaSimbolosAmbitos(tsa_clase, nombre_id, e, nombre_ambito_encontrado);
+    if( nodo!= NULL){
+        TSA *tsa_clase = nodo->info;
+        return buscarParaDeclararIdTablaSimbolosAmbitos(tsa_clase, nombre_id, e, nombre_ambito_encontrado);
+    }
+    return ERR;
+    
 }
 
 // Busqueda en Profundidad de un nodo en el grafo identificado por su nombre (Si queréis podéis buscar en profundidad).

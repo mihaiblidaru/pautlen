@@ -148,7 +148,7 @@ int main(int argc, char const* argv[]) {
                 InfoSimbolo* elem = NULL;
                 char nombre_ambito_encontrado[50];
 
-                int result = buscarParaDeclararIdLocalEnMetodo(tabla_clases, nombre_clase, id_simbolo, &elem,
+                int result = buscarParaDeclararIdLocalEnMetodo(tabla_clases, tsa_main,nombre_clase, id_simbolo, &elem,
                                                                nombre_ambito_encontrado);
 
                 if (result == ERR) {

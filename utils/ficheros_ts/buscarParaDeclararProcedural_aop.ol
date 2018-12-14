@@ -12,17 +12,17 @@ main {
 	
 	// Caso 55: Declarar funcion no declarada f1 devuelve ERR no está declarada y se puede declarar
 	// Caso 56: Declarar parametro no declarado p1 devuelve ERR no está declarada y se puede declarar
-	function int f1 (int p1) { 
+	function boolean f1 (int p1) { 
 		return p1*p1;
 	}
 	
 	// Caso 58: Declarar funcion ya declarada (f1) devuelve OK está declarada en main y no se puede declarar
-	function int f1 (int p1) { 
+	function boolean f1 (int p1) { 
 		return p1;
 	}
 	
 	// Caso 59: Declarar parametro ya declarado (p1) devuelve OK, está declarado en f2@1@1 y no se puede declarar
-	function int f2 (int p1; int p1) { 
+	function boolean f2 (int p1; int p1) { 
 		return p1+p1;
 	}
 	

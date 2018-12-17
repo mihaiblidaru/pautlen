@@ -78,7 +78,12 @@ void InfoSimbolo_imprimir(FILE* out, InfoSimbolo* is, int ambito_global){
             fprintf(out, "POS ATR. INSTANCIA %d Y ACUMULADA %d ", is->posicion_atributo_instancia,
                     is->num_acumulado_atributos_instancia);
             fprintf(out, "CLASE: %s ", clase);
-            fprintf(out, "TIPO: %s ", tipo);
+            if(is->clase == OBJETO){
+                fprintf(out, "TIPO: (null) ");
+
+            }else{
+                fprintf(out, "TIPO: %s ", tipo);
+            }
             fprintf(out, "DIR: %d ", is->direcciones);
             fprintf(out, "ACCESO: %d ", is->tipo_acceso);
             fprintf(out, "MIEMBRO: %d ", is->tipo_miembro);

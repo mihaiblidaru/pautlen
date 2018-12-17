@@ -357,20 +357,29 @@ int buscarIdIDCualificadoClase(TSC *t,
 
 
     NodoGrafo * nodo =buscarNodoProfundidad(t,nombre_clase_cualifica);
-
+    char nombre_id_con_prefijo[200];
     if(nodo==NULL){
         return ERR;
     }
-
-    if(buscarIdEnJerarquiaDesdeClase(t,nombre_id,nombre_clase_cualifica,e,nombre_ambito_encontrado)==ERR){
+    if(strcmp(nombre_clase_cualifica,nombre_clase_desde ) == 0){
+        sprintf(nombre_id_con_prefijo, "%s_%s", nombre_clase_cualifica, nombre_id);
+        if(buscarParaDeclararIdTablaSimbolosAmbitos(nodo->info,nombre_id_con_prefijo,e,nombre_ambito_encontrado) == OK){
+            if((*e)->tipo_miembro != MIEMBRO_UNICO){
+                return ERR;
+            }
+            return OK;
+        }   
+    }
+    
+    if(buscarIdEnJerarquiaDesdeClase(t, nombre_id, nombre_clase_desde, e, nombre_ambito_encontrado) == ERR){
         return ERR;
     }else{
-        return aplicarAccesos(t,nombre_clase_desde,nombre_ambito_encontrado,*e);
-
+       if((*e)->tipo_miembro != MIEMBRO_UNICO){
+            return ERR;
+        }
+        return aplicarAccesos(t, nombre_clase_desde,nombre_ambito_encontrado,*e);
     }
-
-
-
+    
 
 
 }

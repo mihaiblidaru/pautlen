@@ -28,17 +28,31 @@
   char nombre_ambito_encontrado[1000];
 
   char nombre_funcion_aux[1000];
+
   struct _fn_atributes{
-    int pos_parametro_actual = -1;
-    int num_parametros_actual = 0;
-    int num_variables_locales_actual = 0;
-    int pos_variable_local_actual = 1;
-    int fn_return = 0;
-    int en_explist = 0;
-    int tamanio_vector_actual = 0;
-    Lista* lista_nombres = NULL;
-    Lista* lista_tipos = NULL;
-  }fn_atributes;
+    int pos_parametro_actual;
+    int num_parametros_actual;
+    int num_variables_locales_actual;
+    int pos_variable_local_actual;
+    int fn_return;
+    int en_explist;
+    int tamanio_vector_actual;
+    Lista* lista_nombres;
+    Lista* lista_tipos;
+  };
+
+  struct _fn_atributes atributos;
+
+	atributos.pos_parametro_actual = -1;
+  atributos.num_parametros_actual = 0;
+  atributos.num_variables_locales_actual = 0;
+  atributos.pos_variable_local_actual = 1;
+  atributos.fn_return = 0;
+  atributos.en_explist = 0;
+  atributos.tamanio_vector_actual = 0;
+  atributos.lista_nombres = NULL;
+  atributos.lista_tipos = NULL;
+
 %}
 
 /* PALABRAS RESERVADAS */
@@ -95,7 +109,11 @@
 {
   tipo_atributos atributos;
 }
-
+%type <atributos> elemento_vector
+%type <atributos> id_llamada_funcion
+%type <atributos> modificadores_acceso
+%type <atributos> fn_complete_name
+%type <atributos> fn_name
 %type <atributos> exp
 %type <atributos> identificadores
 %type <atributos> clase
@@ -338,15 +356,15 @@ fn_complete_name:
     fprintf(pf, ";R:\t fn_complete_name: fn_name ( parametros_funcion ) \n");
     sprintf(nombre_funcion_aux, "main_%s", $1.lexema);
 
-    for(int i; i < fn_atributes.num_parametros_actual; i++){
-      sprintf(nombre_funcion_aux, "%s@%d", nombre_funcion_aux, *((int*)lista_get(fn_atributes.lista_tipos, i)));
+    for(int i; i < atributos.num_parametros_actual; i++){
+      sprintf(nombre_funcion_aux, "%s@%d", nombre_funcion_aux, *((int*)lista_get(atributos.lista_tipos, i)));
     }
 
     if(buscarParaDeclararIdTablaSimbolosAmbitos(tsaMain, nombre_funcion_aux, &elem, nombre_ambito_encontrado) == ERR){
       abrirAmbitoMain(tsaMain, nombre_funcion_aux, FUNCION, $1.tipo_acceso, 5, 0, DEF_TAM);
-      void declararFuncion(pf , $1.lexema,  fn_atributes.num_parametros_actual);
+      declararFuncion(pf , $1.lexema,  atributos.num_parametros_actual);
     }else{
-      fprintf(stderr, "Funcion ya declaradab \n", $1.lexema);
+      fprintf(stderr, "Funcion %s ya declarada \n", $1.lexema);
       exit(-1);
     }
   }
@@ -360,25 +378,25 @@ fn_name:
   $$.tipo_miembro = $2.tipo_miembro;
   $$.lexema = $4;
 
-  fn_atributes.pos_parametro_actual = 0;
-  fn_atributes.num_parametros_actual = 0;
-  fn_atributes.num_variables_locales_actual = 0;
-  fn_atributes.pos_variable_local_actual = 1;
-  fn_atributes.fn_return = 0;
-  fn_atributes.en_explist = 0;
-  fn_atributes.tamanio_vector_actual = 0;
-  if(fn_atributes.lista_nombres == NULL){
-    fn_atributes.lista_nombres = lista_crear();
+  atributos.pos_parametro_actual = 0;
+  atributos.num_parametros_actual = 0;
+  atributos.num_variables_locales_actual = 0;
+  atributos.pos_variable_local_actual = 1;
+  atributos.fn_return = 0;
+  atributos.en_explist = 0;
+  atributos.tamanio_vector_actual = 0;
+  if(atributos.lista_nombres == NULL){
+    atributos.lista_nombres = lista_crear();
   }else{
-    lista_free(fn_atributes.lista_nombres, free);
-    fn_atributes.lista_nombres = lista_crear();
+    lista_free(atributos.lista_nombres, free);
+    atributos.lista_nombres = lista_crear();
   }
 
-  if(fn_atributes.lista_tipos == NULL){
-    fn_atributes.lista_tipos = lista_crear();
+  if(atributos.lista_tipos == NULL){
+    atributos.lista_tipos = lista_crear();
   }else{
-    lista_free(fn_atributes.lista_tipos, free);
-    fn_atributes.lista_tipos = lista_crear();
+    lista_free(atributos.lista_tipos, free);
+    atributos.lista_tipos = lista_crear();
   }
 
   }
@@ -387,10 +405,10 @@ fn_name:
 idpf:
 	TOK_IDENTIFICADOR{
   fprintf(pf, ";R:\t idpf: TOK_IDENTIFICADOR \n");
-  lista_addstr(fn_atributes.lista_nombres, $1);
-  lista_addint(fn_atributes.lista_tipos, globalTipo);
-  fn_atributes.num_parametros_actual +=1;
-  fn_atributes.pos_parametro_actual +=1;
+  lista_addstr(atributos.lista_nombres, $1);
+  lista_addint(atributos.lista_tipos, globalTipo);
+  atributos.num_parametros_actual +=1;
+  atributos.pos_parametro_actual +=1;
   }
 ;
 
@@ -499,7 +517,7 @@ asignacion:
 | elemento_vector '=' exp
     { fprintf(pf, ";R:\tasignacion: elemento_vector '=' exp\n");
       if ($1.tipo == $3.tipo){
-        asignar(FILE* fpasm, $1.lexema, $3.es_direccion);
+        asignar(pf, $1.lexema, $3.es_direccion);
       } else {
           fprintf(stderr, "ERROR: Expresión de tipo distinto al vector\n");
           exit(-1);
@@ -520,7 +538,7 @@ elemento_vector:
     if(resultado == OK && elem->clase == VECTOR && $3.tipo == INT){
         escribir_elemento_vector(pf, $1.lexema, elem->tamanio, $3.es_direccion);
         $$.tipo = elem->tipo;
-        $$.lexema = $1.lexema;
+        strcpy($$.lexema, $1.lexema);
         $$.es_direccion = 1;
     } else {
         fprintf(stderr, "Identificador %s no encontrado o no es de tipo VECTOR o la expresion dentro de [] no es de tipo entero\n", $1.lexema);
@@ -612,7 +630,8 @@ escritura:
 retorno_funcion:
   TOK_RETURN exp
     { fprintf(pf, ";R:\tretorno_funcion: TOK_RETURN exp\n");
-      retornarFuncion(pf, int es_variable);
+
+      retornarFuncion(pf, $2.es_direccion);
     }
 | TOK_RETURN TOK_NONE
     { fprintf(pf, ";R:\tretorno_funcion: TOK_RETURN TOK_NONE\n");}
@@ -766,7 +785,13 @@ exp:
     { fprintf(pf, ";R:\texp: elemento_vector\n");}
 | id_llamada_funcion '(' lista_expresiones ')'
     { fprintf(pf, ";R:\texp: id_llamada_funcion '(' lista_expresiones ')'\n");
-      llamarFuncion(pf, char * nombre_funcion, int num_argumentos);
+
+
+      if(buscarIdNoCualificado(NULL, tsaMain, $1.lexema, "main", &elem, "sdf")){
+        //ERRORe SEMANTICO
+      }
+
+      llamarFuncion(pf, elem->clave, elem->numero_parametros);
     }
 | identificador_clase '.' TOK_IDENTIFICADOR '(' lista_expresiones ')'
     { fprintf(pf, ";R:\texp: identificador_clase '.' TOK_IDENTIFICADOR   '(' lista_expresiones ')'\n");}
@@ -778,6 +803,7 @@ id_llamada_funcion:
   TOK_IDENTIFICADOR
   {
     fprintf(pf, ";R:\t id_llamada_funcion: TOK_IDENTIFICADOR\n");
+    strcpy($$.lexema,$1.lexema);
   }
 ;
 

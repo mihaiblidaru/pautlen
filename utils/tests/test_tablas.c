@@ -20,10 +20,10 @@ void cambiar_tabs_por_espacios(char *str){
  * para que la cadena pueda ser "tokenizada"
  */
 void replace_multi_space_with_single_space(char *str){
-    char *dest = str; 
+    char *dest = str;
     while (*str != '\0') {
         while (*str == ' ' && *(str + 1) == ' ')
-            str++;  
+            str++;
        *dest++ = *str++;
     }
     *dest = '\0';
@@ -178,15 +178,15 @@ int main(int argc, char const* argv[]) {
                 char* nombre_instancia_cualifica = lista_get(words, 2);
                 char* nombre_atributo_instancia = lista_get(words, 3);
                 char* nombre_clase_desde = lista_get(words, 4);
-                
+
                 InfoSimbolo* elem = NULL;
                 char nombre_ambito_encontrado[50];
 
 
-                int result = buscarIdCualificadoInstancia(tabla_clases, 
-                                                          tsa_main, 
-                                                          nombre_instancia_cualifica, 
-                                                          nombre_atributo_instancia, 
+                int result = buscarIdCualificadoInstancia(tabla_clases,
+                                                          tsa_main,
+                                                          nombre_instancia_cualifica,
+                                                          nombre_atributo_instancia,
                                                           nombre_clase_desde, &elem,
                                                           nombre_ambito_encontrado);
 
@@ -204,7 +204,7 @@ int main(int argc, char const* argv[]) {
                 char* nombre_clase_cualifica = lista_get(words, 2);
                 char* nombre_id = lista_get(words, 3);
                 char* nombre_clase_desde = lista_get(words, 4);
-                
+
                 InfoSimbolo* elem = NULL;
                 char nombre_ambito_encontrado[50];
 
@@ -249,7 +249,7 @@ int main(int argc, char const* argv[]) {
             } else {
                 fprintf(out, "abrir_clase %s\n", id_clase);
             }
-        
+
         } else if (!strcmp(lista_get(words, 0), "insertar_tsc")) {
             char* id_clase = lista_get(words, 1);
             char* clave = lista_get(words, 2);
@@ -278,7 +278,7 @@ int main(int argc, char const* argv[]) {
             int tipo_miembro = atoi(lista_get(words, 6));
 
             int result = tablaSimbolosClasesAbrirAmbitoEnClase(tabla_clases, id_clase, id_ambito, categoria, acceso,
-                                                               tipo, 0, tipo_miembro);
+                                                               tipo, 0, tipo_miembro, 0);
 
             if (result == ERR) {
                 fprintf(out, "abrir_ambito_tsc: ERROR\n");
@@ -290,7 +290,7 @@ int main(int argc, char const* argv[]) {
         } else if (!strcmp(lista_get(words, 0), "abrir_ambito_tsa_main")) {
             int tipo = atoi(lista_get(words, 2));
 
-            if (abrirAmbitoMain(tsa_main, lista_get(words, 1),FUNCION, NINGUNO, tipo, 0, NINGUNO) == ERR) {
+            if (abrirAmbitoMain(tsa_main, lista_get(words, 1),FUNCION, NINGUNO, tipo, 0, NINGUNO, 0) == ERR) {
                 fprintf(out, "abrir_ambito_tsa_main %s %d: ERROR\n",
                         (char*)lista_get(words, 1), tipo);
             } else {
@@ -306,7 +306,7 @@ int main(int argc, char const* argv[]) {
             } else {
                 fprintf(out, "cerrar_ambito_tsc %s \n", id_clase);
             }
-        
+
         } else if (!strcmp(lista_get(words, 0), "cerrar_ambito_tsa_main")) {
             int result = TSA_cerrarAmbitoLocal(tsa_main);
 
@@ -314,8 +314,8 @@ int main(int argc, char const* argv[]) {
                 fprintf(out, "cerrar_ambito_tsa_main: ERROR\n");
             } else {
                 fprintf(out, "cerrar_ambito_tsa_main  \n");
-            }    
-        
+            }
+
         } else if (!strcmp(lista_get(words, 0), "cerrar_clase")) {
             char* id_clase = lista_get(words, 1);
             int result = cerrarClase(tabla_clases, id_clase, 0, 0, 0, 0);
@@ -348,7 +348,7 @@ int main(int argc, char const* argv[]) {
 
         } else if (!strcmp(lista_get(words, 0), "insertar_tsa_main")) {
 
-            
+
         } else if (!strcmp(lista_get(words, 0), "cerrar_tsa_main")) {
             int result = TSA_eliminar(tsa_main);
 
@@ -357,7 +357,7 @@ int main(int argc, char const* argv[]) {
             } else {
                 fprintf(out, "cerrar_tsa_main\n");
             }
-           
+
         } else if (!strcmp(lista_get(words, 0), "cerrar_tsc")) {
             //crearRepresentacionTSC(tabla_clases, "tsc.dot");
             int result = cerrarTablaSimbolosClases(tabla_clases);
@@ -373,7 +373,7 @@ int main(int argc, char const* argv[]) {
         // como se que es una lista de strings que han sido malloceados los libero con free
         lista_free(words, free);
     }
-    
+
     fclose(fp);
 
     if(out != stderr)

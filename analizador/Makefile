@@ -88,3 +88,8 @@ test5: compilador
 		./compilador testsCompilador/in_testS1_V5.c testsCompilador/in_testS1_V5.asm
 		nasm -g -f elf32 testsCompilador/in_testS1_V5.asm -o testsCompilador/in_testS1_V5.o
 		gcc -m32 -g testsCompilador/in_testS1_V5.o ../olib.o -o in_testS1_V5
+
+test_declaracion_funciones: compilador testsCompilador/test_declaracion_funciones.ol
+		./compilador testsCompilador/test_declaracion_funciones.ol testsCompilador/test_declaracion_funciones.asm
+		nasm -g -f elf32 testsCompilador/test_declaracion_funciones.asm -o testsCompilador/test_declaracion_funciones.o
+		gcc -m32 -g testsCompilador/test_declaracion_funciones.o ../olib.o -o test_declaracion_funciones

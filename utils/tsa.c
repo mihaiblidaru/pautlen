@@ -23,21 +23,21 @@ TSA* TSA_crear() {
 int TSA_eliminar(TSA* ts) {
     if (ts == NULL)
         return ERR;
-    
+
     if (ts->local != NULL && hash_eliminar(ts->local, InfoSimbolo_eliminar) == ERR) {
         return ERR;
     }
-    
+
     if (ts->global != NULL && hash_eliminar(ts->global, InfoSimbolo_eliminar) == ERR) {
         return ERR;
     }
-    if(ts->id_ambito_global != NULL) 
+    if(ts->id_ambito_global != NULL)
         free(ts->id_ambito_global);
-    
-    if(ts->id_ambito_local != NULL) 
+
+    if(ts->id_ambito_local != NULL)
         free(ts->id_ambito_local);
     free(ts);
-    
+
     return OK;
 }
 
@@ -61,7 +61,8 @@ TSA* TSA_abrirAmbitoLocal(TSA* ts, const char* id_ambito,
                         int acceso_metodo,
                         int tipo_metodo,
                         int posicion_metodo_sobre,
-                        int tipo_miembro) {
+                        int tipo_miembro,
+                        int numero_parametros) {
     char nombre_simbolo_info_ambito[100];
     ts->local = hash_crear(DEF_TAM);
     ts->ambito = LOCAL;
@@ -72,7 +73,7 @@ TSA* TSA_abrirAmbitoLocal(TSA* ts, const char* id_ambito,
 
     ts->id_ambito_local = strdup(nombre_sin_prefijo);
     sprintf(nombre_simbolo_info_ambito, "%s_%s", id_ambito, id_ambito);
-    
+
     InfoSimbolo* info_ambito = InfoSimbolo_crear();
 
     info_ambito->clave = strdup(id_ambito);
@@ -81,6 +82,7 @@ TSA* TSA_abrirAmbitoLocal(TSA* ts, const char* id_ambito,
     info_ambito->tipo = tipo_metodo;
     info_ambito->posicion_metodo_sobreescribible = posicion_metodo_sobre;
     info_ambito->tipo_miembro = tipo_miembro;
+    info_ambito->numero_parametros = numero_parametros;
 
     hash_insertar(ts->global, id_ambito, info_ambito);
     hash_insertar(ts->local, id_ambito, InfoSimbolo_duplicar(info_ambito));
@@ -194,9 +196,10 @@ int abrirAmbitoMain(TSA* t,
                     int acceso_metodo,
                     int tipo_metodo,
                     int posicion_metodo_sobre,
-                    int tipo_miembro
+                    int tipo_miembro,
+                    int numero_parametros
                     ) {
-    if (TSA_abrirAmbitoLocal(t, id_ambito, categoria_ambito, acceso_metodo, tipo_metodo, posicion_metodo_sobre, tipo_miembro) != NULL) {
+    if (TSA_abrirAmbitoLocal(t, id_ambito, categoria_ambito, acceso_metodo, tipo_metodo, posicion_metodo_sobre, tipo_miembro, numero_parametros) != NULL) {
         return OK;
     }
     return ERR;
@@ -244,7 +247,7 @@ int buscarParaDeclararIdTablaSimbolosAmbitos(TSA* t, char* id, InfoSimbolo** e, 
 
 // esta copiada la anterior, porque no encuentro la diferencia de lo del prefijo
 int buscarTablaSimbolosAmbitosConPrefijos(TSA* t, char* id, InfoSimbolo** e, char* id_ambito) {
-    
+
     if(t->local != NULL){
         char nombre_con_prefijo[50];
         InfoSimbolo* aux = NULL;

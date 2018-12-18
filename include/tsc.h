@@ -2,12 +2,12 @@
 * grafo.h
 *
 * GRUPO 2:
-* 
+*
 * CALVENTE RODRIGUEZ, Andres
 * DOMINGUEZ GIGANTE, Sergio
 * FERNANDEZ TORRES, Lucia
 * AYALA VALENCIA, Alberto
-* BLIDARU , Mihai 
+* BLIDARU , Mihai
 *
 ************************************************************/
 #ifndef tsc
@@ -25,15 +25,15 @@ typedef struct NodoGrafo {
 	Lista* predecesores;
 	Lista* descendientes;
 
-    // esto lo necesito para poder pasar de una lista desordenada de 
+    // esto lo necesito para poder pasar de una lista desordenada de
     // nodos a una ordernada
     int indice;
 } NodoGrafo;
 
 typedef struct TSC {
-	Lista* raices;       
-    Lista* nodos; 
-    char* nombre; 
+	Lista* raices;
+    Lista* nodos;
+    char* nombre;
 } TSC;
 /***********************************************************
  * tsc.c
@@ -68,14 +68,16 @@ int cerrarClase(TSC* t,
                 int num_metodos_sobreescribibles,
                 int num_metodos_no_sobreescribibles);
 
-int tablaSimbolosClasesAbrirAmbitoEnClase(TSC* grafo,
-                                          char* id_clase,
-                                          char* id_ambito,
+int tablaSimbolosClasesAbrirAmbitoEnClase(TSC *grafo,
+                                          char *id_clase,
+                                          char *id_ambito,
                                           int categoria_ambito,
                                           int acceso_metodo,
                                           int tipo_metodo,
                                           int posicion_metodo_sobre,
-                                          int tipo_miembro);
+                                          int tipo_miembro,
+                                          int numero_parametros
+                                        );
 
 int tablaSimbolosClasesCerrarAmbitoEnClase(TSC* grafo, char* id_clase);
 

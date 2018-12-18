@@ -68,7 +68,7 @@ int abrirClase(TSC *t, char *id_clase, Lista *lista_padres)
     nodoActual->nombre = strdup(id_clase);
     TSA_abrirAmbitoGlobal(nodoActual->info, id_clase);
     nodoActual->indice = lista_length(t->nodos);
-    
+
     // si no tiene padres, lo añado al array de raices, y al array de nodos totales
     if (!lista_padres)
     {
@@ -136,14 +136,16 @@ int tablaSimbolosClasesAbrirAmbitoEnClase(TSC *grafo,
                                           int acceso_metodo,
                                           int tipo_metodo,
                                           int posicion_metodo_sobre,
-                                          int tipo_miembro)
+                                          int tipo_miembro,
+                                          int numero_parametros
+                                        )
 {
     NodoGrafo *clase = NULL;
     clase = buscarNodoProfundidad(grafo, id_clase);
     if (clase != NULL)
     {
         clase->info = TSA_abrirAmbitoLocal(clase->info, id_ambito, categoria_ambito, acceso_metodo, tipo_metodo,
-                                           posicion_metodo_sobre, tipo_miembro);
+                                           posicion_metodo_sobre, tipo_miembro, numero_parametros);
         return OK;
     }
 
@@ -275,7 +277,7 @@ int buscarIdEnJerarquiaDesdeClase(TSC *t,
                                   InfoSimbolo **e,
                                   char *nombre_ambito_encontrado)
 {
-    
+
     if(strcmp(nombre_clase_desde, "main") == 0){
         for(int i = lista_length(t->nodos) -1 ; i>=0;i--){
             NodoGrafo *nodo = lista_get(t->nodos, i);
@@ -310,9 +312,9 @@ int buscarIdEnJerarquiaDesdeClase(TSC *t,
 
                 lista_free(jerarquia, NULL);
                 return ERR;
-                
+
             }
-    }    
+    }
 }
 
 // dado un id sin prefijo, devolver donde se ha encontrado partiendo de una clase
@@ -368,9 +370,9 @@ int buscarIdIDCualificadoClase(TSC *t,
                 return ERR;
             }
             return OK;
-        }   
+        }
     }
-    
+
     if(buscarIdEnJerarquiaDesdeClase(t, nombre_id, nombre_clase_desde, e, nombre_ambito_encontrado) == ERR){
         return ERR;
     }else{
@@ -379,7 +381,7 @@ int buscarIdIDCualificadoClase(TSC *t,
         }
         return aplicarAccesos(t, nombre_clase_desde,nombre_ambito_encontrado,*e);
     }
-    
+
 
 
 }
@@ -394,7 +396,7 @@ int buscarIdCualificadoInstancia(TSC *t,
 
 
     InfoSimbolo* aux = NULL;
-    char nombre_ambito_parte_izq[100]; 
+    char nombre_ambito_parte_izq[100];
     if(buscarIdNoCualificado(t, tabla_main, nombre_instancia_cualifica, nombre_clase_desde, &aux, nombre_ambito_parte_izq) == ERR){
         return ERR;
     }else{
@@ -446,7 +448,7 @@ int buscarParaDeclararMiembroInstancia(TSC *t,
         if (res != OK)
         {
             char *nombre_id = nombre_miembro + strlen(nombre_clase_desde) + 1;
-        
+
             int resJerarquia = buscarIdEnJerarquiaDesdeClase(t, nombre_id, nombre_clase_desde, e, nombre_ambito_encontrado);
             if(resJerarquia == OK){
                 return aplicarAccesos(t,nombre_clase_desde, nombre_ambito_encontrado, *e);
@@ -475,7 +477,7 @@ int buscarParaDeclararIdLocalEnMetodo(TSC *t, TSA *tsa_main,
         return buscarParaDeclararIdTablaSimbolosAmbitos(tsa_clase, nombre_id, e, nombre_ambito_encontrado);
     }
     return ERR;
-    
+
 }
 
 // Busqueda en Profundidad de un nodo en el grafo identificado por su nombre (Si queréis podéis buscar en profundidad).
@@ -518,7 +520,7 @@ NodoGrafo *recBuscarNodoProfundidad(NodoGrafo *actual, char *nombre)
             return aux;
         }
     }
-    return NULL; 
+    return NULL;
 }
 
 void crearRepresentacionTSC(TSC *g, char *path)

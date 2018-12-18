@@ -20,6 +20,7 @@
   int globalTamanioVectorActual = -1;
   TSA* tsaMain = NULL;
 
+
   char nombre_ambito_insertar[200] = "main";
 
   char nombre_simbolo_ts[200];
@@ -102,6 +103,7 @@
   tipo_atributos atributos;
 }
 %type <atributos> elemento_vector
+%type <atributos> tipo_retorno
 %type <atributos> id_llamada_funcion
 %type <atributos> modificadores_acceso
 %type <atributos> fn_complete_name
@@ -281,10 +283,14 @@ clase_escalar:
 tipo:
   TOK_INT
     { fprintf(pf, ";R:\ttipo: TOK_INT\n");
-      globalTipo = INT;}
+      globalTipo = INT;
+      $$.tipo = INT;
+      }
 | TOK_BOOLEAN
     { fprintf(pf, ";R:\ttipo: TOK_BOOLEAN\n");
-      globalTipo = BOOLEAN;}
+      globalTipo = BOOLEAN;
+      $$.tipo = BOOLEAN;
+      }
 ;
 
 
@@ -316,9 +322,13 @@ identificador:
   TOK_IDENTIFICADOR
       { fprintf(pf, ";R:\tTOK_IDENTIFICADOR\n");
         sprintf(nombre_simbolo_ts, "%s_%s", nombre_ambito_insertar, $1.lexema);
-
         if (buscarParaDeclararIdTablaSimbolosAmbitos(tsaMain, nombre_simbolo_ts, &elem, nombre_ambito_encontrado) == ERR) {
-            TSA_insertarSimbolo(tsaMain, nombre_simbolo_ts, VARIABLE, globalTipo, globalClase, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, NULL);
+            if(strcmp(nombre_ambito_insertar, "main") != 0){
+              TSA_insertarSimbolo(tsaMain, nombre_simbolo_ts, VARIABLE, globalTipo, globalClase, 0, 0, 0, atributos.pos_variable_local_actual, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, NULL);
+              atributos.pos_variable_local_actual++;
+            }else{
+              TSA_insertarSimbolo(tsaMain, nombre_simbolo_ts, VARIABLE, globalTipo, globalClase, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, NULL);
+            }
         }else{
             fprintf(stderr, "No se puede declarar la variable: %s (variable ya declarada)\n", $1.lexema);
             exit(-1);
@@ -348,8 +358,11 @@ funcion:
 ;
 
 fn_declaration:
-	fn_complete_name '{' declaraciones_funcion{
+	fn_complete_name '{' declaraciones_funcion
+  {
     fprintf(pf, ";R:\t fn_declaration: fn_complete_name { declaraciones_funcion\n");
+    declararFuncion(pf ,nombre_funcion_aux, atributos.pos_variable_local_actual-1);
+    TSA_imprimir(stderr, tsaMain, NULL);
   }
 ;
 
@@ -358,17 +371,32 @@ fn_complete_name:
     fprintf(pf, ";R:\t fn_complete_name: fn_name ( parametros_funcion ) \n");
     sprintf(nombre_funcion_aux, "main_%s", $1.lexema);
 
+    strcpy($$.lexema, $1.lexema);
     for(int i; i < atributos.num_parametros_actual; i++){
       sprintf(nombre_funcion_aux, "%s@%d", nombre_funcion_aux, *((int*)lista_get(atributos.lista_tipos, i)));
     }
+    strcpy(nombre_ambito_insertar, nombre_funcion_aux);
 
     if(buscarParaDeclararIdTablaSimbolosAmbitos(tsaMain, nombre_funcion_aux, &elem, nombre_ambito_encontrado) == ERR){
-      abrirAmbitoMain(tsaMain, nombre_funcion_aux, FUNCION, $1.tipo_acceso, 5, 0, DEF_TAM);
-      declararFuncion(pf , $1.lexema,  atributos.num_parametros_actual);
+      abrirAmbitoMain(tsaMain, nombre_funcion_aux, FUNCION, $1.tipo_acceso, $1.tipo, 5, 0, atributos.num_parametros_actual);
+
     }else{
       fprintf(stderr, "Funcion %s ya declarada \n", $1.lexema);
       exit(-1);
     }
+
+    for(int i=0; i < lista_length(atributos.lista_nombres); i++){
+      char nombre_parametro_ts[300];
+      sprintf(nombre_parametro_ts, "%s_%s", nombre_funcion_aux, (char*)lista_get(atributos.lista_nombres, i));
+
+      TSA_insertarSimbolo(tsaMain, nombre_parametro_ts, PARAMETRO, *((int*)lista_get(atributos.lista_tipos, i)),
+                          ESCALAR, 0, 0, 0, 0, i, 0, 0,
+                                       0, 0, 0, 0, 0, 0, 0, ACCESO_EXPOSED, MIEMBRO_NO_UNICO, 0, 0, 0, 0, NULL);
+      printf("%s \n", nombre_parametro_ts);
+    }
+
+
+
   }
 ;
 
@@ -378,6 +406,7 @@ fn_name:
 
   $$.tipo_acceso = $2.tipo_acceso;
   $$.tipo_miembro = $2.tipo_miembro;
+  $$.tipo = $3.tipo;
   strcpy($$.lexema, $4.lexema);
 
   atributos.pos_parametro_actual = 0;
@@ -416,9 +445,14 @@ idpf:
 
 tipo_retorno:
   TOK_NONE
-    { fprintf(pf, ";R:\ttipo_retorno: TOK_NONE\n"); }
+    { fprintf(pf, ";R:\ttipo_retorno: TOK_NONE\n");
+      $$.tipo = NINGUNO;
+    }
+
 | tipo
-    { fprintf(pf, ";R:\ttipo_retorno: tipo\n"); }
+    { fprintf(pf, ";R:\ttipo_retorno: tipo\n");
+      $$.tipo = $1.tipo;
+    }
 | clase_objeto
     { fprintf(pf, ";R:\ttipo_retorno: clase_objeto\n"); }
 ;
@@ -452,7 +486,7 @@ declaraciones_funcion:
   declaraciones
     { fprintf(pf, ";R:\tdeclaraciones_funcion:declaraciones\n");}
 | /* Vacio */
-    { fprintf(pf, ";R:\tdeclaraciones_funcion:\n");}
+    { fprintf(pf, ";R:\tdeclaraciones_funcion: VACIO\n");}
 ;
 
 

@@ -314,6 +314,8 @@ void while_exp_pila (FILE * fpasm, int exp_es_variable, int etiqueta);
 void while_fin( FILE * fpasm, int etiqueta);
 
 void escribir_elemento_vector(FILE * fpasm,char * nombre_vector, int tam_max, int exp_es_direccion);
+void asignar_en_vector(FILE * fpasm);
+
 void declararFuncion(FILE * fd_s, char * nombre_funcion, int num_var_loc);
 void llamarFuncion(FILE * fd_asm, char * nombre_funcion, int num_argumentos);
 void retornarFuncion(FILE * fd_s, int es_variable);

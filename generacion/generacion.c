@@ -757,13 +757,20 @@ void escribir_elemento_vector(FILE * fpasm, char * nombre_vector, int tam_max, i
   fprintf(fpasm, "\tjl near mensaje_1\n");
 
   fprintf(fpasm, "\tcmp eax, %d\n", tam_max - 1);
-  fprintf(fpasm, "\tjl near mensaje_1\n");
+  fprintf(fpasm, "\tjg near mensaje_1\n");
 
   fprintf(fpasm, "\tmov dword edx, _%s\n", nombre_vector);
   fprintf(fpasm, "\tlea eax, [edx + eax * 4]\n");
   fprintf(fpasm, "\tpush dword eax\n");
 
 }
+
+void asignar_en_vector(FILE * fpasm){
+  fprintf(fpasm, "\n;-> Empieza asignar en vector\n");
+
+  fprintf(fpasm, "\tpop dword [eax]\n");
+}
+
 void declararFuncion(FILE * fd_s, char * nombre_funcion, int num_var_loc){
 
 	fprintf(fd_s, "\n; Declaramos la funcion\n");

@@ -555,7 +555,7 @@ asignacion:
 | elemento_vector '=' exp
     { fprintf(pf, ";R:\tasignacion: elemento_vector '=' exp\n");
       if ($1.tipo == $3.tipo){
-        asignar_en_vector(pf);
+        asignar_en_vector(pf, $3.es_direccion);
       } else {
           fprintf(stderr, "ERROR: Expresión de tipo distinto al vector\n");
           exit(-1);
@@ -640,7 +640,6 @@ bucle:
 
 lectura:
   TOK_SCANF TOK_IDENTIFICADOR
-
     {
         fprintf(pf, ";R:\tlectura: TOK_SCANF TOK_IDENTIFICADOR\n");
         int resultado = buscarIdNoCualificado(NULL, tsaMain, $2.lexema, "main", &elem, nombre_ambito_encontrado);
@@ -653,7 +652,8 @@ lectura:
 
     }
 | TOK_SCANF elemento_vector
-    { fprintf(pf, ";R:\tlectura: TOK_SCANF elemento_vector\n");}
+    { fprintf(pf, ";R:\tlectura: TOK_SCANF elemento_vector\n");
+      leer(pf, $2.lexema, $2.tipo);}
 ;
 
 

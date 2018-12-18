@@ -45,7 +45,7 @@ bison/y.tab.c: bison/omicron.y
 
 clean:
 	rm -f *.o flex/*.o bison/*.o compilador flex/lex.yy.c misalida*.txt bison/y.* ../generacion/*.o testsCompilador/out_* testsCompilador/*.o \
-	testsCompilador/*.asm in_testS1_V1 in_testS1_V2 in_testS1_V3 in_testS1_V4 in_testS1_V5
+	testsCompilador/*.asm in_testS1_V1 in_testS1_V2 in_testS1_V3 in_testS1_V4 in_testS1_V5 in_testS1_V6
 
 test:
 	./pruebaSintactico test_analizador/entrada_sin_1.ol misalida1.txt
@@ -88,6 +88,11 @@ test5: compilador
 		./compilador testsCompilador/in_testS1_V5.c testsCompilador/in_testS1_V5.asm
 		nasm -g -f elf32 testsCompilador/in_testS1_V5.asm -o testsCompilador/in_testS1_V5.o
 		gcc -m32 -g testsCompilador/in_testS1_V5.o ../olib.o -o in_testS1_V5
+
+test6: compilador
+		./compilador testsCompilador/in_testS1_V6.c testsCompilador/in_testS1_V6.asm
+		nasm -g -f elf32 testsCompilador/in_testS1_V6.asm -o testsCompilador/in_testS1_V6.o
+		gcc -m32 -g testsCompilador/in_testS1_V6.o ../olib.o -o in_testS1_V6
 
 test_declaracion_funciones: compilador testsCompilador/test_declaracion_funciones.ol
 		./compilador testsCompilador/test_declaracion_funciones.ol testsCompilador/test_declaracion_funciones.asm

@@ -765,10 +765,18 @@ void escribir_elemento_vector(FILE * fpasm, char * nombre_vector, int tam_max, i
 
 }
 
-void asignar_en_vector(FILE * fpasm){
+void asignar_en_vector(FILE * fpasm, int exp_es_direccion){
+
   fprintf(fpasm, "\n;-> Empieza asignar en vector\n");
 
-  fprintf(fpasm, "\tpop dword [eax]\n");
+  fprintf(fpasm, "\tpop dword eax\n");
+
+  if(exp_es_direccion)
+    fprintf(fpasm, "\tmov eax, [eax]\n");
+
+  fprintf(fpasm, "\tpop dword edx\n");
+
+  fprintf(fpasm, "\tmov dword [edx], eax\n");
 }
 
 void declararFuncion(FILE * fd_s, char * nombre_funcion, int num_var_loc){

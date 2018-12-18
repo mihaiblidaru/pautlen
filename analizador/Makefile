@@ -45,7 +45,7 @@ bison/y.tab.c: bison/omicron.y
 
 clean:
 	rm -f *.o flex/*.o bison/*.o compilador flex/lex.yy.c misalida*.txt bison/y.* ../generacion/*.o testsCompilador/out_* testsCompilador/*.o \
-	testsCompilador/*.asm in_testS1_V1 in_testS1_V2 in_testS1_V3 in_testS1_V4
+	testsCompilador/*.asm in_testS1_V1 in_testS1_V2 in_testS1_V3 in_testS1_V4 in_testS1_V5
 
 test:
 	./pruebaSintactico test_analizador/entrada_sin_1.ol misalida1.txt
@@ -83,3 +83,8 @@ test4: compilador
 		./compilador testsCompilador/in_testS1_V4.c testsCompilador/in_testS1_V4.asm
 		nasm -g -f elf32 testsCompilador/in_testS1_V4.asm -o testsCompilador/in_testS1_V4.o
 		gcc -m32 -g testsCompilador/in_testS1_V4.o ../olib.o -o in_testS1_V4
+
+test5: compilador
+		./compilador testsCompilador/in_testS1_V5.c testsCompilador/in_testS1_V5.asm
+		nasm -g -f elf32 testsCompilador/in_testS1_V5.asm -o testsCompilador/in_testS1_V5.o
+		gcc -m32 -g testsCompilador/in_testS1_V5.o ../olib.o -o in_testS1_V5

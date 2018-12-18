@@ -58,6 +58,8 @@ typedef struct{
    int valor_entero;
    int es_direccion;
    int etiqueta;
+   int tipo_acceso;
+   int tipo_miembro;
 } tipo_atributos;
 
 

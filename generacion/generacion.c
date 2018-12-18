@@ -767,13 +767,13 @@ void escribir_elemento_vector(FILE * fpasm, char * nombre_vector, int tam_max, i
 void declararFuncion(FILE * fd_s, char * nombre_funcion, int num_var_loc){
 
 	fprintf(fd_s, "\n; Declaramos la funcion\n");
-	fprintf(fd_s, "\t_%s:\n");
+	fprintf(fd_s, "\t_%s:\n", nombre_funcion);
 
 	fprintf(fd_s, "\tpush ebp \n");
 	fprintf(fd_s, "\tmov ebp, esp \n");
 
 	if(num_var_loc){
-		fprintf(fd_s, "\tsub esp, %d\n" 4*num_var_loc);
+		fprintf(fd_s, "\tsub esp, %d\n", 4*num_var_loc);
 	}
 
 

@@ -29,7 +29,7 @@
 
   char nombre_funcion_aux[1000];
 
-  struct _fn_atributes{
+  typedef struct {
     int pos_parametro_actual;
     int num_parametros_actual;
     int num_variables_locales_actual;
@@ -39,19 +39,11 @@
     int tamanio_vector_actual;
     Lista* lista_nombres;
     Lista* lista_tipos;
-  };
+  }_fn_atributes;
 
-  struct _fn_atributes atributos;
+  _fn_atributes atributos;
 
-	atributos.pos_parametro_actual = -1;
-  atributos.num_parametros_actual = 0;
-  atributos.num_variables_locales_actual = 0;
-  atributos.pos_variable_local_actual = 1;
-  atributos.fn_return = 0;
-  atributos.en_explist = 0;
-  atributos.tamanio_vector_actual = 0;
-  atributos.lista_nombres = NULL;
-  atributos.lista_tipos = NULL;
+
 
 %}
 
@@ -147,6 +139,16 @@ inicioTabla:
     { fprintf(pf, ";R:\tinicioTabla: \n");
       tsaMain = TSA_crear();
       abrirAmbitoPpalMain(tsaMain);
+      atributos.pos_parametro_actual = -1;
+      atributos.num_parametros_actual = 0;
+      atributos.num_variables_locales_actual = 0;
+      atributos.pos_variable_local_actual = 1;
+      atributos.fn_return = 0;
+      atributos.en_explist = 0;
+      atributos.tamanio_vector_actual = 0;
+      atributos.lista_nombres = NULL;
+      atributos.lista_tipos = NULL;
+
     }
 ;
 
@@ -376,7 +378,7 @@ fn_name:
 
   $$.tipo_acceso = $2.tipo_acceso;
   $$.tipo_miembro = $2.tipo_miembro;
-  $$.lexema = $4;
+  strcpy($$.lexema, $4.lexema);
 
   atributos.pos_parametro_actual = 0;
   atributos.num_parametros_actual = 0;
@@ -405,7 +407,7 @@ fn_name:
 idpf:
 	TOK_IDENTIFICADOR{
   fprintf(pf, ";R:\t idpf: TOK_IDENTIFICADOR \n");
-  lista_addstr(atributos.lista_nombres, $1);
+  lista_addstr(atributos.lista_nombres, $1.lexema);
   lista_addint(atributos.lista_tipos, globalTipo);
   atributos.num_parametros_actual +=1;
   atributos.pos_parametro_actual +=1;

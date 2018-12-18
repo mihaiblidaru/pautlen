@@ -17,7 +17,7 @@
   int globalTipo = -1;
   int globalClase = -1;
   int globalEtiqueta = 1;
-  int globalTamanioVectorActual = -1;
+  int globalTamanio = -1;
   TSA* tsaMain = NULL;
 
   char nombre_ambito_insertar[200] = "main";
@@ -164,8 +164,9 @@ escritura_TS:
       for(int i=0; i < lista_length(variables); i++){
           InfoSimbolo* simbolo = lista_get(variables, i);
           if(simbolo->categoria == VARIABLE){
-              declarar_variable(pf, simbolo->clave, simbolo->tipo, 1);
+              declarar_variable(pf, simbolo->clave, simbolo->tipo, simbolo->tamanio);
           }
+          
       }
 
       lista_free(variables, NULL);
@@ -274,7 +275,8 @@ modificadores_clase:
 
 clase_escalar:
   tipo
-    { fprintf(pf, ";R:\tclase_escalar: tipo\n");}
+    { fprintf(pf, ";R:\tclase_escalar: tipo\n");
+      globalTamanio = 1;}
 ;
 
 
@@ -297,9 +299,9 @@ clase_objeto:
 clase_vector:
   TOK_ARRAY tipo '[' TOK_CONSTANTE_ENTERA ']'
     { fprintf(pf, ";R:\tclase_vector: TOK_ARRAY tipo '[' TOK_CONSTANTE_ENTERA ']'\n");
-      globalTamanioVectorActual = $4.valor_entero;
-      if (globalTamanioVectorActual < 1 || globalTamanioVectorActual > MAX_TAMANIO_VECTOR){
-        fprintf(stderr, "ERROR SEMANTICO: %d (Valor no permitido)\n", globalTamanioVectorActual);
+      globalTamanio = $4.valor_entero;
+      if (globalTamanio < 1 || globalTamanio > MAX_TAMANIO_VECTOR){
+        fprintf(stderr, "ERROR SEMANTICO: %d (Valor no permitido)\n", globalTamanio);
         exit(-1);
       }}
 ;
@@ -318,7 +320,7 @@ identificador:
         sprintf(nombre_simbolo_ts, "%s_%s", nombre_ambito_insertar, $1.lexema);
 
         if (buscarParaDeclararIdTablaSimbolosAmbitos(tsaMain, nombre_simbolo_ts, &elem, nombre_ambito_encontrado) == ERR) {
-            TSA_insertarSimbolo(tsaMain, nombre_simbolo_ts, VARIABLE, globalTipo, globalClase, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, NULL);
+            TSA_insertarSimbolo(tsaMain, nombre_simbolo_ts, VARIABLE, globalTipo, globalClase, 0, 0, 0, 0, 0, 0, globalTamanio, 0, 0, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, NULL);
         }else{
             fprintf(stderr, "No se puede declarar la variable: %s (variable ya declarada)\n", $1.lexema);
             exit(-1);
@@ -519,7 +521,7 @@ asignacion:
 | elemento_vector '=' exp
     { fprintf(pf, ";R:\tasignacion: elemento_vector '=' exp\n");
       if ($1.tipo == $3.tipo){
-        asignar(pf, $1.lexema, $3.es_direccion);
+        asignar_en_vector(pf);
       } else {
           fprintf(stderr, "ERROR: Expresión de tipo distinto al vector\n");
           exit(-1);
@@ -532,15 +534,16 @@ asignacion:
     { fprintf(pf, ";R:\tasignacion: identificador_clase '.' TOK_IDENTIFICADOR '=' exp\n");}
 ;
 
+
 /* TODO :: ESTO PUEDE FALLAR PORQUE NO TENGO NI IDEA SI LA CLASE SE MIRA ASI */
 elemento_vector:
   TOK_IDENTIFICADOR '[' exp ']'
     { fprintf(pf, ";R:\telemento_vector: TOK_IDENTIFICADOR '[' exp ']'\n");
     int resultado = buscarIdNoCualificado(NULL, tsaMain, $1.lexema, "main", &elem, nombre_ambito_encontrado);
     if(resultado == OK && elem->clase == VECTOR && $3.tipo == INT){
-        escribir_elemento_vector(pf, $1.lexema, elem->tamanio, $3.es_direccion);
+        escribir_elemento_vector(pf, elem->clave, elem->tamanio, $3.es_direccion);
         $$.tipo = elem->tipo;
-        strcpy($$.lexema, $1.lexema);
+        strcpy($$.lexema, elem->clave);
         $$.es_direccion = 1;
     } else {
         fprintf(stderr, "Identificador %s no encontrado o no es de tipo VECTOR o la expresion dentro de [] no es de tipo entero\n", $1.lexema);
@@ -952,5 +955,5 @@ constante_entera:
 void yyerror(__attribute__((unused))const char* s){
     // Si el error es de verdad sintactico
     if(yychar != TOK_ERROR)
-        fprintf(stderr,"ERROR SINTÁCTICO:%d:%d\n", yylineno, nColumna - yyleng);
+        fprintf(stderr,"\x1b[41mERROR SINTÁCTICO:%d:%d\x1b[0m\n", yylineno, nColumna - yyleng);
 }

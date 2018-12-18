@@ -11,6 +11,12 @@ main {
   while((y<=3)){
     printf y;
     y = y + 1;
+    if ((y==2)){
+      printf y + 10;
+    }
+    else{
+      printf 2;
+    }
   }
 
 }

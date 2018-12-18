@@ -793,7 +793,8 @@ exp:
 
 
       if(buscarIdNoCualificado(NULL, tsaMain, $1.lexema, "main", &elem, "sdf")){
-        //ERRORe SEMANTICO
+        fprintf(stderr, "Funcion %s no encontrado\n", $1.lexema);
+        exit(-1);
       }
 
       llamarFuncion(pf, elem->clave, elem->numero_parametros);

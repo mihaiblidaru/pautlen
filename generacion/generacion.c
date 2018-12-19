@@ -779,6 +779,20 @@ void asignar_en_vector(FILE * fpasm, int exp_es_direccion){
   fprintf(fpasm, "\tmov dword [edx], eax\n");
 }
 
+void asignar_en_pila(FILE* fpasm, int exp_es_direccion, int posicion_en_pila){
+   fprintf(fpasm, "\n;-> Empieza asignar_en_pila\n");
+   
+   fprintf(fpasm, "\tpop dword eax\n");
+
+  if(exp_es_direccion){
+    fprintf(fpasm, "\tmov eax, [eax]\n");
+  }
+
+  fprintf(fpasm, "\tmov [ebp+%d], eax", posicion_en_pila);
+
+}
+
+
 void declararFuncion(FILE * fd_s, char * nombre_funcion, int num_var_loc){
 
 	fprintf(fd_s, "\n; Declaramos la funcion\n");

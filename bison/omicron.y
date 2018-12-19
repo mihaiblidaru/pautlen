@@ -326,7 +326,7 @@ identificadores:
 identificador:
   TOK_IDENTIFICADOR
       { fprintf(pf, ";R:\tTOK_IDENTIFICADOR\n");
-        sprintf(nombre_simbolo_ts, "%s_%s", nombre_ambito_insertar, $1.lexema);
+          sprintf(nombre_simbolo_ts, "%s_%s", nombre_ambito_insertar, $1.lexema);
         if (buscarParaDeclararIdTablaSimbolosAmbitos(tsaMain, nombre_simbolo_ts, &elem, nombre_ambito_encontrado) == ERR) {
             if(strcmp(nombre_ambito_insertar, "main") != 0){
               TSA_insertarSimbolo(tsaMain, nombre_simbolo_ts, VARIABLE, globalTipo, globalClase, 0, 0, 0, atributos.pos_variable_local_actual, 0, 0, globalTamanio, 0, 0, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, NULL);
@@ -392,10 +392,10 @@ fn_complete_name:
 
     for(int i=0; i < lista_length(atributos.lista_nombres); i++){
       char nombre_parametro_ts[300];
-      sprintf(nombre_parametro_ts, "%s_%s", nombre_funcion_aux, (char*)lista_get(atributos.lista_nombres, i));
+      sprintf(nombre_parametro_ts, "%s_%s", nombre_funcion_aux + 5, (char*)lista_get(atributos.lista_nombres, i));
 
       TSA_insertarSimbolo(tsaMain, nombre_parametro_ts, PARAMETRO, *((int*)lista_get(atributos.lista_tipos, i)),
-                          ESCALAR, 0, 0, 0, 0, i, 0, 0,
+                          ESCALAR, 0, atributos.num_parametros_actual, 0, 0, i, 0, 0,
                                        0, 0, 0, 0, 0, 0, 0, ACCESO_EXPOSED, MIEMBRO_NO_UNICO, 0, 0, 0, 0, NULL);
       //printf("%s \n", nombre_parametro_ts);
     }
@@ -549,8 +549,8 @@ asignacion:
 
         int resultado = buscarIdNoCualificado(NULL, tsaMain, $1.lexema, "main", &elem, nombre_ambito_encontrado);
         if(resultado == OK){
-            asignar(pf, elem->clave, $3.es_direccion);
-        }else{
+              asignar(pf, elem->clave, $3.es_direccion);
+            }else{
             fprintf(stderr, "Identificador %s no encontrado\n", $1.lexema);
             exit(-1);
         }

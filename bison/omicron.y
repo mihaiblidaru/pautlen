@@ -656,7 +656,7 @@ lectura:
     }
 | TOK_SCANF elemento_vector
     { fprintf(pf, ";R:\tlectura: TOK_SCANF elemento_vector\n");
-      leer(pf, $2.lexema, $2.tipo);}
+      leer_exp_pila(pf, $2.tipo);}
 ;
 
 

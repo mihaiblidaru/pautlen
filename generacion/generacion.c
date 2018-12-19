@@ -859,3 +859,14 @@ void llamarFuncion(FILE * fd_asm, char * nombre_funcion, int num_argumentos){
 	limpiarPila(fd_asm, num_argumentos);
 	fprintf(fd_asm, "\tpush dword eax\n");
 }
+
+void leer_exp_pila(FILE* fpasm, int tipo){
+  fprintf(fpasm, "\n;-> Empieza leer una expresión de la pila\n");
+
+  if(tipo == BOOLEAN){
+    fprintf(fpasm, "\tcall scan_boolean\n");
+  }else{
+    fprintf(fpasm, "\tcall scan_int\n");
+  }
+  fprintf(fpasm, "\tadd esp, 4\n");
+}

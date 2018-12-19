@@ -882,3 +882,13 @@ void operandoEnPilaAArgumento(FILE * fpasm, int es_variable){
     fprintf(fpasm, "\n; No es variable, no es hace nada\n");
   }
 }
+
+void leer_exp_pila(FILE* fpasm, int tipo){
+  fprintf(fpasm, "\n;-> Empieza leer una expresión de la pila\n");
+
+  if(tipo == BOOLEAN){
+    fprintf(fpasm, "\tcall scan_boolean\n");
+  }else{
+    fprintf(fpasm, "\tcall scan_int\n");
+  }
+}

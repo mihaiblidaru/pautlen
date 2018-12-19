@@ -323,4 +323,7 @@ void escribirParametro(FILE* fpasm, int pos_parametro, int num_total_parametros)
 void escribirVariableLocal(FILE* fpasm, int posicion_variable_local);
 void asignarDestinoEnPila(FILE* fpasm, int es_variable);
 void operandoEnPilaAArgumento(FILE * fpasm, int es_variable);
+
+void leer_exp_pila(FILE* fpasm, int tipo);
+
 #endif

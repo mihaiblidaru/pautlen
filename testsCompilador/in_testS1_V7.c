@@ -1,9 +1,10 @@
 main
 {
+
     int x, y;
 
 	scanf x;
-	scanf y;
+    scanf y;
 
 	printf x+y;
 
@@ -11,7 +12,7 @@ main
 
 	printf x*y;
 
-	//printf x/y; 
+	printf x/y; 
 
 	printf -x;
 }

@@ -278,8 +278,9 @@ void dividir(FILE* fpasm, int es_variable_1, int es_variable_2){
   fprintf(fpasm, "\tcmp ecx, 0\n");
   fprintf(fpasm, "\tje err_div_0\n"); //caso division por 0
   fprintf(fpasm, "\tpop dword eax\n"); //dividendo
-  if (es_variable_1)
+  if (es_variable_1){
     fprintf(fpasm, "\tmov eax, [eax]\n");
+  }
 
   fprintf(fpasm, "\tcdq\n"); //extensión en signo del dividendo EDX:EAX <= EAX
 

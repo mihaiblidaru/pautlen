@@ -729,7 +729,7 @@ exp:
       if ($1.tipo == INT && $3.tipo == INT){
         dividir(pf, $1.es_direccion, $3.es_direccion);
         $$.es_direccion = 0;
-        $$.valor_entero = (int) $1.valor_entero / $3.valor_entero;
+        /*$$.valor_entero = (int) $1.valor_entero / $3.valor_entero;*/
         $$.tipo = INT;
       } else  {
           if ($1.tipo != INT)

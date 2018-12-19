@@ -86,7 +86,7 @@
 /* Variables para la llamada a funciones */
   int num_parametros_detectados = 0;
   int tipos_parametros_actuales[50] = {0}; //dudo que tengamos alguna vez más de 50 parametros
-  
+  int estamos_en_llamada_funcion = 0;
 
 
   char nombre_ambito_insertar[200] = "main";
@@ -564,15 +564,15 @@ static const yytype_uint16 yyrline[] =
        0,   136,   136,   138,   144,   163,   187,   193,   200,   202,
      208,   210,   216,   221,   227,   232,   236,   240,   245,   251,
      256,   259,   262,   268,   270,   277,   282,   289,   294,   303,
-     309,   320,   322,   327,   352,   355,   360,   371,   380,   414,
-     447,   457,   462,   466,   472,   475,   480,   483,   488,   490,
-     496,   499,   504,   506,   512,   514,   520,   522,   524,   526,
-     528,   530,   532,   538,   544,   546,   552,   576,   584,   586,
-     588,   595,   611,   614,   621,   630,   639,   648,   656,   663,
-     675,   682,   691,   696,   702,   717,   732,   747,   762,   774,
-     789,   804,   817,   831,   836,   840,   844,   846,   865,   867,
-     872,   881,   883,   889,   896,   901,   907,   912,   923,   934,
-     948,   962,   976,   994,   997,  1004,  1009,  1018
+     309,   320,   322,   327,   351,   354,   359,   370,   379,   411,
+     444,   454,   459,   463,   469,   472,   477,   480,   485,   487,
+     493,   496,   501,   503,   509,   511,   517,   519,   521,   523,
+     525,   527,   529,   535,   541,   543,   549,   571,   579,   581,
+     583,   590,   606,   609,   616,   625,   634,   643,   651,   658,
+     670,   677,   686,   691,   697,   712,   727,   742,   757,   769,
+     784,   799,   812,   840,   845,   849,   853,   855,   876,   878,
+     883,   893,   895,   901,   908,   913,   919,   924,   935,   946,
+     960,   974,   988,  1006,  1009,  1016,  1021,  1030
 };
 #endif
 
@@ -1868,12 +1868,11 @@ yyreduce:
   case 33:
 #line 328 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tTOK_IDENTIFICADOR\n");
-        if(strcmp(nombre_ambito_insertar, "main") == 0){
+        if(strcmp(nombre_ambito_insertar, "main")==0){
           sprintf(nombre_simbolo_ts, "%s_%s", nombre_ambito_insertar, (yyvsp[0].atributos).lexema);
         }else{
-          sprintf(nombre_simbolo_ts, "%s_%s", nombre_ambito_insertar + 5, (yyvsp[0].atributos).lexema);
+          sprintf(nombre_simbolo_ts, "%s_%s", nombre_ambito_insertar+5, (yyvsp[0].atributos).lexema);
         }
-        
         if (buscarParaDeclararIdTablaSimbolosAmbitos(tsaMain, nombre_simbolo_ts, &elem, nombre_ambito_encontrado) == ERR) {
             if(strcmp(nombre_ambito_insertar, "main") != 0){
               TSA_insertarSimbolo(tsaMain, nombre_simbolo_ts, VARIABLE, globalTipo, globalClase, 0, 0, 0, atributos.pos_variable_local_actual, 0, 0, globalTamanio, 0, 0, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, NULL);
@@ -1887,39 +1886,39 @@ yyreduce:
         }
 
     }
-#line 1891 "y.tab.c" /* yacc.c:1646  */
+#line 1890 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 353 "bison/omicron.y" /* yacc.c:1646  */
+#line 352 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tfunciones: funcion funciones\n");}
-#line 1897 "y.tab.c" /* yacc.c:1646  */
+#line 1896 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 355 "bison/omicron.y" /* yacc.c:1646  */
+#line 354 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tfunciones:\n");}
-#line 1903 "y.tab.c" /* yacc.c:1646  */
+#line 1902 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 372 "bison/omicron.y" /* yacc.c:1646  */
+#line 371 "bison/omicron.y" /* yacc.c:1646  */
     {
     fprintf(pf, ";R:\t fn_declaration: fn_complete_name { declaraciones_funcion\n");
     declararFuncion(pf ,nombre_funcion_aux, atributos.pos_variable_local_actual-1);
     TSA_imprimir(stderr, tsaMain, NULL);
   }
-#line 1913 "y.tab.c" /* yacc.c:1646  */
+#line 1912 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 380 "bison/omicron.y" /* yacc.c:1646  */
+#line 379 "bison/omicron.y" /* yacc.c:1646  */
     {
     fprintf(pf, ";R:\t fn_complete_name: fn_name ( parametros_funcion ) \n");
     sprintf(nombre_funcion_aux, "main_%s", (yyvsp[-3].atributos).lexema);
 
     strcpy((yyval.atributos).lexema, (yyvsp[-3].atributos).lexema);
-    for(int i; i < atributos.num_parametros_actual; i++){
+    for(int i=0; i < atributos.num_parametros_actual; i++){
       sprintf(nombre_funcion_aux, "%s@%d", nombre_funcion_aux, *((int*)lista_get(atributos.lista_tipos, i)));
     }
     strcpy(nombre_ambito_insertar, nombre_funcion_aux);
@@ -1931,7 +1930,6 @@ yyreduce:
       fprintf(stderr, "Funcion %s ya declarada \n", (yyvsp[-3].atributos).lexema);
       exit(-1);
     }
-
     for(int i=0; i < lista_length(atributos.lista_nombres); i++){
       char nombre_parametro_ts[300];
       sprintf(nombre_parametro_ts, "%s_%s", nombre_funcion_aux + 5, (char*)lista_get(atributos.lista_nombres, i));
@@ -1939,17 +1937,16 @@ yyreduce:
       TSA_insertarSimbolo(tsaMain, nombre_parametro_ts, PARAMETRO, *((int*)lista_get(atributos.lista_tipos, i)),
                           ESCALAR, 0, atributos.num_parametros_actual, 0, 0, i, 0, 0,
                                        0, 0, 0, 0, 0, 0, 0, ACCESO_EXPOSED, MIEMBRO_NO_UNICO, 0, 0, 0, 0, NULL);
-      //printf("%s \n", nombre_parametro_ts);
     }
 
 
 
   }
-#line 1949 "y.tab.c" /* yacc.c:1646  */
+#line 1946 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 414 "bison/omicron.y" /* yacc.c:1646  */
+#line 411 "bison/omicron.y" /* yacc.c:1646  */
     {
   fprintf(pf, ";R:\t fn_name: TOK_FUNCTION modificadores_acceso tipo_retorno TOK_IDENTIFICADOR \n");
 
@@ -1980,11 +1977,11 @@ yyreduce:
   }
 
   }
-#line 1984 "y.tab.c" /* yacc.c:1646  */
+#line 1981 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 447 "bison/omicron.y" /* yacc.c:1646  */
+#line 444 "bison/omicron.y" /* yacc.c:1646  */
     {
   fprintf(pf, ";R:\t idpf: TOK_IDENTIFICADOR \n");
   lista_addstr(atributos.lista_nombres, (yyvsp[0].atributos).lexema);
@@ -1992,193 +1989,191 @@ yyreduce:
   atributos.num_parametros_actual +=1;
   atributos.pos_parametro_actual +=1;
   }
-#line 1996 "y.tab.c" /* yacc.c:1646  */
+#line 1993 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 458 "bison/omicron.y" /* yacc.c:1646  */
+#line 455 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\ttipo_retorno: TOK_NONE\n");
       (yyval.atributos).tipo = NINGUNO;
     }
-#line 2004 "y.tab.c" /* yacc.c:1646  */
+#line 2001 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 463 "bison/omicron.y" /* yacc.c:1646  */
+#line 460 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\ttipo_retorno: tipo\n");
       (yyval.atributos).tipo = (yyvsp[0].atributos).tipo;
     }
-#line 2012 "y.tab.c" /* yacc.c:1646  */
+#line 2009 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 467 "bison/omicron.y" /* yacc.c:1646  */
+#line 464 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\ttipo_retorno: clase_objeto\n"); }
-#line 2018 "y.tab.c" /* yacc.c:1646  */
+#line 2015 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 473 "bison/omicron.y" /* yacc.c:1646  */
+#line 470 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tparametros_funcion: parametro_funcion resto_parametros_funcion\n");}
-#line 2024 "y.tab.c" /* yacc.c:1646  */
+#line 2021 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 475 "bison/omicron.y" /* yacc.c:1646  */
+#line 472 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tparametros_funcion:\n");}
-#line 2030 "y.tab.c" /* yacc.c:1646  */
+#line 2027 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 481 "bison/omicron.y" /* yacc.c:1646  */
+#line 478 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tresto_parametros_funcion: ';' parametro_funcion resto_parametros_funcion\n");}
-#line 2036 "y.tab.c" /* yacc.c:1646  */
+#line 2033 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 483 "bison/omicron.y" /* yacc.c:1646  */
+#line 480 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tresto_parametros_funcion:\n");}
-#line 2042 "y.tab.c" /* yacc.c:1646  */
+#line 2039 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 489 "bison/omicron.y" /* yacc.c:1646  */
+#line 486 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tparametro_funcion: tipo idpf\n"); }
-#line 2048 "y.tab.c" /* yacc.c:1646  */
+#line 2045 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 491 "bison/omicron.y" /* yacc.c:1646  */
+#line 488 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tparametro_funcion: clase_objeto TOK_IDENTIFICADOR\n"); }
-#line 2054 "y.tab.c" /* yacc.c:1646  */
+#line 2051 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 50:
-#line 497 "bison/omicron.y" /* yacc.c:1646  */
+#line 494 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tdeclaraciones_funcion:declaraciones\n");}
-#line 2060 "y.tab.c" /* yacc.c:1646  */
+#line 2057 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 499 "bison/omicron.y" /* yacc.c:1646  */
+#line 496 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tdeclaraciones_funcion: VACIO\n");}
-#line 2066 "y.tab.c" /* yacc.c:1646  */
+#line 2063 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 505 "bison/omicron.y" /* yacc.c:1646  */
+#line 502 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tsentencias: sentencia\n");}
-#line 2072 "y.tab.c" /* yacc.c:1646  */
+#line 2069 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 507 "bison/omicron.y" /* yacc.c:1646  */
+#line 504 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tsentencias: sentencia  sentencias\n");}
-#line 2078 "y.tab.c" /* yacc.c:1646  */
+#line 2075 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 513 "bison/omicron.y" /* yacc.c:1646  */
+#line 510 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tsentencia: sentencia_simple ';'\n");}
-#line 2084 "y.tab.c" /* yacc.c:1646  */
+#line 2081 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 515 "bison/omicron.y" /* yacc.c:1646  */
+#line 512 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tsentencia: bloque\n");}
-#line 2090 "y.tab.c" /* yacc.c:1646  */
+#line 2087 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 521 "bison/omicron.y" /* yacc.c:1646  */
+#line 518 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tsentencia_simple: asignacion\n");}
-#line 2096 "y.tab.c" /* yacc.c:1646  */
+#line 2093 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 523 "bison/omicron.y" /* yacc.c:1646  */
+#line 520 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tsentencia_simple: lectura\n");}
-#line 2102 "y.tab.c" /* yacc.c:1646  */
+#line 2099 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 525 "bison/omicron.y" /* yacc.c:1646  */
+#line 522 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tsentencia_simple: escritura\n");}
-#line 2108 "y.tab.c" /* yacc.c:1646  */
+#line 2105 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 59:
-#line 527 "bison/omicron.y" /* yacc.c:1646  */
+#line 524 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tsentencia_simple: retorno_funcion\n");}
-#line 2114 "y.tab.c" /* yacc.c:1646  */
+#line 2111 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 60:
-#line 529 "bison/omicron.y" /* yacc.c:1646  */
+#line 526 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tsentencia_simple: identificador_clase '.' TOK_IDENTIFICADOR   '(' lista_expresiones ')'\n");}
-#line 2120 "y.tab.c" /* yacc.c:1646  */
+#line 2117 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 61:
-#line 531 "bison/omicron.y" /* yacc.c:1646  */
+#line 528 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tsentencia_simple: TOK_IDENTIFICADOR '(' lista_expresiones ')'\n");}
-#line 2126 "y.tab.c" /* yacc.c:1646  */
+#line 2123 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 62:
-#line 533 "bison/omicron.y" /* yacc.c:1646  */
+#line 530 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tsentencia_simple: destruir_objeto\n");}
-#line 2132 "y.tab.c" /* yacc.c:1646  */
+#line 2129 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 63:
-#line 539 "bison/omicron.y" /* yacc.c:1646  */
+#line 536 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tdestruir_objeto: TOK_DISCARD TOK_IDENTIFICADOR\n");}
-#line 2138 "y.tab.c" /* yacc.c:1646  */
+#line 2135 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 64:
-#line 545 "bison/omicron.y" /* yacc.c:1646  */
+#line 542 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tbloque: condicional\n");}
-#line 2144 "y.tab.c" /* yacc.c:1646  */
+#line 2141 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 65:
-#line 547 "bison/omicron.y" /* yacc.c:1646  */
+#line 544 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tbloque: bucle\n");}
-#line 2150 "y.tab.c" /* yacc.c:1646  */
+#line 2147 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 66:
-#line 553 "bison/omicron.y" /* yacc.c:1646  */
+#line 550 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tasignacion: TOK_IDENTIFICADOR '=' exp\n");
 
         int resultado = buscarIdNoCualificado(NULL, tsaMain, (yyvsp[-2].atributos).lexema, "main", &elem, nombre_ambito_encontrado);
         if(resultado == OK){
-          //si lo encontramos en main es una variable global y podemos
-          //hacer una asignación normal
-            if(strcmp(nombre_ambito_encontrado, "main")==0){
-              asignar(pf, elem->clave, (yyvsp[0].atributos).es_direccion);
-            }else{
-              int posicion_pila = 0;
-              if(elem->categoria == PARAMETRO){
-                posicion_pila = 4 + (elem->numero_parametros - elem->posicion_parametro) * 4;
-                fprintf(stderr, "Numero parametros %d/ Num variable %d\n", elem->posicion_parametro, elem->numero_parametros);
-              }else if(elem->categoria == VARIABLE){
-                posicion_pila = elem->posicion_variable_local * -4;
-              }
-              asignar_en_pila(pf, (yyvsp[0].atributos).es_direccion, posicion_pila);
+          
+          if(strcmp(nombre_ambito_encontrado, "main")==0){
+            asignar(pf, elem->clave, (yyvsp[0].atributos).es_direccion);
+          }else{
+            if(elem->categoria==PARAMETRO){
+              escribirParametro(pf, elem->posicion_parametro, elem->numero_parametros);
+            }else if(elem->categoria==VARIABLE){
+              escribirVariableLocal(pf, elem->posicion_variable_local);
             }
+            asignarDestinoEnPila(pf, (yyvsp[0].atributos).es_direccion);
+          }
+        
         }else{
             fprintf(stderr, "Identificador %s no encontrado\n", (yyvsp[-2].atributos).lexema);
             exit(-1);
         }
     }
-#line 2178 "y.tab.c" /* yacc.c:1646  */
+#line 2173 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 67:
-#line 577 "bison/omicron.y" /* yacc.c:1646  */
+#line 572 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tasignacion: elemento_vector '=' exp\n");
       if ((yyvsp[-2].atributos).tipo == (yyvsp[0].atributos).tipo){
         asignar_en_vector(pf, (yyvsp[0].atributos).es_direccion);
@@ -2186,29 +2181,29 @@ yyreduce:
           fprintf(stderr, "ERROR: Expresión de tipo distinto al vector\n");
           exit(-1);
       }}
-#line 2190 "y.tab.c" /* yacc.c:1646  */
+#line 2185 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 68:
-#line 585 "bison/omicron.y" /* yacc.c:1646  */
+#line 580 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tasignacion: elemento_vector '=' TOK_INSTANCE_OF TOK_IDENTIFICADOR '(' lista_expresiones ')'\n");}
-#line 2196 "y.tab.c" /* yacc.c:1646  */
+#line 2191 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 69:
-#line 587 "bison/omicron.y" /* yacc.c:1646  */
+#line 582 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tasignacion: TOK_IDENTIFICADOR '=' TOK_INSTANCE_OF TOK_IDENTIFICADOR  '(' lista_expresiones ')'\n");}
-#line 2202 "y.tab.c" /* yacc.c:1646  */
+#line 2197 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 70:
-#line 589 "bison/omicron.y" /* yacc.c:1646  */
+#line 584 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tasignacion: identificador_clase '.' TOK_IDENTIFICADOR '=' exp\n");}
-#line 2208 "y.tab.c" /* yacc.c:1646  */
+#line 2203 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 71:
-#line 596 "bison/omicron.y" /* yacc.c:1646  */
+#line 591 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\telemento_vector: TOK_IDENTIFICADOR '[' exp ']'\n");
     int resultado = buscarIdNoCualificado(NULL, tsaMain, (yyvsp[-3].atributos).lexema, "main", &elem, nombre_ambito_encontrado);
     if(resultado == OK && elem->clase == VECTOR && (yyvsp[-1].atributos).tipo == INT){
@@ -2220,67 +2215,67 @@ yyreduce:
         fprintf(stderr, "Identificador %s no encontrado o no es de tipo VECTOR o la expresion dentro de [] no es de tipo entero\n", (yyvsp[-3].atributos).lexema);
         exit(-1);
     }}
-#line 2224 "y.tab.c" /* yacc.c:1646  */
+#line 2219 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 72:
-#line 612 "bison/omicron.y" /* yacc.c:1646  */
+#line 607 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tcondicional: if_exp sentencias '}'\n");
       if_ifElse_exp_pila_finIf_iniElse(pf, (yyvsp[-2].atributos).etiqueta);}
-#line 2231 "y.tab.c" /* yacc.c:1646  */
+#line 2226 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 73:
-#line 615 "bison/omicron.y" /* yacc.c:1646  */
+#line 610 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tcondicional: if_exp_sentencias '}' TOK_ELSE '{' sentencias '}'\n");
       ifelse_exp_pila_finElse(pf, (yyvsp[-4].atributos).etiqueta);}
-#line 2238 "y.tab.c" /* yacc.c:1646  */
+#line 2233 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 74:
-#line 622 "bison/omicron.y" /* yacc.c:1646  */
+#line 617 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tif_exp_sentencias: if_exp sentencias\n");
        ifelse_exp_pila_finIf(pf, (yyvsp[-2].atributos).etiqueta);
        if_ifElse_exp_pila_finIf_iniElse(pf, (yyvsp[-2].atributos).etiqueta);
        (yyval.atributos).etiqueta = (yyvsp[-2].atributos).etiqueta;}
-#line 2247 "y.tab.c" /* yacc.c:1646  */
+#line 2242 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 75:
-#line 631 "bison/omicron.y" /* yacc.c:1646  */
+#line 626 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tif_exp: TOK_IF '(' exp ')' '{'\n");
       if_ifElse_exp_pila_iniIf(pf, (yyvsp[-2].atributos).es_direccion, globalEtiqueta);
       (yyval.atributos).etiqueta = globalEtiqueta;
       globalEtiqueta++;}
-#line 2256 "y.tab.c" /* yacc.c:1646  */
+#line 2251 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 76:
-#line 640 "bison/omicron.y" /* yacc.c:1646  */
+#line 635 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\twhile: TOK_WHILE '('\n");
       while_inicio(pf, globalEtiqueta);
       (yyval.atributos).etiqueta = globalEtiqueta;
       globalEtiqueta++;}
-#line 2265 "y.tab.c" /* yacc.c:1646  */
+#line 2260 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 77:
-#line 649 "bison/omicron.y" /* yacc.c:1646  */
+#line 644 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\twhile_exp: while_exp ')' '{'\n");
       while_exp_pila(pf, (yyvsp[-2].atributos).es_direccion, (yyvsp[-3].atributos).etiqueta);
       (yyval.atributos).etiqueta = (yyvsp[-3].atributos).etiqueta;}
-#line 2273 "y.tab.c" /* yacc.c:1646  */
+#line 2268 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 78:
-#line 657 "bison/omicron.y" /* yacc.c:1646  */
+#line 652 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tbucle: while_exp sentencias '}'\n");
       while_fin(pf, (yyvsp[-2].atributos).etiqueta);}
-#line 2280 "y.tab.c" /* yacc.c:1646  */
+#line 2275 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 79:
-#line 664 "bison/omicron.y" /* yacc.c:1646  */
+#line 659 "bison/omicron.y" /* yacc.c:1646  */
     {
         fprintf(pf, ";R:\tlectura: TOK_SCANF TOK_IDENTIFICADOR\n");
         int resultado = buscarIdNoCualificado(NULL, tsaMain, (yyvsp[0].atributos).lexema, "main", &elem, nombre_ambito_encontrado);
@@ -2292,42 +2287,42 @@ yyreduce:
         }
 
     }
-#line 2296 "y.tab.c" /* yacc.c:1646  */
+#line 2291 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 80:
-#line 676 "bison/omicron.y" /* yacc.c:1646  */
+#line 671 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tlectura: TOK_SCANF elemento_vector\n");
       leer(pf, (yyvsp[0].atributos).lexema, (yyvsp[0].atributos).tipo);}
-#line 2303 "y.tab.c" /* yacc.c:1646  */
+#line 2298 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 81:
-#line 683 "bison/omicron.y" /* yacc.c:1646  */
+#line 678 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tescritura: TOK_PRINTF exp\n");
       /* Aqui no hay que comprobar nada. El tipo se comprueba en exp:TOK_IDENTIFICADOR*/
       escribir(pf, (yyvsp[0].atributos).es_direccion, (yyvsp[0].atributos).tipo);
     }
-#line 2312 "y.tab.c" /* yacc.c:1646  */
+#line 2307 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 82:
-#line 692 "bison/omicron.y" /* yacc.c:1646  */
+#line 687 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tretorno_funcion: TOK_RETURN exp\n");
 
       retornarFuncion(pf, (yyvsp[0].atributos).es_direccion);
     }
-#line 2321 "y.tab.c" /* yacc.c:1646  */
+#line 2316 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 83:
-#line 697 "bison/omicron.y" /* yacc.c:1646  */
+#line 692 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tretorno_funcion: TOK_RETURN TOK_NONE\n");}
-#line 2327 "y.tab.c" /* yacc.c:1646  */
+#line 2322 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 84:
-#line 703 "bison/omicron.y" /* yacc.c:1646  */
+#line 698 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\texp: exp '+' exp\n");
       if ((yyvsp[-2].atributos).tipo == INT && (yyvsp[0].atributos).tipo == INT){
         sumar(pf, (yyvsp[-2].atributos).es_direccion, (yyvsp[0].atributos).es_direccion);
@@ -2342,11 +2337,11 @@ yyreduce:
           exit(-1);
       }
     }
-#line 2346 "y.tab.c" /* yacc.c:1646  */
+#line 2341 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 85:
-#line 718 "bison/omicron.y" /* yacc.c:1646  */
+#line 713 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\texp: exp '-' exp\n");
       if ((yyvsp[-2].atributos).tipo == INT && (yyvsp[0].atributos).tipo == INT){
         restar(pf, (yyvsp[-2].atributos).es_direccion, (yyvsp[0].atributos).es_direccion);
@@ -2361,11 +2356,11 @@ yyreduce:
           exit(-1);
       }
     }
-#line 2365 "y.tab.c" /* yacc.c:1646  */
+#line 2360 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 86:
-#line 733 "bison/omicron.y" /* yacc.c:1646  */
+#line 728 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\texp: exp '/' exp\n");
       if ((yyvsp[-2].atributos).tipo == INT && (yyvsp[0].atributos).tipo == INT){
         dividir(pf, (yyvsp[-2].atributos).es_direccion, (yyvsp[0].atributos).es_direccion);
@@ -2380,11 +2375,11 @@ yyreduce:
           exit(-1);
       }
     }
-#line 2384 "y.tab.c" /* yacc.c:1646  */
+#line 2379 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 87:
-#line 748 "bison/omicron.y" /* yacc.c:1646  */
+#line 743 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\texp: exp '*' exp\n");
       if ((yyvsp[-2].atributos).tipo == INT && (yyvsp[0].atributos).tipo == INT){
         multiplicar(pf, (yyvsp[-2].atributos).es_direccion, (yyvsp[0].atributos).es_direccion);
@@ -2399,11 +2394,11 @@ yyreduce:
           exit(-1);
       }
     }
-#line 2403 "y.tab.c" /* yacc.c:1646  */
+#line 2398 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 88:
-#line 763 "bison/omicron.y" /* yacc.c:1646  */
+#line 758 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\texp: '-' exp\n");
       if ((yyvsp[0].atributos).tipo == INT){
         cambiar_signo(pf, (yyvsp[0].atributos).es_direccion);
@@ -2415,11 +2410,11 @@ yyreduce:
           exit(-1);
       }
     }
-#line 2419 "y.tab.c" /* yacc.c:1646  */
+#line 2414 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 89:
-#line 775 "bison/omicron.y" /* yacc.c:1646  */
+#line 770 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\texp: exp TOK_AND exp\n");
       if ((yyvsp[-2].atributos).tipo == BOOLEAN && (yyvsp[0].atributos).tipo == BOOLEAN){
         y(pf, (yyvsp[-2].atributos).es_direccion, (yyvsp[0].atributos).es_direccion);
@@ -2434,11 +2429,11 @@ yyreduce:
           exit(-1);
       }
     }
-#line 2438 "y.tab.c" /* yacc.c:1646  */
+#line 2433 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 90:
-#line 790 "bison/omicron.y" /* yacc.c:1646  */
+#line 785 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\texp: exp TOK_OR exp\n");
       if ((yyvsp[-2].atributos).tipo == BOOLEAN && (yyvsp[0].atributos).tipo == BOOLEAN){
       o(pf, (yyvsp[-2].atributos).es_direccion, (yyvsp[0].atributos).es_direccion);
@@ -2453,11 +2448,11 @@ yyreduce:
         exit(-1);
       }
     }
-#line 2457 "y.tab.c" /* yacc.c:1646  */
+#line 2452 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 91:
-#line 805 "bison/omicron.y" /* yacc.c:1646  */
+#line 800 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\texp: '!' exp\n");
       if ((yyvsp[0].atributos).tipo == BOOLEAN){
       no(pf, (yyvsp[0].atributos).es_direccion, globalEtiqueta);
@@ -2470,60 +2465,74 @@ yyreduce:
           exit(-1);
       }
     }
-#line 2474 "y.tab.c" /* yacc.c:1646  */
+#line 2469 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 92:
-#line 818 "bison/omicron.y" /* yacc.c:1646  */
+#line 813 "bison/omicron.y" /* yacc.c:1646  */
     {
       fprintf(pf, ";R:\texp: TOK_IDENTIFICADOR\n");
       /*  UNICO SITIO DONDE ES NECESARIO MIRAR SI EL ID ESTA EN LA TS  */
       int resultado = buscarIdNoCualificado(NULL, tsaMain, (yyvsp[0].atributos).lexema, "main", &elem, nombre_ambito_encontrado);
       if(resultado == OK){
-          escribir_operando(pf, elem->clave, 1);
-          (yyval.atributos).tipo = elem->tipo;
-          (yyval.atributos).es_direccion = 1;
+         if(strcmp(nombre_ambito_encontrado, "main")==0){
+            escribir_operando(pf, elem->clave, 1);
+            if(estamos_en_llamada_funcion){
+              operandoEnPilaAArgumento(pf, 1);
+            }
+          }else{
+            if(elem->categoria==PARAMETRO){
+              escribirParametro(pf, elem->posicion_parametro, elem->numero_parametros);
+            }else if(elem->categoria==VARIABLE){
+              escribirVariableLocal(pf, elem->posicion_variable_local);
+            }
+            if(estamos_en_llamada_funcion){
+              operandoEnPilaAArgumento(pf, 1);
+            }
+          }
+        (yyval.atributos).tipo = elem->tipo;
+        (yyval.atributos).es_direccion = 1;
       } else {
           fprintf(stderr, "Identificador %s no encontrado\n", (yyvsp[0].atributos).lexema);
           exit(-1);
       }
     }
-#line 2492 "y.tab.c" /* yacc.c:1646  */
+#line 2501 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 93:
-#line 832 "bison/omicron.y" /* yacc.c:1646  */
+#line 841 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\texp: constante\n");
       (yyval.atributos).tipo = (yyvsp[0].atributos).tipo;
       (yyval.atributos).es_direccion = 0;
       (yyval.atributos).valor_entero = (yyvsp[0].atributos).valor_entero;}
-#line 2501 "y.tab.c" /* yacc.c:1646  */
+#line 2510 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 94:
-#line 837 "bison/omicron.y" /* yacc.c:1646  */
+#line 846 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\texp: '(' exp ')'\n");
       (yyval.atributos).es_direccion = 0;
       (yyval.atributos).tipo = (yyvsp[-1].atributos).tipo;}
-#line 2509 "y.tab.c" /* yacc.c:1646  */
+#line 2518 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 95:
-#line 841 "bison/omicron.y" /* yacc.c:1646  */
+#line 850 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\texp: '(' comparacion ')'\n");
       (yyval.atributos).es_direccion = 0;
       (yyval.atributos).tipo = (yyvsp[-1].atributos).tipo;}
-#line 2517 "y.tab.c" /* yacc.c:1646  */
+#line 2526 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 96:
-#line 845 "bison/omicron.y" /* yacc.c:1646  */
+#line 854 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\texp: elemento_vector\n");}
-#line 2523 "y.tab.c" /* yacc.c:1646  */
+#line 2532 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 97:
-#line 847 "bison/omicron.y" /* yacc.c:1646  */
+#line 856 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\texp: id_llamada_funcion '(' lista_expresiones ')'\n");
 
     sprintf(nombre_funcion_aux,"%s", (yyvsp[-3].atributos).lexema);
@@ -2541,77 +2550,80 @@ yyreduce:
       }
 
       llamarFuncion(pf, elem->clave, elem->numero_parametros);
+      estamos_en_llamada_funcion = 0;
+      
     }
-#line 2546 "y.tab.c" /* yacc.c:1646  */
+#line 2557 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 98:
-#line 866 "bison/omicron.y" /* yacc.c:1646  */
+#line 877 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\texp: identificador_clase '.' TOK_IDENTIFICADOR   '(' lista_expresiones ')'\n");}
-#line 2552 "y.tab.c" /* yacc.c:1646  */
+#line 2563 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 99:
-#line 868 "bison/omicron.y" /* yacc.c:1646  */
+#line 879 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\texp: identificador_clase '.' TOK_IDENTIFICADOR\n");}
-#line 2558 "y.tab.c" /* yacc.c:1646  */
+#line 2569 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 100:
-#line 873 "bison/omicron.y" /* yacc.c:1646  */
+#line 884 "bison/omicron.y" /* yacc.c:1646  */
     {
     fprintf(pf, ";R:\t id_llamada_funcion: TOK_IDENTIFICADOR\n");
     num_parametros_detectados = 0;
+    estamos_en_llamada_funcion = 1;
     strcpy((yyval.atributos).lexema,(yyvsp[0].atributos).lexema);
   }
-#line 2568 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 101:
-#line 882 "bison/omicron.y" /* yacc.c:1646  */
-    { fprintf(pf, ";R:\tidentificador_clase: TOK_IDENTIFICADOR\n");}
-#line 2574 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 102:
-#line 884 "bison/omicron.y" /* yacc.c:1646  */
-    { fprintf(pf, ";R:\tidentificador_clase:\tTOK_ITSELF\n");}
 #line 2580 "y.tab.c" /* yacc.c:1646  */
     break;
 
+  case 101:
+#line 894 "bison/omicron.y" /* yacc.c:1646  */
+    { fprintf(pf, ";R:\tidentificador_clase: TOK_IDENTIFICADOR\n");}
+#line 2586 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 102:
+#line 896 "bison/omicron.y" /* yacc.c:1646  */
+    { fprintf(pf, ";R:\tidentificador_clase:\tTOK_ITSELF\n");}
+#line 2592 "y.tab.c" /* yacc.c:1646  */
+    break;
+
   case 103:
-#line 890 "bison/omicron.y" /* yacc.c:1646  */
+#line 902 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tlista_expresiones:\texp resto_lista_expresiones\n");
     tipos_parametros_actuales[num_parametros_detectados] = (yyvsp[-1].atributos).tipo;
     num_parametros_detectados++;
 
     }
-#line 2590 "y.tab.c" /* yacc.c:1646  */
+#line 2602 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 104:
-#line 896 "bison/omicron.y" /* yacc.c:1646  */
+#line 908 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tlista_expresiones:\t\n");}
-#line 2596 "y.tab.c" /* yacc.c:1646  */
+#line 2608 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 105:
-#line 902 "bison/omicron.y" /* yacc.c:1646  */
+#line 914 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tresto_lista_expresiones: ',' exp resto_lista_expresiones\n");
     tipos_parametros_actuales[num_parametros_detectados] = (yyvsp[-1].atributos).tipo;
     num_parametros_detectados++;
     }
-#line 2605 "y.tab.c" /* yacc.c:1646  */
+#line 2617 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 106:
-#line 907 "bison/omicron.y" /* yacc.c:1646  */
+#line 919 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tresto_lista_expresiones:\t\n");}
-#line 2611 "y.tab.c" /* yacc.c:1646  */
+#line 2623 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 107:
-#line 913 "bison/omicron.y" /* yacc.c:1646  */
+#line 925 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tcomparacion: exp TOK_IGUAL exp\n");
       if ((yyvsp[-2].atributos).tipo == (yyvsp[0].atributos).tipo){
         igual(pf, (yyvsp[-2].atributos).es_direccion, (yyvsp[0].atributos).es_direccion, globalEtiqueta);
@@ -2622,11 +2634,11 @@ yyreduce:
           exit(-1);
       }
     }
-#line 2626 "y.tab.c" /* yacc.c:1646  */
+#line 2638 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 108:
-#line 924 "bison/omicron.y" /* yacc.c:1646  */
+#line 936 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tcomparacion: exp TOK_DISTINTO exp\n");
       if ((yyvsp[-2].atributos).tipo == (yyvsp[0].atributos).tipo){
         distinto(pf, (yyvsp[-2].atributos).es_direccion, (yyvsp[0].atributos).es_direccion, globalEtiqueta);
@@ -2637,11 +2649,11 @@ yyreduce:
           exit(-1);
       }
     }
-#line 2641 "y.tab.c" /* yacc.c:1646  */
+#line 2653 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 109:
-#line 935 "bison/omicron.y" /* yacc.c:1646  */
+#line 947 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tcomparacion: exp TOK_MENORIGUAL exp\n");
       if ((yyvsp[-2].atributos).tipo == INT && (yyvsp[0].atributos).tipo == INT){
         menor_igual(pf, (yyvsp[-2].atributos).es_direccion, (yyvsp[0].atributos).es_direccion, globalEtiqueta);
@@ -2655,11 +2667,11 @@ yyreduce:
           exit(-1);
       }
     }
-#line 2659 "y.tab.c" /* yacc.c:1646  */
+#line 2671 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 110:
-#line 949 "bison/omicron.y" /* yacc.c:1646  */
+#line 961 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tcomparacion: exp TOK_MAYORIGUAL exp\n");
       if ((yyvsp[-2].atributos).tipo == INT && (yyvsp[0].atributos).tipo == INT){
         mayor_igual(pf, (yyvsp[-2].atributos).es_direccion, (yyvsp[0].atributos).es_direccion, globalEtiqueta);
@@ -2673,11 +2685,11 @@ yyreduce:
           exit(-1);
       }
     }
-#line 2677 "y.tab.c" /* yacc.c:1646  */
+#line 2689 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 111:
-#line 963 "bison/omicron.y" /* yacc.c:1646  */
+#line 975 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tcomparacion:\texp '<' exp\n");
       if ((yyvsp[-2].atributos).tipo == INT && (yyvsp[0].atributos).tipo == INT){
         menor(pf, (yyvsp[-2].atributos).es_direccion, (yyvsp[0].atributos).es_direccion, globalEtiqueta);
@@ -2691,11 +2703,11 @@ yyreduce:
           exit(-1);
       }
     }
-#line 2695 "y.tab.c" /* yacc.c:1646  */
+#line 2707 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 112:
-#line 977 "bison/omicron.y" /* yacc.c:1646  */
+#line 989 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tcomparacion: exp '>' exp\n");
       if ((yyvsp[-2].atributos).tipo == INT && (yyvsp[0].atributos).tipo == INT){
         mayor(pf, (yyvsp[-2].atributos).es_direccion, (yyvsp[0].atributos).es_direccion, globalEtiqueta);
@@ -2709,52 +2721,52 @@ yyreduce:
           exit(-1);
       }
     }
-#line 2713 "y.tab.c" /* yacc.c:1646  */
+#line 2725 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 113:
-#line 995 "bison/omicron.y" /* yacc.c:1646  */
+#line 1007 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tconstante:\tconstante_logica\n");
     (yyval.atributos).tipo = (yyvsp[0].atributos).tipo;}
-#line 2720 "y.tab.c" /* yacc.c:1646  */
+#line 2732 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 114:
-#line 998 "bison/omicron.y" /* yacc.c:1646  */
+#line 1010 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tconstante: constante_entera\n");
     (yyval.atributos).tipo = (yyvsp[0].atributos).tipo;}
-#line 2727 "y.tab.c" /* yacc.c:1646  */
+#line 2739 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 115:
-#line 1005 "bison/omicron.y" /* yacc.c:1646  */
+#line 1017 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tconstante_logica:\tTOK_TRUE\n");
       escribir_operando(pf, "1", 0);
       (yyval.atributos).tipo = BOOLEAN;
       (yyval.atributos).valor_entero = 1;}
-#line 2736 "y.tab.c" /* yacc.c:1646  */
+#line 2748 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 116:
-#line 1010 "bison/omicron.y" /* yacc.c:1646  */
+#line 1022 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tconstante_logica:\tTOK_FALSE\n");
       escribir_operando(pf, "0", 0);
       (yyval.atributos).tipo = BOOLEAN;
       (yyval.atributos).valor_entero = 0;}
-#line 2745 "y.tab.c" /* yacc.c:1646  */
+#line 2757 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 117:
-#line 1019 "bison/omicron.y" /* yacc.c:1646  */
+#line 1031 "bison/omicron.y" /* yacc.c:1646  */
     { fprintf(pf, ";R:\tconstante_entera:\tTOK_CONSTANTE_ENTERA\n");
       escribir_operando(pf, (yyvsp[0].atributos).lexema, 0);
       (yyval.atributos).tipo = INT;
       (yyval.atributos).valor_entero = (yyvsp[0].atributos).valor_entero;}
-#line 2754 "y.tab.c" /* yacc.c:1646  */
+#line 2766 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 2758 "y.tab.c" /* yacc.c:1646  */
+#line 2770 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2989,7 +3001,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 1025 "bison/omicron.y" /* yacc.c:1906  */
+#line 1037 "bison/omicron.y" /* yacc.c:1906  */
 
 
 void yyerror(__attribute__((unused))const char* s){

@@ -2,24 +2,34 @@
 
 main {
   int x;
+  int y;
 
-  function exposed int SetX (int p1; int p2; boolean p3){
-    int y, z, alfa, beta;
-    y = 5;
-    z = 6;
-    alfa = 7;
-    beta = 8;
-    p1 = 9;
-    p2 = 10;
-    p3 = false;
-    printf 5;
-
-    return 1;
+  function int cuadrado(int p1){
+    int c;
+    c = p1*p1;
+    printf c+5;
+    return c;
   }
+
+  function int cubo(int p1){
+    return p1 * p1 * p1;
+  }
+  
+  function int suma(int a; int b){
+    return a + b;
+  }
+
   x=8;
 
-  x = SetX(2, 3, true);
-
-  
+  printf x;
+  x = cubo(5);
+  printf x;
+  x = cuadrado(x);
+  printf x;
+  x=3;
+  y=9;
+  printf suma(1, 2);
+  printf suma(3, x);
+  printf suma(x, y);
   
 }

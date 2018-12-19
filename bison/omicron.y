@@ -23,7 +23,7 @@
 /* Variables para la llamada a funciones */
   int num_parametros_detectados = 0;
   int tipos_parametros_actuales[50] = {0}; //dudo que tengamos alguna vez más de 50 parametros
-  
+  int estamos_en_llamada_funcion = 0;
 
 
   char nombre_ambito_insertar[200] = "main";
@@ -326,7 +326,11 @@ identificadores:
 identificador:
   TOK_IDENTIFICADOR
       { fprintf(pf, ";R:\tTOK_IDENTIFICADOR\n");
+        if(strcmp(nombre_ambito_insertar, "main")==0){
           sprintf(nombre_simbolo_ts, "%s_%s", nombre_ambito_insertar, $1.lexema);
+        }else{
+          sprintf(nombre_simbolo_ts, "%s_%s", nombre_ambito_insertar+5, $1.lexema);
+        }
         if (buscarParaDeclararIdTablaSimbolosAmbitos(tsaMain, nombre_simbolo_ts, &elem, nombre_ambito_encontrado) == ERR) {
             if(strcmp(nombre_ambito_insertar, "main") != 0){
               TSA_insertarSimbolo(tsaMain, nombre_simbolo_ts, VARIABLE, globalTipo, globalClase, 0, 0, 0, atributos.pos_variable_local_actual, 0, 0, globalTamanio, 0, 0, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, NULL);
@@ -356,7 +360,7 @@ funcion:
   /*TOK_FUNCTION modificadores_acceso tipo_retorno TOK_IDENTIFICADOR '(' parametros_funcion ')' '{' declaraciones_funcion sentencias '}'
     { fprintf(pf, ";R:\tfuncion: TOK_FUNCTION modificadores_acceso tipo_retorno TOK_IDENTIFICADOR '(' parametros_funcion ')' '{' declaraciones_funcion sentencias '}'\n");
 
-
+    strcpy(nombre_ambito_insertar, "main");
 
 
     }*/
@@ -377,7 +381,7 @@ fn_complete_name:
     sprintf(nombre_funcion_aux, "main_%s", $1.lexema);
 
     strcpy($$.lexema, $1.lexema);
-    for(int i; i < atributos.num_parametros_actual; i++){
+    for(int i=0; i < atributos.num_parametros_actual; i++){
       sprintf(nombre_funcion_aux, "%s@%d", nombre_funcion_aux, *((int*)lista_get(atributos.lista_tipos, i)));
     }
     strcpy(nombre_ambito_insertar, nombre_funcion_aux);
@@ -389,7 +393,6 @@ fn_complete_name:
       fprintf(stderr, "Funcion %s ya declarada \n", $1.lexema);
       exit(-1);
     }
-
     for(int i=0; i < lista_length(atributos.lista_nombres); i++){
       char nombre_parametro_ts[300];
       sprintf(nombre_parametro_ts, "%s_%s", nombre_funcion_aux + 5, (char*)lista_get(atributos.lista_nombres, i));
@@ -397,7 +400,6 @@ fn_complete_name:
       TSA_insertarSimbolo(tsaMain, nombre_parametro_ts, PARAMETRO, *((int*)lista_get(atributos.lista_tipos, i)),
                           ESCALAR, 0, atributos.num_parametros_actual, 0, 0, i, 0, 0,
                                        0, 0, 0, 0, 0, 0, 0, ACCESO_EXPOSED, MIEMBRO_NO_UNICO, 0, 0, 0, 0, NULL);
-      //printf("%s \n", nombre_parametro_ts);
     }
 
 
@@ -549,8 +551,19 @@ asignacion:
 
         int resultado = buscarIdNoCualificado(NULL, tsaMain, $1.lexema, "main", &elem, nombre_ambito_encontrado);
         if(resultado == OK){
-              asignar(pf, elem->clave, $3.es_direccion);
-            }else{
+          
+          if(strcmp(nombre_ambito_encontrado, "main")==0){
+            asignar(pf, elem->clave, $3.es_direccion);
+          }else{
+            if(elem->categoria==PARAMETRO){
+              escribirParametro(pf, elem->posicion_parametro, elem->numero_parametros);
+            }else if(elem->categoria==VARIABLE){
+              escribirVariableLocal(pf, elem->posicion_variable_local);
+            }
+            asignarDestinoEnPila(pf, $3.es_direccion);
+          }
+        
+        }else{
             fprintf(stderr, "Identificador %s no encontrado\n", $1.lexema);
             exit(-1);
         }
@@ -802,9 +815,23 @@ exp:
       /*  UNICO SITIO DONDE ES NECESARIO MIRAR SI EL ID ESTA EN LA TS  */
       int resultado = buscarIdNoCualificado(NULL, tsaMain, $1.lexema, "main", &elem, nombre_ambito_encontrado);
       if(resultado == OK){
-          escribir_operando(pf, elem->clave, 1);
-          $$.tipo = elem->tipo;
-          $$.es_direccion = 1;
+         if(strcmp(nombre_ambito_encontrado, "main")==0){
+            escribir_operando(pf, elem->clave, 1);
+            if(estamos_en_llamada_funcion){
+              operandoEnPilaAArgumento(pf, 1);
+            }
+          }else{
+            if(elem->categoria==PARAMETRO){
+              escribirParametro(pf, elem->posicion_parametro, elem->numero_parametros);
+            }else if(elem->categoria==VARIABLE){
+              escribirVariableLocal(pf, elem->posicion_variable_local);
+            }
+            if(estamos_en_llamada_funcion){
+              operandoEnPilaAArgumento(pf, 1);
+            }
+          }
+        $$.tipo = elem->tipo;
+        $$.es_direccion = 1;
       } else {
           fprintf(stderr, "Identificador %s no encontrado\n", $1.lexema);
           exit(-1);
@@ -843,6 +870,8 @@ exp:
       }
 
       llamarFuncion(pf, elem->clave, elem->numero_parametros);
+      estamos_en_llamada_funcion = 0;
+      
     }
 | identificador_clase '.' TOK_IDENTIFICADOR '(' lista_expresiones ')'
     { fprintf(pf, ";R:\texp: identificador_clase '.' TOK_IDENTIFICADOR   '(' lista_expresiones ')'\n");}
@@ -855,6 +884,7 @@ id_llamada_funcion:
   {
     fprintf(pf, ";R:\t id_llamada_funcion: TOK_IDENTIFICADOR\n");
     num_parametros_detectados = 0;
+    estamos_en_llamada_funcion = 1;
     strcpy($$.lexema,$1.lexema);
   }
 ;

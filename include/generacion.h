@@ -321,5 +321,6 @@ void llamarFuncion(FILE * fd_asm, char * nombre_funcion, int num_argumentos);
 void retornarFuncion(FILE * fd_s, int es_variable);
 void escribirParametro(FILE* fpasm, int pos_parametro, int num_total_parametros);
 void escribirVariableLocal(FILE* fpasm, int posicion_variable_local);
-
+void asignarDestinoEnPila(FILE* fpasm, int es_variable);
+void operandoEnPilaAArgumento(FILE * fpasm, int es_variable);
 #endif

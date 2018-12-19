@@ -810,17 +810,16 @@ void declararFuncion(FILE * fd_s, char * nombre_funcion, int num_var_loc){
 void retornarFuncion(FILE * fd_s, int es_variable){
 
 	fprintf(fd_s, "\n; Retornamos la funcion\n");
-
+  //dejamos el resultado en eax, siempre valor númerico
+	fprintf(fd_s, "\tpop dword eax \n");
 	if(es_variable){
-		fprintf(fd_s, "\tpop dword eax \n");
-	/*fprintf(fd_s, "\t mov eax, [eax]\n");*/
+    fprintf(fd_s, "\t mov eax, [eax]\n");
 	}
 
-	fprintf(fd_s, "\tmov esp, ebp \n");
+  //devolvemos
+  fprintf(fd_s, "\tmov esp, ebp \n");
 	fprintf(fd_s, "\tpop ebp \n");
 	fprintf(fd_s, "\tret\n");
-
-
 }
 /*Función para dejar en la cima de la pila la dirección efectiva del parámetro que ocupa la posición pos_parametro
 	(recuerda que los parámetros se ordenan con origen 0) de un total de num_total_parametros*/
@@ -858,4 +857,28 @@ void llamarFuncion(FILE * fd_asm, char * nombre_funcion, int num_argumentos){
 	fprintf(fd_asm, "\tcall _%s \n", nombre_funcion);
 	limpiarPila(fd_asm, num_argumentos);
 	fprintf(fd_asm, "\tpush dword eax\n");
+}
+
+void asignarDestinoEnPila(FILE* fpasm, int es_variable){
+	fprintf(fpasm, "\n; asignarDestinoEn Pilla\n");
+
+  fprintf(fpasm, "\tpop ebx\n");
+
+  fprintf(fpasm, "\tpop eax\n");
+  if(es_variable){
+    fprintf(fpasm, "\tmov eax, [eax]\n");
+  }
+  
+  fprintf(fpasm, "\tmov [ebx], eax\n");
+}
+
+void operandoEnPilaAArgumento(FILE * fpasm, int es_variable){
+  fprintf(fpasm, "\n; operandoEnPilaAArgumento\n");
+  if(es_variable){
+    fprintf(fpasm, "\tpop eax\n");
+    fprintf(fpasm, "\tmov eax, [eax]\n");
+    fprintf(fpasm, "\tpush eax\n");
+  }else{
+    fprintf(fpasm, "\n; No es variable, no es hace nada\n");
+  }
 }

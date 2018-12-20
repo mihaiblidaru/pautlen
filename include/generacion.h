@@ -302,7 +302,10 @@ void ifthen_inicio(FILE * fpasm, int exp_es_variable, int etiqueta);
 void ifthen_fin(FILE * fpasm, int etiqueta);
 void ifthenelse_fin_then( FILE * fpasm, int etiqueta);
 void ifthenelse_fin( FILE * fpasm, int etiqueta);
-
+void instance_of (FILE * fd_asm, char * nombre_fuente_clase,int numero_atributos_instancia);
+void accederAtributoInstanciaDePila(FILE * fd_asm, char * nombre_atributo);
+void discardPila (FILE * fpasm);
+void llamarMetodoSobreescribibleCualificadoInstanciaPila(FILE * fd_asm, char * nombre_metodo);
 /********** Generacion de Condicionales para PROCEDURAL *****************/
 void if_ifElse_exp_pila_iniIf (FILE * fpasm, int exp_es_variable, int etiqueta);
 void ifelse_exp_pila_finIf (FILE * fpasm, int etiqueta);

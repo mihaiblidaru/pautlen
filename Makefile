@@ -77,6 +77,22 @@ test9: compilador
 	./compilador testsCompilador/in_testS1_V9.c testsCompilador/in_testS1_V9.asm
 	nasm -g -f elf32 testsCompilador/in_testS1_V9.asm -o testsCompilador/in_testS1_V9.o
 	gcc -m32 -g testsCompilador/in_testS1_V9.o olib.o -o in_testS1_V9
+
+test10: compilador
+	./compilador testsCompilador/in_testS1_V10.c testsCompilador/in_testS1_V10.asm
+	nasm -g -f elf32 testsCompilador/in_testS1_V10.asm -o testsCompilador/in_testS1_V10.o
+	gcc -m32 -g testsCompilador/in_testS1_V10.o olib.o -o in_testS1_V10
+
+test11: compilador
+	./compilador testsCompilador/in_testS1_V11.c testsCompilador/in_testS1_V11.asm
+	nasm -g -f elf32 testsCompilador/in_testS1_V11.asm -o testsCompilador/in_testS1_V11.o
+	gcc -m32 -g testsCompilador/in_testS1_V11.o olib.o -o in_testS1_V11
+
+test12: compilador
+	./compilador testsCompilador/in_testS1_V12.c testsCompilador/in_testS1_V12.asm
+	nasm -g -f elf32 testsCompilador/in_testS1_V12.asm -o testsCompilador/in_testS1_V12.o
+	gcc -m32 -g testsCompilador/in_testS1_V12.o olib.o -o in_testS1_V12
+
 clean:
 	ls *.o | sed -e 's/olib.o//'| xargs rm -f
 	rm -f tabla_simbolos/*.o
@@ -85,3 +101,4 @@ clean:
 	rm -f bison/*.o flex/*.o flex/lex.yy.c bison/y.*
 	rm -f compilador
 	rm -f testsCompilador/*.asm in_testS1_V9 in_testS1_V1 in_testS1_V2 in_testS1_V3 in_testS1_V4 in_testS1_V5 in_testS1_V6 in_testS1_V7 in_testS1_V8
+	rm -f testsCompilador/in_testS1_V11 testsCompilador/in_testS1_V12 testsCompilador/in_testS1_V10

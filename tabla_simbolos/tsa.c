@@ -206,7 +206,7 @@ int abrirAmbitoMain(TSA* t,
 }
 
 int cerrarAmbitoMain(TSA* t) {
-    return TSA_eliminar(t);
+    return TSA_cerrarAmbitoLocal(t);
 }
 
 int buscarParaDeclararIdTablaSimbolosAmbitos(TSA* t, char* id, InfoSimbolo** e, char* id_ambito) {

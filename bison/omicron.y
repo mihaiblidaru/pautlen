@@ -18,6 +18,7 @@
   int globalClase = -1;
   int globalEtiqueta = 1;
   int globalTamanio = -1;
+  extern char* tipo_to_str[];
   TSA* tsaMain = NULL;
 
 /* Variables para la llamada a funciones */
@@ -340,7 +341,7 @@ identificador:
               TSA_insertarSimbolo(tsaMain, nombre_simbolo_ts, VARIABLE, globalTipo, globalClase, 0, 0, 0, 0, 0, 0, globalTamanio, 0, 0, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, NULL);
             }
   }else{
-            fprintf(stderr, "No se puede declarar la variable: %s (variable ya declarada)\n", $1.lexema);
+            fprintf(stderr, "No se puede declarar la variable: %s (variable ya declarada en el ambito %s): Linea %d\n", $1.lexema, nombre_ambito_encontrado, yylineno);
             exit(-1);
         }
 
@@ -358,13 +359,13 @@ funciones:
 
 funcion:
 	fn_declaration sentencias '}'
-  /*TOK_FUNCTION modificadores_acceso tipo_retorno TOK_IDENTIFICADOR '(' parametros_funcion ')' '{' declaraciones_funcion sentencias '}'
-    { fprintf(pf, ";R:\tfuncion: TOK_FUNCTION modificadores_acceso tipo_retorno TOK_IDENTIFICADOR '(' parametros_funcion ')' '{' declaraciones_funcion sentencias '}'\n");
+    { fprintf(pf, ";R:\tfuncion: fn_declaration sentencias '}' \n");
 
     strcpy(nombre_ambito_insertar, "main");
+    cerrarAmbitoMain(tsaMain);
 
 
-    }*/
+    }
 ;
 
 fn_declaration:
@@ -372,7 +373,7 @@ fn_declaration:
   {
     fprintf(pf, ";R:\t fn_declaration: fn_complete_name { declaraciones_funcion\n");
     declararFuncion(pf ,nombre_funcion_aux, atributos.pos_variable_local_actual-1);
-    TSA_imprimir(stderr, tsaMain, NULL);
+    //TSA_imprimir(stderr, tsaMain, NULL);
   }
 ;
 
@@ -397,7 +398,10 @@ fn_complete_name:
     for(int i=0; i < lista_length(atributos.lista_nombres); i++){
       char nombre_parametro_ts[300];
       sprintf(nombre_parametro_ts, "%s_%s", nombre_funcion_aux + 5, (char*)lista_get(atributos.lista_nombres, i));
-
+      if(buscarParaDeclararIdTablaSimbolosAmbitos(tsaMain, nombre_parametro_ts, &elem, nombre_ambito_encontrado) == OK){
+        fprintf(stderr, "Variable %s ya declarada en el ambito %s: Linea %d\n", (char*)lista_get(atributos.lista_nombres, i), nombre_ambito_encontrado,yylineno);
+        exit(-1);        
+      }
       TSA_insertarSimbolo(tsaMain, nombre_parametro_ts, PARAMETRO, *((int*)lista_get(atributos.lista_tipos, i)),
                           ESCALAR, 0, atributos.num_parametros_actual, 0, 0, i, 0, 0,
                                        0, 0, 0, 0, 0, 0, 0, ACCESO_EXPOSED, MIEMBRO_NO_UNICO, 0, 0, 0, 0, NULL);
@@ -533,9 +537,9 @@ sentencia_simple:
     
     for(int i=num_parametros_detectados[indice_anidacion_funciones]-1; i >= 0 ; i--){
       sprintf(nombre_funcion_aux, "%s@%d", nombre_funcion_aux, tipos_parametros_actuales[indice_anidacion_funciones][i]);
-      printf(" %d", tipos_parametros_actuales[indice_anidacion_funciones][i]);
+      //printf(" %d", tipos_parametros_actuales[indice_anidacion_funciones][i]);
     }
-     printf("numero de parametros: %s %d", nombre_funcion_aux, num_parametros_detectados[indice_anidacion_funciones]);
+     //printf("numero de parametros: %s %d", nombre_funcion_aux, num_parametros_detectados[indice_anidacion_funciones]);
 
       if(buscarIdNoCualificado(NULL, tsaMain, nombre_funcion_aux, "main", &elem, nombre_ambito_encontrado)){
         fprintf(stderr, "Funcion %s no encontrada\n", $1.lexema);
@@ -572,6 +576,13 @@ asignacion:
         int resultado = buscarIdNoCualificado(NULL, tsaMain, $1.lexema, "main", &elem, nombre_ambito_encontrado);
         if(resultado == OK){
           
+          if(elem->tipo != $3.tipo){
+            fprintf(stderr, "Error asignacion(tipos incompatibles) %s(%s) <= %s . Linea %d \n",
+            $1.lexema, tipo_to_str[elem->tipo - 1], tipo_to_str[$3.tipo - 1], yylineno);
+            exit(-1);
+          }
+
+
           if(strcmp(nombre_ambito_encontrado, "main")==0){
             asignar(pf, elem->clave, $3.es_direccion);
           }else{
@@ -610,11 +621,17 @@ elemento_vector:
   TOK_IDENTIFICADOR '[' exp ']'
     { fprintf(pf, ";R:\telemento_vector: TOK_IDENTIFICADOR '[' exp ']'\n");
     int resultado = buscarIdNoCualificado(NULL, tsaMain, $1.lexema, "main", &elem, nombre_ambito_encontrado);
-    if(resultado == OK && elem->clase == VECTOR && $3.tipo == INT){
+    if(resultado == OK && elem->clase == VECTOR){
         escribir_elemento_vector(pf, elem->clave, elem->tamanio, $3.es_direccion);
         $$.tipo = elem->tipo;
         strcpy($$.lexema, elem->clave);
-        $$.es_direccion = 1;
+
+        if(estamos_en_llamada_funcion){
+          operandoEnPilaAArgumento(pf, 1);
+          $$.es_direccion = 0;
+        }else{
+          $$.es_direccion = 1;
+        }
     } else {
         fprintf(stderr, "Identificador %s no encontrado o no es de tipo VECTOR o la expresion dentro de [] no es de tipo entero\n", $1.lexema);
         exit(-1);
@@ -705,11 +722,21 @@ escritura:
 retorno_funcion:
   TOK_RETURN exp
     { fprintf(pf, ";R:\tretorno_funcion: TOK_RETURN exp\n");
+      fprintf(stderr, "Nombre funcion %s\n", nombre_ambito_insertar);
+      buscarParaDeclararIdTablaSimbolosAmbitos(tsaMain, nombre_ambito_insertar, &elem, nombre_ambito_encontrado);
 
+      if(elem->tipo != $2.tipo){
+        fprintf(stderr, "Retorno del tipo incorrecto en la funcion %s. Esperado %s, Recibido %s"
+                        " Linea %d\n", nombre_ambito_insertar, tipo_to_str[elem->tipo-1], tipo_to_str[$2.tipo-1], yylineno);
+        exit(-1);
+      }    
+  
       retornarFuncion(pf, $2.es_direccion);
     }
 | TOK_RETURN TOK_NONE
-    { fprintf(pf, ";R:\tretorno_funcion: TOK_RETURN TOK_NONE\n");}
+    { fprintf(pf, ";R:\tretorno_funcion: TOK_RETURN TOK_NONE\n");
+      retornarFuncion(pf, 0);
+    }
 ;
 
 
@@ -834,6 +861,7 @@ exp:
       fprintf(pf, ";R:\texp: TOK_IDENTIFICADOR\n");
       /*  UNICO SITIO DONDE ES NECESARIO MIRAR SI EL ID ESTA EN LA TS  */
       int resultado = buscarIdNoCualificado(NULL, tsaMain, $1.lexema, "main", &elem, nombre_ambito_encontrado);
+      
       if(resultado == OK){
          if(strcmp(nombre_ambito_encontrado, "main")==0){
             escribir_operando(pf, elem->clave, 1);
@@ -851,7 +879,12 @@ exp:
             }
           }
         $$.tipo = elem->tipo;
-        $$.es_direccion = 1;
+        if(estamos_en_llamada_funcion){
+          $$.es_direccion = 0;
+        }else{
+          $$.es_direccion = 1;
+        }
+
       } else {
           fprintf(stderr, "Identificador %s no encontrado\n", $1.lexema);
           exit(-1);
@@ -880,9 +913,9 @@ exp:
     
     for(int i=num_parametros_detectados[indice_anidacion_funciones]-1; i >= 0 ; i--){
       sprintf(nombre_funcion_aux, "%s@%d", nombre_funcion_aux, tipos_parametros_actuales[indice_anidacion_funciones][i]);
-      printf(" %d", tipos_parametros_actuales[indice_anidacion_funciones][i]);
+      //printf(" %d", tipos_parametros_actuales[indice_anidacion_funciones][i]);
     }
-     printf("numero de parametros: %s %d", nombre_funcion_aux, num_parametros_detectados[indice_anidacion_funciones]);
+     //printf("numero de parametros: %s %d", nombre_funcion_aux, num_parametros_detectados[indice_anidacion_funciones]);
 
       if(buscarIdNoCualificado(NULL, tsaMain, nombre_funcion_aux, "main", &elem, nombre_ambito_encontrado)){
         fprintf(stderr, "Funcion %s no encontrada\n", $1.lexema);

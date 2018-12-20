@@ -30,6 +30,13 @@ main {
     return k + sumaRecursiva(k-1);
   }
 
+  function none imprimeNumeros(int h; int kaka; int z){
+    printf h;
+    printf kaka;
+    printf z;
+    return 1;
+  }
+
   x=8;
 
   printf x;
@@ -44,6 +51,7 @@ main {
   printf suma(x, y);
   printf cuboYsuma(1,1);
   printf suma(1, suma(1, suma(1, suma(1, cubo(2)))));
-  //printf sumaRecursiva(3);
+  imprimeNumeros(1,suma(1, 2),3);
+  suma(3, 3);
   
 }

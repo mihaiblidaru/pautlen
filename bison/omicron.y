@@ -525,8 +525,27 @@ sentencia_simple:
     { fprintf(pf, ";R:\tsentencia_simple: retorno_funcion\n");}
 | identificador_clase '.' TOK_IDENTIFICADOR '(' lista_expresiones ')'
     { fprintf(pf, ";R:\tsentencia_simple: identificador_clase '.' TOK_IDENTIFICADOR   '(' lista_expresiones ')'\n");}
-| TOK_IDENTIFICADOR '(' lista_expresiones ')'
-    { fprintf(pf, ";R:\tsentencia_simple: TOK_IDENTIFICADOR '(' lista_expresiones ')'\n");}
+| id_llamada_funcion '(' lista_expresiones ')'
+    { fprintf(pf, ";R:\tsentencia_simple: id_llamada_funcion '(' lista_expresiones ')'\n");
+
+    sprintf(nombre_funcion_aux,"%s", $1.lexema);
+   
+    
+    for(int i=num_parametros_detectados[indice_anidacion_funciones]-1; i >= 0 ; i--){
+      sprintf(nombre_funcion_aux, "%s@%d", nombre_funcion_aux, tipos_parametros_actuales[indice_anidacion_funciones][i]);
+      printf(" %d", tipos_parametros_actuales[indice_anidacion_funciones][i]);
+    }
+     printf("numero de parametros: %s %d", nombre_funcion_aux, num_parametros_detectados[indice_anidacion_funciones]);
+
+      if(buscarIdNoCualificado(NULL, tsaMain, nombre_funcion_aux, "main", &elem, nombre_ambito_encontrado)){
+        fprintf(stderr, "Funcion %s no encontrada\n", $1.lexema);
+        exit(-1);
+      }
+
+      llamarFuncion(pf, elem->clave, elem->numero_parametros);
+      estamos_en_llamada_funcion = 0;
+      indice_anidacion_funciones--;
+    }
 | destruir_objeto
     { fprintf(pf, ";R:\tsentencia_simple: destruir_objeto\n");}
 ;

@@ -19,6 +19,17 @@ main {
     return a + b;
   }
 
+  function int cuboYsuma(int a; int b){
+    return suma(a, b) + cubo(a);
+  }
+
+  function int sumaRecursiva(int k){
+    if((k == 1)){
+      return 1;
+    }
+    return k + sumaRecursiva(k-1);
+  }
+
   x=8;
 
   printf x;
@@ -28,8 +39,10 @@ main {
   printf x;
   x=3;
   y=9;
-  printf suma(1, 2);
-  printf suma(3, x);
+  printf suma(1, 2) + suma(1, 3);
+  printf suma(3, y);
   printf suma(x, y);
+  printf cuboYsuma(1,1);
+  //printf sumaRecursiva(3);
   
 }

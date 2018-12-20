@@ -871,7 +871,7 @@ exp:
 
       llamarFuncion(pf, elem->clave, elem->numero_parametros);
       estamos_en_llamada_funcion = 0;
-      
+      $$.tipo = elem->tipo;
     }
 | identificador_clase '.' TOK_IDENTIFICADOR '(' lista_expresiones ')'
     { fprintf(pf, ";R:\texp: identificador_clase '.' TOK_IDENTIFICADOR   '(' lista_expresiones ')'\n");}

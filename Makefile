@@ -93,6 +93,11 @@ test12: compilador
 	nasm -g -f elf32 testsCompilador/in_testS1_V12.asm -o testsCompilador/in_testS1_V12.o
 	gcc -m32 -g testsCompilador/in_testS1_V12.o olib.o -o in_testS1_V12
 
+test13: compilador
+	./compilador testsCompilador/in_testS1_V13.c testsCompilador/in_testS1_V13.asm
+	nasm -g -f elf32 testsCompilador/in_testS1_V13.asm -o testsCompilador/in_testS1_V13.o
+	gcc -m32 -g testsCompilador/in_testS1_V13.o olib.o -o in_testS1_V13
+
 clean:
 	ls *.o | sed -e 's/olib.o//'| xargs rm -f
 	rm -f tabla_simbolos/*.o

@@ -1,11 +1,11 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Wall -g -O0 -m32 -I../include
 LDFLAGS = -m32 -g
-LDLIBS = 
+LDLIBS =
 AS = nasm
 ASFLAGS = -g -f elf32
 
-EJECUTABLES = programa1 programa2 programa3 programa4 programa5 programa6
+EJECUTABLES = programa1 programa2 programa3 programa4 programa5 programa6 programaoo
 GENERADORES = test_generacion/ej1 test_generacion/ej2 test_generacion/ej3 \
               test_generacion/ej4 test_generacion/ej5 test_generacion/ej6
 
@@ -29,6 +29,9 @@ programa5: test_generacion/programa5.o ../olib.o
 programa6: test_generacion/programa6.o ../olib.o
 	$(CC) $(LDFLAGS) $^ -o $@
 
+programaoo: test_generacion/programaoo.o ../olib.o ts.o
+		$(CC) $(LDFLAGS) $^ -o $@
+
 test_generacion/programa1.o: test_generacion/programa1.asm
 	$(AS) $(ASFLAGS) -o $@ $<
 
@@ -43,7 +46,14 @@ test_generacion/programa4.o: test_generacion/programa4.asm
 
 test_generacion/programa5.o: test_generacion/programa5.asm
 	$(AS) $(ASFLAGS) -o $@ $<
+
 test_generacion/programa6.o: test_generacion/programa6.asm
+	$(AS) $(ASFLAGS) -o $@ $<
+
+test_generacion/programaoo.o: test_generacion/programaoo.asm
+	$(AS) $(ASFLAGS) -o $@ $<
+
+ts.o: ts.asm
 	$(AS) $(ASFLAGS) -o $@ $<
 
 test_generacion/ej1: test_generacion/ej1.o generacion.o
@@ -52,20 +62,26 @@ test_generacion/ej3: test_generacion/ej3.o generacion.o
 test_generacion/ej4: test_generacion/ej4.o generacion.o
 test_generacion/ej5: test_generacion/ej5.o generacion.o
 test_generacion/ej6: test_generacion/ej6.o generacion.o
+test_generacion/generacion_oo: test_generacion/generacion_oo.o generacion.o
 
-test_generacion/ej1.o: test_generacion/ej1.c 
-test_generacion/ej2.o: test_generacion/ej2.c 
-test_generacion/ej3.o: test_generacion/ej3.c 
-test_generacion/ej4.o: test_generacion/ej4.c 
-test_generacion/ej5.o: test_generacion/ej5.c 
-test_generacion/ej6.o: test_generacion/ej6.c 
 
+
+test_generacion/ej1.o: test_generacion/ej1.c
+test_generacion/ej2.o: test_generacion/ej2.c
+test_generacion/ej3.o: test_generacion/ej3.c
+test_generacion/ej4.o: test_generacion/ej4.c
+test_generacion/ej5.o: test_generacion/ej5.c
+test_generacion/ej6.o: test_generacion/ej6.c
+test_generacion/generacion_oo.o: test_generacion/generacion_oo.c
+
+test_generacion/programaoo.asm: test_generacion/generacion_oo
+		./$< $@
 
 test_generacion/programa%.asm: test_generacion/ej%
-	./$< $@
+		./$< $@
 
 
-#test_generacion/programa%.o: 
+#test_generacion/programa%.o:
 #	$(AS) $(ASFLAGS) -o $@ $<
 #
 #
@@ -86,19 +102,19 @@ test_generacion/programa%.asm: test_generacion/ej%
 
 clean:
 	ls *.o | sed -e 's/olib.o//'| xargs rm -f
-	rm -f $(GENERADORES) $(EJECUTABLES) test_generacion/*.o *.asm generacion.c.gcov test_generacion/*.asm *.gcda *.gcno test_generacion/*.gcda test_generacion/*.gcno
+	rm -f $(GENERADORES) $(EJECUTABLES) test_generacion/*.o generacion.c.gcov test_generacion/*.asm *.gcda *.gcno test_generacion/*.gcda test_generacion/*.gcno
 
 
-# Mide el porcentaje de lineas ejecutadas de generación.c una vez ejecutados todos los 
+# Mide el porcentaje de lineas ejecutadas de generación.c una vez ejecutados todos los
 # programas de generacion(ej1 ej2...) y saca un informe por cada función y luego un
-# informe general del fichero. 
+# informe general del fichero.
 # Para hacerlo hay que compilar con profile-arcs -ftest-coverage y enlazar con -lgovc por
-# lo que se cambia la variable CFLAGS y LDLIBS y se vuelve 
-# a recompilar todo. (ver la segunda linea de la regla la llamada @make CFLA... ... all) 
-# 
+# lo que se cambia la variable CFLAGS y LDLIBS y se vuelve
+# a recompilar todo. (ver la segunda linea de la regla la llamada @make CFLA... ... all)
+#
 # La @ delante de una linea hace que esa linea no se imprima por consola(la salida del programa
 # ejecutado por esa linea sí que sale)
-# 
+#
 # Se usa la herramienta gcov para analizar los resultados.
 # Al final se genera un fichero generación.c.gcov que es una copia de generacion.c donde
 # aparece cuantas veces ha sido ejecutada cada linea
@@ -116,7 +132,7 @@ coverage:
 	@echo ''
 	@cat generacion.c.gcov | grep '\#\#\#' || true
 	@echo ''
-		
+
 
 # ejecuta todo con valgrind. Tanto los programas que generan los ficheros .asm como
 # los programas generados a partir de esos .asm

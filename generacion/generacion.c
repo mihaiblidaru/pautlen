@@ -79,6 +79,7 @@ void escribir_segmento_codigo(FILE* fpasm){
   fprintf(fpasm, "segment .text\n");
   fprintf(fpasm, "\tglobal main\n");
   fprintf(fpasm, "\textern scan_int, scan_boolean, print_int, print_boolean, print_blank, print_endofline, print_string\n");
+  fprintf(fpasm, "\textern free, malloc\n");
 }
 
 /**
@@ -645,7 +646,7 @@ void ifthenelse_inicio(FILE * fpasm, int exp_es_variable, int etiqueta){
   }
 
   fprintf(fpasm, "\tcmp eax, 1\n");
-  fprintf(fpasm, "\tjne ife_fin_%d\n", etiqueta);
+  fprintf(fpasm, "\tjne ite_fin_%d\n", etiqueta);
 
 }
 void ifthen_inicio(FILE * fpasm, int exp_es_variable, int etiqueta){
@@ -782,7 +783,7 @@ void asignar_en_vector(FILE * fpasm, int exp_es_direccion){
 
 void asignar_en_pila(FILE* fpasm, int exp_es_direccion, int posicion_en_pila){
    fprintf(fpasm, "\n;-> Empieza asignar_en_pila\n");
-   
+
    fprintf(fpasm, "\tpop dword eax\n");
 
   if(exp_es_direccion){
@@ -869,7 +870,7 @@ void asignarDestinoEnPila(FILE* fpasm, int es_variable){
   if(es_variable){
     fprintf(fpasm, "\tmov eax, [eax]\n");
   }
-  
+
   fprintf(fpasm, "\tmov [ebx], eax\n");
 }
 
@@ -892,4 +893,60 @@ void leer_exp_pila(FILE* fpasm, int tipo){
   }else{
     fprintf(fpasm, "\tcall scan_int\n");
   }
+}
+
+void instance_of (FILE * fpasm, char * nombre_fuente_clase,int numero_atributos_instancia){
+
+  int result =  numero_atributos_instancia * 4;
+
+  fprintf(fpasm, "\n; instanceof %s\n", nombre_fuente_clase);
+
+  fprintf(fpasm, "\t push dword %d ; %d*4\n",result,numero_atributos_instancia);
+  fprintf(fpasm, "\t call malloc\n");
+  fprintf(fpasm, "\t add esp, 4\n");
+  fprintf(fpasm, "\t push eax\n");
+
+
+
+}
+
+void discardPila (FILE * fpasm){
+  fprintf(fpasm, "\t call free\n");
+  fprintf(fpasm, "\t add esp,4\n");
+
+}
+
+void llamarMetodoSobreescribibleCualificadoInstanciaPila(FILE * fpasm, char * nombre_metodo){
+    fprintf(fpasm, "\t;llamarMetodoSobreescribibleCualificadoInstanciaPila\n");
+    fprintf(fpasm, "\tpop dword ebx \n");
+    fprintf(fpasm, "\tmov ebx,[ ebx]\n");
+    fprintf(fpasm, "\tmov dword ecx, [_offset_%s]\n", nombre_metodo);
+    fprintf(fpasm, "\tlea ecx, [ebx+ecx]\n");
+    fprintf(fpasm, "\tmov ecx, [ecx]\n");
+    fprintf(fpasm, "\tcall ecx\n");
+
+
+
+
+/*
+  ; c1.msA1();
+      mov dword ebx, [_c2]
+      mov ebx,[ ebx]
+      mov dword ecx, [_offset_msA1]
+      lea ecx, [ebx+ecx]
+      mov ecx, [ecx]
+      ···
+      call ecx
+
+*/
+
+
+      }
+
+
+void accederAtributoInstanciaDePila(FILE * fpasm, char * nombre_atributo){
+    fprintf(fpasm, "\tpop dword ebx \n");
+    fprintf(fpasm, "\tmov dword ecx, [_offset_%s]\n", nombre_atributo);
+    fprintf(fpasm, "\tlea ecx, [ebx+ecx]\n");
+    fprintf(fpasm, "\tpush dword ecx\n");
 }

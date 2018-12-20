@@ -905,12 +905,15 @@ void instance_of (FILE * fpasm, char * nombre_fuente_clase,int numero_atributos_
   fprintf(fpasm, "\t call malloc\n");
   fprintf(fpasm, "\t add esp, 4\n");
   fprintf(fpasm, "\t push eax\n");
-
-
-
+  fprintf(fpasm, "\t mov dword [eax], _ms%s\n", nombre_fuente_clase);
+  
+	
 }
 
 void discardPila (FILE * fpasm){
+  fprintf(fpasm, "\t pop dword eax\n");
+  fprintf(fpasm, "\t mov eax, [eax]\n");
+  fprintf(fpasm, "\t push eax\n");
   fprintf(fpasm, "\t call free\n");
   fprintf(fpasm, "\t add esp,4\n");
 
@@ -923,25 +926,9 @@ void llamarMetodoSobreescribibleCualificadoInstanciaPila(FILE * fpasm, char * no
     fprintf(fpasm, "\tmov dword ecx, [_offset_%s]\n", nombre_metodo);
     fprintf(fpasm, "\tlea ecx, [ebx+ecx]\n");
     fprintf(fpasm, "\tmov ecx, [ecx]\n");
+    fprintf(fpasm, "\tmov ecx, [ecx]\n");
     fprintf(fpasm, "\tcall ecx\n");
-
-
-
-
-/*
-  ; c1.msA1();
-      mov dword ebx, [_c2]
-      mov ebx,[ ebx]
-      mov dword ecx, [_offset_msA1]
-      lea ecx, [ebx+ecx]
-      mov ecx, [ecx]
-      ···
-      call ecx
-
-*/
-
-
-      }
+}
 
 
 void accederAtributoInstanciaDePila(FILE * fpasm, char * nombre_atributo){

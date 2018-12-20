@@ -7,7 +7,7 @@ ASFLAGS = -g -f elf32
 
 EJECUTABLES = programa1 programa2 programa3 programa4 programa5 programa6 programaoo
 GENERADORES = test_generacion/ej1 test_generacion/ej2 test_generacion/ej3 \
-              test_generacion/ej4 test_generacion/ej5 test_generacion/ej6
+              test_generacion/ej4 test_generacion/ej5 test_generacion/ej6 test_generacion/generacion_oo
 
 all: $(EJECUTABLES)
 

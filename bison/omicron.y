@@ -21,9 +21,10 @@
   TSA* tsaMain = NULL;
 
 /* Variables para la llamada a funciones */
-  int num_parametros_detectados = 0;
-  int tipos_parametros_actuales[50] = {0}; //dudo que tengamos alguna vez más de 50 parametros
+  int num_parametros_detectados[50] = {0};
+  int tipos_parametros_actuales[50][50] = {0}; //dudo que tengamos alguna vez más de 50 parametros
   int estamos_en_llamada_funcion = 0;
+  int indice_anidacion_funciones = -1;
 
 
   char nombre_ambito_insertar[200] = "main";
@@ -858,11 +859,11 @@ exp:
     sprintf(nombre_funcion_aux,"%s", $1.lexema);
    
     
-    for(int i=num_parametros_detectados-1; i >= 0 ; i--){
-      sprintf(nombre_funcion_aux, "%s@%d", nombre_funcion_aux, tipos_parametros_actuales[i]);
-      printf(" %d", tipos_parametros_actuales[i]);
+    for(int i=num_parametros_detectados[indice_anidacion_funciones]-1; i >= 0 ; i--){
+      sprintf(nombre_funcion_aux, "%s@%d", nombre_funcion_aux, tipos_parametros_actuales[indice_anidacion_funciones][i]);
+      printf(" %d", tipos_parametros_actuales[indice_anidacion_funciones][i]);
     }
-     printf("numero de parametros: %s %d", nombre_funcion_aux, num_parametros_detectados);
+     printf("numero de parametros: %s %d", nombre_funcion_aux, num_parametros_detectados[indice_anidacion_funciones]);
 
       if(buscarIdNoCualificado(NULL, tsaMain, nombre_funcion_aux, "main", &elem, nombre_ambito_encontrado)){
         fprintf(stderr, "Funcion %s no encontrada\n", $1.lexema);
@@ -871,6 +872,7 @@ exp:
 
       llamarFuncion(pf, elem->clave, elem->numero_parametros);
       estamos_en_llamada_funcion = 0;
+      indice_anidacion_funciones--;
       $$.tipo = elem->tipo;
     }
 | identificador_clase '.' TOK_IDENTIFICADOR '(' lista_expresiones ')'
@@ -883,7 +885,8 @@ id_llamada_funcion:
   TOK_IDENTIFICADOR
   {
     fprintf(pf, ";R:\t id_llamada_funcion: TOK_IDENTIFICADOR\n");
-    num_parametros_detectados = 0;
+    indice_anidacion_funciones++;
+    num_parametros_detectados[indice_anidacion_funciones] = 0;
     estamos_en_llamada_funcion = 1;
     strcpy($$.lexema,$1.lexema);
   }
@@ -900,8 +903,8 @@ identificador_clase:
 lista_expresiones:
   exp resto_lista_expresiones
     { fprintf(pf, ";R:\tlista_expresiones:\texp resto_lista_expresiones\n");
-    tipos_parametros_actuales[num_parametros_detectados] = $1.tipo;
-    num_parametros_detectados++;
+    tipos_parametros_actuales[indice_anidacion_funciones][num_parametros_detectados[indice_anidacion_funciones]] = $1.tipo;
+    num_parametros_detectados[indice_anidacion_funciones]++;
 
     }
 | /* Vacio */
@@ -912,8 +915,8 @@ lista_expresiones:
 resto_lista_expresiones:
   ',' exp resto_lista_expresiones
     { fprintf(pf, ";R:\tresto_lista_expresiones: ',' exp resto_lista_expresiones\n");
-    tipos_parametros_actuales[num_parametros_detectados] = $2.tipo;
-    num_parametros_detectados++;
+    tipos_parametros_actuales[indice_anidacion_funciones][num_parametros_detectados[indice_anidacion_funciones]] = $2.tipo;
+    num_parametros_detectados[indice_anidacion_funciones]++;
     }
 | /* Vacio */
     { fprintf(pf, ";R:\tresto_lista_expresiones:\t\n");}

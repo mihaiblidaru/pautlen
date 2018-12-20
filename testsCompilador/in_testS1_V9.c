@@ -43,6 +43,7 @@ main {
   printf suma(3, y);
   printf suma(x, y);
   printf cuboYsuma(1,1);
+  printf suma(1, suma(1, suma(1, suma(1, cubo(2)))));
   //printf sumaRecursiva(3);
   
 }

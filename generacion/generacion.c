@@ -933,6 +933,7 @@ void llamarMetodoSobreescribibleCualificadoInstanciaPila(FILE * fpasm, char * no
 
 void accederAtributoInstanciaDePila(FILE * fpasm, char * nombre_atributo){
     fprintf(fpasm, "\tpop dword ebx \n");
+    fprintf(fpasm, "\tmov ebx, [ebx]\n");
     fprintf(fpasm, "\tmov dword ecx, [_offset_%s]\n", nombre_atributo);
     fprintf(fpasm, "\tlea ecx, [ebx+ecx]\n");
     fprintf(fpasm, "\tpush dword ecx\n");

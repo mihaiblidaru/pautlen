@@ -113,7 +113,7 @@ int main(int argc, char ** argv)
     operandoEnPilaAArgumento(fd_asm,1);
     llamarFuncion(fd_asm,"main_factorial@o2",1);
     asignar(fd_asm,"c2",0);
-
+   
 // discard c1;
     escribir_operando(fd_asm,"c1",1);
     discardPila(fd_asm);
@@ -122,6 +122,7 @@ int main(int argc, char ** argv)
     escribir_operando(fd_asm,"c2",1);
     accederAtributoInstanciaDePila(fd_asm, "aiC2");
     escribir(fd_asm,1,ENTERO);
+
 
 // d1 = instance_of D;
     instance_of(fd_asm,"D",8);
@@ -263,6 +264,8 @@ int main(int argc, char ** argv)
     escribir_operando(fd_asm,"m",1);
     escribir_operando(fd_asm,"3",0);
     menor_igual(fd_asm,1,0,etiqueta);
+
+
 //    RECUPERACION DE ETIQUETA PREVIA A SU USO
     etiqueta = etiquetas[cima_etiquetas];
     while_exp_pila (fd_asm, 0, etiqueta);
@@ -378,7 +381,6 @@ int main(int argc, char ** argv)
     while_fin(fd_asm, etiqueta);
 //    GESTIÓN DE ETIQUETAS FIN BLOQUE
     cima_etiquetas--;
-
 
 
 //    m = 0;

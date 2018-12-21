@@ -21,10 +21,10 @@ main {
   printf a;
   printf b;
   printf c;
-
+//
   x = x + y + z + a * b * c;
   printf x;
-
+//
   q = - 3;
   printf q;
   q = - z;
@@ -35,12 +35,12 @@ main {
   printf q;
   q = 1 - 2;
   printf q;
-  q = t && f;
-  printf q;
-  q = t || f;
-  printf q;
-  q = !0;
-  printf q;
+  t = t && f;
+  printf t;
+  t = t || f;
+  printf t;
+  t = !false;
+  printf t;
 
 
 }

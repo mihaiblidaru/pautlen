@@ -24,5 +24,6 @@ posteriormentese ensabla el codigo asm resultante junto con ts.asm, se enlazan l
 resultantes(ts.o programaoo.o y olib.o) y se crea un ejecutable único llamado programaoo, siendo este ejecutable el que genera la salida facilitada en el enunciado (99,10,9999,111111,100,333,....)
 
 El código asm generado queda guardado en test_generacion/programaoo.asm.
-
+También entregamos una copia de la salida de moodle llamada salida.txt
+para poder comprobar facilmente la salida del programa.
 

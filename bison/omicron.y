@@ -47,7 +47,8 @@
     Lista* lista_tipos;
   }_fn_atributes;
 
-  _fn_atributes atributos;
+  //Estructura que contiene las variable necesarias para gestionar la decalracion de funciones
+  _fn_atributes params_funciones;
 
 
 
@@ -146,15 +147,15 @@ inicioTabla:
     { fprintf(pf, ";R:\tinicioTabla: \n");
       tsaMain = TSA_crear();
       abrirAmbitoPpalMain(tsaMain);
-      atributos.pos_parametro_actual = -1;
-      atributos.num_parametros_actual = 0;
-      atributos.num_variables_locales_actual = 0;
-      atributos.pos_variable_local_actual = 1;
-      atributos.fn_return = 0;
-      atributos.en_explist = 0;
-      atributos.tamanio_vector_actual = 0;
-      atributos.lista_nombres = NULL;
-      atributos.lista_tipos = NULL;
+      params_funciones.pos_parametro_actual = -1;
+      params_funciones.num_parametros_actual = 0;
+      params_funciones.num_variables_locales_actual = 0;
+      params_funciones.pos_variable_local_actual = 1;
+      params_funciones.fn_return = 0;
+      params_funciones.en_explist = 0;
+      params_funciones.tamanio_vector_actual = 0;
+      params_funciones.lista_nombres = NULL;
+      params_funciones.lista_tipos = NULL;
 
     }
 ;
@@ -195,6 +196,13 @@ escritura_fin:
     { fprintf(pf, ";R:\tescritura_fin: \n");
       escribir_fin(pf);
         TSA_eliminar(tsaMain);
+        //Liberamos las listas si es que se han usado
+        if(params_funciones.lista_nombres != NULL){
+          lista_free(params_funciones.lista_nombres, free);
+        }
+        if(params_funciones.lista_tipos != NULL){
+          lista_free(params_funciones.lista_tipos, free);
+        }
       }
 ;
 
@@ -335,8 +343,8 @@ identificador:
         }
         if (buscarParaDeclararIdTablaSimbolosAmbitos(tsaMain, nombre_simbolo_ts, &elem, nombre_ambito_encontrado) == ERR) {
             if(strcmp(nombre_ambito_insertar, "main") != 0){
-              TSA_insertarSimbolo(tsaMain, nombre_simbolo_ts, VARIABLE, globalTipo, globalClase, 0, 0, 0, atributos.pos_variable_local_actual, 0, 0, globalTamanio, 0, 0, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, NULL);
-              atributos.pos_variable_local_actual++;
+              TSA_insertarSimbolo(tsaMain, nombre_simbolo_ts, VARIABLE, globalTipo, globalClase, 0, 0, 0, params_funciones.pos_variable_local_actual, 0, 0, globalTamanio, 0, 0, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, NULL);
+              params_funciones.pos_variable_local_actual++;
             }else{
               TSA_insertarSimbolo(tsaMain, nombre_simbolo_ts, VARIABLE, globalTipo, globalClase, 0, 0, 0, 0, 0, 0, globalTamanio, 0, 0, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, NULL);
             }
@@ -372,7 +380,7 @@ fn_declaration:
 	fn_complete_name '{' declaraciones_funcion
   {
     fprintf(pf, ";R:\t fn_declaration: fn_complete_name { declaraciones_funcion\n");
-    declararFuncion(pf ,nombre_funcion_aux, atributos.pos_variable_local_actual-1);
+    declararFuncion(pf ,nombre_funcion_aux, params_funciones.pos_variable_local_actual-1);
     //TSA_imprimir(stderr, tsaMain, NULL);
   }
 ;
@@ -383,27 +391,27 @@ fn_complete_name:
     sprintf(nombre_funcion_aux, "main_%s", $1.lexema);
 
     strcpy($$.lexema, $1.lexema);
-    for(int i=0; i < atributos.num_parametros_actual; i++){
-      sprintf(nombre_funcion_aux, "%s@%d", nombre_funcion_aux, *((int*)lista_get(atributos.lista_tipos, i)));
+    for(int i=0; i < params_funciones.num_parametros_actual; i++){
+      sprintf(nombre_funcion_aux, "%s@%d", nombre_funcion_aux, *((int*)lista_get(params_funciones.lista_tipos, i)));
     }
     strcpy(nombre_ambito_insertar, nombre_funcion_aux);
 
     if(buscarParaDeclararIdTablaSimbolosAmbitos(tsaMain, nombre_funcion_aux, &elem, nombre_ambito_encontrado) == ERR){
-      abrirAmbitoMain(tsaMain, nombre_funcion_aux, FUNCION, $1.tipo_acceso, $1.tipo, 5, 0, atributos.num_parametros_actual);
+      abrirAmbitoMain(tsaMain, nombre_funcion_aux, FUNCION, $1.tipo_acceso, $1.tipo, 5, 0, params_funciones.num_parametros_actual);
 
     }else{
-      fprintf(stderr, "Funcion %s ya declarada \n", $1.lexema);
+      fprintf(stderr, "Funcion %s ya declarada. Linea %d\n", $1.lexema, yylineno);
       exit(-1);
     }
-    for(int i=0; i < lista_length(atributos.lista_nombres); i++){
+    for(int i=0; i < lista_length(params_funciones.lista_nombres); i++){
       char nombre_parametro_ts[300];
-      sprintf(nombre_parametro_ts, "%s_%s", nombre_funcion_aux + 5, (char*)lista_get(atributos.lista_nombres, i));
+      sprintf(nombre_parametro_ts, "%s_%s", nombre_funcion_aux + 5, (char*)lista_get(params_funciones.lista_nombres, i));
       if(buscarParaDeclararIdTablaSimbolosAmbitos(tsaMain, nombre_parametro_ts, &elem, nombre_ambito_encontrado) == OK){
-        fprintf(stderr, "Variable %s ya declarada en el ambito %s: Linea %d\n", (char*)lista_get(atributos.lista_nombres, i), nombre_ambito_encontrado,yylineno);
+        fprintf(stderr, "Variable %s ya declarada en el ambito %s: Linea %d\n", (char*)lista_get(params_funciones.lista_nombres, i), nombre_ambito_encontrado,yylineno);
         exit(-1);        
       }
-      TSA_insertarSimbolo(tsaMain, nombre_parametro_ts, PARAMETRO, *((int*)lista_get(atributos.lista_tipos, i)),
-                          ESCALAR, 0, atributos.num_parametros_actual, 0, 0, i, 0, 0,
+      TSA_insertarSimbolo(tsaMain, nombre_parametro_ts, PARAMETRO, *((int*)lista_get(params_funciones.lista_tipos, i)),
+                          ESCALAR, 0, params_funciones.num_parametros_actual, 0, 0, i, 0, 0,
                                        0, 0, 0, 0, 0, 0, 0, ACCESO_EXPOSED, MIEMBRO_NO_UNICO, 0, 0, 0, 0, NULL);
     }
 
@@ -421,25 +429,25 @@ fn_name:
   $$.tipo = $3.tipo;
   strcpy($$.lexema, $4.lexema);
 
-  atributos.pos_parametro_actual = 0;
-  atributos.num_parametros_actual = 0;
-  atributos.num_variables_locales_actual = 0;
-  atributos.pos_variable_local_actual = 1;
-  atributos.fn_return = 0;
-  atributos.en_explist = 0;
-  atributos.tamanio_vector_actual = 0;
-  if(atributos.lista_nombres == NULL){
-    atributos.lista_nombres = lista_crear();
+  params_funciones.pos_parametro_actual = 0;
+  params_funciones.num_parametros_actual = 0;
+  params_funciones.num_variables_locales_actual = 0;
+  params_funciones.pos_variable_local_actual = 1;
+  params_funciones.fn_return = 0;
+  params_funciones.en_explist = 0;
+  params_funciones.tamanio_vector_actual = 0;
+  if(params_funciones.lista_nombres == NULL){
+    params_funciones.lista_nombres = lista_crear();
   }else{
-    lista_free(atributos.lista_nombres, free);
-    atributos.lista_nombres = lista_crear();
+    lista_free(params_funciones.lista_nombres, free);
+    params_funciones.lista_nombres = lista_crear();
   }
 
-  if(atributos.lista_tipos == NULL){
-    atributos.lista_tipos = lista_crear();
+  if(params_funciones.lista_tipos == NULL){
+    params_funciones.lista_tipos = lista_crear();
   }else{
-    lista_free(atributos.lista_tipos, free);
-    atributos.lista_tipos = lista_crear();
+    lista_free(params_funciones.lista_tipos, free);
+    params_funciones.lista_tipos = lista_crear();
   }
 
   }
@@ -448,10 +456,10 @@ fn_name:
 idpf:
 	TOK_IDENTIFICADOR{
   fprintf(pf, ";R:\t idpf: TOK_IDENTIFICADOR \n");
-  lista_addstr(atributos.lista_nombres, $1.lexema);
-  lista_addint(atributos.lista_tipos, globalTipo);
-  atributos.num_parametros_actual +=1;
-  atributos.pos_parametro_actual +=1;
+  lista_addstr(params_funciones.lista_nombres, $1.lexema);
+  lista_addint(params_funciones.lista_tipos, globalTipo);
+  params_funciones.num_parametros_actual +=1;
+  params_funciones.pos_parametro_actual +=1;
   }
 ;
 
@@ -542,7 +550,11 @@ sentencia_simple:
      //printf("numero de parametros: %s %d", nombre_funcion_aux, num_parametros_detectados[indice_anidacion_funciones]);
 
       if(buscarIdNoCualificado(NULL, tsaMain, nombre_funcion_aux, "main", &elem, nombre_ambito_encontrado)){
-        fprintf(stderr, "Funcion %s no encontrada\n", $1.lexema);
+        fprintf(stderr, "Funcion %s( ", $1.lexema);
+        for(int i= num_parametros_detectados[indice_anidacion_funciones]-1; i >= 0 ; i--){
+          fprintf(stderr, "%s ", tipo_to_str[tipos_parametros_actuales[indice_anidacion_funciones][i]-1]);  
+        }
+        fprintf(stderr, ") no encontrada. Linea %d\n", yylineno);
         exit(-1);
       }
 
@@ -581,7 +593,6 @@ asignacion:
             $1.lexema, tipo_to_str[elem->tipo - 1], tipo_to_str[$3.tipo - 1], yylineno);
             exit(-1);
           }
-
 
           if(strcmp(nombre_ambito_encontrado, "main")==0){
             asignar(pf, elem->clave, $3.es_direccion);
@@ -697,7 +708,17 @@ lectura:
         fprintf(pf, ";R:\tlectura: TOK_SCANF TOK_IDENTIFICADOR\n");
         int resultado = buscarIdNoCualificado(NULL, tsaMain, $2.lexema, "main", &elem, nombre_ambito_encontrado);
         if(resultado == OK){
+           if(strcmp(nombre_ambito_encontrado, "main")==0){
             leer(pf, elem->clave, elem->tipo);
+          }else{
+            if(elem->categoria==PARAMETRO){
+              escribirParametro(pf, elem->posicion_parametro, elem->numero_parametros);
+            }else if(elem->categoria==VARIABLE){
+              escribirVariableLocal(pf, elem->posicion_variable_local);
+            }
+            leer_exp_pila(pf, elem->tipo);
+          }
+
         }else{
             fprintf(stderr, "Identificador %s no encontrado\n", $2.lexema);
             exit(-1);
@@ -722,7 +743,7 @@ escritura:
 retorno_funcion:
   TOK_RETURN exp
     { fprintf(pf, ";R:\tretorno_funcion: TOK_RETURN exp\n");
-      fprintf(stderr, "Nombre funcion %s\n", nombre_ambito_insertar);
+      //fprintf(stderr, "Nombre funcion %s\n", nombre_ambito_insertar);
       buscarParaDeclararIdTablaSimbolosAmbitos(tsaMain, nombre_ambito_insertar, &elem, nombre_ambito_encontrado);
 
       if(elem->tipo != $2.tipo){
@@ -746,14 +767,16 @@ exp:
       if ($1.tipo == INT && $3.tipo == INT){
         sumar(pf, $1.es_direccion, $3.es_direccion);
         $$.es_direccion = 0;
-        $$.valor_entero = $1.valor_entero + $3.valor_entero;
         $$.tipo = INT;
       } else  {
-          if ($1.tipo != INT)
-            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $1.lexema);
-          else
-            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $3.lexema);
-          exit(-1);
+          if($1.tipo != INT){
+            fprintf(stderr, "Error suma(+): El tipo de la expresion izquierda != INT. Linea %d\n", yylineno);
+            exit(-1);
+          }
+          if($3.tipo != INT){
+            fprintf(stderr, "Error suma(+): El tipo de la expresion derecha != INT. Linea %d\n", yylineno);
+            exit(-1);
+          }
       }
     }
 | exp '-' exp
@@ -761,14 +784,16 @@ exp:
       if ($1.tipo == INT && $3.tipo == INT){
         restar(pf, $1.es_direccion, $3.es_direccion);
         $$.es_direccion = 0;
-        $$.valor_entero = $1.valor_entero - $3.valor_entero;
         $$.tipo = INT;
       } else  {
-          if ($1.tipo != INT)
-            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $1.lexema);
-          else
-            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $3.lexema);
+        if($1.tipo != INT){
+          fprintf(stderr, "Error resta(-): El tipo de la expresion izquierda != INT. Linea %d\n", yylineno);
           exit(-1);
+        }
+        if($3.tipo != INT){
+          fprintf(stderr, "Error resta(-): El tipo de la expresion derecha != INT. Linea %d\n", yylineno);
+          exit(-1);
+        }
       }
     }
 | exp '/' exp
@@ -776,14 +801,16 @@ exp:
       if ($1.tipo == INT && $3.tipo == INT){
         dividir(pf, $1.es_direccion, $3.es_direccion);
         $$.es_direccion = 0;
-        /*$$.valor_entero = (int) $1.valor_entero / $3.valor_entero;*/
         $$.tipo = INT;
       } else  {
-          if ($1.tipo != INT)
-            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $1.lexema);
-          else
-            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $3.lexema);
+          if($1.tipo != INT){
+          fprintf(stderr, "Error division(/): El tipo de la expresion izquierda != INT. Linea %d\n", yylineno);
           exit(-1);
+        }
+        if($3.tipo != INT){
+          fprintf(stderr, "Error division(/): El tipo de la expresion derecha != INT. Linea %d\n", yylineno);
+          exit(-1);
+        }
       }
     }
 | exp '*' exp
@@ -791,14 +818,16 @@ exp:
       if ($1.tipo == INT && $3.tipo == INT){
         multiplicar(pf, $1.es_direccion, $3.es_direccion);
         $$.es_direccion = 0;
-        $$.valor_entero = $1.valor_entero * $3.valor_entero;
         $$.tipo = INT;
       } else  {
-          if ($1.tipo != INT)
-            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $1.lexema);
-          else
-            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $3.lexema);
+         if($1.tipo != INT){
+          fprintf(stderr, "Error multiplicación(*): El tipo de la expresion izquierda != INT. Linea %d\n", yylineno);
           exit(-1);
+        }
+        if($3.tipo != INT){
+          fprintf(stderr, "Error multiplicación(*): El tipo de la expresion derecha != INT. Linea %d\n", yylineno);
+          exit(-1);
+        }
       }
     }
 | '-' exp %prec NEG
@@ -806,10 +835,9 @@ exp:
       if ($2.tipo == INT){
         cambiar_signo(pf, $2.es_direccion);
         $$.es_direccion = 0;
-        $$.valor_entero = $2.valor_entero * -1;
         $$.tipo = INT;
       } else  {
-          fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $2.lexema);
+          fprintf(stderr, "Negación(-) seguida de una expresión no entera. Linea %d\n", yylineno);
           exit(-1);
       }
     }
@@ -818,14 +846,16 @@ exp:
       if ($1.tipo == BOOLEAN && $3.tipo == BOOLEAN){
         y(pf, $1.es_direccion, $3.es_direccion);
         $$.es_direccion = 0;
-        $$.valor_entero = $1.valor_entero && $3.valor_entero;
         $$.tipo = BOOLEAN;
       } else  {
-          if ($1.tipo != BOOLEAN)
-            fprintf(stderr, "Identificador '%s' NO es de tipo booleano.\n", $1.lexema);
-          else
-            fprintf(stderr, "Identificador '%s' NO es de tipo booleano.\n", $3.lexema);
+        if($1.tipo != BOOLEAN){
+          fprintf(stderr, "Error AND(&&): El tipo de la expresion izquierda != BOOLEAN. Linea %d\n", yylineno);
           exit(-1);
+        }
+        if($3.tipo != BOOLEAN){
+          fprintf(stderr, "Error AND(&&): El tipo de la expresion derecha != BOOLEAN. Linea %d\n", yylineno);
+          exit(-1);
+        }
       }
     }
 | exp TOK_OR exp
@@ -833,14 +863,16 @@ exp:
       if ($1.tipo == BOOLEAN && $3.tipo == BOOLEAN){
       o(pf, $1.es_direccion, $3.es_direccion);
       $$.es_direccion = 0;
-      $$.valor_entero = $1.valor_entero || $3.valor_entero;
       $$.tipo = BOOLEAN;
       } else  {
-        if ($1.tipo != BOOLEAN)
-          fprintf(stderr, "Identificador '%s' NO es de tipo booleano.\n", $1.lexema);
-        else
-          fprintf(stderr, "Identificador '%s' NO es de tipo booleano.\n", $3.lexema);
-        exit(-1);
+        if($1.tipo != BOOLEAN){
+          fprintf(stderr, "Error OR(||): El tipo de la expresion izquierda != BOOLEAN. Linea %d\n", yylineno);
+          exit(-1);
+        }
+        if($3.tipo != BOOLEAN){
+          fprintf(stderr, "Error OR(||): El tipo de la expresion derecha != BOOLEAN. Linea %d\n", yylineno);
+          exit(-1);
+        }
       }
     }
 | '!' exp
@@ -849,10 +881,9 @@ exp:
       no(pf, $2.es_direccion, globalEtiqueta);
       globalEtiqueta++;
       $$.es_direccion = 0;
-      $$.valor_entero = !($2.valor_entero);
       $$.tipo = BOOLEAN;
       } else  {
-          fprintf(stderr, "Identificador '%s' NO es de tipo booleano.\n", $2.lexema);
+          fprintf(stderr, "Negación(!) seguida de una expresión no booleana. Linea %d\n", yylineno);
           exit(-1);
       }
     }
@@ -886,7 +917,7 @@ exp:
         }
 
       } else {
-          fprintf(stderr, "Identificador %s no encontrado\n", $1.lexema);
+          fprintf(stderr, "Identificador %s no encontrado. Linea %d\n", $1.lexema, yylineno);
           exit(-1);
       }
     }
@@ -918,7 +949,11 @@ exp:
      //printf("numero de parametros: %s %d", nombre_funcion_aux, num_parametros_detectados[indice_anidacion_funciones]);
 
       if(buscarIdNoCualificado(NULL, tsaMain, nombre_funcion_aux, "main", &elem, nombre_ambito_encontrado)){
-        fprintf(stderr, "Funcion %s no encontrada\n", $1.lexema);
+        fprintf(stderr, "Funcion %s( ", $1.lexema);
+        for(int i= num_parametros_detectados[indice_anidacion_funciones]-1; i >= 0 ; i--){
+          fprintf(stderr, "%s ", tipo_to_str[tipos_parametros_actuales[indice_anidacion_funciones][i]-1]);  
+        }
+        fprintf(stderr, ") no encontrada. Linea %d\n", yylineno);
         exit(-1);
       }
 
@@ -983,7 +1018,8 @@ comparacion:
         globalEtiqueta++;
         $$.tipo = BOOLEAN;
       } else  {
-          fprintf(stderr, "Identificadores '%s' y '%s' NO son de tipos iguales.\n", $1.lexema, $3.lexema);
+          fprintf(stderr, "Error igual(==): Tipo expresion izquierda(%s) distinto de tipo expresion derecha(%s). Linea %d\n",
+                  tipo_to_str[$1.tipo-1], tipo_to_str[$3.tipo-1], yylineno);
           exit(-1);
       }
     }
@@ -994,7 +1030,8 @@ comparacion:
         globalEtiqueta++;
         $$.tipo = BOOLEAN;
       } else  {
-          fprintf(stderr, "Identificadores '%s' y '%s' NO son de tipos iguales.\n", $1.lexema, $3.lexema);
+          fprintf(stderr, "Error distinto(!=): Tipo expresion izquierda(%s) distinto de tipo expresion derecha(%s). Linea %d\n",
+                  tipo_to_str[$1.tipo-1], tipo_to_str[$3.tipo-1], yylineno);
           exit(-1);
       }
     }
@@ -1005,11 +1042,14 @@ comparacion:
         globalEtiqueta++;
         $$.tipo = BOOLEAN;
       } else  {
-          if ($1.tipo != INT)
-            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $1.lexema);
-          else
-            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $3.lexema);
+        if($1.tipo != INT){
+          fprintf(stderr, "Error comparación menor o igual(<=): El tipo de la expresion izquierda != INT. Linea %d\n", yylineno);
           exit(-1);
+        }
+        if($3.tipo != INT){
+          fprintf(stderr, "Error comparación menor o igual(<=): El tipo de la expresion derecha != INT. Linea %d\n", yylineno);
+          exit(-1);
+        }
       }
     }
 | exp TOK_MAYORIGUAL exp
@@ -1019,11 +1059,14 @@ comparacion:
         globalEtiqueta++;
         $$.tipo = BOOLEAN;
       } else  {
-          if ($1.tipo != INT)
-            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $1.lexema);
-          else
-            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $3.lexema);
+        if($1.tipo != INT){
+          fprintf(stderr, "Error comparación mayor o igual(>=): El tipo de la expresion izquierda != INT. Linea %d\n", yylineno);
           exit(-1);
+        }
+        if($3.tipo != INT){
+          fprintf(stderr, "Error comparación mayor o igual(>=): El tipo de la expresion derecha != INT. Linea %d\n", yylineno);
+          exit(-1);
+        }
       }
     }
 | exp '<' exp
@@ -1033,11 +1076,14 @@ comparacion:
         globalEtiqueta++;
         $$.tipo = BOOLEAN;
       } else  {
-          if ($1.tipo != INT)
-            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $1.lexema);
-          else
-            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $3.lexema);
+        if($1.tipo != INT){
+          fprintf(stderr, "Error comparación menor(<): El tipo de la expresion izquierda != INT. Linea %d\n", yylineno);
           exit(-1);
+        }
+        if($3.tipo != INT){
+          fprintf(stderr, "Error comparación menor(<): El tipo de la expresion derecha != INT. Linea %d\n", yylineno);
+          exit(-1);
+        }
       }
     }
 | exp '>' exp
@@ -1047,11 +1093,14 @@ comparacion:
         globalEtiqueta++;
         $$.tipo = BOOLEAN;
       } else  {
-          if ($1.tipo != INT)
-            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $1.lexema);
-          else
-            fprintf(stderr, "Identificador '%s' NO es de tipo entero.\n", $3.lexema);
+        if($1.tipo != INT){
+          fprintf(stderr, "Error comparación mayor (>): El tipo de la expresion izquierda != INT. Linea %d\n", yylineno);
           exit(-1);
+        }
+        if($3.tipo != INT){
+          fprintf(stderr, "Error comparación mayor (>): El tipo de la expresion derecha != INT. Linea %d\n", yylineno);
+          exit(-1);
+        }
       }
     }
 ;

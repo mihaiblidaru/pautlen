@@ -30,8 +30,6 @@ bison/y.tab.c: bison/omicron.y
 	mv y.* bison/
 
 
-
-
 test1: compilador
 	./compilador testsCompilador/in_testS1_V1.c testsCompilador/in_testS1_V1.asm
 	nasm -g -f elf32 testsCompilador/in_testS1_V1.asm -o testsCompilador/in_testS1_V1.o
@@ -98,10 +96,15 @@ test13: compilador
 	nasm -g -f elf32 testsCompilador/in_testS1_V13.asm -o testsCompilador/in_testS1_V13.o
 	gcc -m32 -g testsCompilador/in_testS1_V13.o olib.o -o in_testS1_V13
 
+test14: compilador
+	./compilador testsCompilador/in_testS1_V14.c testsCompilador/in_testS1_V14.asm
+	nasm -g -f elf32 testsCompilador/in_testS1_V14.asm -o testsCompilador/in_testS1_V14.o
+	gcc -m32 -g testsCompilador/in_testS1_V14.o olib.o -o in_testS1_V14
+
 clean:
 	ls *.o | sed -e 's/olib.o//'| xargs rm -f
 	rm -f tabla_simbolos/*.o
-	rm -f generacion/*.o
+	rm -f generacion/generacion.o
 	rm -f testsCompilador/*.o
 	rm -f bison/*.o flex/*.o flex/lex.yy.c bison/y.*
 	rm -f compilador

@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Wall -g -O0 -m32 -I../include
+CFLAGS = -Wall -Wextra -Wall -g -O0 -m32 -I./
 LDFLAGS = -m32 -g
 LDLIBS =
 AS = nasm

@@ -343,11 +343,6 @@ int main(int argc, char ** argv)
 //    INICIO DEL WHILE
     etiqueta = etiquetas[cima_etiquetas];
 
-    fprintf(fd_asm, "\tpush eax\n");
-    fprintf(fd_asm, "\tpop eax\n");
-    fprintf(fd_asm, "\tpush eax\n");
-    fprintf(fd_asm, "\tpop eax\n");
-    printf("La etiqueta = %d\n", etiqueta);
     while_inicio(fd_asm, etiqueta);
 //    CONDICION DEL WHILE
     escribir_operando(fd_asm,"m",1);

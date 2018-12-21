@@ -109,4 +109,4 @@ clean:
 	rm -f bison/*.o flex/*.o flex/lex.yy.c bison/y.*
 	rm -f compilador
 	rm -f testsCompilador/*.asm in_testS1_V9 in_testS1_V1 in_testS1_V2 in_testS1_V3 in_testS1_V4 in_testS1_V5 in_testS1_V6 in_testS1_V7 in_testS1_V8
-	rm -f testsCompilador/in_testS1_V11 testsCompilador/in_testS1_V12 testsCompilador/in_testS1_V10
+	rm -f in_testS1_V11 in_testS1_V12 in_testS1_V10 in_testS1_V13 in_testS1_V14

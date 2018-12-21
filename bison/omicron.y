@@ -320,7 +320,7 @@ clase_vector:
     { fprintf(pf, ";R:\tclase_vector: TOK_ARRAY tipo '[' TOK_CONSTANTE_ENTERA ']'\n");
       globalTamanio = $4.valor_entero;
       if (globalTamanio < 1 || globalTamanio > MAX_TAMANIO_VECTOR){
-        fprintf(stderr, "ERROR SEMANTICO: %d (Valor no permitido)\n", globalTamanio);
+        fprintf(stderr, "ERROR SEMANTICO: %d (Tamaño del vector no permitido)\n", globalTamanio);
         exit(-1);
       }}
 ;

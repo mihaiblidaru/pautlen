@@ -12,5 +12,5 @@ main {
     return 0;
   }
 
-  recursiva(2);
+  recursiva(5);
 }

@@ -34,25 +34,25 @@ main {
     printf x;
     printf ttt;
     printf z;
-    return 1;
+    return none;
   }
 
   x=8;
 
-  printf x;
+  printf x;  //8
   x = cubo(5);
-  printf x;
-  x = cuadrado(x);
-  printf x;
+  printf x; //125
+  x = cuadrado(x); // imprime 15630
+  printf x; //15625
   x=3;
   y=9;
-  printf suma(1, 2) + suma(1, 3);
-  printf y;
-  //printf suma(3, y);
-  //printf suma(x, y);
-  //printf cuboYsuma(1,1);
-  //printf suma(1, suma(1, suma(1, suma(1, cubo(2)))));
-  //imprimeNumeros(1,suma(1, 2),3);
-  //suma(3, 3);
+  printf suma(1, 2) + suma(1, 3); //7
+  printf y; //9
+  printf suma(3, y); //12
+  printf suma(x, y); //12
+  printf cuboYsuma(1,1); //3
+  printf suma(1, suma(1, suma(1, suma(1, cubo(2))))); //12
+  imprimeNumeros(1,suma(1, 2),3); // 1, 3,3
+  suma(3, 3);
   
 }

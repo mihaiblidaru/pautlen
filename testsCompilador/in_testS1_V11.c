@@ -32,7 +32,9 @@ main {
     suma = suma + x;
     x = x + 1;
   }
-  printf suma;
-
+  
+  printf suma; //55
+  vacia(13); //11
+  fun2(12312312); //12
 
 }

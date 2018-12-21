@@ -896,7 +896,7 @@ void leer_exp_pila(FILE* fpasm, int tipo){
 }
 
 void instance_of (FILE * fpasm, char * nombre_fuente_clase,int numero_atributos_instancia){
-
+  //Se necesita un espacio adicionar para el puntero a la tabla de metodos sobresribibles
   int result =  (numero_atributos_instancia + 1) * 4;
 
   fprintf(fpasm, "\n; instanceof %s\n", nombre_fuente_clase);

@@ -387,8 +387,7 @@ int main(int argc, char ** argv)
     etiqueta = etiquetas[cima_etiquetas];
     while_fin(fd_asm, etiqueta);
     
-    escribir_fin(fd_asm);
-    return 0;
+
 //    GESTIÓN DE ETIQUETAS FIN BLOQUE
     cima_etiquetas--;
 

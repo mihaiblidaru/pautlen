@@ -897,7 +897,7 @@ void leer_exp_pila(FILE* fpasm, int tipo){
 
 void instance_of (FILE * fpasm, char * nombre_fuente_clase,int numero_atributos_instancia){
 
-  int result =  numero_atributos_instancia * 4;
+  int result =  (numero_atributos_instancia + 1) * 4;
 
   fprintf(fpasm, "\n; instanceof %s\n", nombre_fuente_clase);
 

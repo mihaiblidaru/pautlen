@@ -342,6 +342,12 @@ int main(int argc, char ** argv)
     etiqueta = getiqueta;
 //    INICIO DEL WHILE
     etiqueta = etiquetas[cima_etiquetas];
+
+    fprintf(fd_asm, "\tpush eax\n");
+    fprintf(fd_asm, "\tpop eax\n");
+    fprintf(fd_asm, "\tpush eax\n");
+    fprintf(fd_asm, "\tpop eax\n");
+    printf("La etiqueta = %d\n", etiqueta);
     while_inicio(fd_asm, etiqueta);
 //    CONDICION DEL WHILE
     escribir_operando(fd_asm,"m",1);
@@ -349,13 +355,14 @@ int main(int argc, char ** argv)
     menor_igual(fd_asm,1,0,etiqueta);
 //    RECUPERACION DE ETIQUETA PREVIA A SU USO
     etiqueta = etiquetas[cima_etiquetas];
+
     while_exp_pila (fd_asm, 0, etiqueta);
 //    while ( m <= 2 )
 //    {
 //        printf m;
         escribir_operando(fd_asm,"m",1);
         escribir(fd_asm,1,ENTERO);
-
+    
 //        Vobjs[m].msA1();
         escribir_operando(fd_asm,"m",1);
         escribir_elemento_vector(fd_asm,"Vobjs", 3, 1);
@@ -379,6 +386,9 @@ int main(int argc, char ** argv)
 //    RECUPERACION DE ETIQUETA PREVIA A SU USO
     etiqueta = etiquetas[cima_etiquetas];
     while_fin(fd_asm, etiqueta);
+    
+    escribir_fin(fd_asm);
+    return 0;
 //    GESTIÓN DE ETIQUETAS FIN BLOQUE
     cima_etiquetas--;
 

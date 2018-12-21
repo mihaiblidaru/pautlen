@@ -923,9 +923,9 @@ void llamarMetodoSobreescribibleCualificadoInstanciaPila(FILE * fpasm, char * no
     fprintf(fpasm, "\t;llamarMetodoSobreescribibleCualificadoInstanciaPila\n");
     fprintf(fpasm, "\tpop dword ebx \n");
     fprintf(fpasm, "\tmov ebx,[ ebx]\n");
+    fprintf(fpasm, "\tmov ebx,[ ebx]\n");
     fprintf(fpasm, "\tmov dword ecx, [_offset_%s]\n", nombre_metodo);
     fprintf(fpasm, "\tlea ecx, [ebx+ecx]\n");
-    fprintf(fpasm, "\tmov ecx, [ecx]\n");
     fprintf(fpasm, "\tmov ecx, [ecx]\n");
     fprintf(fpasm, "\tcall ecx\n");
 }

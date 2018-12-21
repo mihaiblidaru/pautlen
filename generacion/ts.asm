@@ -27,12 +27,12 @@
 ;			ac acD1;
 ;			}
 ;
-;	function int f(int n) 
+;	function int f(int n)
 ;	{ int doble;
 ;
 ;		doble = n+n;
 ;
-;		if ( (n == 0)  ) 
+;		if ( (n == 0)  )
 ;		{
 ;			return 1;
 ;		}
@@ -40,16 +40,16 @@
 ;		{
 ;			return n*f( n-1 );
 ;		}
-;	
+;
 ;
 ;}
 ;
-;Class C  suma( class A a, class B b) { 
-;	class C c; 
-;	a.A1(); b .B1(); 
-;	c = instance of C; 
-;	c.A1(); 
-;	c.aiA1 = 100; c.aiA2 = 110; c.aiC1 = 1000; c.aiC2 = 1100; 
+;Class C  suma( class A a, class B b) {
+;	class C c;
+;	a.A1(); b .B1();
+;	c = instance of C;
+;	c.A1();
+;	c.aiA1 = 100; c.aiA2 = 110; c.aiC1 = 1000; c.aiC2 = 1100;
 ;	f2 (c)
 ;	return c;
 ;}
@@ -96,7 +96,7 @@ segment .data
 	__auxint dd 0.0
 ; SET METODOS SOBREESCRIBIBLES OFFSET
 ; SE ESTÁ SUPONIENDO LA LINEALIZACIÓN  A B C D
-; RESPECTO A MÉTODOS SOBREESCRIBIBLES CADA UNA TIENE 2 DE NOMBRES RESPECTIVAMENTE 
+; RESPECTO A MÉTODOS SOBREESCRIBIBLES CADA UNA TIENE 2 DE NOMBRES RESPECTIVAMENTE
 ; (ms)A1 (ms)A2 (m2)B2 (ms)B2 (ms)C1 (ms)C2 (ms)D1 (ms)D2
 	_offset_msA1 dd 0    ; ESTO SE DEBE ESCRIBIR CUANDO SE ESCRIBA LA TABLA DE SÍMBOLOS Y SE ENCUENTRE UN MÉTODO SOBREESCRIBIBLE
 	_offset_msA2 dd 4
@@ -109,7 +109,7 @@ segment .data
 
 ; SET ATRIBUTOS INSTANCIA OFFSET
 ; SE ESTÁ SUPONIENDO LA LINEALIZACIÓN  A B C D
-; RESPECTO ATRIBUTOS DE INSTANCIA CADA UNA TIENE 2 DE NOMBRES RESPECTIVAMENTE 
+; RESPECTO ATRIBUTOS DE INSTANCIA CADA UNA TIENE 2 DE NOMBRES RESPECTIVAMENTE
 ; (ai)A1 (ai)A2 (ai)B2 (ai)B2 (ai)C1 (ai)C2 (ai)D1 (ai)D2
 ; DEBEN PRESERVAR UNA POSICIÓN (4 bytes) PARA EL PUNTERO A LA TABLA DE MÉTODOS SOBREESCRIBIBLES
 	_offset_aiA1 dd 4 ; 4+0      ; ESTO SE DEBE ESCRIBIR CUANDO SE ESCRIBA LA TABLA DE SIMBOLOS Y SE ENCUENTRE UN ATRIBUTO DE INSTANCIA
@@ -120,7 +120,7 @@ segment .data
 	_offset_aiC2 dd 24 ; 4+20
 	_offset_aiD1 dd 28 ; 4+24
 	_offset_aiD2 dd 32 ; 4+28
-	
+
 segment .bss
 	__esp resd 4
 ; Class A
@@ -244,20 +244,10 @@ _CmsA1:
 	call print_endofline
 	ret
 ; En Class C se sobreescirbe A2
-; A2() { this.aiC2= 2222; print 11 }
+; A2() { print 11 }
 _CmsA2:
 	push ebp
 	mov ebp, esp
-; this.aiC2 = 2222;
-; this está en [ebp+8]
-	; LAS SIGUIENTES LINEAS SON PRUEBAS DE THIS.. LAS HE QUITADO PARA QUE TODOS LOS MÉTODOS SEAN IGUALES..NINGUNO AHORA SUPONE THIS
-	;lea ebx, [ebp+8]    ; ebx &this 
-	;mov ebx, [ebx]    ; ebx tiene this
-	;mov ebx, [ebx]    ; ebx tiene [this] comienzo del bloque de memoria al que apunta this
-	;mov dword ecx, [_offset_aiC2]   ; ecx tiene el offset
-	;lea ebx, [ebx+ ecx]  ; ebx tiene [c]+offset
-	;mov dword [ebx ], 2222  ; añadimos 100 a su instancia [[c]+offset]
-
 	push dword 11
 	call print_int
 	add esp,4
@@ -305,29 +295,29 @@ _set_offsets:
 	ret
 ; CREATE MS TABLE
 _create_ms_table:
-	mov dword [_msA], _msA1		
-	mov dword [_msA+4], _msA2		
+	mov dword [_msA], _msA1
+	mov dword [_msA+4], _msA2
 ; B SOBRE ESCRIBE msA1
-	mov dword [_msB], _BmsA1		
-	mov dword [_msB+4], _msA2		
+	mov dword [_msB], _BmsA1
+	mov dword [_msB+4], _msA2
 	mov dword [_msB+8], _msB1
-	mov dword [_msB+12], _msB2		
+	mov dword [_msB+12], _msB2
 ; C SOBRE ESCRIBE msA1
-	mov dword [_msC], _CmsA1		
+	mov dword [_msC], _CmsA1
 ; C SOBRE ESCRIBE msA2
-	mov dword [_msC+4], _CmsA2		
+	mov dword [_msC+4], _CmsA2
 ; C NO HEREDA DE B
 	mov dword [_msC+8], _no_defined_method
-	mov dword [_msC+12], _no_defined_method		
-	mov dword [_msC+16], _msC1		
-	mov dword [_msC+20], _msC2		
-; SI ASUMIMOS EL ORDEN DE DECLARACION D extends B C TIENE PRIORIDAD B
-	mov dword [_msD], _BmsA1		
-	mov dword [_msD+4], _msA2		
+	mov dword [_msC+12], _no_defined_method
+	mov dword [_msC+16], _msC1
+	mov dword [_msC+20], _msC2
+; SI ASUMIMOS QUE C TIENE PRIORIDAD SOBRE B 
+	mov dword [_msD], _CmsA1
+	mov dword [_msD+4], _CmsA2
 	mov dword [_msD+8], _msB1
-	mov dword [_msD+12], _msB2		
-	mov dword [_msD+16], _msC1		
-	mov dword [_msD+20], _msC2		
-	mov dword [_msD+24], _msD1		
-	mov dword [_msD+28], _msD2		
+	mov dword [_msD+12], _msB2
+	mov dword [_msD+16], _msC1
+	mov dword [_msD+20], _msC2
+	mov dword [_msD+24], _msD1
+	mov dword [_msD+28], _msD2
 	ret

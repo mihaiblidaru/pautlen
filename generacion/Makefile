@@ -11,25 +11,25 @@ GENERADORES = test_generacion/ej1 test_generacion/ej2 test_generacion/ej3 \
 
 all: $(EJECUTABLES)
 
-programa1: test_generacion/programa1.o ../olib.o
+programa1: test_generacion/programa1.o olib.o
 	$(CC) $(LDFLAGS) $^ -o $@
 
-programa2: test_generacion/programa2.o ../olib.o
+programa2: test_generacion/programa2.o olib.o
 	$(CC) $(LDFLAGS) $^ -o $@
 
-programa3: test_generacion/programa3.o ../olib.o
+programa3: test_generacion/programa3.o olib.o
 	$(CC) $(LDFLAGS) $^ -o $@
 
-programa4: test_generacion/programa4.o ../olib.o
+programa4: test_generacion/programa4.o olib.o
 	$(CC) $(LDFLAGS) $^ -o $@
 
-programa5: test_generacion/programa5.o ../olib.o
+programa5: test_generacion/programa5.o olib.o
 	$(CC) $(LDFLAGS) $^ -o $@
 
-programa6: test_generacion/programa6.o ../olib.o
+programa6: test_generacion/programa6.o olib.o
 	$(CC) $(LDFLAGS) $^ -o $@
 
-programaoo: test_generacion/programaoo.o ../olib.o ts.o
+programaoo: test_generacion/programaoo.o olib.o ts.o
 		$(CC) $(LDFLAGS) $^ -o $@
 
 test_generacion/programa1.o: test_generacion/programa1.asm

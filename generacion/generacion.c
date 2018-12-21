@@ -14,11 +14,15 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <omicron.h>
 #include <generacion.h>
 
+
 #define ES_VAR(x) (x ? "variable": "no_variable")
 
+
+const char* PREFIJO_TABLA_METODOS_SOBREESCRIBIBLES = "_ms";
 /*
  *  Expresion regular para borrar todas las lineas de comentarios
  *  NO BORRAR
@@ -898,15 +902,15 @@ void leer_exp_pila(FILE* fpasm, int tipo){
 void instance_of (FILE * fpasm, char * nombre_fuente_clase,int numero_atributos_instancia){
   //Se necesita un espacio adicionar para el puntero a la tabla de metodos sobresribibles
   int result =  (numero_atributos_instancia + 1) * 4;
-
+  char* nombre_tabla_ms = claseATabla(nombre_fuente_clase);
   fprintf(fpasm, "\n; instanceof %s\n", nombre_fuente_clase);
 
   fprintf(fpasm, "\t push dword %d ; %d*4\n",result,numero_atributos_instancia);
   fprintf(fpasm, "\t call malloc\n");
   fprintf(fpasm, "\t add esp, 4\n");
   fprintf(fpasm, "\t push eax\n");
-  fprintf(fpasm, "\t mov dword [eax], _ms%s\n", nombre_fuente_clase);
-  
+  fprintf(fpasm, "\t mov dword [eax], %s\n", nombre_tabla_ms);
+  free(nombre_tabla_ms);
 	
 }
 
@@ -937,4 +941,11 @@ void accederAtributoInstanciaDePila(FILE * fpasm, char * nombre_atributo){
     fprintf(fpasm, "\tmov dword ecx, [_offset_%s]\n", nombre_atributo);
     fprintf(fpasm, "\tlea ecx, [ebx+ecx]\n");
     fprintf(fpasm, "\tpush dword ecx\n");
+}
+
+char * claseATabla(char * nombre_fuente_clase){
+  int longitud = strlen(PREFIJO_TABLA_METODOS_SOBREESCRIBIBLES) + strlen(nombre_fuente_clase);
+  char * aux = malloc(longitud+1);
+  sprintf(aux, "%s%s", PREFIJO_TABLA_METODOS_SOBREESCRIBIBLES, nombre_fuente_clase);
+  return aux;
 }

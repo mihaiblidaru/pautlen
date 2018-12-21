@@ -10,9 +10,9 @@ OBJETOS_TABLA_SIMBOLOS = tabla_simbolos/tsa.o tabla_simbolos/tsc.o tabla_simbolo
 
 .PHONY: all clean
 
-all: compilador
+all: omicron
 
-compilador: omicron.o flex/lex.yy.o bison/y.tab.o ./generacion/generacion.o $(OBJETOS_TABLA_SIMBOLOS)
+omicron: omicron.o flex/lex.yy.o bison/y.tab.o ./generacion/generacion.o $(OBJETOS_TABLA_SIMBOLOS)
 	$(CC) $(LDFLAGS) $^ -o $@
 
 flex/lex.yy.o: flex/lex.yy.c
@@ -30,74 +30,74 @@ bison/y.tab.c: bison/omicron.y
 	mv y.* bison/
 
 
-test1: compilador
-	./compilador testsCompilador/in_testS1_V1.c testsCompilador/in_testS1_V1.asm
+test1: omicron
+	./omicron testsCompilador/in_testS1_V1.c testsCompilador/in_testS1_V1.asm
 	nasm -g -f elf32 testsCompilador/in_testS1_V1.asm -o testsCompilador/in_testS1_V1.o
 	gcc -m32 -g testsCompilador/in_testS1_V1.o olib.o -o in_testS1_V1
 
 
-test2: compilador
-	./compilador testsCompilador/in_testS1_V2.c testsCompilador/in_testS1_V2.asm
+test2: omicron
+	./omicron testsCompilador/in_testS1_V2.c testsCompilador/in_testS1_V2.asm
 	nasm -g -f elf32 testsCompilador/in_testS1_V2.asm -o testsCompilador/in_testS1_V2.o
 	gcc -m32 -g testsCompilador/in_testS1_V2.o olib.o -o in_testS1_V2
 
-test3: compilador
-	./compilador testsCompilador/in_testS1_V3.c testsCompilador/in_testS1_V3.asm
+test3: omicron
+	./omicron testsCompilador/in_testS1_V3.c testsCompilador/in_testS1_V3.asm
 	nasm -g -f elf32 testsCompilador/in_testS1_V3.asm -o testsCompilador/in_testS1_V3.o
 	gcc -m32 -g testsCompilador/in_testS1_V3.o olib.o -o in_testS1_V3
 
-test4: compilador
-	./compilador testsCompilador/in_testS1_V4.c testsCompilador/in_testS1_V4.asm
+test4: omicron
+	./omicron testsCompilador/in_testS1_V4.c testsCompilador/in_testS1_V4.asm
 	nasm -g -f elf32 testsCompilador/in_testS1_V4.asm -o testsCompilador/in_testS1_V4.o
 	gcc -m32 -g testsCompilador/in_testS1_V4.o olib.o -o in_testS1_V4
 
-test5: compilador
-	./compilador testsCompilador/in_testS1_V5.c testsCompilador/in_testS1_V5.asm
+test5: omicron
+	./omicron testsCompilador/in_testS1_V5.c testsCompilador/in_testS1_V5.asm
 	nasm -g -f elf32 testsCompilador/in_testS1_V5.asm -o testsCompilador/in_testS1_V5.o
 	gcc -m32 -g testsCompilador/in_testS1_V5.o olib.o -o in_testS1_V5
 
-test6: compilador
-	./compilador testsCompilador/in_testS1_V6.c testsCompilador/in_testS1_V6.asm
+test6: omicron
+	./omicron testsCompilador/in_testS1_V6.c testsCompilador/in_testS1_V6.asm
 	nasm -g -f elf32 testsCompilador/in_testS1_V6.asm -o testsCompilador/in_testS1_V6.o
 	gcc -m32 -g testsCompilador/in_testS1_V6.o olib.o -o in_testS1_V6
 
-test7: compilador
-	./compilador testsCompilador/in_testS1_V7.c testsCompilador/in_testS1_V7.asm
+test7: omicron
+	./omicron testsCompilador/in_testS1_V7.c testsCompilador/in_testS1_V7.asm
 	nasm -g -f elf32 testsCompilador/in_testS1_V7.asm -o testsCompilador/in_testS1_V7.o
 	gcc -m32 -g testsCompilador/in_testS1_V7.o olib.o -o in_testS1_V7
 
-test8: compilador
-	./compilador testsCompilador/in_testS1_V8.c testsCompilador/in_testS1_V8.asm
+test8: omicron
+	./omicron testsCompilador/in_testS1_V8.c testsCompilador/in_testS1_V8.asm
 	nasm -g -f elf32 testsCompilador/in_testS1_V8.asm -o testsCompilador/in_testS1_V8.o
 	gcc -m32 -g testsCompilador/in_testS1_V8.o olib.o -o in_testS1_V8
 
-test9: compilador
-	./compilador testsCompilador/in_testS1_V9.c testsCompilador/in_testS1_V9.asm
+test9: omicron
+	./omicron testsCompilador/in_testS1_V9.c testsCompilador/in_testS1_V9.asm
 	nasm -g -f elf32 testsCompilador/in_testS1_V9.asm -o testsCompilador/in_testS1_V9.o
 	gcc -m32 -g testsCompilador/in_testS1_V9.o olib.o -o in_testS1_V9
 
-test10: compilador
-	./compilador testsCompilador/in_testS1_V10.c testsCompilador/in_testS1_V10.asm
+test10: omicron
+	./omicron testsCompilador/in_testS1_V10.c testsCompilador/in_testS1_V10.asm
 	nasm -g -f elf32 testsCompilador/in_testS1_V10.asm -o testsCompilador/in_testS1_V10.o
 	gcc -m32 -g testsCompilador/in_testS1_V10.o olib.o -o in_testS1_V10
 
-test11: compilador
-	./compilador testsCompilador/in_testS1_V11.c testsCompilador/in_testS1_V11.asm
+test11: omicron
+	./omicron testsCompilador/in_testS1_V11.c testsCompilador/in_testS1_V11.asm
 	nasm -g -f elf32 testsCompilador/in_testS1_V11.asm -o testsCompilador/in_testS1_V11.o
 	gcc -m32 -g testsCompilador/in_testS1_V11.o olib.o -o in_testS1_V11
 
-test12: compilador
-	./compilador testsCompilador/in_testS1_V12.c testsCompilador/in_testS1_V12.asm
+test12: omicron
+	./omicron testsCompilador/in_testS1_V12.c testsCompilador/in_testS1_V12.asm
 	nasm -g -f elf32 testsCompilador/in_testS1_V12.asm -o testsCompilador/in_testS1_V12.o
 	gcc -m32 -g testsCompilador/in_testS1_V12.o olib.o -o in_testS1_V12
 
-test13: compilador
-	./compilador testsCompilador/in_testS1_V13.c testsCompilador/in_testS1_V13.asm
+test13: omicron
+	./omicron testsCompilador/in_testS1_V13.c testsCompilador/in_testS1_V13.asm
 	nasm -g -f elf32 testsCompilador/in_testS1_V13.asm -o testsCompilador/in_testS1_V13.o
 	gcc -m32 -g testsCompilador/in_testS1_V13.o olib.o -o in_testS1_V13
 
-test14: compilador
-	./compilador testsCompilador/in_testS1_V14.c testsCompilador/in_testS1_V14.asm
+test14: omicron
+	./omicron testsCompilador/in_testS1_V14.c testsCompilador/in_testS1_V14.asm
 	nasm -g -f elf32 testsCompilador/in_testS1_V14.asm -o testsCompilador/in_testS1_V14.o
 	gcc -m32 -g testsCompilador/in_testS1_V14.o olib.o -o in_testS1_V14
 
@@ -107,6 +107,6 @@ clean:
 	rm -f generacion/generacion.o
 	rm -f testsCompilador/*.o
 	rm -f bison/*.o flex/*.o flex/lex.yy.c bison/y.*
-	rm -f compilador
+	rm -f omicron
 	rm -f testsCompilador/*.asm in_testS1_V9 in_testS1_V1 in_testS1_V2 in_testS1_V3 in_testS1_V4 in_testS1_V5 in_testS1_V6 in_testS1_V7 in_testS1_V8
 	rm -f in_testS1_V11 in_testS1_V12 in_testS1_V10 in_testS1_V13 in_testS1_V14

@@ -159,6 +159,7 @@ int TSA_insertarSimbolo(TSA* ts,
 
     if (ts->ambito == GLOBAL) {
         if (hash_contiene(ts->global, simbolo->clave) == true) {
+            InfoSimbolo_eliminar(simbolo);
             return OK;
         } else {
             if (hash_insertar(ts->global, simbolo->clave, simbolo) == ERR) {
@@ -171,6 +172,7 @@ int TSA_insertarSimbolo(TSA* ts,
         if (simbolo->categoria == FUNCION) {
             printf("No se puede insertar Funcion en la tabla local");
         } else if (hash_contiene(ts->local, simbolo->clave) == true) {
+            InfoSimbolo_eliminar(simbolo);
             return OK;
         } else {
             if (hash_insertar(ts->local, simbolo->clave, simbolo) == ERR) {
@@ -292,7 +294,7 @@ void TSA_imprimir(FILE* out, TSA* ts, char* ambito) {
                 hash_as_list(ts->local, &elementos, &posiciones);
                 fprintf(out, "\n=================== %s =================\n", ts->id_ambito_local);
 
-                printf("Elementos encontrados en ambito %s: %d\n\n", ts->id_ambito_local, lista_length(elementos));
+                //printf("Elementos encontrados en ambito %s: %d\n\n", ts->id_ambito_local, lista_length(elementos));
                 for (int i = 0; i < lista_length(elementos); i++) {
                     InfoSimbolo* elem = lista_get(elementos, i);
                     int* pos = lista_get(posiciones, i);
@@ -314,7 +316,7 @@ void TSA_imprimir(FILE* out, TSA* ts, char* ambito) {
                 hash_as_list(ts->global, &elementos, &posiciones);
                 fprintf(out, "\n=================== %s =================\n", ts->id_ambito_global);
 
-                printf("Elementos encontrados en ambito %s: %d\n\n", ts->id_ambito_global, lista_length(elementos));
+                //printf("Elementos encontrados en ambito %s: %d\n\n", ts->id_ambito_global, lista_length(elementos));
                 for (int i = 0; i < lista_length(elementos); i++) {
                     InfoSimbolo* elem = lista_get(elementos, i);
                     int* pos = lista_get(posiciones, i);

@@ -579,7 +579,23 @@ void imprimeTSAdeClase(FILE *out, TSC *g, char *id_clase)
 
 int recGetListaPadresCompleta(NodoGrafo *nodo, Lista *padres)
 {
-    lista_addlast(padres, nodo);
+    int ya_en_lista = 0;
+
+    //Comprobamos si el nodo esta ya en la lista
+    //ya que es posible que se haya añadido siguiendo
+    //otra rama de la recursividad
+    for(int i=0; i < lista_length(padres); i++){
+        NodoGrafo* aux = lista_get(padres, i);
+        if(strcmp(aux->nombre, nodo->nombre) == 0){
+            ya_en_lista = 1;
+            break;
+        }
+    }
+
+    //Si ya está en la lista no hace falta añadirlo otra vez
+    if(!ya_en_lista)
+        lista_addlast(padres, nodo);
+
     Lista *mis_padres = nodo->predecesores;
     for (int i = 0; i < lista_length(mis_padres); i++)
     {
@@ -600,6 +616,13 @@ Lista *getListaPadresCompleta(TSC *g, char *nombre_clase)
         recGetListaPadresCompleta(lista_get(padres_nodo, i), padres_acumulados);
     }
     lista_sort(padres_acumulados, compara_nodos_por_sus_incides);
+
+    //for(int i=0; i < lista_length(padres_acumulados);i++){
+    //    NodoGrafo* aux = lista_get(padres_acumulados, i);
+    //    fprintf(stderr, "[%d] %s\n", aux->indice, aux->nombre);
+    //}
+    //fprintf(stderr, "\n");
+
     return padres_acumulados;
 }
 
@@ -617,7 +640,9 @@ void liberar_nodo(void* a){
 }
 
 int compara_nodos_por_sus_incides(const void *a, const void*b){
-    NodoGrafo *nA = (NodoGrafo*)a;
-    NodoGrafo *nB = (NodoGrafo*)b;
-    return nA->indice - nB->indice;
+    NodoGrafo *nA = *(NodoGrafo**)(a);
+    NodoGrafo *nB = *(NodoGrafo**)(b);
+    //fprintf(stderr, "L=%s, R=%s\n", nA->nombre, nB->nombre);
+    //return nA->indice - nB->indice;  //Orden Creciente
+    return nB->indice - nA->indice; //Orden Decreciente
 }

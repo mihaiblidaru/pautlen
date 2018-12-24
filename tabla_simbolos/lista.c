@@ -28,6 +28,7 @@ Lista *lista_crecer(Lista* l){
     new_buffer = realloc(l->data, l->tam_maximo * 2 *sizeof(void*));
     if(new_buffer != NULL){
         l->tam_maximo *= 2;
+
         l->data = new_buffer;
         return l;
     }

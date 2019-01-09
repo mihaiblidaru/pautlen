@@ -3,6 +3,7 @@
 main {
   int x;
   int y;
+  array int[10] arr1;
 
   function int cuadrado(int p1){
     int c;
@@ -51,8 +52,15 @@ main {
   printf suma(3, y); //12
   printf suma(x, y); //12
   printf cuboYsuma(1,1); //3
-  printf suma(1, suma(1, suma(1, suma(1, cubo(2))))); //12
-  imprimeNumeros(1,suma(1, 2),3); // 1, 3,3
+  //printf suma(1, suma(1, suma(1, suma(1, cubo(2))))); //12
+  //imprimeNumeros(1,suma(1, 2),3); // 1, 3,3
   suma(3, 3);
+
+  while((x >= 0)){
+    arr1[x] = x;
+    printf arr1[x];
+    x = x - 1;
+    
+  }
   
 }

@@ -830,6 +830,24 @@ exp:
         }
       }
     }
+| exp '^' exp
+    { fprintf(pf, ";R:\texp: exp '^' exp\n");
+      if ($1.tipo == INT && $3.tipo == INT){
+        potencia(pf, $1.es_direccion, $3.es_direccion, globalEtiqueta);
+        globalEtiqueta++;
+        $$.es_direccion = 0;
+        $$.tipo = INT;
+      } else  {
+         if($1.tipo != INT){
+          fprintf(stderr, "Error potencia(^): El tipo de la expresion izquierda != INT. Linea %d\n", yylineno);
+          exit(-1);
+        }
+        if($3.tipo != INT){
+          fprintf(stderr, "Error potencia(^): El tipo de la expresion derecha != INT. Linea %d\n", yylineno);
+          exit(-1);
+        }
+      }
+    }
 | '-' exp %prec NEG
     { fprintf(pf, ";R:\texp: '-' exp\n");
       if ($2.tipo == INT){

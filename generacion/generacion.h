@@ -137,6 +137,7 @@ void restar(FILE* fpasm, int es_variable_1, int es_variable_2);
  */
 void multiplicar(FILE* fpasm, int es_variable_1, int es_variable_2);
 
+void potencia(FILE* fpasm, int es_variable_1, int es_variable_2, int etiqueta);
 /**
  * @brief Realiza la división de dos operandos.
  *

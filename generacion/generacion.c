@@ -57,6 +57,7 @@ void escribir_subseccion_data(FILE* fpasm){
   fprintf(fpasm, "segment .data\n");
   fprintf(fpasm, "\tmsg_error_ind_rng db \"Indice fuera de rango\",0\n");
   fprintf(fpasm, "\tmsg_error_div_0 db \"Division por 0\",0\n");
+  fprintf(fpasm, "\tmsg_error_pot_0 db \"Exponente menor de 0\",0\n");
 }
 
 
@@ -121,6 +122,12 @@ void escribir_fin(FILE* fpasm){
   fprintf(fpasm, "\t jmp near fin\n");
   fprintf(fpasm, "err_div_0: ");
   fprintf(fpasm, "\tpush dword msg_error_div_0\n");
+  fprintf(fpasm, "\tcall print_string\n");
+  fprintf(fpasm, "\tadd esp, 4\n");
+  fprintf(fpasm, "\tcall print_endofline\n");
+  fprintf(fpasm, "\tjmp near fin\n");
+  fprintf(fpasm, "error_potencia: ");
+  fprintf(fpasm, "\tpush dword msg_error_pot_0\n");
   fprintf(fpasm, "\tcall print_string\n");
   fprintf(fpasm, "\tadd esp, 4\n");
   fprintf(fpasm, "\tcall print_endofline\n");
@@ -258,6 +265,49 @@ void multiplicar(FILE* fpasm, int es_variable_1, int es_variable_2){
 
   fprintf(fpasm, "\timul ecx\n"); //Multiplicamos los dos operandos
   fprintf(fpasm, "\tpush dword eax\n"); //Ponemos el resultado en la pila
+}
+
+
+/**
+ * @brief Realiza la potencia de dos operandos.
+ *
+ * Extrae de la pila los dos operandos, realiza la operación de multiplicación
+ * y guarda el resultado en la pila.
+ *
+ * @param fpasm fichero donde se imprime el codigo nasm
+ * @param es_variable_1 indica si el primer operando es un referencia o un valor explicito
+ * @param es_variable_2 indica si el segundo operando es un referencia o un valor explicito
+ */
+void potencia(FILE* fpasm, int es_variable_1, int es_variable_2, int etiqueta){
+  fprintf(fpasm, "\n;-> Empieza potencia\n");
+
+  fprintf(fpasm, "\tpop dword ecx\n"); //Exponente
+
+  if (es_variable_2)
+    fprintf(fpasm, "\tmov ecx, [ecx]\n"); //Cogemos el contenido si es una viable
+
+  fprintf(fpasm,"\tcmp ecx, 0\n");
+  fprintf(fpasm,"\tjl error_potencia\n");
+
+  fprintf(fpasm, "\tpop dword ebx\n"); //Base
+
+  if (es_variable_1)
+    fprintf(fpasm, "\tmov ebx, [ebx]\n"); //Cogemos el contenido si es una viable
+
+/*Hacemos el bucle de la potencia*/
+  
+  fprintf(fpasm,"\tmov eax, 1\n");
+  fprintf(fpasm,"\tmov edi, 0\n");
+
+
+  fprintf(fpasm,"\tbucle_%d: cmp edi, ecx\n", etiqueta);
+  fprintf(fpasm,"\tje fin_potencia_%d\n", etiqueta);
+  fprintf(fpasm,"\timul ebx\n"); //Multiplicamos los dos operandos
+  fprintf(fpasm,"\tinc edi\n");
+  fprintf(fpasm,"\tjmp bucle_%d\n", etiqueta);
+
+  fprintf(fpasm, "\tfin_potencia_%d: push dword eax\n", etiqueta); //Ponemos el resultado en la pila
+
 }
 
 

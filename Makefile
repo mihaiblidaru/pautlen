@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g -O0 -std=gnu11 -I./include
+CFLAGS = -Wall -Werror -g -O0 -std=gnu11 -I./include
 LDFLAGS = -g
 LDLIBS =
 AS = nasm
@@ -21,6 +21,8 @@ bison/y.tab.o: bison/y.tab.c
 flex/lex.yy.c: flex/omicron.l bison/y.tab.h
 	flex $< && mv lex.yy.c flex/
 
+#(e3- se compila con -d -y -v para que se genere un y.output con info del automata,
+# para ver su descripcion y los conflictos si los hubiera)
 bison/y.tab.h: bison/omicron.y
 	bison -d -y -v $<
 	mv y.* bison/
@@ -101,6 +103,11 @@ test14: omicron
 	nasm -g -f elf32 testsCompilador/in_testS1_V14.asm -o testsCompilador/in_testS1_V14.o
 	gcc -m32 -g testsCompilador/in_testS1_V14.o olib.o -o in_testS1_V14
 
+test15: omicron
+	./omicron testsCompilador/in_testS1_V15.c testsCompilador/in_testS1_V15.asm
+	nasm -g -f elf32 testsCompilador/in_testS1_V15.asm -o testsCompilador/in_testS1_V15.o
+	gcc -m32 -g testsCompilador/in_testS1_V15.o olib.o -o in_testS1_V15
+
 test16: omicron
 	./omicron testsCompilador/in_testS1_V16.c testsCompilador/in_testS1_V16.asm
 	nasm -g -f elf32 testsCompilador/in_testS1_V16.asm -o testsCompilador/in_testS1_V16.o
@@ -115,4 +122,4 @@ clean:
 	rm -f bison/*.o flex/*.o flex/lex.yy.c bison/y.*
 	rm -f omicron
 	rm -f testsCompilador/*.asm in_testS1_V9 in_testS1_V1 in_testS1_V2 in_testS1_V3 in_testS1_V4 in_testS1_V5 in_testS1_V6 in_testS1_V7 in_testS1_V8
-	rm -f in_testS1_V11 in_testS1_V12 in_testS1_V10 in_testS1_V13 in_testS1_V14 in_testS1_V16
+	rm -f in_testS1_V11 in_testS1_V12 in_testS1_V10 in_testS1_V13 in_testS1_V14 in_testS1_V16 in_testS1_V15

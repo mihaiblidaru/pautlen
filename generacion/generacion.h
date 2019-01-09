@@ -330,4 +330,5 @@ void operandoEnPilaAArgumento(FILE * fpasm, int es_variable);
 
 void leer_exp_pila(FILE* fpasm, int tipo);
 
+void potencia(FILE* fpasm, int es_variable_1, int es_variable_2, int etiqueta);
 #endif

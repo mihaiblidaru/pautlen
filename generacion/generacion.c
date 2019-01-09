@@ -57,6 +57,8 @@ void escribir_subseccion_data(FILE* fpasm){
   fprintf(fpasm, "segment .data\n");
   fprintf(fpasm, "\tmsg_error_ind_rng db \"Indice fuera de rango\",0\n");
   fprintf(fpasm, "\tmsg_error_div_0 db \"Division por 0\",0\n");
+  fprintf(fpasm, "\tmsg_error_pow_neg db \"Potencia negativa\",0\n");
+
 }
 
 
@@ -125,6 +127,17 @@ void escribir_fin(FILE* fpasm){
   fprintf(fpasm, "\tadd esp, 4\n");
   fprintf(fpasm, "\tcall print_endofline\n");
   fprintf(fpasm, "\tjmp near fin\n");
+
+
+  fprintf(fpasm, "err_pow_neg: ");
+  fprintf(fpasm, "\tpush dword msg_error_pow_neg\n");
+  fprintf(fpasm, "\tcall print_string\n");
+  fprintf(fpasm, "\tadd esp, 4\n");
+  fprintf(fpasm, "\tcall print_endofline\n");
+  fprintf(fpasm, "\tjmp near fin\n");
+
+
+
   fprintf(fpasm, "mensaje_1: ");
   fprintf(fpasm, "\tpush dword msg_error_ind_rng\n");
   fprintf(fpasm, "\tcall print_string\n");
@@ -260,6 +273,44 @@ void multiplicar(FILE* fpasm, int es_variable_1, int es_variable_2){
   fprintf(fpasm, "\tpush dword eax\n"); //Ponemos el resultado en la pila
 }
 
+void potencia(FILE* fpasm, int es_variable_1, int es_variable_2, int etiqueta){
+  fprintf(fpasm, "\n;-> Empieza potencia\n");
+    
+  fprintf(fpasm, "\tpop dword ebx\n"); //Primer operando
+  if (es_variable_2)
+    fprintf(fpasm, "\tmov ebx, [ebx]\n"); //Cogemos el contenido si es una viable
+
+
+  fprintf(fpasm, "\tcmp ebx, 0\n"); //Primer operando
+  fprintf(fpasm, "\tjl err_pow_neg\n"); //Primer operando
+
+
+
+
+  fprintf(fpasm, "\tpop dword ecx\n"); //Segundo operando
+
+  if (es_variable_1)
+    fprintf(fpasm, "\tmov ecx, [ecx]\n"); //Cogemos el contenido si es una viable
+
+  fprintf(fpasm, "\tmov eax, 1\n"); //Cogemos el contenido si es una viable
+
+  //fprintf(fpasm, "\tpush ebx\n"); //
+  //escribir(fpasm, 0, INT);
+
+  fprintf(fpasm, "\tetiq_%d: \n", etiqueta); //etiqueta
+  fprintf(fpasm, "\tcmp ebx, 0\n"); //
+  fprintf(fpasm, "\tje finpotencia_%d\n", etiqueta); //Cogemos el contenido si es una viable
+
+
+
+  fprintf(fpasm, "\timul ecx\n"); //Multiplicamos los dos operandos
+  fprintf(fpasm, "\tsub ebx, 1\n");
+  fprintf(fpasm, "\tjmp etiq_%d\n", etiqueta);
+
+  fprintf(fpasm, "\tfinpotencia_%d: \n", etiqueta); 
+  fprintf(fpasm, "\tpush dword eax\n"); //Ponemos el resultado en la pila
+
+}
 
 /**
  * @brief Realiza la división de dos operandos.
@@ -900,46 +951,55 @@ void leer_exp_pila(FILE* fpasm, int tipo){
   }
 }
 
+/***********************************************/
+/*    GENERACION DE OO                         */
+/************************************************/
+
 void instance_of (FILE * fpasm, char * nombre_fuente_clase,int numero_atributos_instancia){
   //Se necesita un espacio adicionar para el puntero a la tabla de metodos sobresribibles
   int result =  (numero_atributos_instancia + 1) * 4;
+  /*en ts.asm la etiqueta se llama _mSA, pero como solo me pasan A, genero _mSA*/
   char* nombre_tabla_ms = claseATabla(nombre_fuente_clase);
   fprintf(fpasm, "\n; instanceof %s\n", nombre_fuente_clase);
 
   fprintf(fpasm, "\t push dword %d ; %d*4\n",result,numero_atributos_instancia);
-  fprintf(fpasm, "\t call malloc\n");
+  fprintf(fpasm, "\t call malloc\n"); /*malloc deja el resultado en eax */
+  /*quita el 16 de la pila */
   fprintf(fpasm, "\t add esp, 4\n");
-  fprintf(fpasm, "\t push eax\n");
+
+  fprintf(fpasm, "\t push eax\n"); /*mete en la pila el puntero al espacio reservado */
   fprintf(fpasm, "\t mov dword [eax], %s\n", nombre_tabla_ms);
   free(nombre_tabla_ms);
 	
 }
 
+/*el intermedio seria: escribir_operando, asignar_destino_en_pila, escribir_operando */
 void discardPila (FILE * fpasm){
-  fprintf(fpasm, "\t pop dword eax\n");
-  fprintf(fpasm, "\t mov eax, [eax]\n");
-  fprintf(fpasm, "\t push eax\n");
-  fprintf(fpasm, "\t call free\n");
+  fprintf(fpasm, "\t pop dword eax\n"); /*en la cima de la pila está el puntero a una variable (que es una instancia de una clase) */
+  fprintf(fpasm, "\t mov eax, [eax]\n"); /* carga la direccion de memoria que tiene asignada la instancia de la clase, que es el malloc que se hace en instanceof*/
+  fprintf(fpasm, "\t push eax\n"); /*meto en pila*/
+  fprintf(fpasm, "\t call free\n"); /* llamo a free */ 
   fprintf(fpasm, "\t add esp,4\n");
 
 }
 
+/* */
 void llamarMetodoSobreescribibleCualificadoInstanciaPila(FILE * fpasm, char * nombre_metodo){
     fprintf(fpasm, "\t;llamarMetodoSobreescribibleCualificadoInstanciaPila\n");
-    fprintf(fpasm, "\tpop dword ebx \n");
-    fprintf(fpasm, "\tmov ebx,[ ebx]\n");
-    fprintf(fpasm, "\tmov ebx,[ ebx]\n");
-    fprintf(fpasm, "\tmov dword ecx, [_offset_%s]\n", nombre_metodo);
-    fprintf(fpasm, "\tlea ecx, [ebx+ecx]\n");
-    fprintf(fpasm, "\tmov ecx, [ecx]\n");
-    fprintf(fpasm, "\tcall ecx\n");
+    fprintf(fpasm, "\tpop dword ebx \n"); /*sacamos "0x19"*/
+    fprintf(fpasm, "\tmov ebx,[ ebx]\n"); /* sacamos "0x21"*/
+    fprintf(fpasm, "\tmov ebx,[ ebx]\n"); /* coge "0x44"*/
+    fprintf(fpasm, "\tmov dword ecx, [_offset_%s]\n", nombre_metodo); /*carga en ecx el offset de nombre_metodo*/
+    fprintf(fpasm, "\tlea ecx, [ebx+ecx]\n"); /* indiferente */
+    fprintf(fpasm, "\tmov ecx, [ecx]\n"); /* sacar la direccion real de "_mSA2"*/
+    fprintf(fpasm, "\tcall ecx\n"); /* meterse */
 }
 
-
+/*dejaria en la pila la direccion de donde esta "x" */
 void accederAtributoInstanciaDePila(FILE * fpasm, char * nombre_atributo){
-    fprintf(fpasm, "\tpop dword ebx \n");
-    fprintf(fpasm, "\tmov ebx, [ebx]\n");
-    fprintf(fpasm, "\tmov dword ecx, [_offset_%s]\n", nombre_atributo);
+    fprintf(fpasm, "\tpop dword ebx \n"); /* saca de la pila "0x19"*/
+    fprintf(fpasm, "\tmov ebx, [ebx]\n"); /* accede a "0x21"*/
+    fprintf(fpasm, "\tmov dword ecx, [_offset_%s]\n", nombre_atributo); /*accede a offset de nombre_artributo */
     fprintf(fpasm, "\tlea ecx, [ebx+ecx]\n");
     fprintf(fpasm, "\tpush dword ecx\n");
 }

@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Wall -Werror -g -O0 -m32 -I./
+CFLAGS = -Wall -Wall -Werror -g -O0 -m32 -I./
 LDFLAGS = -m32 -g
 LDLIBS =
 AS = nasm
@@ -9,8 +9,18 @@ EJECUTABLES = programa1 programa2 programa3 programa4 programa5 programa6 progra
 GENERADORES = test_generacion/ej1 test_generacion/ej2 test_generacion/ej3 \
               test_generacion/ej4 test_generacion/ej5 test_generacion/ej6 test_generacion/generacion_oo
 
-all: $(EJECUTABLES)
+#####################REGLAS SI ME HACEN MODIFICAR GENERACION
+all: $(EJECUTABLES) #programa_examen
 
+#1. Compilar las funciones creadas en generacion.c junto al ejemplo en cuestión (ej1.c)
+programa_examen:
+	gcc -Wall -g -o programa_examen generacion.c programa_examen.c
+	./programa_examen programa_examen.asm
+	nasm -g -o programa_ex.o -f elf32 programa_examen.asm
+	gcc -Wall -g -m32 -o programa_ex programa_ex.o olib.o
+#########################################################################
+
+# 4. Compilar con gcc sobre el objeto obtenido en 3
 programa1: test_generacion/programa1.o olib.o
 	$(CC) $(LDFLAGS) $^ -o $@
 
@@ -32,6 +42,7 @@ programa6: test_generacion/programa6.o olib.o
 programaoo: test_generacion/programaoo.o olib.o ts.o
 		$(CC) $(LDFLAGS) $^ -o $@
 
+#3. Compilar el fichero nasm obtenido
 test_generacion/programa1.o: test_generacion/programa1.asm
 	$(AS) $(ASFLAGS) -o $@ $<
 
@@ -64,8 +75,7 @@ test_generacion/ej5: test_generacion/ej5.o generacion.o
 test_generacion/ej6: test_generacion/ej6.o generacion.o
 test_generacion/generacion_oo: test_generacion/generacion_oo.o generacion.o
 
-
-
+#1. Compilar las funciones creadas en generacion.c junto al ejemplo en cuestión (ej1.c)
 test_generacion/ej1.o: test_generacion/ej1.c
 test_generacion/ej2.o: test_generacion/ej2.c
 test_generacion/ej3.o: test_generacion/ej3.c
@@ -74,6 +84,7 @@ test_generacion/ej5.o: test_generacion/ej5.c
 test_generacion/ej6.o: test_generacion/ej6.c
 test_generacion/generacion_oo.o: test_generacion/generacion_oo.c
 
+#2. Ejecutar el ejecutable obtenido para sacar el fichero .asm (como argumento)
 test_generacion/programaoo.asm: test_generacion/generacion_oo
 		./$< $@
 

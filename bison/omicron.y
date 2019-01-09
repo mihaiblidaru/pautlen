@@ -100,6 +100,7 @@
 /* https://raw.githubusercontent.com/pablomm/pautlen/master/src/alfa.y */
 %left '+' '-' TOK_OR
 %left '*' '/' TOK_AND
+%left '^'
 %right NEG '!'
 
 %locations
@@ -620,6 +621,56 @@ asignacion:
             exit(-1);
         }
     }
+| TOK_IDENTIFICADOR '+''=' exp
+    { fprintf(pf, ";R:\tasignacion: TOK_IDENTIFICADOR '+''=' exp\n");
+
+        int resultado = buscarIdNoCualificado(NULL, tsaMain, $1.lexema, "main", &elem, nombre_ambito_encontrado);
+        if(resultado == OK){
+          
+          if(elem->tipo != $4.tipo){
+            fprintf(stderr, "Error asignacion(tipos incompatibles) %s(%s) <= %s . Linea %d \n",
+            $1.lexema, tipo_to_str[elem->tipo - 1], tipo_to_str[$4.tipo - 1], yylineno);
+            exit(-1);
+          }
+
+          /* ESCRIBIR OPERANDO EN PILA DEPENDIENDO DE LA CLASE EN LA QUE SE ENCUENTRE */
+          if(strcmp(nombre_ambito_encontrado, "main")==0){
+            escribir_operando(pf, elem->clave, 1);
+            if(estamos_en_llamada_funcion){
+              operandoEnPilaAArgumento(pf, 1);
+            }
+          }else{
+            if(elem->categoria==PARAMETRO){
+              escribirParametro(pf, elem->posicion_parametro, elem->numero_parametros);
+            }else if(elem->categoria==VARIABLE){
+              escribirVariableLocal(pf, elem->posicion_variable_local);
+            }
+          }
+          /**********************************************************************/
+          sumar(pf, $4.es_direccion, 1);
+
+          /*ahora queda la pila con el resultado; ahora escribo d nuevo x y asigno*/
+
+          /* ESCRIBIR OPERANDO EN PILA DEPENDIENDO DE LA CLASE EN LA QUE SE ENCUENTRE */
+          if(strcmp(nombre_ambito_encontrado, "main")==0){
+            escribir_operando(pf, elem->clave, 1);
+            if(estamos_en_llamada_funcion){
+              operandoEnPilaAArgumento(pf, 1);
+            }
+          }else{
+            if(elem->categoria==PARAMETRO){
+              escribirParametro(pf, elem->posicion_parametro, elem->numero_parametros);
+            }else if(elem->categoria==VARIABLE){
+              escribirVariableLocal(pf, elem->posicion_variable_local);
+            }
+          }
+
+          asignarDestinoEnPila(pf, 0);
+        }else{
+            fprintf(stderr, "Identificador %s no encontrado\n", $1.lexema);
+            exit(-1);
+        }
+    }
 | elemento_vector '=' exp
     { fprintf(pf, ";R:\tasignacion: elemento_vector '=' exp\n");
       if ($1.tipo == $3.tipo){
@@ -819,6 +870,25 @@ exp:
         }
         if($3.tipo != INT){
           fprintf(stderr, "Error resta(-): El tipo de la expresion derecha != INT. Linea %d\n", yylineno);
+          exit(-1);
+        }
+      }
+    }
+| exp '^' exp
+    { fprintf(pf, ";R:\texp: exp '^' exp\n");
+      if ($1.tipo == INT && $3.tipo == INT){
+        potencia(pf, $1.es_direccion, $3.es_direccion, globalEtiqueta);
+        $$.etiqueta = globalEtiqueta;
+        globalEtiqueta++;
+        $$.es_direccion = 0;
+        $$.tipo = INT;
+      } else  {
+        if($1.tipo != INT){
+          fprintf(stderr, "Error potencia(^): El tipo de la expresion izquierda != INT. Linea %d\n", yylineno);
+          exit(-1);
+        }
+        if($3.tipo != INT){
+          fprintf(stderr, "Error potencia(-): El tipo de la expresion derecha != INT. Linea %d\n", yylineno);
           exit(-1);
         }
       }
